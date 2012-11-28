@@ -13,3 +13,4 @@ Slik ser lokal_config.php ut:
 	$database_string="passord her";
 	$database_database = "solfrih_bukdb";
 
+*/

@@ -30,22 +30,22 @@ function koble_til_database($database_host, $database_user, $database_string, $d
 function inkluder_side_fra_undermappe($sidenavn, $mappenavn){
 	
 	if( empty($sidenavn) ) $sidenavn = "forside";
-	if( empty($mappenavn) ) $mappenavn = "hoved";
+	if( empty($mappenavn) ) $mappenavn = "sider";
  	
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
-	// hvis $page inneholder .. eller / sï¿½ prï¿½ver noen ï¿½ gï¿½ i undermapper, det vil vi ikke
+	// hvis $page inneholder .. eller / så prøver noen å gå i undermapper, det vil vi ikke
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
 			include $php_fil;
 		} else {
-			include "hoved/forside.php";
+			include "sider/forside.php";
 		}
 		
 	} else {
-		include "hoved/forside.php";
+		include "sider/forside.php";
 	}
 }
 
@@ -76,15 +76,15 @@ function er_logget_inn(){
 function list_forum(){
 	echo"
 	<table>
-	(TODO: skal vÃ¦re dynamisk...)
+	(TODO: skal være dynamisk...)
 	<tr><td>Velg forum: </td>
 	<td><a href='?side=forum/tema&id=2'>musikk & konserter</a></td>
 	<td><a href='?side=forum/tema&id=1'>aktuelt</a></td>
     <td><a href=''>sosialt</a></td>
-    <td><a href=''>pÃ¥meldinger</a></td>";  
+    <td><a href=''>påmeldinger</a></td>";  
     if($_SESSION['rettigheter']>1){
 		echo"
-    	<td><a href=''>musikkomitÃ©en</a></td>
+    	<td><a href=''>musikkomitéen</a></td>
     	<td><a href=''>styret</a></td>
     	<td><a href=''>webkom</a></td></tr>";
 	};

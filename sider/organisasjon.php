@@ -31,15 +31,16 @@
 	//det som skrives ut pÃ¥ side	
 	
 	echo"<table>
-			<tr><th colspan='4'>Kjekt Ã¥ vite: </th></tr>
-			<tr><td><b>FravÃ¦r:</b></td><td colspan='3'>FravÃ¦r meldes til nestleder pÃ¥ e-post eller sms. <br>
-			Du kan ogsÃ¥ fylle ut skjemaet under sÃ¥ autogenereres en mail for deg</td></tr>
+			<tr><th colspan='4'>Kjekt å vite: </th></tr>
+			<tr><td><b>Fravær:</b></td><td colspan='3'>Fravær meldes til nestleder på e-post eller sms. <br>
+			Du kan også fylle ut skjemaet under så autogenereres en mail for deg</td></tr>
 			<form method='post' action='?side=oranisasjon'>
-				<tr><td></td><td>Hvilken Ã¸velse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
+				<tr><td></td><td>Hvilken øvelse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<tr><td></td><td>Grunn:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
+<<<<<<< HEAD:hoved/organisasjon.php
 			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes pÃ¥ e-post til styret. 
 				Husk Ã¥ oppgi periode og Ã¥rsak til permisjonen.</td></tr>
 			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det går på rundgang se ruten oppe til høyre om neste gang 
@@ -47,6 +48,10 @@
 			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
 			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>
 			<tr><td><a href=''>vis grupper</a></td><td colspan='3'><a href=''>Gruppe 1</a></td></tr>
+=======
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes på e-post til styret. 
+				Husk å oppgi periode og årsak til permisjonen.</td></tr>
+>>>>>>> 5bd1cdefe5ac4d70b390cbdb2ed4fc59544a3a41:sider/organisasjon.php
 								
 			<tr><th colspan='4'>Kontaktinformasjon</th></tr>
 			<tr><td><b>Adresse:</b></td><td colspan='3'>
@@ -57,7 +62,11 @@
 			<tr><td><b>Organisasjonnummer:</b></td><td colspan='2'>975.729.141</td></tr>
 			<tr><td><b>Kontonummer:<br><br></b></td><td colspan='2'>4200 07 51280<br><br></td></tr>
 			<tr><td colspan='3'><b>Vedtektene til korpset:<b></td><td><a href='http://org.ntnu.no/buk/filer/dokumenter/Vedlegg_A2.pdf'><i>her kommer link til vedtektene<i></a></td></tr>
+<<<<<<< HEAD:hoved/organisasjon.php
 			<tr><th colspan='4'>Styret og komiteer</th></tr>";
+=======
+			<tr><th colspan='4'>Styret og komitéer</th></tr>";
+>>>>>>> 5bd1cdefe5ac4d70b390cbdb2ed4fc59544a3a41:sider/organisasjon.php
 			
 			//skriver ut alle komiteene med link til komitevisning
 			foreach($komiteer as $komite){

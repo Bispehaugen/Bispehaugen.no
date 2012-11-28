@@ -94,7 +94,7 @@ $enavn_leder=$row['enavn'];
 				<h1 class="hidden">Bispehaugen Ungdomskorps</h1>
 				<?php
 				
-				include "hoved/meny.php";
+				include "sider/meny.php";
 				
 				?>
 			</div>
@@ -116,9 +116,9 @@ $enavn_leder=$row['enavn'];
 					if(isset($_GET['side'])){
 						$side = $_GET['side'];
 					} else {
-						$side = "hoved";
+						$side = "sider";
 					}
-					inkluder_side_fra_undermappe($side, "hoved");
+					inkluder_side_fra_undermappe($side, "sider");
 					
 					?>
 				</div>
@@ -126,7 +126,7 @@ $enavn_leder=$row['enavn'];
 		
 			<div class="right_column">
 				<?php
-				inkluder_side_fra_undermappe("informasjonskolonne", "hoved");
+				inkluder_side_fra_undermappe("informasjonskolonne", "sider");
 				?>
 			</div>
 			
