@@ -40,8 +40,13 @@
 				<input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
-			<tr><td><b>Permisjon:</b></td><td colspan='3'>SÃ¸knad om permisjon sendes pÃ¥ e-post til styret. 
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes pÃ¥ e-post til styret. 
 				Husk Ã¥ oppgi periode og Ã¥rsak til permisjonen.</td></tr>
+			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det går på rundgang se ruten oppe til høyre om neste gang 
+			det er din tur eller trykk på aktiviteten for å se.</td></tr>
+			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
+			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>
+			<tr><td><a href=''>vis grupper</a></td><td colspan='3'><a href=''>Gruppe 1</a></td></tr>
 								
 			<tr><th colspan='4'>Kontaktinformasjon</th></tr>
 			<tr><td><b>Adresse:</b></td><td colspan='3'>
@@ -52,7 +57,7 @@
 			<tr><td><b>Organisasjonnummer:</b></td><td colspan='2'>975.729.141</td></tr>
 			<tr><td><b>Kontonummer:<br><br></b></td><td colspan='2'>4200 07 51280<br><br></td></tr>
 			<tr><td colspan='3'><b>Vedtektene til korpset:<b></td><td><a href='http://org.ntnu.no/buk/filer/dokumenter/Vedlegg_A2.pdf'><i>her kommer link til vedtektene<i></a></td></tr>
-			<tr><th colspan='4'>Styret og komiteÃ©r</th></tr>";
+			<tr><th colspan='4'>Styret og komiteer</th></tr>";
 			
 			//skriver ut alle komiteene med link til komitevisning
 			foreach($komiteer as $komite){
