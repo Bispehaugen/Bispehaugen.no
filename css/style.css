@@ -351,24 +351,23 @@ a img {
 				
 			}
 				
-			.content .album.liten{
+			.content .album.liten, .content .album.liten .album-bilde {
 				width: 100px;
 				margin: 0px;
 				padding: 0px;
 			}
-			.content .album.liten .album-bilde {
-				width: 100px;
-				margin: 0px;
-				padding: 0px;
-			}
-			
+						
 			.content .album .album-text{
 				text-align: center;
 				font-size: 14px;
 				font-weight: bold;
 				margin-top: 0px;
 			}
-
+			.content .album.middels, .content .album.middels .album-bilde{
+			width: 100px;
+			margin: 10px;
+			padding: 0px;
+			}
 
 .right_column {
 	width: 208px;
