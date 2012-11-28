@@ -1,6 +1,6 @@
 <?php 
-	include_once "../db_config.php";
-	include_once "../funksjoner.php";
+	include_once "db_config.php";
+	include_once "funksjoner.php";
 
 	$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -52,11 +52,8 @@
 		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det.";
 	}
 	
-	
 	logg_inn($medlemsid, $rettigheter);
-				
-	header('Location: ../index.php');
-	
+	header('Location: index.php');
 	
 ?>
 
