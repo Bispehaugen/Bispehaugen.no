@@ -3,7 +3,7 @@ if(er_logget_inn()){
 ?>
 
 <ul>
-    <li><a href="?side=hoved">Hovedside</a></li>
+    <li><a href="?side=forside">Hovedside</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=bilder">Bilder</a></li>
     <li><a href="?side=dokumenter">Dokumenter</a></li>
@@ -18,7 +18,7 @@ if(er_logget_inn()){
 ?>
 
 <ul>
-    <li><a href="?side=hoved">Hovedside</a></li>
+    <li><a href="?side=forside">Hovedside</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag/liste">Spilleoppdrag</a></li>
     <li style="font-weight: bold;"><a href="?side=bli_medlem">Bli medlem!</a></li>

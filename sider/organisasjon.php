@@ -31,17 +31,17 @@
 	//det som skrives ut pÃ¥ side	
 	
 	echo"<table>
-			<tr><th colspan='4'>Kjekt Ã¥ vite: </th></tr>
-			<tr><td><b>FravÃ¦r:</b></td><td colspan='3'>FravÃ¦r meldes til nestleder pÃ¥ e-post eller sms. <br>
-			Du kan ogsÃ¥ fylle ut skjemaet under sÃ¥ autogenereres en mail for deg</td></tr>
+			<tr><th colspan='4'>Kjekt å vite: </th></tr>
+			<tr><td><b>Fravær:</b></td><td colspan='3'>Fravær meldes til nestleder på e-post eller sms. <br>
+			Du kan også fylle ut skjemaet under så autogenereres en mail for deg</td></tr>
 			<form method='post' action='?side=oranisasjon'>
-				<tr><td></td><td>Hvilken Ã¸velse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
+				<tr><td></td><td>Hvilken øvelse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<tr><td></td><td>Grunn:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
-			<tr><td><b>Permisjon:</b></td><td colspan='3'>SÃ¸knad om permisjon sendes pÃ¥ e-post til styret. 
-				Husk Ã¥ oppgi periode og Ã¥rsak til permisjonen.</td></tr>
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes på e-post til styret. 
+				Husk å oppgi periode og årsak til permisjonen.</td></tr>
 								
 			<tr><th colspan='4'>Kontaktinformasjon</th></tr>
 			<tr><td><b>Adresse:</b></td><td colspan='3'>
@@ -52,7 +52,7 @@
 			<tr><td><b>Organisasjonnummer:</b></td><td colspan='2'>975.729.141</td></tr>
 			<tr><td><b>Kontonummer:<br><br></b></td><td colspan='2'>4200 07 51280<br><br></td></tr>
 			<tr><td colspan='3'><b>Vedtektene til korpset:<b></td><td><a href='http://org.ntnu.no/buk/filer/dokumenter/Vedlegg_A2.pdf'><i>her kommer link til vedtektene<i></a></td></tr>
-			<tr><th colspan='4'>Styret og komiteÃ©r</th></tr>";
+			<tr><th colspan='4'>Styret og komitéer</th></tr>";
 			
 			//skriver ut alle komiteene med link til komitevisning
 			foreach($komiteer as $komite){
