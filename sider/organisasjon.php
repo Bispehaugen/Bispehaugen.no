@@ -46,10 +46,16 @@
 			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det går på rundgang se ruten oppe til høyre om neste gang 
 			det er din tur eller trykk på aktiviteten for å se.</td></tr>
 			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
-			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>
-			<tr><td><a href=''>vis grupper</a></td><td colspan='3'><a href=''>Gruppe 1</a></td></tr>
-								
-			<tr><th colspan='4'>Kontaktinformasjon</th></tr>
+			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>";
+			
+			if(isset($_GET['slagverksgrupper'])){
+				echo"<tr><td><a href='?side=organisasjon'>skjul grupper</a></td><td colspan='3'></td></tr>
+				<tr><td></td><td><b>Gruppe 1</b></td><td colspan='2'>.......</td></tr>";
+
+			}else{
+				echo"<tr><td><a href='?side=organisasjon&slagverksgrupper=1'>vis grupper</a></td><td colspan='3'><a href=''></a></td></tr>";		
+			};					
+			echo"<tr><th colspan='4'>Kontaktinformasjon</th></tr>
 			<tr><td><b>Adresse:</b></td><td colspan='3'>
 				Bispehaugen Ungdomskorps<br>
 				Postboks 9012<br>

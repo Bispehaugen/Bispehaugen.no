@@ -41,11 +41,15 @@
    				strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td>".$aktivitet['tittel']."
    				</td><td>".$aktivitet['sted']."</td>";
 			}
-			#Viser endre/slettkapper hvis man er admin
+			#Viser endre/slettkapper hvis man er admin - fungerer ikke som de skal!!!
+//			if($_SESSION['rettigheter']>1){
+//				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href=
+//				'?side=aktiviteter/slette&id=".$aktivitet['arrid']."'onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
+//				".$aktivitet['tittel']."\")'>slett</a></td></tr>";
+//			};
 			if($_SESSION['rettigheter']>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href=
-				'?side=aktiviteter/slette&id=".$aktivitet['arrid']."'onclick='slett_aktivitet(".$aktivitet['arrid'].
-				",\"".$aktivitet['tittel']."\")'>slett</a></td></tr>";
+				''>slett</a></td></tr>";
 			};
 		}
 
