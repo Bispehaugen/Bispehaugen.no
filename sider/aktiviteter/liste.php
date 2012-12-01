@@ -7,7 +7,7 @@
     //sp�rring som henter ut alle aktiviteter
     if($_SESSION['rettigheter']==0){
 		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND public = 1 ORDER BY dato, starttid ";
-	}elseif($_SESSION['rettigheter']==0){
+	}elseif($_SESSION['rettigheter']==1){
 		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND public < 2 ORDER BY dato, starttid ";
 	}else{
 		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() ORDER BY dato, starttid ";		

@@ -5,7 +5,7 @@ if(er_logget_inn()){
 <ul>
     <li><a href="?side=forside">Hovedside</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
-    <li><a href="?side=bilder">Bilder</a></li>
+    <li><a href="?side=bilder/bilder">Bilder</a></li>
     <li><a href="?side=dokumenter">Dokumenter</a></li>
     <li><a href="?side=noter">Noter</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
