@@ -49,23 +49,45 @@ function inkluder_side_fra_undermappe($sidenavn, $mappenavn){
 	}
 }
 
-function hent_og_putt_inn_i_array($sql, $id_verdi){
+function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$query = mysql_query($sql);
 	
 	$array = Array();
 	
 	while($row = mysql_fetch_assoc($query)){
-		$array[$row[$id_verdi]] = $row; 
+		if(empty($id_verdi)) {
+			$array = $row; 
+		} else {
+			$array[$row[$id_verdi]] = $row; 
+		}
 	}
 	
 	return $array;
 }
 
-function hent_brukerdata($medlemid=""){
+function hent_brukerdata($medlemid = ""){
 	if(empty($medlemid)){
 		$medlemid = $_SESSION['medlemsid'];
 	}
-	return array($medlemid);
+
+	if(er_logget_inn()){
+		$sql = "SELECT medlemsid, fnavn, enavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
+					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra 
+				FROM `medlemmer` 
+				WHERE `medlemsid`=".$medlemid;
+	} else {
+		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
+				FROM `medlemmer` 
+				WHERE `medlemsid`=".$medlemid;
+	}
+	
+	$mysql_result = mysql_query($sql);
+	
+	while($medlem = mysql_fetch_assoc($mysql_result)) {
+		return $medlem;
+	}
+	
+	die("Fant ikke medlem");
 }
 
 function er_logget_inn(){

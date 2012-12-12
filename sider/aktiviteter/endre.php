@@ -60,9 +60,6 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
 		
 	echo "
-    <link rel='stylesheet' href='http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' />
-    <script src='http://code.jquery.com/jquery-1.8.2.js'></script>
-    <script src='http://code.jquery.com/ui/1.9.0/jquery-ui.js'></script>
     <script>
     $(function() {
         $('#datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;

@@ -6,16 +6,8 @@
 	//henter valgte medlem fra databasen
 	if(isset($_GET['id'])){	
 		$id=mysql_real_escape_string($_GET['id']);
-		if(er_logget_inn()){
-			$sql="SELECT fnavn, enavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-			startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra FROM `medlemmer` WHERE `medlemsid`=".$id;
-		}
-		else{
-			$sql="SELECT fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra FROM `medlemmer` WHERE `medlemsid`=".$id;
-		};
-		$mysql_result=mysql_query($sql);
-		$medlemmer = Array();
-		$medlemmer=mysql_fetch_array($mysql_result);
+		
+		$medlemmer = hent_brukerdata($id);
 	}
 	
 	
