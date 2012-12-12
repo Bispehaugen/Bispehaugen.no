@@ -16,9 +16,7 @@ if( isset($_GET['id']) ){
 
 	}
 	
-	$nyhet = hent_og_putt_inn_i_array($sql, "nyhetsid");
-	// Hent ut elementet fra listen
-	$nyhet = $nyhet[$id];
+	$nyhet = hent_og_putt_inn_i_array($sql);
 	
 	$bilde = $nyhet['bilde'];
 	?>

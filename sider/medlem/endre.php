@@ -71,22 +71,15 @@
 		};
 	//henter valgte medlem fra databasen hvis "endre"
 	if(isset($_GET['id'])){	
-		
 		$id=mysql_real_escape_string($_GET['id']);
-		$sql="SELECT * FROM `medlemmer` WHERE `medlemsid`=".$id;
-		$mysql_result=mysql_query($sql);
-		$medlemmer = Array();
-		$medlemmer=mysql_fetch_array($mysql_result);	
+		$medlemmer = hent_brukerdata($id);
+	} else {
+		$medlemmer = hent_brukerdata();
 	}
-	
-	
 	
 	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
 		
 	echo "
-    <link rel='stylesheet' href='http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' />
-    <script src='http://code.jquery.com/jquery-1.8.2.js'></script>
-    <script src='http://code.jquery.com/ui/1.9.0/jquery-ui.js'></script>
     <script>
     $(function() {
         $('#datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;
