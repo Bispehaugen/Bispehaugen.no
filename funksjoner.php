@@ -27,11 +27,8 @@ function koble_til_database($database_host, $database_user, $database_string, $d
 }
 
 
-function inkluder_side_fra_undermappe($sidenavn, $mappenavn){
+function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
-	if( empty($sidenavn) ) $sidenavn = "forside";
-	if( empty($mappenavn) ) $mappenavn = "sider";
- 	
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
