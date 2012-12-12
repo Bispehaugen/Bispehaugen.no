@@ -16,12 +16,24 @@ if(isset($_GET["loggut"])){
 }
 
 //Henter ut mobilnummeret til leder
-$sql="SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'";
-$mysql_result=mysql_query($sql);
-$row=mysql_fetch_array($mysql_result);
-$mobil_leder=$row['tlfmobil'];
-$fnavn_leder=$row['fnavn'];
-$enavn_leder=$row['enavn'];
+$sql = "SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'";
+$mysql_result = mysql_query($sql);
+$row = mysql_fetch_array($mysql_result);
+$mobil_leder = $row['tlfmobil'];
+$fnavn_leder = $row['fnavn'];
+$enavn_leder = $row['enavn'];
+
+
+//lagrer alt innhold som en variabel
+if(isset($_GET['side'])){
+	$side = $_GET['side'];
+} else {
+	$side = "sider";
+}
+
+ob_start();
+inkluder_side_fra_undermappe($side, "sider");
+$innhold = ob_get_clean();
 
 ?>
 
@@ -112,14 +124,7 @@ $enavn_leder=$row['enavn'];
 				
 				<div class="content">			
 					<?php
-					
-					if(isset($_GET['side'])){
-						$side = $_GET['side'];
-					} else {
-						$side = "sider";
-					}
-					inkluder_side_fra_undermappe($side, "sider");
-					
+					 echo $innhold;
 					?>
 				</div>
 			</div>	

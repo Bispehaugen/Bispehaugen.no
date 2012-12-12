@@ -10,7 +10,7 @@
 	};
 		
 	//hvis en aktivitet er lagt inn og noen har trykket på lagre hentes verdiene ut
-	if(isset($_POST['tittel'])&& (! empty($_POST['tittel']))  && (! empty($_POST['dato']))){
+	if(isset($_POST['tittel']) && (!empty($_POST['tittel']))  && (! empty($_POST['dato']))){
 		$id=$_POST['id'];
 		$tittel=mysql_real_escape_string($_POST['tittel']);
 		$public=mysql_real_escape_string($_POST['public']);
@@ -35,8 +35,8 @@
 values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
 			mysql_query($sql);
 			header('Location: ?side=aktiviteter/liste');
-		}
-	}
+		};
+	};
 	
 	//henter valgte aktivitet fra databasen
 	if(isset($_GET['id'])){	
@@ -46,13 +46,12 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 		$mysql_result=mysql_query($sql);
 		$aktiviteter = Array();
 		$aktiviteter=mysql_fetch_array($mysql_result);		
-	}
+	};
 	
 	//henter ut alle medlemmer som kakebaker
 		$sql="SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
 		$mysql_result=mysql_query($sql);
 		while($row=mysql_fetch_array($mysql_result)){
-			//print_r($row);
     		$medlemmer[$row['medlemsid']] = $row;
 		};
 		
