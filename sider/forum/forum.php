@@ -4,7 +4,7 @@
 	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
-		header('Location: ../index.php');
+		header('Location: index.php');
 	};
 	
 	//henter ut alle forumene og lister de opp sammen med når siste innlegg var
@@ -21,7 +21,7 @@
    //Her legges det inn en oversikt over alle forumene
     list_forum();
     
-    echo "<table><tr><th></th><th>Forum</th><th>Sist oppdatert av</th></tr>";
+    echo "<table class='forum'><tr><th></th><th>Forum</th><th>Sist oppdatert av</th></tr>";
   
    	//skriver ut alle forumene samt hvem som la inn siste innlegg og hvor lenge siden.
    	//TODO: skal også sjekke om siste gang man sjekket forumet var før siste innlegg

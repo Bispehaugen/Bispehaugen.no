@@ -44,8 +44,9 @@ $innhold = ob_get_clean();
     <meta charset="ISO-8859-1"/>
     <title>Bispehaugen Ungdomskorps</title>
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png">
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/forum.css" type="text/css" />
+    <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png" />
 	
 	<script type="text/javascript" src="javascript/jquery-1.7.2.min.js" ></script>  
   

@@ -32,7 +32,7 @@
     //Her legges det inn en oversikt over alle forumene
     list_forum();
 	//skriver ut temaet for denne tråden
-    echo "<table><tr><th colspan = '3'>".$tema['tittel']."</th></tr>";
+    echo "<table class='forum'><tr><th colspan = '3'>".$tema['tittel']."</th></tr>";
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet på sist oppdaterte med siste innlegg og av hvem
    	foreach($foruminnlegg as $forum_innlegg){
