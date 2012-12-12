@@ -10,17 +10,20 @@
 		header('Location: ../index.php');
 	};
 	
+	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
+	if(isset($_POST['temaid'])){
+		$tekst=mysql_real_escape_string($_POST['tekst']);
+		$medlemsid=mysql_real_escape_string($_POST['medlemsid']);
+		$temaid=mysql_real_escape_string($_POST['temaid']);
+		echo("legger til nytt innlegg");
+	};
+	
 	$temaid=$_GET['id'];
 	//henter ut alle innleggene i valgte forum/tema 
 	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav, 
 	forum_innlegg.skrevet FROM forum_tema, forum_innlegg WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." 
 	ORDER BY skrevet;";
-	$mysql_result=mysql_query($sql);
-	$foruminnlegg = Array();
-	
-	while($row=mysql_fetch_array($mysql_result)){
-    	$foruminnlegg[$row['innleggid']] = $row;
-		};
+	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 		
 	//Henter ut tema-tittel
 	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
@@ -40,8 +43,8 @@
    		<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
 	};	
 	echo "
-	<form method='post' action='?side=forum/innlegg&id=".$temaid."'>
-			<tr><td>Svar på innlegg:</td><td><input type='textfield' name='tekst'></td>
+	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
+			<tr><td>Svar på innlegg:</td><td><textarea name='tekst'></textarea></td>
 			<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 			<input type='hidden' name='temaid' value=".$temaid.">
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>

@@ -2,3 +2,8 @@
 	padding: 0.5em;
 	border-bottom:1px dotted black;
 }
+
+.forum textarea{ 
+	width: 90%;
+	height:4em;
+}

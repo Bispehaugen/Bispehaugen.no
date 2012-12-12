@@ -76,7 +76,6 @@ function er_logget_inn(){
 function list_forum(){
 	echo"
 	<table>
-	(TODO: skal være dynamisk...)
 	<tr><td>Velg forum: </td>
 	<td><a href='?side=forum/tema&id=2'>musikk & konserter</a></td>
 	<td><a href='?side=forum/tema&id=1'>aktuelt</a></td>
