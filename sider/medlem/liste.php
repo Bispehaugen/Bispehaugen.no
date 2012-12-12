@@ -88,14 +88,9 @@
 		}
 
 		//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
-		#Fungerer ikke 
-//		if($_SESSION['rettigheter']>1){
-//				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'>endre</a> / <a href=
-//				'?side=medlem/slette&id=".$medlem['medlemsid']."'onclick='slett_medlem(".$medlem['medlemsid'].
-//				",\"".$medlem['fnavn']."\")'>slett</a></td></tr>";
+
 		if($_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'>endre</a> / <a href=
-				''>slett</a></td></tr>";
+				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'>endre</a></td></tr>";
 		}else{
 			echo"<td></td></tr>";
 		};

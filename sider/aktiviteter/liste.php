@@ -5,12 +5,12 @@
     #fuksjonalitet
     
     //sp�rring som henter ut alle aktiviteter
-    if($_SESSION['rettigheter']==0){
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND public = 1 ORDER BY dato, starttid ";
+    if($_SESSION['rettigheter']==0 || !er_logget_inn()){
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid ";
 	}elseif($_SESSION['rettigheter']==1){
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND public < 2 ORDER BY dato, starttid ";
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid ";
 	}else{
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() ORDER BY dato, starttid ";		
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid ";		
 	}
 	$mysql_result=mysql_query($sql);
 	$aktiviteter = Array();
@@ -26,8 +26,8 @@
     	<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){
 				var ask = confirm('Vil du slette ..... ?');
-				if(ask){
-					window.location = '?p=aktiviteter/slette&id='+id;
+				if(!!ask){
+					window.location = '?side=aktiviteter/slette&id='+id;
 				}
 			}
 		</script>";
@@ -42,14 +42,9 @@
    				</td><td>".$aktivitet['sted']."</td>";
 			}
 			#Viser endre/slettkapper hvis man er admin - fungerer ikke som de skal!!!
-//			if($_SESSION['rettigheter']>1){
-//				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href=
-//				'?side=aktiviteter/slette&id=".$aktivitet['arrid']."'onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
-//				".$aktivitet['tittel']."\")'>slett</a></td></tr>";
-//			};
 			if($_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href=
-				''>slett</a></td></tr>";
+				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
+				".$aktivitet['tittel']."\")'>slett</a></td></tr>";
 			};
 		}
 

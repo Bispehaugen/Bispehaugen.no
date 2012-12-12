@@ -1,9 +1,6 @@
 <?php 
-
 	//funksjonalitet
-	
-	//TODO bredde på tabeller, og vise mer av siste innlegg, fargekoding el. av linjene så det blir mer lesbart
-	
+		
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
 		header('Location: ../index.php');
@@ -25,12 +22,12 @@
     //Her legges det inn en oversikt over alle forumene
     list_forum();
     
-    echo "<table><tr><th></th><th>Tråd</th><th colspan = '2'>Siste innlegg i tråd</th></tr>";
+    echo "<table class='forum'><tr><th></th><th>Tråd</th><th>Siste innlegg i tråd</th></tr>";
   
    	//skriver ut alle temaene i forumet sortet på sist oppdaterte med siste innlegg og av hvem
    	foreach($forumtemaer as $forumtema){
-   		echo "<tr><td></td><td><a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></td><td>".$forumtema['sisteinnleggskrevetav']." skrev </td>
-   		<td>".substr($forumtema['tekst'],0,30)."[...]</td></tr>";
+   		echo "<tr><td></td><td><a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></td>
+   			<td><p>".$forumtema['tekst']."</p>".$forumtema['sisteinnleggskrevetav']."</td></tr>";
 	};	
 	echo "</table>";
 ?>

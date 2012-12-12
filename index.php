@@ -16,6 +16,17 @@ if (isset($_GET["loggut"])) {
 
 //Henter ut mobilnummeret til leder
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
+
+//lagrer alt innhold som en variabel
+if(isset($_GET['side'])){
+	$side = $_GET['side'];
+} else {
+	$side = "sider";
+}
+
+ob_start();
+	inkluder_side_fra_undermappe($side, "sider");
+$innhold = ob_get_clean();
 ?>
 
 
@@ -28,6 +39,9 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png">
     <link rel='stylesheet' href='http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/forum.css" type="text/css" />
+    <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png" />
     <script type="text/javascript" src='http://code.jquery.com/jquery-1.8.2.js'></script>
     <script type="text/javascript" src='http://code.jquery.com/ui/1.9.0/jquery-ui.js'></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js" ></script>  
@@ -86,13 +100,7 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 				
 				<div class="content">			
 					<?php
-
-					if (isset($_GET['side'])) {
-						$side = $_GET['side'];
-					} else {
-						$side = "sider";
-					}
-					inkluder_side_fra_undermappe($side, "sider");
+					 echo $innhold;
 					?>
 				</div>
 			</div>	
