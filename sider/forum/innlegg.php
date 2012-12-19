@@ -13,16 +13,16 @@
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(isset($_POST['temaid'])){
 		$tekst=mysql_real_escape_string($_POST['tekst']);
-		$medlemsid=mysql_real_escape_string($_POST['medlemsid']);
-		$temaid=mysql_real_escape_string($_POST['temaid']);
-		echo("legger til nytt innlegg");
+		$sql="INSERT INTO forum_innlegg (temaid, tekst, skrevet, skrevetavid, sistredigert) 
+			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
+		mysql_query($sql);
 	};
 	
 	$temaid=$_GET['id'];
 	//henter ut alle innleggene i valgte forum/tema 
-	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav, 
-	forum_innlegg.skrevet FROM forum_tema, forum_innlegg WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." 
-	ORDER BY skrevet;";
+	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetavid, 
+	forum_innlegg.skrevet, fnavn, enavn, medlemsid FROM forum_tema, forum_innlegg, medlemmer 
+	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND medlemsid=forum_innlegg.skrevetavid ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 		
 	//Henter ut tema-tittel
@@ -39,12 +39,12 @@
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet på sist oppdaterte med siste innlegg og av hvem
    	foreach($foruminnlegg as $forum_innlegg){
-   		echo "<tr><td>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
+   		echo "<tr><td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
    		<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
 	};	
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
-			<tr><td>Svar på innlegg:</td><td><textarea name='tekst'></textarea></td>
+			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
 			<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 			<input type='hidden' name='temaid' value=".$temaid.">
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
