@@ -8,24 +8,14 @@
 	
 	//henter ut alle komiteer
 	$sql="SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
-	$mysql_result=mysql_query($sql) or die(mysql_error());
-	$komiteer = Array();
-
-	while($row=mysql_fetch_array($mysql_result)){
-    	$komiteer[$row['komiteid']] = $row;
-	};
+	$komiteer=hent_og_putt_inn_i_array($sql,$id_verdi="komiteid");
 	
 	//henter ut info om medlemmer++ om valgte komité
 	if(isset($_GET['id'])){
 		$sql="SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon, tittel, medlemmer.medlemsid, 
 		verv.medlemsid, epost, fnavn, enavn  FROM komite, verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND 
 		komite.komiteid=verv.komiteid AND komite.komiteid=".$_GET['id']." ORDER BY komite.posisjon, verv.posisjon";
-		$mysql_result=mysql_query($sql) or die(mysql_error());
-		$valgtekomiteer = Array();
-	
-		while($row=mysql_fetch_array($mysql_result)){
-	    	$valgtekomiteer[$row['vervid']] = $row;
-		};
+	    $valgtekomiteer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 	};
 	
 	//det som skrives ut på side	
