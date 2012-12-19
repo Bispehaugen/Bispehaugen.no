@@ -24,6 +24,13 @@
 	forum_innlegg.skrevet, fnavn, enavn, medlemsid FROM forum_tema, forum_innlegg, medlemmer 
 	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND medlemsid=forum_innlegg.skrevetavid ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
+	
+	//Henter ut siste uleste innlegg i tråd
+	$medlemsid= $_SESSION["medlemsid"];
+	$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
+	$mysql_result=mysql_query($sql);
+	$sisteleste = mysql_fetch_array($mysql_result);
+	$sisteleste= $sisteleste['sistelesteinnlegg'];
 		
 	//Henter ut tema-tittel
 	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
@@ -39,8 +46,14 @@
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet pÃ¥ sist oppdaterte med siste innlegg og av hvem
    	foreach($foruminnlegg as $forum_innlegg){
-   		echo "<tr><td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
-   		<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
+      	if($forum_innlegg['innleggid']>$sisteleste){
+	      	echo "<tr class='ulest'>";
+		}
+		else{
+			echo"<tr>";
+		}
+      	echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
+   			<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
 	};	
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
