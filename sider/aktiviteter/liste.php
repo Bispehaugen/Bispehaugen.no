@@ -6,20 +6,20 @@
     
     //spï¿½rring som henter ut alle aktiviteter
     if($_SESSION['rettigheter']==0 || !er_logget_inn()){
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid ";
+		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid ";
 	}elseif($_SESSION['rettigheter']==1){
 		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid ";
 	}else{
 		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid ";		
 	}
-	$mysql_result=mysql_query($sql);
-	$aktiviteter = Array();
-
-	while($row=mysql_fetch_array($mysql_result)){
-		//print_r($row);
-    	$aktiviteter[$row['arrid']] = $row;
-	};
-		
+	$aktiviteter=hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
+	
+	$valgt_id=$_GET['id'];
+	//henter kakebaker hvis det er noen
+	$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
+	$query = mysql_query($sql);
+	$kakebaker=mysql_fetch_assoc($query);
+	
     #Det som printes pï¿½ sida
     echo "<table><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	
@@ -34,20 +34,32 @@
   
    	foreach($aktiviteter as $aktivitet){
    			if($aktivitet['starttid']=="00:00:00"){
-   				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td></td><td>".$aktivitet['tittel']."
-   				</td><td>".$aktivitet['sted']."</td>";
+   				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td></td><td>
+   				<a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>".$aktivitet['tittel']."</a></td><td>".$aktivitet['sted']."</td>";
 			}else{
 				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td>".
-   				strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td>".$aktivitet['tittel']."
+   				strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
+   				".$aktivitet['tittel']."</a>
    				</td><td>".$aktivitet['sted']."</td>";
 			}
-			#Viser endre/slettkapper hvis man er admin - fungerer ikke som de skal!!!
+			#Viser endre/slettkapper hvis man er admin
 			if($_SESSION['rettigheter']>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
 				".$aktivitet['tittel']."\")'>slett</a></td></tr>";
+			}else{
+				echo "<td></td></tr>";
+			};
+			
+			//Viser mer info hvis trykket på en hendelse
+			if($valgt_id==$aktivitet['arrid']){
+				echo" <tr><td ></td><td class='aktivitet' colspan='4'>Oppmøte: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
+					<br> Varighet: ".strftime("%a %#d. %b", strtotime($aktivitet['starttid']))." til ".strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
+					<br> Beskrivelse: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
+					<br>Kakebaker: ".$kakebaker['fnavn']."
+					<br>Bæregruppe: ".$aktivitet['hjelpere']."</td></tr>";
 			};
 		}
-
+		
 		if($_SESSION['rettigheter']>1){
 			echo"
 			<tr><td></td><td></td><td></td><td></td><td></td></tr>

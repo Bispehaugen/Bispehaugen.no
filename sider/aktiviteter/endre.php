@@ -20,7 +20,7 @@
 		$oppmote=mysql_real_escape_string($_POST['oppm�te']);
 		$starttid=mysql_real_escape_string($_POST['starttid']);
 		$sluttid=mysql_real_escape_string($_POST['sluttid']);
-		$slagverksbarere=mysql_real_escape_string($_POST['hjelpere']);
+		$hjelpere=mysql_real_escape_string($_POST['hjelpere']);
 		$kakebaker=mysql_real_escape_string($_POST['kakebaker']);
 		
 		//sjekker om man vil legge til eller endre en aktivitet
@@ -81,7 +81,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 				<tr><td>Oppm�te kl:</td><td><input type='text' name='oppmote' value=".$aktiviteter['oppm�te']."></td></tr>
 				<tr><td>Start kl:</td><td><input type='text' name='starttid' value=".$aktiviteter['starttid']."></td></tr>
 				<tr><td>Slutt kl:</td><td><input type='text' name='sluttid' value=".$aktiviteter['sluttid']."></td></tr>
-				<tr><td>Slagverksb�rere:</td><td><input type='text' name='slagverksbarere' value=".$aktiviteter['hjelpere']."></td></tr>
+				<tr><td>Slagverksb�rere:</td><td><input type='text' name='hjelpere' value=".$aktiviteter['hjelpere']."></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
 					<option value=''</option>";
