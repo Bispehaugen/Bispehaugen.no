@@ -10,13 +10,8 @@
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
 	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, sisteinnleggskrevetav, tekst, innleggid FROM forum_tema, forum_innlegg
 	WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid ORDER BY sisteinnleggid DESC;";
-	$mysql_result=mysql_query($sql);
-	$forumtemaer = Array();
+	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
-	while($row=mysql_fetch_array($mysql_result)){
-    	$forumtemaer[$row['temaid']] = $row;
-	};
-		
     #Det som printes p� sida
     
     //Her legges det inn en oversikt over alle forumene
