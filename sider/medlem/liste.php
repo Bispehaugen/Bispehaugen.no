@@ -17,22 +17,11 @@
     	instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
 	};
 
-	$mysql_result=mysql_query($sql);
-    $medlemmer = Array();
-	while($row=mysql_fetch_array($mysql_result)){
-		//print_r($row);
-    	$medlemmer[$row['medlemsid']] = $row;
-	};
+    $medlemmer = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
 
 	//sp�rring som henter ut medlemsid til alle styrevervene
 	$sql="SELECT vervid, tittel, medlemsid, epost FROM verv WHERE komiteid='3'";
-	$mysql_result=mysql_query($sql) or die(mysql_error());
-	$styreverv = Array();
-
-	while($row=mysql_fetch_array($mysql_result)){
-    	$styreverv[$row['medlemsid']] = $row;
-	};
-	
+	$styreverv = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
     
     #Det som printes p� sida
     
