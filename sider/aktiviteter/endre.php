@@ -84,6 +84,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 				<tr><td>Slagverksb�rere:</td><td><input type='text' name='hjelpere' value=".$aktiviteter['hjelpere']."></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
+					<option value=".$aktiviteter['kakebaker'].">".$medlemmer[$aktiviteter['kakebaker']]['fnavn']." ".$medlemmer[$aktiviteter['kakebaker']]['enavn']."</option>
 					<option value=''</option>";
 					foreach($medlemmer as $medlem){
 						echo"

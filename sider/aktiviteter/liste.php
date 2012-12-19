@@ -52,9 +52,9 @@
 			
 			//Viser mer info hvis trykket på en hendelse
 			if($valgt_id==$aktivitet['arrid']){
-				echo" <tr><td ></td><td class='aktivitet' colspan='4'>Oppmøte: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
+				echo" <tr><td ></td><td class='aktivitet' colspan='4'> Beskrivelse: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
 					<br> Varighet: ".strftime("%a %#d. %b", strtotime($aktivitet['starttid']))." til ".strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
-					<br> Beskrivelse: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
+					<br> Oppmøte: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
 					<br>Kakebaker: ".$kakebaker['fnavn']."
 					<br>Bæregruppe: ".$aktivitet['hjelpere']."</td></tr>";
 			};
