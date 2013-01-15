@@ -17,6 +17,7 @@ include_once "funksjoner.php";
 		<li>Kundearrangement</li>
 		<li>Fester/selskap</li>
 		<li>Åpningssermonier</li>
+		<li>Eksamenssermonier</li>
 		<li>Bryllyp</li>
 	</ul>
 	
