@@ -20,9 +20,9 @@
 	
 	$temaid=$_GET['id'];
 	//henter ut alle innleggene i valgte forum/tema 
-	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetavid, 
-	forum_innlegg.skrevet, fnavn, enavn, medlemsid FROM forum_tema, forum_innlegg, medlemmer 
-	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND medlemsid=forum_innlegg.skrevetavid ORDER BY skrevet;";
+	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav, 
+	forum_innlegg.skrevet FROM forum_tema, forum_innlegg 
+	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
 	//Henter ut siste uleste innlegg i tråd
@@ -52,7 +52,7 @@
 		else{
 			echo"<tr>";
 		}
-      	echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
+      	echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
    			<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
 	};	
 	echo "

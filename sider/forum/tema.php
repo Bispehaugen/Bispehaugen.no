@@ -8,8 +8,9 @@
 	
 	$forumid=$_GET['id'];
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
-	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, sisteinnleggskrevetav, tekst, innleggid FROM forum_tema, forum_innlegg
-	WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid ORDER BY sisteinnleggid DESC;";
+	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetav, tekst, innleggid
+	FROM forum_tema, forum_innlegg WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid 
+	ORDER BY sisteinnleggid DESC;";
 	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
 	//Henter ut siste leste innlegg og siste innlegg for alle temaer
@@ -20,7 +21,6 @@
 	FROM forum_innlegg, forum_leste, forum_tema WHERE forum_tema.temaid=forum_innlegg.temaid AND forum_tema.temaid=forum_leste.temaid
 	AND forum_leste.medlemsid=".$medlemsid." ORDER BY innleggid LIMIT 1";
 	
-	print_r($sql);
 	$sist_leste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
     #Det som printes p� sida
@@ -38,7 +38,7 @@
 	   		echo "<tr>";
 		};
    		echo"<td></td><td><a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></td>
-   			<td><p>".$forumtema['tekst']."</p>".$forumtema['sisteinnleggskrevetav']."</td></tr>";
+   			<td><p>".$forumtema['tekst']."</p>".$forumtema['skrevetav']."</td></tr>";
 	};	
 	echo "</table>";
 ?>

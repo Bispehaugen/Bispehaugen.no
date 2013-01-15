@@ -8,8 +8,12 @@
 	};
 	
 	//henter ut alle forumene og lister de opp sammen med når siste innlegg var
-	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
-	FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
+	//Denne skal egentlig brukse, men databasen er ikke tilstrekkelig oppdatert enn�
+	//$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
+	//FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
+	
+	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggskrevet, sisteinnleggskrevetav
+	FROM forum ORDER BY forumid;";
 	$mysql_result=mysql_query($sql);
 	$forum = Array();
 
@@ -28,11 +32,11 @@
    	//TODO: skal også sjekke om siste gang man sjekket forumet var før siste innlegg
    	foreach($forumer as $forum){
    		//sjekker om man er admin og dermed skal se styret, webkom og musikkomite-forumene
-   		//if($_SESSION['rettigheter']>2 || $forum['forumid']<3){
+   		if($_SESSION['rettigheter']>2 || $forum['forumid']<3){
    			//dager siden siste innlegg
-   			$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($forum['skrevet'],0,10)))/ (60*60*24));
+   			$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($forum['sisteinnleggskrevet'],0,10)))/ (60*60*24));
    			echo "<tr><td></td><td><a href='?side=forum/tema&id=".$forum['forumid']."'>".$forum['tittel']."</a></td><td>
-   			".$forum['fnavn']." ".$forum['enavn'];
+   			".$forum['sisteinnleggskrevetav'];
    			if ($dagersiden==0){
    				echo" i dag</td></tr>";
    			}
@@ -47,7 +51,7 @@
 			}else{
 				echo" for ".floor($dagersiden/30)." måneder siden</td></tr>";
 			};
-		//};
+		};
 	};	
 
 	echo "</table>";
