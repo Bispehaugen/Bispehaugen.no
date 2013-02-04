@@ -46,7 +46,6 @@ $innhold = ob_get_clean();
     <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png" />
     <script type="text/javascript" src='http://code.jquery.com/jquery-1.8.2.js'></script>
     <script type="text/javascript" src='http://code.jquery.com/ui/1.9.0/jquery-ui.js'></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js" ></script>  
   
 	<script type="text/javascript">
 		$(document).ready(function() {
