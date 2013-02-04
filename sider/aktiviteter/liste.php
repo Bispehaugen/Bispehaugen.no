@@ -18,9 +18,7 @@
 
 	//henter kakebaker hvis det er noen
 	$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
-	$query = mysql_query($sql);
-	$kakebaker=mysql_fetch_assoc($query);
-	
+	$kakebaker=hent_og_putt_inn_i_array($sql);
 	
     #Det som printes p� sida
     echo "<table><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
