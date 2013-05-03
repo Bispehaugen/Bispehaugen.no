@@ -34,23 +34,9 @@
    		//sjekker om man er admin og dermed skal se styret, webkom og musikkomite-forumene
    		if($_SESSION['rettigheter']>2 || $forum['forumid']<3){
    			//dager siden siste innlegg
-   			$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($forum['sisteinnleggskrevet'],0,10)))/ (60*60*24));
    			echo "<tr><td></td><td><a href='?side=forum/tema&id=".$forum['forumid']."'>".$forum['tittel']."</a></td><td>
-   			".$forum['sisteinnleggskrevetav'];
-   			if ($dagersiden==0){
-   				echo" i dag</td></tr>";
-   			}
-			elseif ($dagersiden==1){
-   				echo" i går</td></tr>";
-   			}
-			elseif($dagersiden<7){
-				echo" for ".$dagersiden." dager siden</td></tr>";
-			}
-			elseif($dagersiden<31){
-				echo" for ".floor($dagersiden/7)." uker siden</td></tr>";
-			}else{
-				echo" for ".floor($dagersiden/30)." måneder siden</td></tr>";
-			};
+   			".$forum['sisteinnleggskrevetav']." - ";
+   			echo ant_dager_siden($forum['sisteinnleggskrevet'])."</td></tr>";
 		};
 	};	
 
