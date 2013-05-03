@@ -150,8 +150,10 @@ function ant_dager_siden($dato){
 			}
 			elseif($dagersiden<31){
 				$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
-			}else{
+			}elseif($dagersiden<256){
 				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+			}else{
+				$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
 			};
 			return "<i>".$dagersiden_som_tekst."</i>";
 };
