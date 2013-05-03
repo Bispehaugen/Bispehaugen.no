@@ -21,7 +21,7 @@
 
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(isset($_POST['id']) || $_POST['fnavn']){
-		$medlemsid=$_POST['id'];
+		$medlemsid=mysql_real_escape_string($_POST['id']);
 		$fnavn=mysql_real_escape_string($_POST['fnavn']);
 		$enavn=mysql_real_escape_string($_POST['enavn']);
 		$instrument=mysql_real_escape_string($_POST['instrument']);		
@@ -39,11 +39,11 @@
 		$adresse=mysql_real_escape_string($_POST['adresse']);
 		$postnr=mysql_real_escape_string($_POST['postnr']);
 		$poststed=mysql_real_escape_string($_POST['poststed']);
-		$tfmobil=mysql_real_escape_string($_POST['tlfmobil']);
+		$tlfmobil=mysql_real_escape_string($_POST['tlfmobil']);
 		$email=mysql_real_escape_string($_POST['email']);
 		$bakgrunn=mysql_real_escape_string($_POST['bakgrunn']);
-		$startetibuk=mysql_real_escape_string($_POST['startetibuk']);
-		$sluttetibuk=mysql_real_escape_string($_POST['sluttetibuk']);
+		$startetibuk=mysql_real_escape_string($_POST['startetibuk_date']);
+		$sluttetibuk=mysql_real_escape_string($_POST['sluttetibuk_date']);
 		$studieyrke=mysql_real_escape_string($_POST['studieyrke']);
 		$kommerfra=mysql_real_escape_string($_POST['kommerfra']);
 		$ommegselv=mysql_real_escape_string($_POST['ommegselv']);
@@ -52,21 +52,46 @@
 		
 		//sjekker om man vil legge til eller endre en aktivitet
 		if ($medlemsid){
-			$sql="UPDATE medlemmer SET fnavn='".$fnavn."',enavn='".$enavn."',fdato=".$fdato.",status='".$status."'
-			,instnr=".$instrument.",grleder=".$grleder.",adresse='".$adresse."',postnr='".$postnr."',poststed='".$poststed."'
-			,tlfmobil='".$tlfmobil."',email='".$email."',bakgrunn='".$bakgrunn."',startetibuk=".$startetibuk."
-			,sluttetibuk=".$sluttetibuk.",studieyrke='".$studieyrke."',kommerfra='".$kommerfra."',ommegselv='".$ommegselv."'
-			,foto='".$foto."', begrenset='".$begrenset."' WHERE medlemsid=".$medlemsid.";";
+			$sql="
+			UPDATE 
+				medlemmer 
+			SET 
+				fnavn = '$fnavn',
+				enavn = '$enavn',
+				fdato = '$fdato',
+				status = '$status',
+				instnr = '$instrument',
+				grleder = '$grleder',
+				adresse = '$adresse',
+				postnr = '$postnr',
+				poststed = '$poststed',
+				tlfmobil = '$tlfmobil',
+				email = '$email',
+				bakgrunn = '$bakgrunn',
+				startetibuk_date = '$startetibuk',
+				sluttetibuk_date = '$sluttetibuk',
+				studieyrke = '$studieyrke',
+				kommerfra = '$kommerfra',
+				ommegselv = '$ommegselv',
+				foto = '$foto',
+				begrenset = '$begrenset' 
+			WHERE 
+				medlemsid = '$medlemsid';
+			";
+			
 			echo "loop1".$sql;
 			mysql_query($sql);
-			header('Location: ?side=medlem/liste');
-		}else{			
-			$sql="INSERT INTO medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, email
-			, bakgrunn, startetibuk, sluttetibuk, studieyrke, kommerfra, ommegselv, foto, begrenset)
-			values (".$fnavn.",".$enavn.",".$fdato.",".$status.",".$instrument.",".$instnr.",".$grleder.",".$adresse.",".$postnr.",".$poststed.",".$tlfmobil."
-			,".$email.",".$bakgrunn.",".$startetibuk.",".$sluttetibuk.",".$studieyrke.",".$kommerfra.",".$ommegselv.",".$foto.",".$begrenset.")";
+			//header('Location: ?side=medlem/liste');
+		}else{
+			die("WRONG");			
+			$sql="
+			INSERT INTO 
+			medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
+				email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, foto, begrenset)
+			values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
+				'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$foto','$begrenset')";
 			mysql_query($sql);
-			header('Location: ?side=medlem/liste');
+			//header('Location: ?side=medlem/liste');
 		}
 		};
 	//henter valgte medlem fra databasen hvis "endre"
@@ -77,12 +102,14 @@
 		$medlemmer = hent_brukerdata();
 	}
 	
+	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet");
+	
 	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
 		
 	echo "
     <script>
     $(function() {
-        $('#datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;
+        $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;
     });
     </script>
 		<form method='post' action='?side=medlem/endre'>
@@ -93,37 +120,45 @@
 				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value=".$medlemmer['enavn']."></td></tr>
 				<tr><td>status:</td><td>
 					<select name='status'>
-  						<option value='Aktiv'>Aktiv</option>
-  						<option value='Permisjon'>Permisjon</option>
-  						<option value='Sluttet'>Sluttet</option>
+					";
+					
+					foreach($gyldige_statuser as $status) {
+						echo "<option value='$status' ";
+						if($medlemmer['status']=="$status") {
+							echo "selected=selected";
+						} 
+						echo ">".$status."</option>";
+					}
+					
+					echo "
 					</select></td></tr>
 				<tr><td>Instrument:</td><td>
-					<select name='instid'>";
+					<select name='instnr'>";
 					foreach($instrumenter as $instrument){
 						echo"
   							<option value=".$instrument['instrumentid'].">".$instrument['instrument']."</option>
   							<input type='hidden' name='instrument' value=".$instrument['instrument'].">";
 						};
 						echo "</select></td></tr>
-				<tr><td>Fødselsdato:</td><td><input type='text' id='datepicker' name='fdato' value=".$medlemmer['fdato']."></td></tr>
+				<tr><td>Fødselsdato:</td><td><input type='text' class='datepicker' name='fdato' value=".$medlemmer['fdato']."></td></tr>
 				<tr><td>Adresse:</td><td><input type='text' name='adresse' value=".$medlemmer['adresse']."></td></tr>
 				<tr><td>Postnr:</td><td><input type='text' name='postnr' value=".$medlemmer['postnr']."></td></tr>
 				<tr><td>Poststed:</td><td><input type='text' name='poststed' value=".$medlemmer['poststed']."></td></tr>
 				<tr><td>Mobilnummer:</td><td><input type='text' name='tlfmobil' value=".$medlemmer['tlfmobil']."></td></tr>
 				<tr><td>E-post:</td><td><input type='text' name='email' value=".$medlemmer['email']."></td></tr>
 				<tr><td>Musikalsk bakgrunn:</td><td><input type='text' name='bakgrunn' value=".$medlemmer['bakgrunn']."></td></tr>
-				<tr><td>Startet i BUK:</td><td><input type='text' id='datepicker' name='startetibuk_date' value=".$medlemmer['startetibuk_date']."></td></tr>
-				<tr><td>Sluttet i BUK:</td><td><input type='text' id='datepicker' name='sluttetibuk_date' value=".$medlemmer['sluttetibuk_date']."></td></tr>
+				<tr><td>Startet i BUK:</td><td><input type='text' class='datepicker' name='startetibuk_date' value=".$medlemmer['startetibuk_date']."></td></tr>
+				<tr><td>Sluttet i BUK:</td><td><input type='text' class='datepicker' name='sluttetibuk_date' value=".$medlemmer['sluttetibuk_date']."></td></tr>
 				<tr><td>Studie/yrke:</td><td><input type='text' name='studieyrke' value=".$medlemmer['studieyrke']."></td></tr>
 				<tr><td>Kommer fra:</td><td><input type='text' name='kommerfra' value=".$medlemmer['kommerfra']."></td></tr>
-				<tr><td>Litt om meg selv:</td><td><input type='text' name='ommegselv' value=".$medlemmer['ommegselv']."></td></tr>
+				<tr><td>Litt om meg selv:</td><td><textarea name='ommegselv'>".$medlemmer['ommegselv']."</textarea></td></tr>
 				<tr><td>Bilde:</td><td><input type='text' name='foto' value=".$medlemmer['foto']."></td></tr>
 				<tr><td>Vises kun for innloggede:</td><td><input type='checkbox' name='begrenset' value=".$medlemmer['begrenset']."></td></tr>
 				</table>
-			<input type='hidden' name='id' value=".$_GET['id'].">
+			<input type='hidden' name='id' value=".$medlemmer['medlemsid'].">
 			<a href='?side=medlem/liste'>Avbryt</a>
 			<input type='submit' name='endreMedlem' value='Lagre'>
 		</form> 
 	";
-	
 ?>
+	

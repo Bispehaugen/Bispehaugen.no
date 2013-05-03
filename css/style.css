@@ -344,6 +344,21 @@ a img {
 			.album-bilde{
 				width: 180px;
 			}
+			.album-bilde-right{
+				width: 180px;
+				float: right;
+				margin: 0 0 15px 15px;
+				
+			}
+			.album-bilde-center{
+				width: 100px;
+				float: center;
+			}
+			.album-bilde-left{
+				width: 180px;
+				text-align: left;
+				margin: 0 0 15px 0;
+			}
 			.content .album.galleri {
 				width: 400px;
 				margin-right: 60px;
