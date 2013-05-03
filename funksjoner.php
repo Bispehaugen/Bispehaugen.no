@@ -135,5 +135,25 @@ function logg_ut() {
     session_destroy();
 }
 	
-
+function ant_dager_siden($dato){
+	//dager siden siste innlegg
+   			$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($dato,0,10)))/ (60*60*24));
+   			
+   			if ($dagersiden==0){
+   				$dagersiden_som_tekst = " i dag";
+   			}
+			elseif ($dagersiden==1){
+   				$dagersiden_som_tekst = " i går";
+   			}
+			elseif($dagersiden<7){
+				$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
+			}
+			elseif($dagersiden<31){
+				$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
+			}else{
+				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+			};
+			return "<i>".$dagersiden_som_tekst."</i>";
+};
+	
 ?>
