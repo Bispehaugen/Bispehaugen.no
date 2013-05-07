@@ -18,14 +18,14 @@
 	
 	$row=mysql_fetch_assoc($mysql_result);
 
-	#Henter ut medlemsid
+	#Henter ut medlemsid (uavhengig av om passord er riktig)
 	$sql="SELECT medlemsid FROM medlemmer WHERE brukernavn='".$username."'";
 	$mysql_result=mysql_query($sql);
 	$medlemsid=mysql_result($mysql_result, 0);
 
-	#If setning for å sjekke mot medlemmer for md5passord
+	#If setning for å sjekke mot medlemmer for md5passord (brukes kun hvis brukernavn/passord-kombinasjonen ikke finnes i medlemmer-tabellen)
 	if($row["COUNT(brukernavn)"] == 0){
-		$sql="SELECT COUNT(brukernavn) FROM medlemmer WHERE brukernavn='".$username."' AND passord='".$password_md5."'";
+		$sql="SELECT COUNT(brukernavn) FROM registrering WHERE brukernavn='".$username."' AND passord='".$password_md5."'";
 		$mysql_result=mysql_query($sql);
 	
 		$row=mysql_fetch_assoc($mysql_result);
@@ -33,7 +33,7 @@
 		#Dersom kombinasjonen brukernavn/passord fortsatt ikke stemmer sendes bruker tilbake til hovedsiden med en feilmelding.	
 		if($row["COUNT(brukernavn)"] == 0){
 			$_session["Errors"]="Feil brukernavn eller passord. Kunne ikke logge inn.";
-			header("Location: ../index.php");
+			header('Location: index.php');
 		};
 		
 		$sql="UPDATE medlemmer SET passord='".$password."' WHERE brukernavn='".$username."'";
@@ -42,7 +42,6 @@
 	};
 
 	#Sjekker rettigheter
-	
 	$sql="SELECT rettigheter FROM medlemmer WHERE brukernavn='".$username."'";
 	$mysql_result=mysql_query($sql);
 
