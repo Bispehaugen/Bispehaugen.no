@@ -20,15 +20,23 @@
 	
 	$temaid=$_GET['id'];
 	//henter ut alle innleggene i valgte forum/tema 
-	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav, 
+	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav,  
 	forum_innlegg.skrevet FROM forum_tema, forum_innlegg 
 	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
-	//henter ut alle innlegg i valgte forum og tema som det er en liste knyttet til
-	$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_innlegg.innleggid FROM forum_liste, forum_innlegg 
+	//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
+	//TODO: Merk at brukerid i forum_listeinnlegg er 'id' i registrering tabellen (!=medlemsid) - BØR FIKSES SENERE
+	$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg
 	WHERE forum_liste.listeid=forum_innlegg.innleggid;";
-	$listeinnlegg=hent_og_putt_inn_i_array($sql, "innleggid");	
+	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
+	
+	//henter ut alle aktuelle liste-oppføringer
+	$sql="SELECT fnavn, enavn, forum_listeinnlegg.listeid, forum_listeinnlegg.tid, forum_listeinnlegg.innleggid, forum_listeinnlegg.kommentar, forum_listeinnlegg.flagg 
+	FROM forum_liste, forum_innlegg, forum_listeinnlegg, forum_tema, medlemmer, registrering 
+	WHERE forum_liste.listeid=forum_innlegg.innleggid AND forum_liste.listeid=forum_listeinnlegg.listeid AND
+	 forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND id=brukerid and registrering.medlemsid=medlemmer.medlemsid ORDER BY tid ;";
+	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 	
 	//Henter ut siste uleste innlegg i tråd
 	$medlemsid= $_SESSION["medlemsid"];
@@ -57,13 +65,27 @@
 		else{
 			echo"<tr>";
 		}
-      	//if for å sjekke om det er foruminnlegg
-		if($listeinnlegg[$forum_innlegg['innleggid']]){
-			echo $listeinnlegg[$forum_innlegg['innleggid']]['tittel'];
-		}else{
-      		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
-   			<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
-		};
+		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
+   			<td>".$forum_innlegg['tekst'];
+		
+      	//if som skriver ut liste hvis det hører en til innlegget
+		if($listeinnlegg[$forum_innlegg['innleggid']]){			
+			echo "<table>
+			<tr><th colspan='2'>".$listeinnlegg[$forum_innlegg['innleggid']]['tittel']."</th></tr>";
+			foreach($listeoppforinger as $listeoppforing){
+				//print_r($liste_innlegg);
+				if($listeoppforing['listeid']==$forum_innlegg['innleggid']){
+					if($listeoppforing['flagg']==1){
+						echo "<tr><td><strike>".$listeoppforing['fnavn']." ".$listeoppforing['enavn']."</strike>";
+					}else{
+						echo "<tr><td>".$listeoppforing['fnavn']." ".$listeoppforing['enavn'];
+					};
+					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";		
+				};	
+			};
+			echo "</table>";
+  		};
+  		echo "</td><td><a href''>liker</a></td></tr>";
 	};	
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
