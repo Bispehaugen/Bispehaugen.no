@@ -25,6 +25,11 @@
 	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
+	//henter ut alle innlegg i valgte forum og tema som det er en liste knyttet til
+	$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_innlegg_innleggid FROM forum_liste, forum_innlegg 
+	WHERE forum_liste.listeid=forum_innlegg.innleggid;";
+	$listeinnlegg=hent_og_putt_inn_i_array($sql, "innleggid");	
+	
 	//Henter ut siste uleste innlegg i tråd
 	$medlemsid= $_SESSION["medlemsid"];
 	$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
