@@ -26,7 +26,7 @@
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
 	//henter ut alle innlegg i valgte forum og tema som det er en liste knyttet til
-	$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_innlegg_innleggid FROM forum_liste, forum_innlegg 
+	$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_innlegg.innleggid FROM forum_liste, forum_innlegg 
 	WHERE forum_liste.listeid=forum_innlegg.innleggid;";
 	$listeinnlegg=hent_og_putt_inn_i_array($sql, "innleggid");	
 	
@@ -42,7 +42,7 @@
 	$mysql_result=mysql_query($sql);
 	$tema = mysql_fetch_array($mysql_result);
 	
-    #Det som printes pï¿½ sida
+    #Det som printes på sida
     
     //Her legges det inn en oversikt over alle forumene
     list_forum();
@@ -57,8 +57,13 @@
 		else{
 			echo"<tr>";
 		}
-      	echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
+      	//if for å sjekke om det er foruminnlegg
+		if($listeinnlegg[$forum_innlegg['innleggid']]){
+			echo $listeinnlegg[$forum_innlegg['innleggid']]['tittel'];
+		}else{
+      		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
    			<td>".$forum_innlegg['tekst']."</td><td><a href''>liker</a></td></tr>";
+		};
 	};	
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
