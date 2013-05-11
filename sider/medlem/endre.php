@@ -13,11 +13,7 @@
 	
 	//henter ut alle instrumenter
 		$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
-		$mysql_result=mysql_query($sql);
-		$instrumenter = Array();
-		while($row=mysql_fetch_array($mysql_result)){
-    		$instrumenter[$row['posisjon']] = $row;
-		};
+		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(isset($_POST['id']) || $_POST['fnavn']){
@@ -50,7 +46,7 @@
 		$foto=mysql_real_escape_string($_POST['foto']);
 		$begrenset=mysql_real_escape_string($_POST['begrenset']);
 		
-		//sjekker om man vil legge til eller endre en aktivitet
+		//sjekker om man vil legge til eller endre et medlem
 		if ($medlemsid){
 			$sql="
 			UPDATE 
@@ -101,7 +97,6 @@
 	} else {
 		$medlemmer = hent_brukerdata();
 	}
-	
 	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet");
 	
 	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
@@ -129,17 +124,19 @@
 						} 
 						echo ">".$status."</option>";
 					}
-					
 					echo "
 					</select></td></tr>
 				<tr><td>Instrument:</td><td>
 					<select name='instnr'>";
 					foreach($instrumenter as $instrument){
-						echo"
-  							<option value=".$instrument['instrumentid'].">".$instrument['instrument']."</option>
-  							<input type='hidden' name='instrument' value=".$instrument['instrument'].">";
-						};
-						echo "</select></td></tr>
+							echo"
+  							<option value=".$instrument['instrumentid']." ";
+  							if($instrument['instrument']==$medlemmer['instrument']){
+  								echo "selected";
+  							};
+  							echo ">".$instrument['instrument']."</option>";
+					};
+					echo "<input type='hidden' name='instrument' value=".$instrument['instrument']."></select></td></tr>
 				<tr><td>Fødselsdato:</td><td><input type='text' class='datepicker' name='fdato' value=".$medlemmer['fdato']."></td></tr>
 				<tr><td>Adresse:</td><td><input type='text' name='adresse' value=".$medlemmer['adresse']."></td></tr>
 				<tr><td>Postnr:</td><td><input type='text' name='postnr' value=".$medlemmer['postnr']."></td></tr>
