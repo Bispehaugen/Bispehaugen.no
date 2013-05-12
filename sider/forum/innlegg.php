@@ -83,7 +83,13 @@
 					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";		
 				};	
 			};
-			echo "</table>";
+			//todo: få funksjonaliteten til å fungere
+			echo "<form class='forum' method='post' action=''>
+				<tr><td>Kommentar:<br><input type='text' name='tekst' autofocus></td>
+				<td><br><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<input type='hidden' name='listeinnlegg' value=''>
+				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>
+			</form></table>";
   		};
   		echo "</td><td><a href''>liker</a></td></tr>";
 	};	
