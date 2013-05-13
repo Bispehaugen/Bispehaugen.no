@@ -32,12 +32,13 @@
 	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 	
 	//henter ut alle aktuelle liste-oppføringer
-	$sql="SELECT fnavn, enavn, forum_listeinnlegg.listeid, forum_listeinnlegg.tid, forum_listeinnlegg.innleggid, forum_listeinnlegg.kommentar, forum_listeinnlegg.flagg 
+	$sql="SELECT fnavn, enavn, forum_listeinnlegg.listeid, forum_listeinnlegg.tid, forum_listeinnlegg.innleggid, forum_listeinnlegg.kommentar, 
+	forum_listeinnlegg.flagg, forum_liste.expires 
 	FROM forum_liste, forum_innlegg, forum_listeinnlegg, forum_tema, medlemmer, registrering 
 	WHERE forum_liste.listeid=forum_innlegg.innleggid AND forum_liste.listeid=forum_listeinnlegg.listeid AND
 	 forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND id=brukerid and registrering.medlemsid=medlemmer.medlemsid ORDER BY tid ;";
 	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
-	
+		
 	//Henter ut siste uleste innlegg i tråd
 	$medlemsid= $_SESSION["medlemsid"];
 	$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
@@ -83,13 +84,19 @@
 					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";		
 				};	
 			};
+			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
+			echo "test ".strtotime(date('Y-m-d'))-strtotime(substr($listeoppforing['expires'],0,10));
+			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			//todo: få funksjonaliteten til å fungere
 			echo "<form class='forum' method='post' action=''>
 				<tr><td>Kommentar:<br><input type='text' name='tekst' autofocus></td>
 				<td><br><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<input type='hidden' name='listeinnlegg' value=''>
-				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>
-			</form></table>";
+				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
+			}else{
+				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig å melde seg på denne lista</b></td></tr> ";	
+			};
+			echo "</form></table>";
   		};
   		echo "</td><td><a href''>liker</a></td></tr>";
 	};	
