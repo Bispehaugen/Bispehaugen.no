@@ -55,11 +55,12 @@
 	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 		
 	//Henter ut siste uleste innlegg i tråd
-	$medlemsid= $_SESSION["medlemsid"];
-	$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
-	$mysql_result=mysql_query($sql);
-	$sisteleste = mysql_fetch_array($mysql_result);
-	$sisteleste= $sisteleste['sistelesteinnlegg'];
+//kommentert ut siden databasen ikke er oppdatert
+	//$medlemsid= $_SESSION["medlemsid"];
+	//$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
+	//$mysql_result=mysql_query($sql);
+	//$sisteleste = mysql_fetch_array($mysql_result);
+	//$sisteleste= $sisteleste['sistelesteinnlegg'];
 		
 	//Henter ut tema-tittel
 	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
