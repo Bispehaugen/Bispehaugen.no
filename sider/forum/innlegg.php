@@ -18,6 +18,14 @@
 		mysql_query($sql);
 	};
 	
+	if(isset($_POST['listeinnlegg'])){
+		//TODO: Må hente ut brukerid fra medlemmertabellen
+		$tekst=mysql_real_escape_string($_POST['kommentar']);
+		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, skrevet, skrevetavid, sistredigert) 
+			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
+		//mysql_query($sql);
+	};
+	
 	$temaid=$_GET['id'];
 	//henter ut alle innleggene i valgte forum/tema 
 	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav,  
@@ -86,12 +94,14 @@
 			};
 			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
 			echo "test ".strtotime(date('Y-m-d'))-strtotime(substr($listeoppforing['expires'],0,10));
-			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
+			//if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
+			
+			if(1){ //kun for testing
 			//todo: få funksjonaliteten til å fungere
 			echo "<form class='forum' method='post' action=''>
-				<tr><td>Kommentar:<br><input type='text' name='tekst' autofocus></td>
-				<td><br><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
-				<input type='hidden' name='listeinnlegg' value=''>
+				<tr><td>Kommentar:<br><input type='text' name='tekst' autofocus><br><input type='checkbox' name='flagg' value='flagg'> Stryk navnet</td>
+				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<input type='hidden' name='listeinnlegg' value=".$listeinnlegg['listeid'].">
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
 			}else{
 				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig å melde seg på denne lista</b></td></tr> ";	
