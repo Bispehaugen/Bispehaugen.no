@@ -30,7 +30,6 @@
 		//sql - databasen er sånn at pdd. kan du ikke melde deg på når du allerede er påmeldt
 		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
 			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$brukerid[$_POST['medlemsid']]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
-		echo $sql;
 		mysql_query($sql);
 	};
 	
@@ -100,10 +99,7 @@
 				};	
 			};
 			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
-			//if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
-			
-			if(1){ //kun for testing
-			//todo: få funksjonaliteten til å fungere
+			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar:<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
