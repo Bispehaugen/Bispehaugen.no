@@ -102,7 +102,7 @@
 			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
 			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
-				<tr><td>Kommentar:<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
+				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$forum_innlegg['innleggid']]['listeid']."'>
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
