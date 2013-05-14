@@ -18,11 +18,15 @@
 		mysql_query($sql);
 	};
 	
+	//hvis noen har skrevet seg på en liste
 	if(isset($_POST['listeinnlegg'])){
-		//TODO: Må hente ut brukerid fra medlemmertabellen
-		$tekst=mysql_real_escape_string($_POST['kommentar']);
-		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
+		//Må hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen)
+		$brukerid=
+		$kommentar=mysql_real_escape_string($_POST['kommentar']);
+		if($_POST['flagg']==1){$flagg=1;}else{$flagg=0;};
+		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
+			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$_POST['medlemsid']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
+		echo $sql;
 		//mysql_query($sql);
 	};
 	
@@ -78,11 +82,10 @@
    			<td>".$forum_innlegg['tekst'];
 		
       	//if som skriver ut liste hvis det hører en til innlegget
-		if($listeinnlegg[$forum_innlegg['innleggid']]){			
+		if($listeinnlegg[$forum_innlegg['innleggid']]){
 			echo "<table>
 			<tr><th colspan='2'>".$listeinnlegg[$forum_innlegg['innleggid']]['tittel']."</th></tr>";
 			foreach($listeoppforinger as $listeoppforing){
-				//print_r($liste_innlegg);
 				if($listeoppforing['listeid']==$forum_innlegg['innleggid']){
 					if($listeoppforing['flagg']==1){
 						echo "<tr><td><strike>".$listeoppforing['fnavn']." ".$listeoppforing['enavn']."</strike>";
@@ -93,15 +96,14 @@
 				};	
 			};
 			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
-			echo "test ".strtotime(date('Y-m-d'))-strtotime(substr($listeoppforing['expires'],0,10));
 			//if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			
 			if(1){ //kun for testing
 			//todo: få funksjonaliteten til å fungere
-			echo "<form class='forum' method='post' action=''>
-				<tr><td>Kommentar:<br><input type='text' name='tekst' autofocus><br><input type='checkbox' name='flagg' value='flagg'> Stryk navnet</td>
+			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
+				<tr><td>Kommentar:<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
-				<input type='hidden' name='listeinnlegg' value=".$listeinnlegg['listeid'].">
+				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$forum_innlegg['innleggid']]['listeid']."'>
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
 			}else{
 				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig å melde seg på denne lista</b></td></tr> ";	
