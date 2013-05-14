@@ -20,14 +20,18 @@
 	
 	//hvis noen har skrevet seg på en liste
 	if(isset($_POST['listeinnlegg'])){
-		//Må hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen)
-		$brukerid=
+		//Må hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
+		//TODO: få dette til å gå på medlemsid
+		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".$_POST['medlemsid']."';";
+		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
+		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
 		$kommentar=mysql_real_escape_string($_POST['kommentar']);
 		if($_POST['flagg']==1){$flagg=1;}else{$flagg=0;};
+		//sql - databasen er sånn at pdd. kan du ikke melde deg på når du allerede er påmeldt
 		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
-			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$_POST['medlemsid']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$brukerid[$_POST['medlemsid']]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		echo $sql;
-		//mysql_query($sql);
+		mysql_query($sql);
 	};
 	
 	$temaid=$_GET['id'];
