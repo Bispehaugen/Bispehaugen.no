@@ -1,7 +1,7 @@
 <?php
 
 $siste_nyheter = hent_siste_nyheter(3);
-$siste_konserter = hent_siste_nyheter(3, "konsert")
+$siste_konserter = hent_siste_nyheter(3, "nestekonsert");
 
 ?>
 <div class="banner_container">
