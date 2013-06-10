@@ -2,9 +2,10 @@
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
 	
 	//funksjonalitet
+	$id = get('id');
 	
 	//sjekker om man er admin eller prøver å endre seg selv
-	if($_SESSION['medlemsid']==$_GET['id']){
+	if($_SESSION['medlemsid']==$id){
 		$endre_seg_selv=1;//brukes for å sende mail til sekretær ved endring
 	}
 	elseif($_SESSION['rettigheter']<2){
@@ -16,13 +17,13 @@
 		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
-	if(isset($_POST['id']) || $_POST['fnavn']){
-		$medlemsid=mysql_real_escape_string($_POST['id']);
-		$fnavn=mysql_real_escape_string($_POST['fnavn']);
-		$enavn=mysql_real_escape_string($_POST['enavn']);
-		$instrument=mysql_real_escape_string($_POST['instrument']);		
-		$instnr=mysql_real_escape_string($_POST['instnr']);		
-		$grleder=mysql_real_escape_string($_POST['grleder']);
+	if(isset($_POST['id']) || isset($_POST['fnavn'])){
+		$medlemsid=post('id');
+		$fnavn=post('fnavn');
+		$enavn=post('enavn');
+		$instrument=post('instrument');		
+		$instnr=post('instnr');		
+		$grleder=post('grleder');
 			if($grleder==1){
 				$sql="SELECT medlemsid FROM medlemmer WHERE grleder=1 AND instnr=".$instrument.";";
 				$mysql_result=mysql_query($sql);
@@ -30,21 +31,21 @@
 				$sql2="UPDATE medlemmer SET grleder=0 WHERE medlemsid=".$medl['medlemsid']." AND instrument=".$instrument.";";
 			}
 
-		$status=mysql_real_escape_string($_POST['status']);
-		$fdato=mysql_real_escape_string($_POST['fdato']);
-		$adresse=mysql_real_escape_string($_POST['adresse']);
-		$postnr=mysql_real_escape_string($_POST['postnr']);
-		$poststed=mysql_real_escape_string($_POST['poststed']);
-		$tlfmobil=mysql_real_escape_string($_POST['tlfmobil']);
-		$email=mysql_real_escape_string($_POST['email']);
-		$bakgrunn=mysql_real_escape_string($_POST['bakgrunn']);
-		$startetibuk=mysql_real_escape_string($_POST['startetibuk_date']);
-		$sluttetibuk=mysql_real_escape_string($_POST['sluttetibuk_date']);
-		$studieyrke=mysql_real_escape_string($_POST['studieyrke']);
-		$kommerfra=mysql_real_escape_string($_POST['kommerfra']);
-		$ommegselv=mysql_real_escape_string($_POST['ommegselv']);
-		$foto=mysql_real_escape_string($_POST['foto']);
-		$begrenset=mysql_real_escape_string($_POST['begrenset']);
+		$status=post('status');
+		$fdato=post('fdato');
+		$adresse=post('adresse');
+		$postnr=post('postnr');
+		$poststed=post('poststed');
+		$tlfmobil=post('tlfmobil');
+		$email=post('email');
+		$bakgrunn=post('bakgrunn');
+		$startetibuk=post('startetibuk_date');
+		$sluttetibuk=post('sluttetibuk_date');
+		$studieyrke=post('studieyrke');
+		$kommerfra=post('kommerfra');
+		$ommegselv=post('ommegselv');
+		$foto=post('foto');
+		$begrenset=post('begrenset');
 		
 		//sjekker om man vil legge til eller endre et medlem
 		if ($medlemsid){
@@ -92,7 +93,6 @@
 		};
 	//henter valgte medlem fra databasen hvis "endre"
 	if(isset($_GET['id'])){	
-		$id=mysql_real_escape_string($_GET['id']);
 		$medlemmer = hent_brukerdata($id);
 	} else {
 		$medlemmer = hent_brukerdata();
@@ -110,7 +110,9 @@
 		<form method='post' action='?side=medlem/endre'>
 			<table>
 				<th>Rediger medlem</th><th></th>
-				<tr><td>Gruppeleder:</td><td><input type='checkbox' name='grleder' value=".$medlemmer['grleder']."></td></tr>
+				<tr><td>Gruppeleder:</td><td><input type='checkbox' name='grleder' value='true' ";
+				if(isset($medlemmer['grleder']) && $medlemmer['grleder']) echo "checked";	
+				echo "></td></tr>
 				<tr><td>Fornavn:</td><td><input type='text' name='fnavn' value=".$medlemmer['fnavn']."></td></tr>
 				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value=".$medlemmer['enavn']."></td></tr>
 				<tr><td>status:</td><td>
@@ -150,7 +152,9 @@
 				<tr><td>Kommer fra:</td><td><input type='text' name='kommerfra' value=".$medlemmer['kommerfra']."></td></tr>
 				<tr><td>Litt om meg selv:</td><td><textarea name='ommegselv'>".$medlemmer['ommegselv']."</textarea></td></tr>
 				<tr><td>Bilde:</td><td><input type='text' name='foto' value=".$medlemmer['foto']."></td></tr>
-				<tr><td>Vises kun for innloggede:</td><td><input type='checkbox' name='begrenset' value=".$medlemmer['begrenset']."></td></tr>
+				<tr><td>Vises kun for innloggede:</td><td><input type='checkbox' name='begrenset' value='true' ";
+				if (isset($medlemmer['begrenset']) && $medlemmer['begrenset']) echo "checked";
+				echo "></td></tr>
 				</table>
 			<input type='hidden' name='id' value=".$medlemmer['medlemsid'].">
 			<a href='?side=medlem/liste'>Avbryt</a>

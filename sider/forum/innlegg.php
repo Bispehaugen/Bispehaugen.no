@@ -12,22 +12,22 @@
 	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(isset($_POST['temaid'])){
-		$tekst=mysql_real_escape_string($_POST['tekst']);
+		$tekst=post('tekst');
 		$sql="INSERT INTO forum_innlegg (temaid, tekst, skrevet, skrevetavid, sistredigert) 
 			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
-	//hvis noen har skrevet seg på en liste
+	//hvis noen har skrevet seg pï¿½ en liste
 	if(isset($_POST['listeinnlegg'])){
-		//Må hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
-		//TODO: få dette til å gå på medlemsid
+		//Mï¿½ hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
+		//TODO: fï¿½ dette til ï¿½ gï¿½ pï¿½ medlemsid
 		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".$_POST['medlemsid']."';";
 		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
-		$kommentar=mysql_real_escape_string($_POST['kommentar']);
+		$kommentar=post('kommentar');
 		if($_POST['flagg']==1){$flagg=1;}else{$flagg=0;};
-		//sql - databasen er sånn at pdd. kan du ikke melde deg på når du allerede er påmeldt
+		//sql - databasen er sï¿½nn at pdd. kan du ikke melde deg pï¿½ nï¿½r du allerede er pï¿½meldt
 		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
 			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$brukerid[$_POST['medlemsid']]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
@@ -41,12 +41,12 @@
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
 	//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
-	//TODO: Merk at brukerid i forum_listeinnlegg er 'id' i registrering tabellen (!=medlemsid) - BØR FIKSES SENERE
+	//TODO: Merk at brukerid i forum_listeinnlegg er 'id' i registrering tabellen (!=medlemsid) - Bï¿½R FIKSES SENERE
 	$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg
 	WHERE forum_liste.listeid=forum_innlegg.innleggid;";
 	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 	
-	//henter ut alle aktuelle liste-oppføringer
+	//henter ut alle aktuelle liste-oppfï¿½ringer
 	$sql="SELECT fnavn, enavn, forum_listeinnlegg.listeid, forum_listeinnlegg.tid, forum_listeinnlegg.innleggid, forum_listeinnlegg.kommentar, 
 	forum_listeinnlegg.flagg, forum_liste.expires 
 	FROM forum_liste, forum_innlegg, forum_listeinnlegg, forum_tema, medlemmer, registrering 
@@ -54,7 +54,7 @@
 	 forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND id=brukerid and registrering.medlemsid=medlemmer.medlemsid ORDER BY tid ;";
 	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 		
-	//Henter ut siste uleste innlegg i tråd
+	//Henter ut siste uleste innlegg i trï¿½d
 //kommentert ut siden databasen ikke er oppdatert
 	//$medlemsid= $_SESSION["medlemsid"];
 	//$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
@@ -67,7 +67,7 @@
 	$mysql_result=mysql_query($sql);
 	$tema = mysql_fetch_array($mysql_result);
 	
-    #Det som printes på sida
+    #Det som printes pï¿½ sida
     
     //Her legges det inn en oversikt over alle forumene
     list_forum();
@@ -85,7 +85,7 @@
 		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
    			<td>".$forum_innlegg['tekst'];
 		
-      	//if som skriver ut liste hvis det hører en til innlegget
+      	//if som skriver ut liste hvis det hï¿½rer en til innlegget
 		if($listeinnlegg[$forum_innlegg['innleggid']]){
 			echo "<table>
 			<tr><th colspan='2'>".$listeinnlegg[$forum_innlegg['innleggid']]['tittel']."</th></tr>";
@@ -99,15 +99,15 @@
 					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";		
 				};	
 			};
-			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
+			//Legger til tekstfelt for ï¿½ melde seg pï¿½ hvis ikke lista har expired
 			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$forum_innlegg['innleggid']]['listeid']."'>
-				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
+				<input type='submit' name='nyttListeInnlegg' value='Skriv meg pï¿½ lista'></td></tr>";
 			}else{
-				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig å melde seg på denne lista</b></td></tr> ";	
+				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig ï¿½ melde seg pï¿½ denne lista</b></td></tr> ";	
 			};
 			echo "</form></table>";
   		};
