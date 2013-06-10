@@ -12,16 +12,16 @@
 	//hvis en aktivitet er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(isset($_POST['tittel']) && (!empty($_POST['tittel']))  && (! empty($_POST['dato']))){
 		$id=$_POST['id'];
-		$tittel=mysql_real_escape_string($_POST['tittel']);
-		$public=mysql_real_escape_string($_POST['public']);
-		$ingress=mysql_real_escape_string($_POST['ingress']);
-		$sted=mysql_real_escape_string($_POST['sted']);
-		$dato=mysql_real_escape_string($_POST['dato']);
-		$oppmote=mysql_real_escape_string($_POST['oppm�te']);
-		$starttid=mysql_real_escape_string($_POST['starttid']);
-		$sluttid=mysql_real_escape_string($_POST['sluttid']);
-		$hjelpere=mysql_real_escape_string($_POST['hjelpere']);
-		$kakebaker=mysql_real_escape_string($_POST['kakebaker']);
+		$tittel=post('tittel');
+		$public=post('public');
+		$ingress=post('ingress');
+		$sted=post('sted');
+		$dato=post('dato');
+		$oppmote=post('oppmoetetid');
+		$starttid=post('starttid');
+		$sluttid=post('sluttid');
+		$hjelpere=post('hjelpere');
+		$kakebaker=post('kakebaker');
 		
 		//sjekker om man vil legge til eller endre en aktivitet
 		if ($id){
@@ -57,7 +57,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 		
 		
 	
-	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
+	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
 		
 	echo "
     <script>
@@ -78,7 +78,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 				<tr><td>Ingress:</td><td><input type='text' name='ingress' value=".$aktiviteter['ingress']."></td></tr>
 				<tr><td>Sted:</td><td><input type='text' name='sted' value=".$aktiviteter['sted']."></td></tr>
 				<tr><td>Dato:</td><td><input type='text' id='datepicker' name='dato' value=".$aktiviteter['dato']."></td></tr>
-				<tr><td>Oppm�te kl:</td><td><input type='text' name='oppmote' value=".$aktiviteter['oppm�te']."></td></tr>
+				<tr><td>Oppmøte kl:</td><td><input type='text' name='oppmoetetid' value=".$aktiviteter['oppmoetetid']."></td></tr>
 				<tr><td>Start kl:</td><td><input type='text' name='starttid' value=".$aktiviteter['starttid']."></td></tr>
 				<tr><td>Slutt kl:</td><td><input type='text' name='sluttid' value=".$aktiviteter['sluttid']."></td></tr>
 				<tr><td>Slagverksb�rere:</td><td><input type='text' name='hjelpere' value=".$aktiviteter['hjelpere']."></td></tr>
