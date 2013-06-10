@@ -34,7 +34,7 @@
 				if(er_logget_inn()){
 					echo"<tr><td><b>Født</b>: </td></tr>
 					<tr><td></td></tr>
-					<tr><td>".$medlemmer['fdato']."</td></tr>
+					<tr><td>".date("d. m. Y",strtotime(substr($medlemmer['fdato'],0,10)))."</td></tr>
 					<tr><td></td></tr>
 					<tr><td><b>Kontaktinfo:</b></td></tr>
 					<tr><td>".$medlemmer['tlfmobil']."</td></tr>
@@ -45,9 +45,9 @@
 					<tr><td>".$medlemmer['postnr']." ".$medlemmer['poststed']."</td></tr>
 					<tr><td></td></tr>
 					<tr><td></td></tr>
-					<tr><td><b>Startet i BUK:</b> ".$medlemmer['startetibuk_date']."</td></tr>";
+					<tr><td><b>Startet i BUK:</b> ".date("d. M Y",strtotime(substr($medlemmer['startetibuk_date'],0,10)))."</td></tr>";
 					if($medlemmer['sluttetibuk_date']>0){
-						echo"<tr><td><b>Sluttet i BUK:</b>".$medlemmer['sluttetibuk_date']."</td></tr>";
+						echo"<tr><td><b>Sluttet i BUK:</b>".date("d. M Y",strtotime(substr($medlemmer['sluttetibuk_date'],0,10)))."</td></tr>";
 					}
 					if(!empty($medlemmer['studieyrke'])){
 						echo" <tr><td><b>Studie/yrke:</b></td></tr>

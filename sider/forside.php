@@ -1,7 +1,9 @@
 <?php
 
 $siste_nyheter = hent_siste_nyheter(3);
-$siste_konserter = hent_siste_nyheter(3, "konsert")
+
+//TODO: her skal vi hente ut siste 3 ikke-aktive så spørringa må endres
+$siste_konserter = hent_siste_nyheter(3, "nestekonsert");
 
 ?>
 <div class="banner_container">

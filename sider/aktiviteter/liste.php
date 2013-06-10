@@ -6,20 +6,22 @@
     
     //sp�rring som henter ut alle aktiviteter
     if($_SESSION['rettigheter']==0 || !er_logget_inn()){
-		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid ";
+		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
 	}elseif($_SESSION['rettigheter']==1){
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid ";
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid; ";
 	}else{
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid ";		
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid; ";		
 	}
 	$aktiviteter=hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 	
 	$valgt_id=$_GET['id'];
 
 	//henter kakebaker hvis det er noen
-	$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
-	$kakebaker=hent_og_putt_inn_i_array($sql);
-	
+	if(isset($valgt_id)){
+		$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
+		$kakebaker=hent_og_putt_inn_i_array($sql);
+	};
+
     #Det som printes p� sida
     echo "<table><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	

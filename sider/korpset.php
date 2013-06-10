@@ -124,7 +124,7 @@ kafébesøk, fester og helgeturer utenbys. Medlemmene våre blir i stor grad rekrut
 
 Vi øver mandager fra 19:30 på Bispehaugen skole på Møllenberg, sentralt i Trondheim. Det blir også noen ekstraøvelser før
 konsertene. Dersom du er interessert i hva vi holder på med, kan du ta turen innom en av øvelsene, eller gå inn på <a
-href=\"?side=bli_medlem\">kontaksskjema</a>.
+href=\"?side=bli_medlem\">kontaktskjema</a>.
 
 	</tr>
 	</table>
