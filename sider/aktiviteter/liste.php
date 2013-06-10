@@ -17,7 +17,7 @@
 	$valgt_id=$_GET['id'];
 
 	//henter kakebaker hvis det er noen
-	if(!empty($valgt_id)){
+	if(isset($valgt_id)){
 		$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
