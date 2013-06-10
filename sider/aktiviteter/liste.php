@@ -4,7 +4,7 @@
         
     #fuksjonalitet
     
-    //spï¿½rring som henter ut alle aktiviteter
+    //spørring som henter ut alle aktiviteter
     if($_SESSION['rettigheter']==0 || !er_logget_inn()){
 		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
 	}elseif($_SESSION['rettigheter']==1){
@@ -14,15 +14,15 @@
 	}
 	$aktiviteter=hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 	
-	$valgt_id=$_GET['id'];
+	$valgt_id = isset($_GET['id']) ? $_GET['id'] : NULL ;
 
 	//henter kakebaker hvis det er noen
-	if(isset($valgt_id)){
+	if($valgt_id){
 		$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
 
-    #Det som printes pï¿½ sida
+    #Det som printes på sida
     echo "<table><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	
     	<script type='text/javascript'>
