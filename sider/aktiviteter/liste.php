@@ -35,8 +35,22 @@
 		</script>";
   
    	foreach($aktiviteter as $aktivitet){
+ 			#aktiviteten printes i bold hvis den er valgt
+   			if($valgt_id==$aktivitet['arrid']){
+   				echo "<tr class='valgt'>";
+   			}else{
+   				echo "<tr>";
+   			};
+ 
+ 			echo "<td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']));
+			
+			#hvis tildato er satt eller lik
+ 			if($aktivitet['tildato'] > $aktivitet['dato']){
+ 				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['tildato']));
+ 			}
+ 
    			if($aktivitet['starttid']=="00:00:00"){
-   				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td></td><td>
+   				echo "</td><td></td><td>
    				<a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>".$aktivitet['tittel']."</a></td><td>".$aktivitet['sted']."</td>";
 			}else{
 				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td>".
@@ -44,6 +58,7 @@
    				".$aktivitet['tittel']."</a>
    				</td><td>".$aktivitet['sted']."</td>";
 			}
+
 			#Viser endre/slettkapper hvis man er admin
 			if($_SESSION['rettigheter']>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
@@ -54,9 +69,12 @@
 			
 			//Viser mer info hvis trykket på en hendelse
 			if($valgt_id==$aktivitet['arrid']){
-				echo" <tr><td ></td><td class='aktivitet' colspan='4'> Beskrivelse: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
-					<br> Varighet: ".strftime("%a %#d. %b", strtotime($aktivitet['starttid']))." til ".strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
-					<br> Oppmøte: ".strftime("%a %#d. %b", strtotime($aktivitet['oppmote']))."
+				echo" <tr><td></td><td class='info' colspan='4'> 
+					Varighet: ".strftime("%H:%M", strtotime($aktivitet['dato']))."kl ".strftime("%H:%M", strtotime($aktivitet['dato']))." til ";
+					
+					if($aktivitet['tildato'] > $aktivitet['dato']){echo strftime("%H:%M", strtotime($aktivitet['dato']));};
+					
+					echo strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
 					<br>Kakebaker: ".$kakebaker['fnavn']."
 					<br>Bæregruppe: ".$aktivitet['hjelpere']."</td></tr>";
 			};
