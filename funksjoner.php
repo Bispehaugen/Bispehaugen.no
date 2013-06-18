@@ -26,13 +26,20 @@ function koble_til_database($database_host, $database_user, $database_string, $d
     return true;
 }
 
+function get($attributt) {
+	return isset($_GET[$attributt]) ? mysql_real_escape_string($_GET[$attributt]) : null; 
+}
+
+function post($attributt) {
+	return isset($_POST[$attributt]) ? mysql_real_escape_string($_POST[$attributt]) : null; 
+}
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
-	// hvis $page inneholder .. eller / så prøver noen å gå i undermapper, det vil vi ikke
+	// hvis $page inneholder .. eller / sï¿½ prï¿½ver noen ï¿½ gï¿½ i undermapper, det vil vi ikke
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
@@ -99,10 +106,10 @@ function list_forum(){
 	<td><a href='?side=forum/tema&id=2'>musikk & konserter</a></td>
 	<td><a href='?side=forum/tema&id=1'>aktuelt</a></td>
     <td><a href=''>sosialt</a></td>
-    <td><a href=''>påmeldinger</a></td>";  
+    <td><a href=''>pï¿½meldinger</a></td>";  
     if($_SESSION['rettigheter']>1){
 		echo"
-    	<td><a href=''>musikkomitéen</a></td>
+    	<td><a href=''>musikkomitï¿½en</a></td>
     	<td><a href=''>styret</a></td>
     	<td><a href=''>webkom</a></td></tr>";
 	};
@@ -143,7 +150,7 @@ function ant_dager_siden($dato){
    				$dagersiden_som_tekst = " i dag";
    			}
 			elseif ($dagersiden==1){
-   				$dagersiden_som_tekst = " i går";
+   				$dagersiden_som_tekst = " i gï¿½r";
    			}
 			elseif($dagersiden<7){
 				$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
@@ -151,7 +158,7 @@ function ant_dager_siden($dato){
 			elseif($dagersiden<31){
 				$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
 			}elseif($dagersiden<256){
-				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." mï¿½neder siden";
 			}else{
 				$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
 			};

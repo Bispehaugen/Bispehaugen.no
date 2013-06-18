@@ -38,6 +38,7 @@ if (!empty($konsert)) {
 
 <div class="advertisement">
 	<div class="grasrota">
+		<img src="bilder/forside/tronderenergi.png" />
 		<a href="">
 			<img src="bilder/forside/Grasrotandelen_logo_RGB.jpg" />
 			<h3>Hjelp oss, støtt oss!</h3>
