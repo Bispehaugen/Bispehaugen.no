@@ -18,7 +18,7 @@
 	    $valgtekomiteer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 	};
 	
-	//det som skrives ut pÃ¥ side	
+	//det som skrives ut på side	
 	
 	echo"<table>
 			<tr><th colspan='4'>Kjekt å vite: </th></tr>
@@ -27,7 +27,7 @@
 			<form method='post' action='?side=oranisasjon'>
 				<tr><td></td><td>Hvilken øvelse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<tr><td></td><td>Grunn:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
-				<input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
 
