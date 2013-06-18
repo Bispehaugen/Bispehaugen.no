@@ -3,7 +3,7 @@
 $siste_nyheter = hent_siste_nyheter(3);
 
 //TODO: her skal vi hente ut siste 3 ikke-aktive så spørringa må endres
-$siste_konserter = hent_siste_nyheter(3, "nestekonsert");
+$siste_konserter = hent_eldre_konserter(3);
 
 ?>
 <div class="banner_container">
@@ -55,22 +55,34 @@ echo '
 	    </div>
 	</div>
 	';
+};
+echo" 
+<div class='astest_concerts'>
+    	<h2><a href='' title='De siste konsertene'>Siste konserter</a></h2>
+";
+
+foreach($siste_konserter as $konsert){
+	
+	$bilde = $konsert['bilde'];
+	if(empty($bilde)){
+		$bilde = "bilder/forside/logo.png";
+	}
+	
+echo '
+	
+		<div class="concert">
+	    	<div class="image"><img src="'.$bilde.'" /></div>
+	    	<h4>'.$konsert['overskrift'].'</h4>
+	    	<p>'.$konsert['ingress'].'</p>
+	    	<div class="date">
+			    '.date("d. M", strtotime($konsert['tid'])).' kl.'.date("H:m", strtotime($konsert['tid'])).'
+		    	<div class="read_more"><a href="?side=nyhet&id='.$konsert['nyhetsid'].'">Les mer</a></div>
+	    	</div>
+		</div>
+	';
 }
+echo"</div>";
 ?>
 
-<div class="lastest_concerts">
-    <h2><a href="" title="De siste konsertene">Siste konserter</a></h2>
-    <div class="concert">
-        <img src="bilder/forside/logo.png" />
-        <p>Konsertnavn</p>
-    </div>
-    <div class="concert">
-        <img src="bilder/forside/logo.png" />
-        <p>Konsertnavn</p>
-    </div>
-    <div class="concert">
-        <img src="bilder/forside/logo.png" />
-        <p>Konsertnavn</p>
-    </div>
-</div>
+
 
