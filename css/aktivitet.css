@@ -1,4 +1,8 @@
-.aktivitet{
+.info{
 	background-color: #e2e2e2;
 	padding: 0.5em;
+}
+
+.valgt{
+	font-weight:bold;
 }
