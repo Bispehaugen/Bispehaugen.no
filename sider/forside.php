@@ -57,21 +57,21 @@ echo '
 	';
 };
 echo" 
-<div class='astest_concerts'>
+<div class='lastest_concerts'>
     	<h2><a href='' title='De siste konsertene'>Siste konserter</a></h2>
 ";
 
 foreach($siste_konserter as $konsert){
 	
 	$bilde = $konsert['bilde'];
-	if(empty($bilde)){
+	//if(empty($bilde)){
 		$bilde = "bilder/forside/logo.png";
-	}
+	//}
 	
 echo '
 	
 		<div class="news">
-	    	<div class="img"><img src="'.$bilde.'" /></div>
+	    	<div class="image"><img src="'.$bilde.'" /></div>
 	    	<h4>'.$konsert['overskrift'].'</h4>
 	    	<p>'.$konsert['ingress'].'</p>
 	    	<div class="date">
