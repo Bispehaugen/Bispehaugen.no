@@ -70,8 +70,8 @@ foreach($siste_konserter as $konsert){
 	
 echo '
 	
-		<div class="concert">
-	    	<div class="image"><img src="'.$bilde.'" /></div>
+		<div class="news">
+	    	<div class="img"><img src="'.$bilde.'" /></div>
 	    	<h4>'.$konsert['overskrift'].'</h4>
 	    	<p>'.$konsert['ingress'].'</p>
 	    	<div class="date">
