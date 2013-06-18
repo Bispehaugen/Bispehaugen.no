@@ -103,7 +103,7 @@
 			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
-				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$forum_innlegg['innleggid']]['listeid']."'>
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg p� lista'></td></tr>";
 			}else{
@@ -116,8 +116,8 @@
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
-			<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
-			<input type='hidden' name='temaid' value=".$temaid.">
+			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
+			<input type='hidden' name='temaid' value='".$temaid."'>
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
 		</form> 
 	</table>";

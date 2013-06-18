@@ -68,31 +68,31 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 		<form method='post' action='?side=aktiviteter/endre'>
 			<table>
 				<th>Endre aktivitet</th><th></th>
-				<tr><td>Tittel:</td><td><input type='text' name='tittel' value=".$aktiviteter['tittel']."></td></tr>
+				<tr><td>Tittel:</td><td><input type='text' name='tittel' value='".$aktiviteter['tittel']."'></td></tr>
 				<tr><td>public:</td><td>
 					<select name='public'>
   						<option value='1'>Public</option>
   						<option value='0'>Intern</option>
   						<option value='2'>Admin</option>
 					</select></td></tr>
-				<tr><td>Ingress:</td><td><input type='text' name='ingress' value=".$aktiviteter['ingress']."></td></tr>
-				<tr><td>Sted:</td><td><input type='text' name='sted' value=".$aktiviteter['sted']."></td></tr>
-				<tr><td>Dato:</td><td><input type='text' id='datepicker' name='dato' value=".$aktiviteter['dato']."></td></tr>
-				<tr><td>Oppmøte kl:</td><td><input type='text' name='oppmoetetid' value=".$aktiviteter['oppmoetetid']."></td></tr>
-				<tr><td>Start kl:</td><td><input type='text' name='starttid' value=".$aktiviteter['starttid']."></td></tr>
-				<tr><td>Slutt kl:</td><td><input type='text' name='sluttid' value=".$aktiviteter['sluttid']."></td></tr>
-				<tr><td>Slagverksb�rere:</td><td><input type='text' name='hjelpere' value=".$aktiviteter['hjelpere']."></td></tr>
+				<tr><td>Ingress:</td><td><input type='text' name='ingress' value='".$aktiviteter['ingress']."'></td></tr>
+				<tr><td>Sted:</td><td><input type='text' name='sted' value='".$aktiviteter['sted']."'></td></tr>
+				<tr><td>Dato:</td><td><input type='text' id='datepicker' name='dato' value='".$aktiviteter['dato']."'></td></tr>
+				<tr><td>Oppmøte kl:</td><td><input type='text' name='oppmoetetid' value='".$aktiviteter['oppmoetetid']."'></td></tr>
+				<tr><td>Start kl:</td><td><input type='text' name='starttid' value='".$aktiviteter['starttid']."'></td></tr>
+				<tr><td>Slutt kl:</td><td><input type='text' name='sluttid' value='".$aktiviteter['sluttid']."'></td></tr>
+				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".$aktiviteter['hjelpere']."'></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
-					<option value=".$aktiviteter['kakebaker'].">".$medlemmer[$aktiviteter['kakebaker']]['fnavn']." ".$medlemmer[$aktiviteter['kakebaker']]['enavn']."</option>
+					<option value='".$aktiviteter['kakebaker']."'>".$medlemmer[$aktiviteter['kakebaker']]['fnavn']." ".$medlemmer[$aktiviteter['kakebaker']]['enavn']."</option>
 					<option value=''</option>";
 					foreach($medlemmer as $medlem){
 						echo"
-  							<option value=".$medlem['medlemsid'].">".$medlem['fnavn']." ".$medlem['enavn']."</option>";
+  							<option value='".$medlem['medlemsid']."'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
 						};
 						echo "</select></td></tr>
 			</table>
-			<input type='hidden' name='id' value=".$_GET['id'].">
+			<input type='hidden' name='id' value='".$_GET['id']."'>
 			<a href='?side=aktiviteter/liste'>Avbryt</a>
 			<input type='submit' name='endreNyhet' value='Lagre'>
 		</form> 

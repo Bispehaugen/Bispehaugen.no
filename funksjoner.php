@@ -77,7 +77,6 @@ function hent_brukerdata($medlemid = ""){
 				FROM `medlemmer` 
 				WHERE `medlemsid`=".$medlemid;
 	}
-	
 	$mysql_result = mysql_query($sql);
 	
 	while($medlem = mysql_fetch_assoc($mysql_result)) {
