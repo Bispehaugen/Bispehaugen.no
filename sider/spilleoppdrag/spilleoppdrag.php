@@ -113,7 +113,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 		<tr>
 			<td class="label">Navn:</td>
 			<td>
-			<input type="text" name="sNavn" value="<?php echo $sNamn; ?>"></td>
+			<input type="text" name="sNavn" value="<?php echo $sNavn; ?>"></td>
 		</tr>
 		<tr>
 			<td class="label">Organisasjon:</td>
