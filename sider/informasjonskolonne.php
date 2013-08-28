@@ -17,7 +17,7 @@ if (!empty($konsert)) {
 	?>
 	<div class="news">
 	    <div class="next_concert">
-	    	<h3 class="next_concert"><a class="next_concert" href="?side=nyhet&id=$id" title="Neste konsert">Neste konsert</a></h3>	
+	    	<h3 class="next_concert"><a class="next_concert" href="?side=nyhet&id=<?php echo $konsert['nyhetsid']?>" title="Neste konsert">Neste konsert</a></h3>	
 	        <img src="<?php echo $bilde; ?>" />
 	        <h4><?php echo $konsert['overskrift']; ?></h4>
 	        <div class="info">
@@ -27,7 +27,7 @@ if (!empty($konsert)) {
 	        <b>Sted:</b> <?php echo $konsert['sted']; ?>
 	        </div>
 	        <br />
-	        <div class="read_more"><a href="?side=nyhet&id=$id"">Les mer</a></div>
+	        <div class="read_more"><a href="?side=nyhet&id=<?php echo $konsert['nyhetsid']?>">Les mer</a></div>
 	        
 	    </div>
 	</div>
