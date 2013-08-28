@@ -144,7 +144,7 @@
 				<tr><td>Poststed:</td><td><input type='text' name='poststed' value='".$medlemmer['poststed']."'></td></tr>
 				<tr><td>Mobilnummer:</td><td><input type='text' name='tlfmobil' value='".$medlemmer['tlfmobil']."'></td></tr>
 				<tr><td>E-post:</td><td><input type='text' name='email' value='".$medlemmer['email']."'></td></tr>
-				<tr><td>Musikalsk bakgrunn:</td><td><input type='text' name='bakgrunn' value='".$medlemmer['bakgrunn']."'></td></tr>
+				<tr><td>Musikalsk bakgrunn:</td><td><textarea name='bakgrunn'>".$medlemmer['bakgrunn']."</textarea></td></tr>
 				<tr><td>Startet i BUK:</td><td><input type='text' class='datepicker' name='startetibuk_date' value='".$medlemmer['startetibuk_date']."'></td></tr>
 				<tr><td>Sluttet i BUK:</td><td><input type='text' class='datepicker' name='sluttetibuk_date' value='".$medlemmer['sluttetibuk_date']."'></td></tr>
 				<tr><td>Studie/yrke:</td><td><input type='text' name='studieyrke' value='".$medlemmer['studieyrke']."'></td></tr>
