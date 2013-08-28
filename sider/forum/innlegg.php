@@ -11,25 +11,25 @@
 	};
 	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
-	if(isset($_POST['temaid'])){
+	if(has_post('temaid')){
 		$tekst=post('tekst');
 		$sql="INSERT INTO forum_innlegg (temaid, tekst, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d h:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
 	//hvis noen har skrevet seg p� en liste
-	if(isset($_POST['listeinnlegg'])){
+	if(has_post('listeinnlegg')){
 		//M� hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
 		//TODO: f� dette til � g� p� medlemsid
-		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".$_POST['medlemsid']."';";
+		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".post('medlemsid')."';";
 		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
 		$kommentar=post('kommentar');
-		if($_POST['flagg']==1){$flagg=1;}else{$flagg=0;};
+		if(post('flagg')==1){$flagg=1;}else{$flagg=0;};
 		//sql - databasen er s�nn at pdd. kan du ikke melde deg p� n�r du allerede er p�meldt
 		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
-			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$brukerid[$_POST['medlemsid']]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".post('listeinnlegg')."','".$flagg."','".$brukerid[post('medlemsid')]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	

@@ -1,5 +1,5 @@
 <?php 
-	//TODO: mangler fortsatt test pÃ¥ tidsformat, timepicker, og en liste for Ã¥ koble slagverksbÃ¦rere til medlemmer
+	//TODO: mangler fortsatt test på tidsformat, timepicker, og en liste for å koble slagverksbærere til medlemmer
 	
 	
 	//funksjonalitet
@@ -9,9 +9,9 @@
 		header('Location: ?side=aktiviteter/liste');
 	};
 		
-	//hvis en aktivitet er lagt inn og noen har trykket pÃ¥ lagre hentes verdiene ut
-	if(isset($_POST['tittel']) && (!empty($_POST['tittel']))  && (! empty($_POST['dato']))){
-		$id=$_POST['id'];
+	//hvis en aktivitet er lagt inn og noen har trykket pÃå lagre hentes verdiene ut
+	if(has_post('tittel') && !empty(post('tittel')) && !empty(post('dato'))) {
+		$id=post('id');
 		$tittel=post('tittel');
 		$public=post('public');
 		$ingress=post('ingress');

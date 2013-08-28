@@ -8,9 +8,9 @@
     	exit("tilkoblingsfeil");
 	}
 	
-	$username=$_POST["username"];
-	$password=sha1($_POST["password"]);
-	$password_md5=md5($_POST["password"]);
+	$username=post("username");
+	$password=sha1(post("password"));
+	$password_md5=md5(post("password"));
 	
 	#Sjekker om passordet finnes i medlemmer-tabellen
 	$sql="SELECT COUNT(brukernavn) FROM medlemmer WHERE brukernavn='".$username."' AND passord='".$password."'";

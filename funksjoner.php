@@ -38,6 +38,10 @@ function has($attributt) {
 	return isset($_GET[$attributt]);
 }
 
+function has_post($attributt) {
+	return isset($_POST[$attributt]);
+}
+
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
 	$php_fil = $mappenavn."/".$sidenavn.".php";

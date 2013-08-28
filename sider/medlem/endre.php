@@ -17,7 +17,7 @@
 		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
-	if(isset($_POST['id']) || isset($_POST['fnavn'])){
+	if(has_post('id') || has_post('fnavn')){
 		$medlemsid=post('id');
 		$fnavn=post('fnavn');
 		$enavn=post('enavn');
