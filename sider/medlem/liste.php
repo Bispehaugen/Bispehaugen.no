@@ -1,6 +1,6 @@
 <?php
     
-    //SQL-spï¿½rringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
+    //SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
     //sjekker om man er logget inn for Ã¥ vise "begrensede" medlemmer (som ikke vil vises eksternt)
     if(er_logget_inn() && get('alle')==1){
    		$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
@@ -54,15 +54,16 @@
    					echo " (S) ";
    				};
 				//sjekker pÃ¥ gruppeleder og skriver ut dette etter navnet hvis ja
-       			if($medlem['grleder']){
+       			if($medlem['grleder'] == true){
        				echo " - Gruppeleder";
        			};
 				
        		echo "</td><td>";
 				//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
-       			if($styreverv[$medlem['medlemsid']]){
-       				echo $styreverv[$medlem['medlemsid']]['tittel']." </td><td class='hoyrestilt'>
-       				<a href='mailto:".$styreverv[$medlem['medlemsid']]['epost']."'>send e-post</a>";
+				$medlemsid = $medlem['medlemsid'];
+       			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
+       				echo $styreverv[$medlemsid]['tittel']." </td><td class='hoyrestilt'>
+       				<a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i></a>";
 				}else{
 					echo "</td><td></td>";
 				};
@@ -79,7 +80,7 @@
 		//hvis brukeren er admin kommer det opp endre/slette knapp pÃ¥ alle medlemmer
 
 		if($_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'>endre</a></td></tr>";
+				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='icon-edit' title='Klikk for å endre'></i></a></td></tr>";
 		}else{
 			echo"<td></td></tr>";
 		};
@@ -87,8 +88,9 @@
 
 	if($_SESSION['rettigheter']>1){
 			echo"
-			<tr><td></td><td></td><td></td><td></td><td></td></tr>
-			<tr><td></td><td></td><td></td><td></td><th><a href='?side=medlem/endre'>legg til ny</a></th></tr>";
+			<tr><td colspan='5'></td></tr>
+			<tr><td colspan='5'></td></tr>
+			<tr><td colspan='5'><a href='?side=medlem/endre'><i class='icon-plus'></i> Legg til ny</a></td></tr>";
 		}
 	echo "</table>";
     
