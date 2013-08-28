@@ -18,7 +18,7 @@
   
 			<table>
 				<tr><th>".$medlemmer['fnavn']." ".$medlemmer['enavn']."</th><th>";
-				if(($_SESSION['medlemsid']==get('id') || ($_SESSION['rettigheter']>2)){
+				if($_SESSION['medlemsid']==get('id') || ($_SESSION['rettigheter']>2)){
 						echo"<a href='?side=medlem/endre&id=".$id."'>endre</a>";
 				};
 				echo"</th></tr>
