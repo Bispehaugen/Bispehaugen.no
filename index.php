@@ -67,7 +67,7 @@ $innhold = ob_get_clean();
 	<div id="header_stripe"></div>
 	<div class="site">
 		<div class="logo_column">
-			<a href=""><div class="logo"></div></a>
+			<a href="?"><div class="logo"></div></a>
 			<div class="figurer"></div>
 			
 			<?php
