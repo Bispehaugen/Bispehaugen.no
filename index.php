@@ -92,10 +92,12 @@ $innhold = ob_get_clean();
 
 				<?php
 				#sjekker om det er satt noen errors og evt. skriver dem ut
-				if (isset($_SESSION["errors"])) {
+				if (isset($_SESSION["Errors"])) {
 					echo "<div class='errors'>
-						" . $_SESSION['errors'] . "
+						" . $_SESSION["Errors"] . "
 						</div>";
+					
+					unset($_SESSION["Errors"]);
 				}
 				?>
 				

@@ -76,11 +76,9 @@
 				medlemsid = '$medlemsid';
 			";
 			
-			echo "loop1".$sql;
 			mysql_query($sql);
-			//header('Location: ?side=medlem/liste');
-		}else{
-			die("WRONG");			
+			header('Location: ?side=medlem/liste');
+		}else{		
 			$sql="
 			INSERT INTO 
 			medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
@@ -88,7 +86,7 @@
 			values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
 				'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$foto','$begrenset')";
 			mysql_query($sql);
-			//header('Location: ?side=medlem/liste');
+			header('Location: ?side=medlem/liste');
 		}
 		};
 	//henter valgte medlem fra databasen hvis "endre"

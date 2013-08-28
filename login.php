@@ -22,6 +22,8 @@
 	$sql="SELECT medlemsid FROM medlemmer WHERE brukernavn='".$username."'";
 	$mysql_result=mysql_query($sql);
 	$medlemsid=mysql_result($mysql_result, 0);
+	
+	
 
 	#If setning for å sjekke mot medlemmer for md5passord (brukes kun hvis brukernavn/passord-kombinasjonen ikke finnes i medlemmer-tabellen)
 	if($row["COUNT(brukernavn)"] == 0){
@@ -29,11 +31,12 @@
 		$mysql_result=mysql_query($sql);
 	
 		$row=mysql_fetch_assoc($mysql_result);
-
+		
 		#Dersom kombinasjonen brukernavn/passord fortsatt ikke stemmer sendes bruker tilbake til hovedsiden med en feilmelding.	
 		if($row["COUNT(brukernavn)"] == 0){
-			$_session["Errors"]="Feil brukernavn eller passord. Kunne ikke logge inn.";
+			$_SESSION["Errors"]="Feil brukernavn eller passord. Kunne ikke logge inn.";
 			header('Location: index.php');
+			die();
 		};
 		
 		$sql="UPDATE medlemmer SET passord='".$password."' WHERE brukernavn='".$username."'";
@@ -47,8 +50,10 @@
 
 	$rettigheter=mysql_result($mysql_result, 0);
 	if($rettigheter==0){
-		$_session["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
+		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
 		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det.";
+		header('Location: index.php');
+		die();
 	}
 	
 	logg_inn($medlemsid, $rettigheter);

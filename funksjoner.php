@@ -80,6 +80,10 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 function hent_brukerdata($medlemid = ""){
 	if(empty($medlemid)){
 		$medlemid = $_SESSION['medlemsid'];
+		
+		if (empty($medlemid)) {
+			$medlemid = "-99";
+		}
 	}
 
 	if(er_logget_inn()){
@@ -92,13 +96,14 @@ function hent_brukerdata($medlemid = ""){
 				FROM `medlemmer` 
 				WHERE `medlemsid`=".$medlemid;
 	}
-	$mysql_result = mysql_query($sql);
 	
+	$mysql_result = mysql_query($sql);
+
 	while($medlem = mysql_fetch_assoc($mysql_result)) {
 		return $medlem;
 	}
 	
-	die("Fant ikke medlem");
+	return NULL;
 }
 
 function er_logget_inn(){
