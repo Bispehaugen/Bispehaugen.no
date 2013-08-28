@@ -6,7 +6,7 @@
 		header('Location: ../index.php');
 	};
 	
-	$forumid=$_GET['id'];
+	$forumid=get('id');
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
 	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetav, tekst, innleggid, skrevet
 	FROM forum_tema, forum_innlegg WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid 

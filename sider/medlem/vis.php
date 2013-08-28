@@ -4,8 +4,8 @@
 	//funksjonalitet
 
 	//henter valgte medlem fra databasen
-	if(isset($_GET['id'])){	
-		$id=mysql_real_escape_string($_GET['id']);
+	if(has('id')){	
+		$id=get('id');
 		
 		$medlemmer = hent_brukerdata($id);
 	}
@@ -18,7 +18,7 @@
   
 			<table>
 				<tr><th>".$medlemmer['fnavn']." ".$medlemmer['enavn']."</th><th>";
-				if(($_SESSION['medlemsid']==$_GET['id']) || ($_SESSION['rettigheter']>2)){
+				if(($_SESSION['medlemsid']==get('id') || ($_SESSION['rettigheter']>2)){
 						echo"<a href='?side=medlem/endre&id=".$id."'>endre</a>";
 				};
 				echo"</th></tr>

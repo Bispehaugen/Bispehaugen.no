@@ -26,6 +26,17 @@ function koble_til_database($database_host, $database_user, $database_string, $d
     return true;
 }
 
+function get($attributt) {
+	return isset($_GET[$attributt]) ? mysql_real_escape_string($_GET[$attributt]) : null; 
+}
+
+function post($attributt) {
+	return isset($_POST[$attributt]) ? mysql_real_escape_string($_POST[$attributt]) : null; 
+}
+
+function has($attributt) {
+	return isset($_GET[$attributt]);
+}
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	

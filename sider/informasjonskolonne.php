@@ -21,13 +21,13 @@ if (!empty($konsert)) {
 	        <img src="<?php echo $bilde; ?>" />
 	        <h4><?php echo $konsert['overskrift']; ?></h4>
 	        <div class="info">
-	        <b>Tid:</b> <?php echo ucfirst(strftime("%A %#d. %B", strtotime($konsert['$konsert_tid']))); ?>, kl. <?php 
-	        echo strftime("%H:%M", strtotime($konsert['$konsert_tid'])); ?><br />
+	        <b>Tid:</b> <?php echo ucfirst(strftime("%A %#d. %B", strtotime($konsert['konsert_tid']))); ?>, kl. <?php 
+	        echo strftime("%H:%M", strtotime($konsert['konsert_tid'])); ?><br />
 	        <b>Pris:</b> <?php echo $konsert['normal_pris']; ?>/<?php echo $konsert['student_pris']; ?><br />
 	        <b>Sted:</b> <?php echo $konsert['sted']; ?>
 	        </div>
 	        <br />
-	        <div class="read_more"><a href="">Les mer</a></div>
+	        <div class="read_more"><a href="?side=nyhet&id=$id"">Les mer</a></div>
 	        
 	    </div>
 	</div>

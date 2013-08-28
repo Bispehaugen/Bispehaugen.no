@@ -14,7 +14,7 @@
 	}
 	$aktiviteter=hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 	
-	$valgt_id = isset($_GET['id']) ? $_GET['id'] : NULL ;
+	$valgt_id = get('id');
 
 	//henter kakebaker hvis det er noen
 	if($valgt_id){

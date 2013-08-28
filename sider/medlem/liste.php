@@ -2,7 +2,7 @@
     
     //SQL-sp�rringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
     //sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
-    if(er_logget_inn() && $_GET['alle']==1){
+    if(er_logget_inn() && get('alle')==1){
    		$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
     	medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE instrumentid LIKE instnr ORDER BY posisjon, 
     	grleder  desc, status, fnavn";
@@ -26,9 +26,9 @@
     #Det som printes p� sida
     
     //lager en link til å vise alle
-    if(er_logget_inn() && $_GET['alle']==0){
+    if(er_logget_inn() && get('alle')==0){
     	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede også</a>";
-    }if(er_logget_inn() && $_GET['alle']==1){
+    }if(er_logget_inn() && get('alle')==1){
     	echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive</a>";
     }
     
@@ -66,7 +66,7 @@
 				}else{
 					echo "</td><td></td>";
 				};
-			if(er_logget_inn() && $_GET['alle']==0){
+			if(er_logget_inn() && get('alle')==0){
 					//hvis man er logget inn vises mobilnummeret til alle medlemmer
 					echo "<td>".$medlem ['tlfmobil']."</td>";
 			}

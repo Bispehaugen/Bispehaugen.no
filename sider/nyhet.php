@@ -1,12 +1,12 @@
 <?php
 setlocale(LC_TIME, "norwegian"); 	
 // Vis enkelnyhet
-if( isset($_GET['id']) ){
+if( has('id') ){
 
 	$logget_inn = false;
 
 	
-	$id = mysql_real_escape_string($_GET['id']);
+	$id = get('id');
 	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE nyhetsid=".$id;
 
 

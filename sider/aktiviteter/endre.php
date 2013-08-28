@@ -39,9 +39,9 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 	};
 	
 	//henter valgte aktivitet fra databasen
-	if(isset($_GET['id'])){	
+	if(has('id')){	
 		#Hente ut valgte nyhet hvis "endre"
-		$arrid=mysql_real_escape_string($_GET['id']);
+		$arrid=get('id');
 		$sql="SELECT * FROM `arrangement` WHERE `arrid`=".$arrid;
 		$mysql_result=mysql_query($sql);
 		$aktiviteter = Array();
@@ -92,7 +92,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 						};
 						echo "</select></td></tr>
 			</table>
-			<input type='hidden' name='id' value='".$_GET['id']."'>
+			<input type='hidden' name='id' value='".get('id')."'>
 			<a href='?side=aktiviteter/liste'>Avbryt</a>
 			<input type='submit' name='endreNyhet' value='Lagre'>
 		</form> 

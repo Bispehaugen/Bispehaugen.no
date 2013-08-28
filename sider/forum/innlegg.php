@@ -33,7 +33,7 @@
 		mysql_query($sql);
 	};
 	
-	$temaid=$_GET['id'];
+	$temaid=get('id');
 	//henter ut alle innleggene i valgte forum/tema 
 	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav,  
 	forum_innlegg.skrevet FROM forum_tema, forum_innlegg 

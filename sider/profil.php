@@ -1,8 +1,8 @@
 <?php
 
-if(isset($_GET['id'])){
+if(has('id')){
 	
-	$id = mysql_real_escape_string($_GET['id']);
+	$id = get('id');
 	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `medlemmer` WHERE nyhetsid=".$id;
 	
 	

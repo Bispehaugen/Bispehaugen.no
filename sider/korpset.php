@@ -1,7 +1,7 @@
 <?php
 include_once "funksjoner.php";
 
-if ($_GET['id']=="en") {
+if (get('id')=="en") {
 echo "
 <a href=\"?side=korpset\">Vis på norsk</a>
 	<table width=\"97%\">
