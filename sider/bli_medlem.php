@@ -14,14 +14,14 @@ $sTelefon = "";
 
 
 // Hvis bli_medlem mottar et skjema
-if(isset($_POST["sEpost"])){
+if(has_post("sEpost")){
 	
-	$sAnnet = $_POST["sAnnet"];
-	$sNavn = $_POST["sNavn"];
-	$sInstrument = $_POST["sInstrument"];
-	$sHvorKjentMed = $_POST["sHvorKjentMed"];
-	$sEpost = $_POST["sEpost"];
-	$sTelefon = $_POST["sTelefon"];
+	$sAnnet = post("sAnnet");
+	$sNavn = post("sNavn");
+	$sInstrument = post("sInstrument");
+	$sHvorKjentMed = post("sHvorKjentMed");
+	$sEpost = post("sEpost");
+	$sTelefon = post("sTelefon");
 
 	# Definerer headere til mailen som skal sendes
 	$from = "From: !!BUK web-skjema!! <buk-webskjema@stud.ntnu.no>";

@@ -11,29 +11,29 @@
 	};
 	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
-	if(isset($_POST['temaid'])){
+	if(has_post('temaid')){
 		$tekst=post('tekst');
 		$sql="INSERT INTO forum_innlegg (temaid, tekst, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".$_POST['temaid']."','".$tekst."','".date('Y-m-d h:i:s')."','".$_POST['medlemsid']."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d h:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
 	//hvis noen har skrevet seg p� en liste
-	if(isset($_POST['listeinnlegg'])){
+	if(has_post('listeinnlegg')){
 		//M� hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
 		//TODO: f� dette til � g� p� medlemsid
-		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".$_POST['medlemsid']."';";
+		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".post('medlemsid')."';";
 		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
 		$kommentar=post('kommentar');
-		if($_POST['flagg']==1){$flagg=1;}else{$flagg=0;};
+		if(post('flagg')==1){$flagg=1;}else{$flagg=0;};
 		//sql - databasen er s�nn at pdd. kan du ikke melde deg p� n�r du allerede er p�meldt
 		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
-			VALUES ('".$_POST['listeinnlegg']."','".$flagg."','".$brukerid[$_POST['medlemsid']]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".post('listeinnlegg')."','".$flagg."','".$brukerid[post('medlemsid')]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
-	$temaid=$_GET['id'];
+	$temaid=get('id');
 	//henter ut alle innleggene i valgte forum/tema 
 	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav,  
 	forum_innlegg.skrevet FROM forum_tema, forum_innlegg 
@@ -103,7 +103,7 @@
 			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
-				<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$forum_innlegg['innleggid']]['listeid']."'>
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg p� lista'></td></tr>";
 			}else{
@@ -116,8 +116,8 @@
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
-			<td><input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
-			<input type='hidden' name='temaid' value=".$temaid.">
+			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
+			<input type='hidden' name='temaid' value='".$temaid."'>
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
 		</form> 
 	</table>";

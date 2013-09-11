@@ -11,7 +11,7 @@ if ($tilkobling === false) {
 	exit ;
 }
 
-if (isset($_GET["loggut"])) {
+if (has("loggut")) {
 	logg_ut();
 }
 
@@ -19,8 +19,8 @@ if (isset($_GET["loggut"])) {
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 
 //lagrer alt innhold som en variabel
-if(isset($_GET['side'])){
-	$side = $_GET['side'];
+if(has('side')){
+	$side = get('side');
 } else {
 	$side = "sider";
 }
@@ -37,7 +37,9 @@ $innhold = ob_get_clean();
     <meta charset="ISO-8859-1"/>
     <title>Bispehaugen Ungdomskorps</title>
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
+    <link rel="stylesheet" href="css/font-awesome-ie7.css" type="text/css" />
     <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png">
     <link rel='stylesheet' href='http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' />
     <link rel="stylesheet" href="css/style.css" type="text/css" />
@@ -65,7 +67,7 @@ $innhold = ob_get_clean();
 	<div id="header_stripe"></div>
 	<div class="site">
 		<div class="logo_column">
-			<a href=""><div class="logo"></div></a>
+			<a href="?"><div class="logo"></div></a>
 			<div class="figurer"></div>
 			
 			<?php
@@ -92,10 +94,12 @@ $innhold = ob_get_clean();
 
 				<?php
 				#sjekker om det er satt noen errors og evt. skriver dem ut
-				if (isset($_SESSION["errors"])) {
+				if (isset($_SESSION["Errors"])) {
 					echo "<div class='errors'>
-						" . $_SESSION['errors'] . "
+						" . $_SESSION["Errors"] . "
 						</div>";
+					
+					unset($_SESSION["Errors"]);
 				}
 				?>
 				

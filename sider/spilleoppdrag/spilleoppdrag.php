@@ -50,14 +50,14 @@ $sPoststed = "";
 
 
 // Hvis Spilleoppdrag mottar et skjema
-if(isset($_POST["sEpost"])){
+if(has_post("sEpost")){
 	
-	$sAnnet = $_POST["sAnnet"];
-	$sNavn = $_POST["sNavn"];
-	$sOrganisasjon = $_POST["sOrganisasjon"];
-	$sAdresse = $_POST["sAdresse"];
-	$sEpost = $_POST["sEpost"];
-	$sTelefon = $_POST["sTelefon"];
+	$sAnnet = post("sAnnet");
+	$sNavn = post("sNavn");
+	$sOrganisasjon = post("sOrganisasjon");
+	$sAdresse = post("sAdresse");
+	$sEpost = post("sEpost");
+	$sTelefon = post("sTelefon");
 
 	# Definerer headere til mailen som skal sendes
 	$from = "From: !!BUK web-skjema!! <buk-webskjema@stud.ntnu.no>";
@@ -113,7 +113,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 		<tr>
 			<td class="label">Navn:</td>
 			<td>
-			<input type="text" name="sNavn" value="<?php echo $sNamn; ?>"></td>
+			<input type="text" name="sNavn" value="<?php echo $sNavn; ?>"></td>
 		</tr>
 		<tr>
 			<td class="label">Organisasjon:</td>

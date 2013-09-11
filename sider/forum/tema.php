@@ -6,7 +6,7 @@
 		header('Location: ../index.php');
 	};
 	
-	$forumid=$_GET['id'];
+	$forumid=get('id');
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
 	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetav, tekst, innleggid, skrevet
 	FROM forum_tema, forum_innlegg WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid 
@@ -31,8 +31,15 @@
     echo "<table class='forum'><tr><th></th><th>Tråd</th><th>Siste innlegg i tråd</th></tr>";
   
    	//skriver ut alle temaene i forumet sortet på sist oppdaterte med siste innlegg og av hvem
-   	foreach($forumtemaer as $forumtema){
-   		if($sist_leste_innlegg[$forumtema['temaid']]['sistelesteinnlegg'] < $sist_leste_innlegg[$forumtema['temaid']]['innleggid']){
+   	foreach($forumtemaer as $temaid => $forumtema){
+   		
+   		$ulest = true;
+   		if (!empty($siste_leste_innlegg)) {
+   			$innlegg = $sist_leste_innlegg[$temaid];
+   			$ulest = !empty($temaid) && (empty($innlegg) || $innlegg['sistelesteinnlegg'] < $innlegg['innleggid']);
+   		}
+   		
+   		if($ulest){
    			echo "<tr class='ulest'>";
    		}else{
 	   		echo "<tr>";

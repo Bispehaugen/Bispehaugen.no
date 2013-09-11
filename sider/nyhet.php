@@ -1,22 +1,21 @@
 <?php
 setlocale(LC_TIME, "norwegian"); 	
 // Vis enkelnyhet
-if( isset($_GET['id']) ){
+if( has('id') ){
 
-	$logget_inn = false;
-
-	
-	$id = mysql_real_escape_string($_GET['id']);
+	$id = get('id');
 	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE nyhetsid=".$id;
-
-
-        // If not signed in, add news restrictions
-	if($logget_inn === false){
+	
+    // If not signed in, add news restrictions
+	if(er_logget_inn() === false){
 		$sql .= " AND type='Public' ";
-
 	}
 	
 	$nyhet = hent_og_putt_inn_i_array($sql);
+	
+	if (empty($nyhet)) {
+		echo "Du må logge inn for å lese denne nyheten :)";
+	} else {
 	
 	$bilde = $nyhet['bilde'];
 	?>
@@ -33,7 +32,7 @@ if( isset($_GET['id']) ){
 	
 	
 	<?php
-	
+	}
 } else {
 	// Vis nyhetsoversikt
 	$nyheter = hent_siste_nyheter(30, "Public");

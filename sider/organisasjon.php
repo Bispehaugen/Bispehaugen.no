@@ -11,14 +11,14 @@
 	$komiteer=hent_og_putt_inn_i_array($sql,$id_verdi="komiteid");
 	
 	//henter ut info om medlemmer++ om valgte komitÃ©
-	if(isset($_GET['id'])){
+	if(has('id')){
 		$sql="SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon, tittel, medlemmer.medlemsid, 
 		verv.medlemsid, epost, fnavn, enavn  FROM komite, verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND 
-		komite.komiteid=verv.komiteid AND komite.komiteid=".$_GET['id']." ORDER BY komite.posisjon, verv.posisjon";
+		komite.komiteid=verv.komiteid AND komite.komiteid=".get('id')." ORDER BY komite.posisjon, verv.posisjon";
 	    $valgtekomiteer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 	};
 	
-	//det som skrives ut pÃ¥ side	
+	//det som skrives ut på side	
 	
 	echo"<table>
 			<tr><th colspan='4'>Kjekt å vite: </th></tr>
@@ -27,18 +27,18 @@
 			<form method='post' action='?side=oranisasjon'>
 				<tr><td></td><td>Hvilken øvelse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<tr><td></td><td>Grunn:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
-				<input type='hidden' name='medlemsid' value=".$_SESSION['medlemsid'].">
+				<input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
 
-			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes pÃ¥ e-post til styret. 
-				Husk Ã¥ oppgi periode og Ã¥rsak til permisjonen.</td></tr>
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes på e-post til styret. 
+				Husk å oppgi periode og årsak til permisjonen.</td></tr>
 			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det går på rundgang se ruten oppe til høyre om neste gang 
 			det er din tur eller trykk på aktiviteten for å se.</td></tr>
 			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
 			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>";
 			
-			if(isset($_GET['slagverksgrupper'])){
+			if(has('slagverksgrupper')){
 				echo"<tr><td><a href='?side=organisasjon'>skjul grupper</a></td><td colspan='3'></td></tr>
 				<tr><td></td><td><b>Gruppe 1</b></td><td colspan='2'>.......</td></tr>";
 
@@ -59,7 +59,7 @@
 			
 			//skriver ut alle komiteene med link til komitevisning
 			foreach($komiteer as $komite){
-					if($komite['komiteid']==$_GET['id']){
+					if($komite['komiteid']==get('id')){
 						echo"<tr><td colspan='3'><a href='?side=organisasjon'><b>".$komite['navn']."</b></a></td>
 						<td>".$komite['mail_alias']."</td></tr>";
 						foreach($valgtekomiteer as $valgtekomite){

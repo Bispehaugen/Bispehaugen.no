@@ -1,4 +1,5 @@
 lokal_config.php
+*.sublime*
 .settings
 .project
 desktop.ini

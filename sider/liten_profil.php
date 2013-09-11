@@ -9,8 +9,7 @@
 
 	echo '
 		<div id="liten_profil">
-		<p><b>Hei '.$bruker['fnavn'].'!</b><br />Kjapt om deg:</p>
-		<img class="lite_bilde" src="'.$bilde.'" />
+		<img class="profil_bilde" src="'.$bilde.'" />
 		<div class="navn">'.$bruker['fnavn'].' '.$bruker['enavn'].'</div>
 		<div class="epost">'.$bruker['email'].'</div>
 		<div class="mobil">'.$bruker['tlfmobil'].'</div>

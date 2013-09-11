@@ -17,7 +17,7 @@
 		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
-	if(isset($_POST['id']) || isset($_POST['fnavn'])){
+	if(has_post('id') || has_post('fnavn')){
 		$medlemsid=post('id');
 		$fnavn=post('fnavn');
 		$enavn=post('enavn');
@@ -76,11 +76,9 @@
 				medlemsid = '$medlemsid';
 			";
 			
-			echo "loop1".$sql;
 			mysql_query($sql);
-			//header('Location: ?side=medlem/liste');
-		}else{
-			die("WRONG");			
+			header('Location: ?side=medlem/liste');
+		}else{		
 			$sql="
 			INSERT INTO 
 			medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
@@ -88,11 +86,11 @@
 			values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
 				'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$foto','$begrenset')";
 			mysql_query($sql);
-			//header('Location: ?side=medlem/liste');
+			header('Location: ?side=medlem/liste');
 		}
 		};
 	//henter valgte medlem fra databasen hvis "endre"
-	if(isset($_GET['id'])){	
+	if(has('id')){	
 		$medlemmer = hent_brukerdata($id);
 	} else {
 		$medlemmer = hent_brukerdata();
@@ -112,9 +110,9 @@
 				<th>Rediger medlem</th><th></th>
 				<tr><td>Gruppeleder:</td><td><input type='checkbox' name='grleder' value='true' ";
 				if(isset($medlemmer['grleder']) && $medlemmer['grleder']) echo "checked";	
-				echo "></td></tr>
-				<tr><td>Fornavn:</td><td><input type='text' name='fnavn' value=".$medlemmer['fnavn']."></td></tr>
-				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value=".$medlemmer['enavn']."></td></tr>
+				echo "'></td></tr>
+				<tr><td>Fornavn:</td><td><input type='text' name='fnavn' value='".$medlemmer['fnavn']."'></td></tr>
+				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value='".$medlemmer['enavn']."'></td></tr>
 				<tr><td>status:</td><td>
 					<select name='status'>
 					";
@@ -132,31 +130,32 @@
 					<select name='instnr'>";
 					foreach($instrumenter as $instrument){
 							echo"
-  							<option value=".$instrument['instrumentid']." ";
+  							<option value='".$instrument['instrumentid']." ";
   							if($instrument['instrument']==$medlemmer['instrument']){
   								echo "selected";
   							};
   							echo ">".$instrument['instrument']."</option>";
 					};
-					echo "<input type='hidden' name='instrument' value=".$instrument['instrument']."></select></td></tr>
-				<tr><td>Fødselsdato:</td><td><input type='text' class='datepicker' name='fdato' value=".$medlemmer['fdato']."></td></tr>
-				<tr><td>Adresse:</td><td><input type='text' name='adresse' value=".$medlemmer['adresse']."></td></tr>
-				<tr><td>Postnr:</td><td><input type='text' name='postnr' value=".$medlemmer['postnr']."></td></tr>
-				<tr><td>Poststed:</td><td><input type='text' name='poststed' value=".$medlemmer['poststed']."></td></tr>
-				<tr><td>Mobilnummer:</td><td><input type='text' name='tlfmobil' value=".$medlemmer['tlfmobil']."></td></tr>
-				<tr><td>E-post:</td><td><input type='text' name='email' value=".$medlemmer['email']."></td></tr>
-				<tr><td>Musikalsk bakgrunn:</td><td><input type='text' name='bakgrunn' value=".$medlemmer['bakgrunn']."></td></tr>
-				<tr><td>Startet i BUK:</td><td><input type='text' class='datepicker' name='startetibuk_date' value=".$medlemmer['startetibuk_date']."></td></tr>
-				<tr><td>Sluttet i BUK:</td><td><input type='text' class='datepicker' name='sluttetibuk_date' value=".$medlemmer['sluttetibuk_date']."></td></tr>
-				<tr><td>Studie/yrke:</td><td><input type='text' name='studieyrke' value=".$medlemmer['studieyrke']."></td></tr>
-				<tr><td>Kommer fra:</td><td><input type='text' name='kommerfra' value=".$medlemmer['kommerfra']."></td></tr>
+
+					echo "<input type='hidden' name='instrument' value='".$instrument['instrument']."'></select></td></tr>
+				<tr><td>Fødselsdato:</td><td><input type='text' class='datepicker' name='fdato' value='".$medlemmer['fdato']."'></td></tr>
+				<tr><td>Adresse:</td><td><input type='text' name='adresse' value='".$medlemmer['adresse']."'></td></tr>
+				<tr><td>Postnr:</td><td><input type='text' name='postnr' value='".$medlemmer['postnr']."'></td></tr>
+				<tr><td>Poststed:</td><td><input type='text' name='poststed' value='".$medlemmer['poststed']."'></td></tr>
+				<tr><td>Mobilnummer:</td><td><input type='text' name='tlfmobil' value='".$medlemmer['tlfmobil']."'></td></tr>
+				<tr><td>E-post:</td><td><input type='text' name='email' value='".$medlemmer['email']."'></td></tr>
+				<tr><td>Musikalsk bakgrunn:</td><td><textarea name='bakgrunn'>".$medlemmer['bakgrunn']."</textarea></td></tr>
+				<tr><td>Startet i BUK:</td><td><input type='text' class='datepicker' name='startetibuk_date' value='".$medlemmer['startetibuk_date']."'></td></tr>
+				<tr><td>Sluttet i BUK:</td><td><input type='text' class='datepicker' name='sluttetibuk_date' value='".$medlemmer['sluttetibuk_date']."'></td></tr>
+				<tr><td>Studie/yrke:</td><td><input type='text' name='studieyrke' value='".$medlemmer['studieyrke']."'></td></tr>
+				<tr><td>Kommer fra:</td><td><input type='text' name='kommerfra' value='".$medlemmer['kommerfra']."'></td></tr>
 				<tr><td>Litt om meg selv:</td><td><textarea name='ommegselv'>".$medlemmer['ommegselv']."</textarea></td></tr>
-				<tr><td>Bilde:</td><td><input type='text' name='foto' value=".$medlemmer['foto']."></td></tr>
+				<tr><td>Bilde:</td><td><input type='text' name='foto' value='".$medlemmer['foto']."'></td></tr>
 				<tr><td>Vises kun for innloggede:</td><td><input type='checkbox' name='begrenset' value='true' ";
 				if (isset($medlemmer['begrenset']) && $medlemmer['begrenset']) echo "checked";
-				echo "></td></tr>
+				echo "'></td></tr>
 				</table>
-			<input type='hidden' name='id' value=".$medlemmer['medlemsid'].">
+			<input type='hidden' name='id' value='".$medlemmer['medlemsid']."'>
 			<a href='?side=medlem/liste'>Avbryt</a>
 			<input type='submit' name='endreMedlem' value='Lagre'>
 		</form> 

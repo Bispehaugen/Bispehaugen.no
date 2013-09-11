@@ -7,9 +7,9 @@
 		header('Location: ?side=aktiviteter/liste');
 	};
 	
-	$id=$_GET['id'];
+	$id=get('id');
 	
-	if(isset($_GET['id'])){
+	if(has('id')){
 		//$sql = "UPDATE arrangement SET slettet=true WHERE arrid = '".$id."';";
 		mysql_query($sql);
 		header('Location: ?side=aktiviteter/liste');
