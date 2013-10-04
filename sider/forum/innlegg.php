@@ -75,8 +75,8 @@
     echo "<table class='forum'><tr><th colspan = '3'>".$tema['tittel']."</th></tr>";
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet på sist oppdaterte med siste innlegg og av hvem
-   	foreach($foruminnlegg as $forum_innlegg){
-      	if($forum_innlegg['innleggid']>$sisteleste){
+   	foreach($foruminnlegg as $innleggId => $forum_innlegg){
+      	if($innleggId > $sisteleste){
 	      	echo "<tr class='ulest'>";
 		}
 		else{
