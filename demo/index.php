@@ -109,7 +109,7 @@
           <div class="image">
             <img src="../bilder/forside/logo.png">
           </div>
-          <div class="innhold">
+          <div class="innhold"> 
             <h4>Kunne du tenke deg å bli støttemedlem?</h4>
             <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
             <div class="date">

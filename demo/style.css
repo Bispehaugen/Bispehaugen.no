@@ -33,7 +33,7 @@ ul {
 }
 
 .nav-container {
-  background-color: #002e40;
+  background: rgba(0, 46, 64, 0.7);
   width: 100%;
   position: fixed;
   left: 0px;
