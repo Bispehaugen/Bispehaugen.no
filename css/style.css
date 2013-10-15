@@ -212,8 +212,9 @@ a img {
 }
 
 .content table {
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
+    padding-right: 1em;
+    margin: 0px 0px 0px 0px;
 }
 
 .content table th {

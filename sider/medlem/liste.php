@@ -27,7 +27,7 @@
     
     //lager en link til å vise alle
     if(er_logget_inn() && get('alle')==0){
-    	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede også</a>";
+    	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede ogs�</a>";
     }if(er_logget_inn() && get('alle')==1){
     	echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive</a>";
     }
@@ -47,11 +47,8 @@
 	   			};
        		echo "<tr><td><a href='?side=medlem/vis&id=".$medlem['medlemsid']."'>".$medlem['fnavn']." ".$medlem['enavn']."</a>";
 				//sjekker om permisjon eller sluttet - i så fall printes en bokstav etter navnet
-				if($medlem['status']=='Permisjon'){
-   					echo " (P) ";
-   				};
-				if($medlem['status']=='Sluttet'){
-   					echo " (S) ";
+				if($medlem['status']!='Aktiv'){
+   					echo " (".$medlem['status'].") ";
    				};
 				//sjekker på gruppeleder og skriver ut dette etter navnet hvis ja
        			if($medlem['grleder'] == true){
@@ -59,34 +56,31 @@
        			};
 				
        		echo "</td><td>";
-				//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
-				$medlemsid = $medlem['medlemsid'];
-       			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
-       				echo $styreverv[$medlemsid]['tittel']." </td><td class='hoyrestilt'>
-       				<a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i></a>";
-				}else{
-					echo "</td><td></td>";
-				};
-			if(er_logget_inn() && get('alle')==0){
-					//hvis man er logget inn vises mobilnummeret til alle medlemmer
-					echo "<td>".$medlem ['tlfmobil']."</td>";
+
+			//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
+			$medlemsid = $medlem['medlemsid'];
+   			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
+   				echo "<a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a>";
 			}
-			else{
-				echo"<td></td>";	
-			};
+			echo "</td><td>";
+			if(er_logget_inn() && get('alle')==0 && $medlem ['tlfmobil']){
+					//hvis man er logget inn vises mobilnummeret til alle medlemmer
+					echo "<a href='tel:".$medlem ['tlfmobil']."'><i class='icon-phone'></i> ".$medlem ['tlfmobil']."</a></a>";
+			}
+			echo"<td></td>";	
 			
 		}
 
 		//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
 
-		if($_SESSION['rettigheter']>1){
+		if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
 				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='icon-edit' title='Klikk for � endre'></i></a></td></tr>";
 		}else{
 			echo"<td></td></tr>";
 		};
 	};    
 
-	if($_SESSION['rettigheter']>1){
+	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
 			echo"
 			<tr><td colspan='5'></td></tr>
 			<tr><td colspan='5'></td></tr>
