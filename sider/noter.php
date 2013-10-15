@@ -8,35 +8,53 @@
 		header('Location: ../index.php');
 	};
 	
-	echo"<table>
-			<form method='get'>
+	//henter ut alle stykkene i db sortert etter tittel og evt. filtrert på konsert hvis konsert er valgt
+	//(Bruker tabellene noter_konsert og noter_notesett)
+	$konsertid=post('arrid');
+	
+	if(has_post('arrid') && $konsertid!='alle'){
+		
+		$sql="SELECT * FROM noter_notesett, noter_konsert 
+		WHERE arrid=".$konsertid." AND noter_notesett.noteid=noter_konsert.noteid ORDER BY tittel;";
+	}
+	else{
+		$sql="SELECT * FROM noter_notesett ORDER BY tittel;";
+	};
+	$notesett=hent_og_putt_inn_i_array($sql,'noteid');
+	
+	//henter alle konsertene
+	$sql="SELECT DISTINCT noter_konsert.arrid, tittel, dato FROM noter_konsert, arrangement 
+	WHERE noter_konsert.arrid=arrangement.arrid ORDER BY dato DESC;";
+	$konserter=hent_og_putt_inn_i_array($sql,'arrid');
+	
+	//printer ut det som skal vises på sida
+	echo"<table>";
+	
+	//form med muligheter for å velge ut noter til en konsert
+	echo" <form class='forum' method='post' action='?side=noter'>
 				<tr><td>Konsert:</td><td>
-					<select name='instid'>
-  							<option value='id'>Adventskonsert 2008</option>
-  							<option value='id'>HÃ¸stkonsert 2008</option>
-   							<option value='id'>NM 2008</option>
-  							<option value='id'>TM 2010</option>
-   							<option value='id'>Oppvarmingshefter</option>  							  							
+					<select name='arrid'>
+							<option value='alle'>alle noter</option>";
+					foreach($konserter as $konsert){
+						echo"<option value=".$konsert['arrid'];
+							//sjekk for om det er valgte konsert
+							if($konsertid==$konsert['arrid']){echo " selected ";}
+						echo">".$konsert['tittel']."</option>";};
+	echo "												  							
   					</select></td>
-			</form> 
-			<form method='get'>
-				<td>Type arr:</td><td>
-					<select name='instid'>
-  							<option value='id'>Fullt korps</option>
-  							<option value='id'>Solostykker</option>
-   							<option value='id'>Tyrolder</option>
-  							<option value='id'>Storband</option>
-  					</select></td></tr>
+  				<td><input type='submit' name='nyttInnlegg' value='finn noter!'></td></tr>
 			</form> 
 				<tr><td></td><td></td></tr>
-				<tr><th>Tittel</th><th>Komponist:</th><th>Del av verk:</th><th>Type arr</th></th>
-				<tr><td>Symfoni nr. 5</td><td></td><td></td><td>Fullt arr</td></tr>
-				<tr><td>Glade jul</td><td></td><td></td><td>Julefest</td></tr>
-				<tr><td>Intrada</td><td></td><td></td><td>Fullt arr</td></tr>
-				<tr><td>Oppvarmingshefter</td><td></td><td></td><td>Fullt arr</td></tr>
-				<tr><td>Trombonesolo</td><td></td><td></td><td>Fullt arr</td></tr>								
-		</table>
-		
-		
-	";
+				<tr><th>Tittel</th><th>Komponist:</th><th>Besetning:</th><th>Arkivnummer</th></tr>";
+	//liste med notesettene
+	foreach($notesett as $sett){
+		echo"<tr>
+				<td><a href='".$sett['filpath']."'>".$sett['tittel']."<a></td>
+				<td>".$sett['komponist']."</td>
+				<td>".$sett['besetningsid']."</td>
+				<td>".$sett['arkivnr']."</td>
+			</tr>
+		";
+	};
+	echo"</table>";
 ?>
