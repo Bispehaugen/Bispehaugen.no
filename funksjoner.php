@@ -122,8 +122,8 @@ function list_forum(){
     if($_SESSION['rettigheter']>1){
 		echo"
     	<td><a href=''>musikkomitéen</a></td>
-    	<td><a href=''>styret</a></td>
-    	<td><a href=''>webkom</a></td></tr>";
+    	<td><a href='?side=forum/tema&id=4'>styret</a></td>
+    	<td><a href='?side=forum/tema&id=3'>webkom</a></td></tr>";
 	};
     echo"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     </table>";
