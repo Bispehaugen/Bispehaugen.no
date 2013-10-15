@@ -55,12 +55,10 @@
 	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 		
 	//Henter ut siste uleste innlegg i tr�d
-//kommentert ut siden databasen ikke er oppdatert
-	//$medlemsid= $_SESSION["medlemsid"];
-	//$sql="SELECT * FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
-	//$mysql_result=mysql_query($sql);
-	//$sisteleste = mysql_fetch_array($mysql_result);
-	//$sisteleste= $sisteleste['sistelesteinnlegg'];
+	$medlemsid= $_SESSION["medlemsid"];
+	$sql="SELECT sistelesteinnlegg FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid." LIMIT 1;";
+	$result = mysql_query($sql);
+	$sisteleste = mysql_result($result, 0);		
 		
 	//Henter ut tema-tittel
 	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
@@ -85,7 +83,7 @@
 		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
    			<td>".$forum_innlegg['tekst'];
 		
-      	//if som skriver ut liste hvis det h�rer en til innlegget
+      	//if som skriver ut liste hvis det h�rer en liste til innlegget
 		if($listeinnlegg[$forum_innlegg['innleggid']]){
 			echo "<table>
 			<tr><th colspan='2'>".$listeinnlegg[$forum_innlegg['innleggid']]['tittel']."</th></tr>";
