@@ -5,14 +5,7 @@
     #fuksjonalitet
     
     //spørring som henter ut alle aktiviteter
-    if($_SESSION['rettigheter']==0 || !er_logget_inn()){
-		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
-	}elseif($_SESSION['rettigheter']==1){
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid; ";
-	}else{
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid; ";		
-	}
-	$aktiviteter=hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
+	$aktiviteter=hent_aktiviteter();
 	
 	$valgt_id = get('id');
 

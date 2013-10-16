@@ -182,5 +182,16 @@ function ant_dager_siden($dato){
 			};
 			return "<i>".$dagersiden_som_tekst."</i>";
 };
+
+function hent_aktiviteter() {
+	if($_SESSION['rettigheter']==0 || !er_logget_inn()){
+		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
+	}elseif($_SESSION['rettigheter']==1){
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid; ";
+	}else{
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid; ";		
+	}
+	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
+}
 	
 ?>
