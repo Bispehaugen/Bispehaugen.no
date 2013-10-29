@@ -3,8 +3,14 @@ body {
   margin: 0px;
   font-family: "Open Sans", sans-serif; }
 
-h1, h2, h4, nav li a {
-  font-family: "Headland One", Georgia, serif; }
+h1, h2, h3, h4{
+  /*font-family: "Headland One", Georgia, serif;*/
+  font-family: 'Dosis', sans-serif;
+  font-weight: 500;
+}
+nav li a {
+  font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 
 h1 {
   font-size: 48px;
@@ -26,16 +32,30 @@ a {
 ul {
   list-style: none; }
 
-.nyheter {
-  background-image:url("1.jpg");
+.title {
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-size: 6em;
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(34, 41, 51, 1);
+  
+}
+
+
+.forside {
+  background-image:url("3.jpg");
   background-repeat:no-repeat;
   background-size:cover;
+  height: 100%;
 }
 
 .nav-container {
-  background: rgba(0, 46, 64, 0.7);
+  /*background: rgba(0, 46, 64, 1)*/
+  background: white;
   width: 100%;
   position: fixed;
+  bottom: 0px;
   left: 0px;
   z-index: 1000;
 }
@@ -51,9 +71,15 @@ nav {
     display: inline-block; }
     nav li a {
       font-size: 15px;
-      color: white; }
+      color: #777;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      }
+    nav li a.bli-medlem {
+      font-size: 16px;
+    }
     nav li a.active {
-      color: #aaaaaa; }
+      color: rgba(34, 41, 51, 1); }
   @media screen and (max-width: 1100px) {
     nav {
       width: 90%; }
@@ -63,7 +89,7 @@ nav {
 section {
   padding-top: 100px;
   padding-bottom: 100px;
-  min-height: 1200px;
+  min-height: 800px;
   width: 100%; }
   section .content {
     margin: 0px auto;
@@ -93,6 +119,17 @@ section {
   .innhold {
     display: inline-block;
     width: 79%;
+    vertical-align: top;
+  }
+
+  .innhold h4 {
+      margin: 0px;
+  }
+
+  .news img {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #c6c6c6;
   }
 
 .banner { position: relative; overflow: auto; }
@@ -118,7 +155,7 @@ section {
       color: #002e40; }
 
 section:nth-child(odd) {
-  background-color: #4c6c79;
+  background-color: rgba(34, 41, 51, 1);
   color: white; }
   section:nth-child(odd) a {
     color: white; }
