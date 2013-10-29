@@ -210,3 +210,14 @@ td {
   padding: 0.5em;
 
 }
+
+
+.kontakt {
+  background-color: rgba(34, 41, 51, 0.5);
+  color: white;
+  min-height: 530px;
+}
+
+.korpset {
+  padding-bottom: 0px;
+}

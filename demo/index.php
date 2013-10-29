@@ -414,7 +414,28 @@
     <section class="korpset" data-scroll-index='7'>
       <div class='content'>
         <h2>Korpset</h2>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+        <p>Masse info om korpset kommer her</p>
+      </div>
 
+      <div class="kontakt">
+        <div class='content'>
+          <h2>Kontakt</h2>
+          <p>Bispehaugen Ungdomskorps<br />
+              Postboks 9012<br />
+              Rosenborg 7455 Trondheim<br />
+              <br />
+              Organisasjonnummer: 975.729.141<br />
+              Kontonummer: 4200 07 51280
+          </p>
+
+        </div>
       </div>
     </section>
 
