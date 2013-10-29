@@ -11,8 +11,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
-    <section class="forside" data-scroll-index='1'>
-      <div class="stottemedlem">Korps er ikke gratis å drive, bli støttemedlem i dag!</div>
+    <section class="forside coverflow" data-scroll-index='1'>
+      <div class="stottemedlem">Korps er ikke gratis å drive, bli <b><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></b> i dag!</div>
       <h1 class="title">Bispehaugen Ungdomskorps</h1>
     </section>
     <div class='nav-container'>
@@ -155,6 +155,7 @@
         <h2>Aktiviteter</h2>
 
           <table cellspacing=0 style="width: 100%">
+          <thead>
   <tr style="text-align: left">
     <th colspan=2 width="22%"><b>Dato</th>
     <th width="35%"><b>Arrangement</th>
@@ -162,6 +163,8 @@
     <th width="10%"><b>Starter</th>
     <th width="0">&nbsp;</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>fre</td>
     <td>01. nov</td>
@@ -381,65 +384,24 @@
     <td class=small_text><href="?id=1013&action=vis">&nbsp;</td>
     
   </tr>
-  
-  <tr>
-    <td></td>
-  </tr>
+
+  </tbody>
   </table>
       </div>
     </section>
-    <section class="spilleoppdrag" data-scroll-index='4'>
+    <section class="spilleoppdrag coverflow" data-scroll-index='4'>
      
       <div class='content'>
         <h2>Spilleoppdrag</h2>
-
-      <div class='content'>
-        <h2>Aktiviteter</h2>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-        <p>Masse masse</p>
-      </div>
+        <p>Tyrolerorkester, fanfareoppdrag</p>
+        <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
       </div>
     </section>
     <section class="blimedlem" data-scroll-index='5'>
       <div class='content'>
-        <h2>Bli medlem!</h2>
+
+        <button><h2>Bli medlem!</h2></button>
+        <button><h2>Eller bli støttemedlem!</h2></button>
 
       </div>
     </section>

@@ -42,17 +42,41 @@ ul {
   
 }
 
+.stottemedlem {
+  background: white;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  padding: 0.5em 1em;
+  color: rgba(34, 41, 51, 1);
+  background: rgba(255, 255, 255, 0.5);
+
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
 svg.logo-img {
   position: relative;
   right: 100%;
 }
 
-.forside {
-  background-image:url("3.jpg");
+.coverflow {
   background-repeat:no-repeat;
   background-size:cover;
   height: 100%;
   text-align: center;
+}
+
+.forside {
+  background-image:url("3.jpg");
+}
+
+.spilleoppdrag {
+  background-image:url("3.jpg");
 }
 
 .nav-container {
@@ -174,3 +198,15 @@ section:nth-child(odd) {
   color: white; }
   section:nth-child(odd) a {
     color: white; }
+
+tbody tr:nth-child(even) {
+  background-color: rgba(245, 245, 245, 1);
+}
+thead tr {
+  background-color: #efefef;
+}
+
+td {
+  padding: 0.5em;
+
+}
