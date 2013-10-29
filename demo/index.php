@@ -11,35 +11,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
-    <section class="forside">
+    <section class="forside" data-scroll-index='1'>
+      <div class="stottemedlem">Korps er ikke gratis å drive, bli støttemedlem i dag!</div>
       <h1 class="title">Bispehaugen Ungdomskorps</h1>
-      
     </section>
     <div class='nav-container'>
       <nav>
         <ul>
-          <li>
-            <a class='active' data-scroll-nav='0'>Nyheter</a>
+          <li class="logo">
+            <a class='active' data-scroll-nav='1'>
+              <svg class="logo-img" width="100" height="100">
+                <image class="logo-img" xlink:href="icon_logo.svg" src="icon_logo.png" width="100" height="100" />
+              </svg>
+            </a>
+          </li>
+          <li class="first">
+            <a data-scroll-nav='2'>Nyheter</a>
           </li>
           <li>
-            <a data-scroll-nav='1'>Aktiviteter</a>
+            <a data-scroll-nav='3'>Aktiviteter</a>
           </li>
           <li>
-            <a data-scroll-nav='2'>Spilleoppdrag</a>
+            <a data-scroll-nav='4'>Spilleoppdrag</a>
           </li>
           <li>
-            <a class="bli-medlem" data-scroll-nav='3'>Bli medlem</a>
+            <a class="bli-medlem" data-scroll-nav='5'>Bli medlem</a>
           </li>
           <li>
-            <a data-scroll-nav='4'>Medlemmer</a>
+            <a data-scroll-nav='6'>Medlemmer</a>
           </li>
           <li>
-            <a data-scroll-nav='5'>Korpset</a>
+            <a data-scroll-nav='7'>Korpset</a>
           </li>
         </ul>
       </nav>
     </div>
-    <section class="nyheter" data-scroll-index='0'>
+    <section class="nyheter" data-scroll-index='2'>
     <div class='content'>
         <div class="box news">
           <div class="image">
@@ -143,7 +150,7 @@
         
       </div>
     </section>
-    <section class="aktiviteter" data-scroll-index='1'>
+    <section class="aktiviteter" data-scroll-index='3'>
       <div class='content'>
         <h2>Aktiviteter</h2>
 
@@ -381,7 +388,7 @@
   </table>
       </div>
     </section>
-    <section class="spilleoppdrag" data-scroll-index='2'>
+    <section class="spilleoppdrag" data-scroll-index='4'>
      
       <div class='content'>
         <h2>Spilleoppdrag</h2>
@@ -430,19 +437,19 @@
       </div>
       </div>
     </section>
-    <section class="blimedlem" data-scroll-index='3'>
+    <section class="blimedlem" data-scroll-index='5'>
       <div class='content'>
         <h2>Bli medlem!</h2>
 
       </div>
     </section>
-    <section class="medlemmer" data-scroll-index='4'>
+    <section class="medlemmer" data-scroll-index='6'>
       <div class='content'>
         <h2>Medlemmer</h2>
 
       </div>
     </section>
-    <section class="korpset" data-scroll-index='5'>
+    <section class="korpset" data-scroll-index='7'>
       <div class='content'>
         <h2>Korpset</h2>
 
@@ -461,6 +468,19 @@
           
           //  Either do unslider.data('unslider').next() or .prev() depending on the className
           unslider.data('unslider')[fn]();
+      });
+
+      var logo = $(".logo-img");
+
+      $( window ).scroll(function() {
+        var top = $(window).scrollTop();
+        if (top < 800) {
+          logo.attr("height", ((1000 - top) / 10.0));
+          logo.css("right", ((1000 - top) / 10.0)+"%");
+        } else {
+          logo.attr("height", 20);
+          logo.css("right", 10);
+        }
       });
     </script>
   </body>
