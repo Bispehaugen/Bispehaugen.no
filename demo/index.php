@@ -12,6 +12,7 @@
   </head>
   <body>
     <section class="forside coverflow" data-scroll-index='1'>
+      <a name="forside" />
       <div class="stottemedlem">Korps er ikke gratis å drive, bli <b><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></b> i dag!</div>
       <h1 class="title">Bispehaugen Ungdomskorps</h1>
     </section>
@@ -19,7 +20,7 @@
       <nav>
         <ul>
           <li class="logo">
-            <a class='active' data-scroll-nav='1'>
+            <a href="#forside" class='active' data-scroll-nav='1'>
               <img class="logo-img" width="100" height="100" src="icon_logo.svg" />
             </a>
           </li>
