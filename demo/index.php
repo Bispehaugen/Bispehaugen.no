@@ -20,9 +20,7 @@
         <ul>
           <li class="logo">
             <a class='active' data-scroll-nav='1'>
-              <svg class="logo-img" width="100" height="100">
-                <image class="logo-img" xlink:href="icon_logo.svg" src="icon_logo.png" width="100" height="100" />
-              </svg>
+              <img class="logo-img" width="100" height="100" src="icon_logo.svg" />
             </a>
           </li>
           <li class="first">
@@ -390,7 +388,7 @@
       </div>
     </section>
     <section class="spilleoppdrag coverflow" data-scroll-index='4'>
-     
+    
       <div class='content'>
         <h2>Spilleoppdrag</h2>
         <p>Tyrolerorkester, fanfareoppdrag</p>
