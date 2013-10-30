@@ -440,6 +440,10 @@
 
     <script>
       $.scrollIt();
+      
+      $("nav a").click(function(event) {
+        event.prevetDefault();
+      });
 
       //$(".aktiviteter").height($(".aktiviteter .content").outerHeight(true));
 
