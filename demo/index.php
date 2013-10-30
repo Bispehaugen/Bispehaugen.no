@@ -442,7 +442,7 @@
       $.scrollIt();
       
       $("nav a").click(function(event) {
-        event.prevetDefault();
+        event.preventDefault();
       });
 
       //$(".aktiviteter").height($(".aktiviteter .content").outerHeight(true));
