@@ -65,8 +65,25 @@ function escapeString($string) {
 ?>
 BEGIN:VCALENDAR
 VERSION:2.0
+METHOD:PUBLISH
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
-CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:CET
+BEGIN:STANDARD
+DTSTART:20001029T030000
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
+TZNAME:CET
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:20000326T020000
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
+TZNAME:CEST
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+END:DAYLIGHT
+END:VTIMEZONE
 <?php
 foreach($aktiviteter as $id => $aktivitet) {
 	$uid = "Bispehaugen.no/arr/".$id;
@@ -75,20 +92,37 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$title = $aktivitet["tittel"];
 	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
 	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
-	$description =  "OppmÃ¸te kl. " . $aktivitet["oppmoetetid"] . "\n" .
-					"Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\n" .
-					"Kakebaker: " . $aktivitet["hjelpere"] . "\n" .
-					$aktivitet["ingress"];
+	$description =  $aktivitet["ingress"];
+
+	if (!empty($aktivitet["kakebaker"])) {
+		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\n" . $description;
+	}
+
+	if (!empty($aktivitet["hjelpere"])) {
+		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\n" . $description;
+	}
+
+	if (!empty($aktivitet["oppmoetetid"])) {
+		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\n" . $description;
+	}
 ?>
 BEGIN:VEVENT
 DTEND:<?= dateToCal($dateend) ?>
+
 UID:<?= $uid ?>
+
 DTSTAMP:<?= dateToCal(time()) ?>
+
 LOCATION:<?= escapeString($address) ?>
+
 DESCRIPTION:<?= escapeString($description) ?>
+
 URL;VALUE=URI:<?= escapeString($uri) ?>
+
 SUMMARY:<?= escapeString($title) ?>
+
 DTSTART:<?= dateToCal($datestart) ?>
+
 END:VEVENT
 <?php
 }
