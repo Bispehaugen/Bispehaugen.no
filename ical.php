@@ -6,7 +6,7 @@ error_reporting(E_ERROR | E_PARSE);
 include_once "db_config.php";
 include_once "funksjoner.php";
 require_once( "./icalendar.php" );
-header('Content-type: text/calendar; charset=utf-8');
+//header('Content-type: text/calendar; charset=utf-8');
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -79,7 +79,6 @@ foreach($aktiviteter as $id => $aktivitet) {
 	  // create an event calendar component
 	$vevent->setProperty( "uid", $uid);
 
-	$
 	$vevent->setProperty( "dtstart", $datestart );
 
 	$vevent->setProperty( "dtend",   $dateend );
@@ -92,7 +91,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
-$v->returnCalendar();
+$v->returnCalendar(true);
 
 /*
 $valarm = & $vevent->newComponent( "valarm" );
