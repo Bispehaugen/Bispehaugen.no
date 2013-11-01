@@ -65,14 +65,22 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$vevent = & $v->newComponent( "vevent" );
 	  // create an event calendar component
+	/*
 	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
+
+echo "haha:".$aktivitet["dato"]." ".$aktivitet["starttid"];
+echo "Start: ".$datestart;
+echo "Hm: " . date("y". $datestart);
+
+
 	$start = array( "year"  => date("y". $datestart)
 	              , "month" => date("n". $datestart)
 	              , "day"   => date("j". $datestart)
 	              , "hour"  => date("G". $datestart)
 	              , "min"   => date("i". $datestart)
 	              , "sec"   => 0 );
-	$vevent->setProperty( "dtstart", $start );
+	print_r($start);
+	$vevent->setProperty( "dtstart", date_parse($aktivitet["dato"]." ".$aktivitet["starttid"]) );
 
 	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
 	$end   = array( "year"  => date("y". $dateend)
@@ -81,8 +89,8 @@ foreach($aktiviteter as $id => $aktivitet) {
 	              , "hour"  => date("G". $dateend)
 	              , "min"   => date("i". $dateend)
 	              , "sec"   => 0 );
-
-	$vevent->setProperty( "dtend",   $end );
+*/
+	$vevent->setProperty( "dtend",   date_parse($aktivitet["dato"]." ".$aktivitet["sluttid"]) );
 	$vevent->setProperty( "LOCATION", $address );
 	  // property name - case independent
 	$vevent->setProperty( "summary", $description );
