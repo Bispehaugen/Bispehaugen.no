@@ -66,7 +66,9 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$vevent = & $v->newComponent( "vevent" );
 	  // create an event calendar component
-	$vevent->setProperty("UID", $uid);
+	$vevent->setProperty( "uid", $uid);
+
+	$vevent->setProperty( "dtstart", date_parse($aktivitet["dato"]." ".$aktivitet["starttid"]) );
 
 	$vevent->setProperty( "dtend",   date_parse($aktivitet["dato"]." ".$aktivitet["sluttid"]) );
 	$vevent->setProperty( "LOCATION", $address );
