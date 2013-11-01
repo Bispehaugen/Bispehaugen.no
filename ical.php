@@ -43,6 +43,8 @@ $filename = date("d-m-Y").".ics";
 header('Content-type: text/calendar; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);
 
+//http://www.google.com/calendar/render?cid=http://org.ntnu.no/buk/ny/ical.php?p=bukaros
+
 // 2. Define helper functions
 
 // Converts a unix timestamp to an ics-friendly format
@@ -95,34 +97,27 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$description =  $aktivitet["ingress"];
 
 	if (!empty($aktivitet["kakebaker"])) {
-		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\n" . $description;
+		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\r\n" . $description;
 	}
 
 	if (!empty($aktivitet["hjelpere"])) {
-		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\n" . $description;
+		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\r\n" . $description;
 	}
 
 	if (!empty($aktivitet["oppmoetetid"])) {
-		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\n" . $description;
+		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
 	}
+	$description = str_replace("\r\n", "\\n", $description);
 ?>
 BEGIN:VEVENT
-DTEND:<?= dateToCal($dateend) ?>
-
-UID:<?= $uid ?>
-
-DTSTAMP:<?= dateToCal(time()) ?>
-
-LOCATION:<?= escapeString($address) ?>
-
-DESCRIPTION:<?= escapeString($description) ?>
-
-URL;VALUE=URI:<?= escapeString($uri) ?>
-
-SUMMARY:<?= escapeString($title) ?>
-
-DTSTART:<?= dateToCal($datestart) ?>
-
+DTEND:<?= dateToCal($dateend) ?>\r\n
+UID:<?= $uid ?>\r\n
+DTSTAMP:<?= dateToCal(time()) ?>\r\n
+LOCATION:<?= escapeString($address) ?>\r\n
+DESCRIPTION:<?= escapeString($description) ?>\r\n
+URL;VALUE=URI:<?= escapeString($uri) ?>\r\n
+SUMMARY:<?= escapeString($title) ?>\r\n
+DTSTART:<?= dateToCal($datestart) ?>\r\n
 END:VEVENT
 <?php
 }
