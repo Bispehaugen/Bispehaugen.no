@@ -110,14 +110,22 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$description = str_replace("\r\n", "\\n", $description);
 ?>
 BEGIN:VEVENT
-DTEND:<?= dateToCal($dateend) ?>\r\n
-UID:<?= $uid ?>\r\n
-DTSTAMP:<?= dateToCal(time()) ?>\r\n
-LOCATION:<?= escapeString($address) ?>\r\n
-DESCRIPTION:<?= escapeString($description) ?>\r\n
-URL;VALUE=URI:<?= escapeString($uri) ?>\r\n
-SUMMARY:<?= escapeString($title) ?>\r\n
-DTSTART:<?= dateToCal($datestart) ?>\r\n
+DTEND:<?= dateToCal($dateend) ?>
+
+UID:<?= $uid ?>
+
+DTSTAMP:<?= dateToCal(time()) ?>
+
+LOCATION:<?= escapeString($address) ?>
+
+DESCRIPTION:<?= escapeString($description) ?>
+
+URL;VALUE=URI:<?= escapeString($uri) ?>
+
+SUMMARY:<?= escapeString($title) ?>
+
+DTSTART:<?= dateToCal($datestart) ?>
+
 END:VEVENT
 <?php
 }
