@@ -46,8 +46,19 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$address = $aktivitet["sted"];
 	$uri = "http://bispehaugen.no";
 	$title = $aktivitet["tittel"];
-	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
-	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
+
+	$startstreng = $aktivitet["dato"];
+	if (!empty($aktivitet["starttid"];)) {
+		$startstreng = $aktivitet["starttid"];
+	}
+	$datestart = date_parse($startstreng);
+
+	$sluttstreng = $aktivitet["dato"];
+	if (!empty($aktivitet["sluttid"];)) {
+		$sluttstreng = $aktivitet["sluttid"];
+	}
+	$dateend = date_parse($sluttstreng);
+
 	$description =  $aktivitet["ingress"];
 
 	if (!empty($aktivitet["kakebaker"])) {
@@ -68,9 +79,10 @@ foreach($aktiviteter as $id => $aktivitet) {
 	  // create an event calendar component
 	$vevent->setProperty( "uid", $uid);
 
-	$vevent->setProperty( "dtstart", date_parse($aktivitet["dato"]." ".$aktivitet["starttid"]) );
+	$
+	$vevent->setProperty( "dtstart", $datestart );
 
-	$vevent->setProperty( "dtend",   date_parse($aktivitet["dato"]." ".$aktivitet["sluttid"]) );
+	$vevent->setProperty( "dtend",   $dateend );
 	$vevent->setProperty( "LOCATION", $address );
 	  // property name - case independent
 	$vevent->setProperty( "summary", $description );
