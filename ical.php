@@ -91,7 +91,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
-$v->returnCalendar(true);
+$v->returnCalendar();
 
 /*
 $valarm = & $vevent->newComponent( "valarm" );
