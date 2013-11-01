@@ -49,13 +49,13 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$startstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["starttid"])) {
-		$startstreng = $aktivitet["starttid"];
+		$startstreng = " ".$aktivitet["starttid"];
 	}
 	$datestart = date_parse($startstreng);
 
 	$sluttstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["sluttid"])) {
-		$sluttstreng = $aktivitet["sluttid"];
+		$sluttstreng .= " ".$aktivitet["sluttid"];
 	}
 	$dateend = date_parse($sluttstreng);
 
