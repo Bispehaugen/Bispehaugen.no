@@ -2,8 +2,10 @@
 
 // Fjern denne linja
 setlocale(LC_TIME, "Norwegian");
+error_reporting(E_ERROR | E_PARSE);
 include_once "db_config.php";
 include_once "funksjoner.php";
+require_once( "./icalendar.php" );
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -14,6 +16,121 @@ if ($tilkobling === false) {
 $aktiviteter = hent_aktiviteter();
 $filename = date("d-m-Y").".ics";
 
+$tz     = "Europe/Oslo";
+ // define time zone
+$config = array( "unique_id" => "bispehaugen.no"
+  // set a (site) unique id
+               , "TZID"      => $tz );
+  // opt. "calendar" timezone
+$v = new vcalendar( $config );
+  // create a new calendar instance
+
+$v->setProperty( "method", "PUBLISH" );
+  // required of some calendar software
+$v->setProperty( "x-wr-calname", "Bispehaugen Ungdomskorps" );
+  // required of some calendar software
+$v->setProperty( "X-WR-CALDESC", "Oversikt over aktivitetene for Bispehaugen Ungdomskorps" );
+  // required of some calendar software
+$v->setProperty( "X-WR-TIMEZONE", $tz );
+  // required of some calendar software
+
+$xprops = array( "X-LIC-LOCATION" => $tz );
+  // required of some calendar software
+iCalUtilityFunctions::createTimezone( $v, $tz, $xprops );
+  // create timezone component(-s) opt. 1
+  // based on present date
+
+foreach($aktiviteter as $id => $aktivitet) {
+	$uid = "Bispehaugen.no/arr/".$id;
+	$address = $aktivitet["sted"];
+	$uri = "http://bispehaugen.no";
+	$title = $aktivitet["tittel"];
+	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
+	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
+	$description =  $aktivitet["ingress"];
+
+	if (!empty($aktivitet["kakebaker"])) {
+		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\r\n" . $description;
+	}
+
+	if (!empty($aktivitet["hjelpere"])) {
+		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\r\n" . $description;
+	}
+
+	if (!empty($aktivitet["oppmoetetid"])) {
+		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
+	}
+	$description = str_replace("\r\n", "\\n\\r", $description);
+
+
+	$vevent = & $v->newComponent( "vevent" );
+	  // create an event calendar component
+	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
+	$start = array( "year"  => date("y". $datestart)
+	              , "month" => date("n". $datestart)
+	              , "day"   => date("j". $datestart)
+	              , "hour"  => date("G". $datestart)
+	              , "min"   => date("i". $datestart)
+	              , "sec"   => 0 );
+	$vevent->setProperty( "dtstart", $start );
+
+	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
+	$end   = array( "year"  => date("y". $dateend)
+	              , "month" => date("n". $dateend)
+	              , "day"   => date("j". $dateend)
+	              , "hour"  => date("G". $dateend)
+	              , "min"   => date("i". $dateend)
+	              , "sec"   => 0 );
+
+	$vevent->setProperty( "dtend",   $end );
+	$vevent->setProperty( "LOCATION", $address );
+	  // property name - case independent
+	$vevent->setProperty( "summary", $description );
+	$vevent->setProperty( "description", $description );
+
+}
+
+$v->returnCalendar();
+
+/*
+$valarm = & $vevent->newComponent( "valarm" );
+  // create an event alarm
+$valarm->setProperty("action", "DISPLAY" );
+$valarm->setProperty("description", $vevent->getProperty( "description" );
+  // reuse the event description
+
+$d = sprintf( "%04d%02d%02d %02d%02d%02d", 2007, 3, 31, 15, 0, 0 );
+iCalUtilityFunctions::transformDateTime( $d, $tz, "UTC", "Ymd\THis\Z");
+$valarm->setProperty( "trigger", $d );
+  // create alarm trigger (in UTC datetime)
+.. .
+
+$vevent = & $v->newComponent( "vevent" );
+  // create next event calendar component
+$vevent->setProperty( "dtstart", "20070401", array("VALUE" => "DATE"));
+  // alt. date format, now for an all-day event
+$vevent->setProperty( "organizer" , "boss@icaldomain.com" );
+$vevent->setProperty( "summary", "ALL-DAY event" );
+$vevent->setProperty( "description", "A description for an all-day event" );
+$vevent->setProperty( "resources", "COMPUTER PROJECTOR" );
+$vevent->setProperty( "rrule", array( "FREQ" => "WEEKLY"
+                                          , "count" => 4 ));
+  // weekly, four occasions
+$vevent->parse( "LOCATION:1CP Conference Room 4350" );
+  // support parse of strict rfc2445/rfc5545 text
+.. .
+  // all calendar components are described in rfc5545
+  // a complete method list in iCalcreator manual
+.. .
+iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+  // create timezone component(-s) opt. 2
+  // based on all start dates in events (i.e. dtstart)
+*/
+
+
+
+
+/*
 
 // Variables used in this script:
 //   $filename    - the name of this file for saving (e.g. my-event-name.ics)
@@ -132,3 +249,4 @@ END:VEVENT
 }
 ?>
 END:VCALENDAR	
+*/
