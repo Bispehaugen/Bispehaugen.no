@@ -12,7 +12,7 @@ if ($tilkobling === false) {
 }
 
 $aktiviteter = hent_aktiviteter();
-$filename = date("d-m-Y").".ical";
+$filename = date("d-m-Y").".ics";
 
 
 // Variables used in this script:
