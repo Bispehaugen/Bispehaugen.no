@@ -6,6 +6,7 @@ error_reporting(E_ERROR | E_PARSE);
 include_once "db_config.php";
 include_once "funksjoner.php";
 require_once( "./icalendar.php" );
+header('Content-type: text/calendar; charset=utf-8');
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -65,31 +66,8 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$vevent = & $v->newComponent( "vevent" );
 	  // create an event calendar component
-	/*
-	$datestart = strtotime($aktivitet["dato"]." ".$aktivitet["starttid"]);
+	$vevent->setProperty("UID", $uid);
 
-echo "haha:".$aktivitet["dato"]." ".$aktivitet["starttid"];
-echo "Start: ".$datestart;
-echo "Hm: " . date("y". $datestart);
-
-
-	$start = array( "year"  => date("y". $datestart)
-	              , "month" => date("n". $datestart)
-	              , "day"   => date("j". $datestart)
-	              , "hour"  => date("G". $datestart)
-	              , "min"   => date("i". $datestart)
-	              , "sec"   => 0 );
-	print_r($start);
-	$vevent->setProperty( "dtstart", date_parse($aktivitet["dato"]." ".$aktivitet["starttid"]) );
-
-	$dateend = strtotime($aktivitet["dato"]." ".$aktivitet["sluttid"]);
-	$end   = array( "year"  => date("y". $dateend)
-	              , "month" => date("n". $dateend)
-	              , "day"   => date("j". $dateend)
-	              , "hour"  => date("G". $dateend)
-	              , "min"   => date("i". $dateend)
-	              , "sec"   => 0 );
-*/
 	$vevent->setProperty( "dtend",   date_parse($aktivitet["dato"]." ".$aktivitet["sluttid"]) );
 	$vevent->setProperty( "LOCATION", $address );
 	  // property name - case independent
