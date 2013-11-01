@@ -78,6 +78,8 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 }
 
+iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+
 $v->returnCalendar();
 
 /*
