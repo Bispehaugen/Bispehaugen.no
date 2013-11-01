@@ -106,9 +106,9 @@ foreach($aktiviteter as $id => $aktivitet) {
 	}
 
 	if (!empty($aktivitet["oppmoetetid"])) {
-		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
+		$description = "OppmÃ¸te kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
 	}
-	$description = str_replace("\r\n", "\\n", $description);
+	$description = str_replace("\r\n", "\\n\\r", $description);
 ?>
 BEGIN:VEVENT
 DTEND:<?= dateToCal($dateend) ?>
