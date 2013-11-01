@@ -68,6 +68,7 @@ function escapeString($string) {
 BEGIN:VCALENDAR
 VERSION:2.0
 METHOD:PUBLISH
+X-WR-CALNAME:Bispehaugen Ungdomskorps
 PRODID:-//hacksw/handcal//NONSGML v1.0//EN
 BEGIN:VTIMEZONE
 TZID:CET
