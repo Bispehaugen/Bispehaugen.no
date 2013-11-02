@@ -37,7 +37,7 @@ $v->setProperty( "X-WR-TIMEZONE", $tz );
 
 $xprops = array( "X-LIC-LOCATION" => $tz );
   // required of some calendar software
-iCalUtilityFunctions::createTimezone( $v, $tz, $xprops );
+//iCalUtilityFunctions::createTimezone( $v, $tz, $xprops );
   // create timezone component(-s) opt. 1
   // based on present date
 
@@ -72,7 +72,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	if (!empty($aktivitet["oppmoetetid"])) {
 		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
 	}
-	$description = str_replace("\r\n", "\\n\\r", $description);
+	$description = str_replace("\r\n", "\\n", $description);
 
 
 	$vevent = & $v->newComponent( "vevent" );
@@ -89,7 +89,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 }
 
-iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+//iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
 $v->returnCalendar();
 
