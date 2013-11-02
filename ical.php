@@ -49,15 +49,15 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$startstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["starttid"])) {
-		$startstreng .= " ".str_replace($aktivitet["starttid"], "24:", "00:");
+		$startstreng .= " ".$aktivitet["starttid"];
 	}
-	$datestart = date_parse($startstreng);
+	$datestart = date_parse(date("Y-m-d H:i:s", strtotime(str_replace(" 24:", " 00:", $startstreng)) - 60*60));
 
 	$sluttstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["sluttid"])) {
-		$sluttstreng .= " ".str_replace($aktivitet["sluttid"], "24:", "00:");
+		$sluttstreng .= " ".$aktivitet["sluttid"];
 	}
-	$dateend = date_parse($sluttstreng);
+	$dateend = date_parse(date("Y-m-d H:i:s", strtotime(str_replace(" 24:", " 00:", $sluttstreng)) - 60*60));
 
 	$description =  $aktivitet["ingress"];
 
@@ -84,7 +84,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$vevent->setProperty( "dtend",   $dateend );
 	$vevent->setProperty( "LOCATION", $address );
 	  // property name - case independent
-	$vevent->setProperty( "summary", $description );
+	$vevent->setProperty( "summary", $title);
 	$vevent->setProperty( "description", $description );
 
 }
