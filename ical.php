@@ -49,7 +49,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$startstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["starttid"])) {
-		$startstreng = " ".$aktivitet["starttid"];
+		$startstreng .= " ".$aktivitet["starttid"];
 	}
 	$datestart = date_parse($startstreng);
 
