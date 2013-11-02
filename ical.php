@@ -19,9 +19,9 @@ $filename = date("d-m-Y").".ics";
 
 $tz     = "Europe/Oslo";
  // define time zone
-$config = array( "unique_id" => "bispehaugen.no"
+$config = array( "unique_id" => "bispehaugen.no" );
   // set a (site) unique id
-               , "TZID" => $tz );
+              // , "TZID" => $tz );
   // opt. "calendar" timezone
 $v = new vcalendar( $config );
   // create a new calendar instance
@@ -95,7 +95,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 }
 
-//iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
 $v->returnCalendar();
 
