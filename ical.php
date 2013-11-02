@@ -51,13 +51,19 @@ foreach($aktiviteter as $id => $aktivitet) {
 	if (!empty($aktivitet["starttid"])) {
 		$startstreng .= " ".$aktivitet["starttid"];
 	}
-	$datestart = date_parse(date("Y-m-d H:i:s", strtotime(str_replace(" 24:", " 00:", $startstreng)) - 60*60));
+	$datestart = date_parse(str_replace(" 24:", " 00:", $startstreng));
 
-	$sluttstreng = $aktivitet["dato"];
+    // Heldagseventer starter 00:00 og slutter 00:00 neste dag, legg på en dag
+	if ($aktivitet["sluttid"]=="00:00:00") {
+		$sluttstreng = date("Y-m-d H:i:s", strtotime($aktivitet["dato"]." 00:00:00") + 24*60*60);
+	} else {
+		$sluttstreng = $aktivitet["dato"];
+	}
+
 	if (!empty($aktivitet["sluttid"])) {
 		$sluttstreng .= " ".$aktivitet["sluttid"];
 	}
-	$dateend = date_parse(date("Y-m-d H:i:s", strtotime(str_replace(" 24:", " 00:", $sluttstreng)) - 60*60));
+	$dateend = date_parse(str_replace(" 24:", " 00:", $sluttstreng));
 
 	$description =  $aktivitet["ingress"];
 
