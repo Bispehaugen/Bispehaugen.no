@@ -66,6 +66,10 @@ img.logo-img {
 
 .coverflow {
   background-repeat:no-repeat;
+  background-position: 50% 0%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size:cover;
   height: 100%;
   text-align: center;
@@ -79,51 +83,56 @@ img.logo-img {
   background-image:url("3.jpg");
 }
 
-.nav-container {
-  /*background: rgba(0, 46, 64, 1)*/
-  background: white;
-  width: 100%;
+nav.bottom {
   position: fixed;
   bottom: 0px;
   left: 0px;
-  z-index: 1000;
 }
 
-nav {
+nav.top {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+nav, .nav-container {
   text-align: center;
-  width: 1100px;
-  margin: 0px auto; }
+  background: white;
+  width: 100%;
+  z-index: 1000;
+  height: 7em;
+  }
   nav ul {
     padding: 0px;
-    line-height: 100%;
+    margin: 0px auto; 
   }
   nav li {
-    width: 16%;
-    line-height: 100%;
-  vertical-align: middle;
+    margin-left: 2em;
+    line-height: 7em;
+    vertical-align: middle;
     display: inline-block; }
-    nav li.logo {
-      width: 6%;
-      }
-    nav li.first {
-      width: 8%;
-      }
+
+  nav li:first-of-type {
+    margin-left: 0;
+  }  
     nav li a {
-      font-size: 15px;
       color: #777;
       text-transform: uppercase;
       letter-spacing: 1px;
+      text-decoration: none;
+      padding: 0.5em 1em 0.1em 1em;
       }
-    nav li a.bli-medlem {
-      font-size: 16px;
-    }
     nav li a.active {
-      color: rgba(34, 41, 51, 1); }
+      color: rgba(34, 41, 51, 1);
+      border-bottom: 2px solid;
+    }
+    /*
   @media screen and (max-width: 1100px) {
     nav {
       width: 90%; }
       nav li a {
         font-size: 18px; } }
+        */
 
 section {
   padding-top: 100px;
@@ -174,11 +183,12 @@ section {
 .banner { position: relative; overflow: auto; }
     .banner li { list-style: none; }
         .banner ul li { float: left; }
-
+/*
     @media screen and (max-width: 1100px) {
       section .content {
         width: 90%;
       } 
+
 
       nav li {
         display: block;
@@ -190,6 +200,7 @@ section {
         padding-top: 250px;
       }
     }
+          */
     section .content a {
       color: #002e40; }
 
