@@ -46,6 +46,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$address = utf8_encode($aktivitet["sted"]);
 	$uri = "http://bispehaugen.no";
 	$title = utf8_encode($aktivitet["tittel"]);
+	$versjon = $aktivitet["versjon"];
 
 	$startstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["starttid"])) {
