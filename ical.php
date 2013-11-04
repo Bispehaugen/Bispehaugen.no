@@ -43,9 +43,9 @@ $xprops = array( "X-LIC-LOCATION" => $tz );
 
 foreach($aktiviteter as $id => $aktivitet) {
 	$uid = "Bispehaugen.no/arr/".$id;
-	$address = $aktivitet["sted"];
+	$address = utf8_encode($aktivitet["sted"]);
 	$uri = "http://bispehaugen.no";
-	$title = $aktivitet["tittel"];
+	$title = utf8_encode($aktivitet["tittel"]);
 
 	$startstreng = $aktivitet["dato"];
 	if (!empty($aktivitet["starttid"])) {
@@ -65,7 +65,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	}
 	$dateend = date_parse(str_replace(" 24:", " 00:", $sluttstreng));
 
-	$description =  $aktivitet["ingress"];
+	$description =  utf8_encode($aktivitet["ingress"]);
 
 	if (!empty($aktivitet["kakebaker"])) {
 		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\r\n" . $description;
