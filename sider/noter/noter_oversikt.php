@@ -31,7 +31,7 @@
 	echo"<table>";
 	
 	//form med muligheter for å velge ut noter til en konsert
-	echo" <form class='forum' method='post' action='?side=noter'>
+	echo" <form class='forum' method='post' action='?side=noter/noter_oversikt'>
 				<tr><td>Konsert:</td><td>
 					<select name='arrid'>
 							<option value='alle'>alle noter</option>";
