@@ -2,31 +2,31 @@
 <html lang='no' xml:lang='no' charset="utf-8" xmlns='http://www.w3.org/1999/xhtml'>
 <head>
     <title>Bispehaugen Ungdomskorps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='jquery-1.10.2.min.js' type='text/javascript'></script>
     <script src='scrollIt.js' type='text/javascript'></script>
     <script src='unslider.min.js' type='text/javascript'></script>
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='css/font-awesome.css' rel='stylesheet'>
     <link href='style.css' rel='stylesheet'>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
     <section class="forside coverflow" data-scroll-index='1'>
-      <a name="forside" />
-      <div class="stottemedlem">Korps er ikke gratis å drive, bli <b><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></b> i dag!</div>
-      <h1 class="title">Bispehaugen Ungdomskorps</h1>
+      <a name="forside"></a>
+      <div class="stottemedlem">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
+      
+      <header class="header">
+      <img class="logo" src="icon_logo.png" />
+      <h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
+      </header>
     </section>
     <div class='nav-container'>
-        <nav class="bottom">
+        <nav>
+            <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
             <ul>
-                <!--
-                  <li class="logo">
-                    <a href="#forside" class='active' data-scroll-nav='1'>
-                      <img class="logo-img" width="100" height="100" src="icon_logo.svg" />
-                    </a>
-                  </li>
-                  //-->
-                  <li>
+                <li>
                     <a href="#nyheter" data-scroll-nav='2'>Nyheter</a>
                 </li>
                 <li>
@@ -48,112 +48,30 @@
         </nav>
     </div>
     <section class="nyheter" data-scroll-index='2'>
-        <a name="nyheter" />
+        <a name="nyheter"></a>
         <div class='content'>
+            <h2>Nyheter</h2>
+
             <div class="box news">
-              <div class="image">
-                <img src="../bilder/forside/logo.png">
+                <div class="image">
+                    <img src="../bilder/forside/logo.png">
+                </div>
+                <div class="innhold">
+                    <h4>Kunne du tenke deg å bli støttemedlem?</h4>
+                    <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
+                    <div class="date">
+                      06. May kl.23:05
+                        <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
+                    </div>
+                </div>
             </div>
-            <div class="innhold">
-                <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-                <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-                <div class="date">
-                  06. May kl.23:05
-                  <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-              </div>
-          </div>
+
+
+
       </div>
-
-      <div class="box news">
-          <div class="image">
-            <img src="../bilder/forside/logo.png">
-        </div>
-        <div class="innhold">
-            <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-            <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-            <div class="date">
-              06. May kl.23:05
-              <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-          </div>
-      </div>
-    </div>
-
-    <div class="box news">
-      <div class="image">
-        <img src="../bilder/forside/logo.png">
-    </div>
-    <div class="innhold">
-        <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-        <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-        <div class="date">
-          06. May kl.23:05
-          <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-      </div>
-    </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="box news">
-      <div class="image">
-        <img src="../bilder/forside/logo.png">
-    </div>
-    <div class="innhold">
-        <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-        <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-        <div class="date">
-          06. May kl.23:05
-          <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-      </div>
-    </div>
-    </div>
-
-    <div class="box news">
-      <div class="image">
-        <img src="../bilder/forside/logo.png">
-    </div>
-    <div class="innhold"> 
-        <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-        <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-        <div class="date">
-          06. May kl.23:05
-          <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-      </div>
-    </div>
-    </div>
-
-    <div class="box news">
-      <div class="image">
-        <img src="../bilder/forside/logo.png">
-    </div>
-    <div class="innhold">
-        <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-        <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-        <div class="date">
-          06. May kl.23:05
-          <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-      </div>
-    </div>
-    </div>
-
-
-    </div>
 </section>
 <section class="aktiviteter" data-scroll-index='3'>
-  <a name="aktiviteter" />
+  <a name="aktiviteter"></a>
   <div class='content'>
     <h2>Aktiviteter</h2>
 
@@ -393,7 +311,7 @@
 </div>
 </section>
 <section class="spilleoppdrag coverflow" data-scroll-index='4'>
-  <a name="spilleoppdrag" />
+  <a name="spilleoppdrag"></a>
   <div class='content'>
     <h2>Spilleoppdrag</h2>
     <p>Tyrolerorkester, fanfareoppdrag</p>
@@ -401,7 +319,7 @@
 </div>
 </section>
 <section class="blimedlem" data-scroll-index='5'>
-  <a name="blimedlem" />
+  <a name="blimedlem"></a>
   <div class='content'>
 
     <button><h2>Bli medlem!</h2></button>
@@ -410,14 +328,14 @@
 </div>
 </section>
 <section class="medlemmer" data-scroll-index='6'>
-  <a name="medlemmer" />
+  <a name="medlemmer"></a>
   <div class='content'>
     <h2>Medlemmer</h2>
 
 </div>
 </section>
 <section class="korpset" data-scroll-index='7'>
-  <a name="korpset" />
+  <a name="korpset"></a>
   <div class='content'>
     <h2>Korpset</h2>
     <p>Masse info om korpset kommer her</p>
@@ -465,8 +383,6 @@
         changeHash($(this).attr("href"));
     });
 
-    //$(".aktiviteter").height($(".aktiviteter .content").outerHeight(true));
-
     var unslider = $('.banner').unslider();
 
     $('.unslider-arrow').click(function() {
@@ -476,23 +392,8 @@
         unslider.data('unslider')[fn]();
     });
 
-    /*
-    var logo = $(".logo-img");
-
-    $( window ).scroll(function() {
-    var top = $(window).scrollTop();
-    if (top < 800) {
-      logo.attr("height", ((1000 - top) / 10.0));
-      logo.css("right", ((1000 - top) / 10.0)+"%");
-    } else {
-      logo.attr("height", 20);
-      logo.css("right", 10);
-    }
-    });
-*/
-
     var navElements = $("nav li");
-    var nav = $("nav, .nav-container");
+    var nav = $("nav").first();
 
     function resizeHeight() {
         var height = getHeight();
@@ -509,6 +410,10 @@
         return height;
     }
 
+    $("nav .meny").click(function(event) {
+        $("nav.top ul").toggle();
+    });
+
     
     resizeHeight();
     $( window ).resize(function() {
@@ -516,21 +421,42 @@
     });
 
     $( window ).scroll(function() {
-        var height = getHeight();
+
         var top = $(window).scrollTop();
-        var navContainer = $(".nav-container").position().top;
+        var navContainer = $(".nav-container");
+        var navContainerTop = navContainer.position().top;
+        var normalNavHeight = false;
 
-        if (top < height/2) {
-            var tempHeight = ((height - top) / (height/7.0))+"em";
-            nav.css("height", tempHeight);
-            navElements.css("line-height", tempHeight);
-        } else {
-            nav.css("height", "3.5em");
-            navElements.css("line-height", "3.5em");
+        nav.toggleClass("top", (top >= navContainerTop));
+
+        if ($(window).width() > 750) {
+
+            if (nav.hasClass("top")) {
+                var windowHeight = getHeight();
+                var navHeight = navContainer.height();
+
+                normalNavHeight = true;
+
+                if ((top >= (navContainerTop))) {
+                    var newNavHeight = navHeight-(top - navContainerTop);
+
+                    if (newNavHeight <= 113 && newNavHeight >= 49) {
+                        navElements.css("line-height", newNavHeight+"px");
+                        normalNavHeight = false;
+                    }
+                }
+            }
+
+            if (normalNavHeight) {
+                nav.css("height", "49px");
+                navElements.css("line-height", "49px");
+            }
+
+            if (!nav.hasClass("top")) {
+                nav.css("height", "113px");
+                navElements.css("line-height", "113px");
+            }
         }
-
-        nav.toggleClass("bottom", top <= nav.height());
-        nav.toggleClass("top", (top >= (navContainer-nav.height())));
     });
 </script>
 </body>

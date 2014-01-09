@@ -1,14 +1,20 @@
 body {
   padding: 0px;
   margin: 0px;
-  font-family: "Open Sans", sans-serif; }
+  font-family: "Open Sans", sans-serif;
+ }
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
 
 h1, h2, h3, h4{
   /*font-family: "Headland One", Georgia, serif;*/
   font-family: 'Dosis', sans-serif;
   font-weight: 500;
 }
-nav li a {
+nav li a, .meny {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -32,16 +38,6 @@ a {
 ul {
   list-style: none; }
 
-.title {
-  text-align: center;
-  color: white;
-  text-transform: uppercase;
-  font-size: 6em;
-  background: rgba(255, 255, 255, 0.5);
-  color: rgba(34, 41, 51, 1);
-  
-}
-
 .stottemedlem {
   background: white;
   position: absolute;
@@ -59,9 +55,39 @@ ul {
   border-bottom-left-radius: 10px;
 }
 
-img.logo-img {
-  position: relative;
-  right: 100%;
+
+.header {
+  margin: 0 auto;
+  font-size: 6em;
+  width: 3.8em;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
+  line-height: 0.5em;
+  padding: 0.3em;
+}
+
+.title {
+  text-transform: uppercase;
+  color: #2a2829;
+  font-weight: bold;
+  line-height: 0.8em;
+  padding-top: 0.2em;
+}
+
+.title .bispehaugen {
+  font-size: 1em;
+  letter-spacing: 0.01em;
+
+}
+
+.title .ungdomskorps {
+  font-size: 0.6em;
+  letter-spacing: 0.23em;
+
 }
 
 .coverflow {
@@ -83,12 +109,6 @@ img.logo-img {
   background-image:url("3.jpg");
 }
 
-nav.bottom {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-}
-
 nav.top {
   position: fixed;
   top: 0px;
@@ -97,32 +117,92 @@ nav.top {
 
 nav, .nav-container {
   text-align: center;
-  background: white;
   width: 100%;
   z-index: 1000;
-  height: 7em;
+  height: 113px;
+
   }
   nav ul {
     padding: 0px;
     margin: 0px auto; 
+    background: white;
   }
-  nav li {
-    margin-left: 2em;
-    line-height: 7em;
+  nav li, .meny {
+    line-height: 113px;
     vertical-align: middle;
-    display: inline-block; }
+    display: block;
+  }
 
-  nav li:first-of-type {
-    margin-left: 0;
-  }  
+  .meny {
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 740px) {
+    .mobil {
+      display: none;
+    }
+
+    nav li:first-of-type {
+      margin-left: 0;
+    }
+
+    nav li {
+      display: inline-block;
+    }
+
+  }
+
+  @media screen and (max-width: 739px) {
+    nav, .nav-container {
+      height: 3.5em;
+    }
+
+    nav.top {
+      height: auto;
+      background: white;
+    }
+
+    nav ul {
+      display: none;
+    }
+
+    nav li, .meny {
+      line-height: 3.5em;
+    }
+
+    .meny.vis, nav li:last-of-type {
+      border-bottom: 1px solid black;
+    }
+  }
+
+  @media screen and (min-width: 740px) and (max-width: 900px) {
     nav li a {
+      font-size: 0.8em;
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    nav li {
+      margin-left: 2em;
+    }
+    nav li a:hover, .meny:hover {
+      color: rgba(34, 41, 51, 0.5);
+      border-bottom: 2px solid;
+    }
+  }
+
+    nav li a {
+      padding: 0.5em 1em 0.1em 1em;
+    }
+
+    nav li a, .meny {
       color: #777;
       text-transform: uppercase;
       letter-spacing: 1px;
       text-decoration: none;
-      padding: 0.5em 1em 0.1em 1em;
-      }
-    nav li a.active {
+    }
+
+    nav li a.active, .meny.active {
       color: rgba(34, 41, 51, 1);
       border-bottom: 2px solid;
     }
