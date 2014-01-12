@@ -14,7 +14,19 @@
 	if(has_post('temaid')){
 		$tekst=post('tekst');
 		$sql="INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d h:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d H:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
+		mysql_query($sql);
+		//henter ut id til det nye innlegget
+		$id = mysql_insert_id();
+		//henter ut liste over alle aktive medlemmer
+		$sql="SELECT medlemsid FROM medlemmer WHERE status!='Sluttet';";
+		$aktivemedlemmer=hent_og_putt_inn_i_array($sql, "medlemsid");
+		$sql="INSERT INTO `forum_leste`(`medlemsid`, `uleste_innlegg`, `temaid`) 
+			VALUES ";
+		foreach ($aktivemedlemmer as $medlemsid => $medlem) {
+			$sql.="('".$medlem['medlemsid']."','".$id."','".post('temaid')."'),";
+		}
+		$sql=substr($sql,0,-1);
 		mysql_query($sql);
 	};
 	
@@ -26,7 +38,7 @@
 		//sql - databasen er sï¿½nn at pdd. kan du ikke melde deg pï¿½ nï¿½r du allerede er pï¿½meldt
 		$sql="INSERT INTO forum_listeinnlegg_ny (listeid, flagg, brukerid, kommentar, tid) 
 			VALUES ('".post('listeinnlegg')."','".$flagg."','".$_SESSION["medlemsid"]."','".$kommentar."','".date('Y-m-d h:i:s')."')";
-		mysql_query($sql);
+		mysql_query($sql);	
 	};
 	
 	$temaid=get('id');
@@ -51,10 +63,10 @@
 		
 	//Henter ut siste uleste innlegg i trï¿½d
 	$medlemsid= $_SESSION["medlemsid"];
-	$sql="SELECT sistelesteinnlegg FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid." LIMIT 1;";
+	$sql="SELECT uleste_innlegg FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
 	$result = mysql_query($sql);
-	$sisteleste = mysql_result($result, 0);		
-		
+	$ulesteinnlegg=hent_og_putt_inn_i_array($sql, "uleste_innlegg");		
+	
 	//Henter ut tema-tittel
 	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
 	$mysql_result=mysql_query($sql);
@@ -69,7 +81,7 @@
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet pÃ¥ sist oppdaterte med siste innlegg og av hvem
    	foreach($foruminnlegg as $innleggId => $forum_innlegg){
-      	if($innleggId > $sisteleste){
+      	if($ulesteinnlegg[$forum_innlegg['innleggid']]){
 	      	echo "<tr class='ulest'>";
 		}
 		else{
@@ -90,6 +102,7 @@
 						echo "<tr><td>".$listeoppforing['fnavn']." ".$listeoppforing['enavn'];
 					};
 					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";
+					
 					#For å vite om bruker står på lista og dermed ikke kan skrive seg på på nytt
 					if($listeoppforing['medlemsid']==$_SESSION["medlemsid"]){$oppfort_paa_liste=1;}	
 				};	
