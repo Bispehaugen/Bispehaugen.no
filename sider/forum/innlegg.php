@@ -72,6 +72,10 @@
 	$mysql_result=mysql_query($sql);
 	$tema = mysql_fetch_array($mysql_result);
 	
+	//Setter alle innlegg i aktuelle tråd som lest i databasen (så neste gang blir de merket som lest)
+	$sql = "DELETE FROM `forum_leste` WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
+	mysql_query($sql);
+	
     #Det som printes pï¿½ sida
     
     //Her legges det inn en oversikt over alle forumene
