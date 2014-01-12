@@ -54,8 +54,9 @@
 
 			#Viser endre/slettkapper hvis man er admin
 			if($_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'>endre</a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
-				".$aktivitet['tittel']."\")'>slett</a></td></tr>";
+				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='icon-edit' 
+				title='Klikk for å endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
+				".$aktivitet['tittel']."\")'><i class='icon-remove' title='Klikk for å slette'></i></a></td></tr>";
 			}else{
 				echo "<td></td></tr>";
 			};
