@@ -13,43 +13,40 @@
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(has_post('temaid')){
 		$tekst=post('tekst');
-		$sql="INSERT INTO forum_innlegg (temaid, tekst, skrevet, skrevetavid, sistredigert) 
+		$sql="INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetavid, sistredigert) 
 			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d h:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
 	//hvis noen har skrevet seg pï¿½ en liste
 	if(has_post('listeinnlegg')){
-		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".post('medlemsid')."';";
-		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
 		$kommentar=post('kommentar');
 		if(post('flagg')==1){$flagg=1;}else{$flagg=0;};
 		//sql - databasen er sï¿½nn at pdd. kan du ikke melde deg pï¿½ nï¿½r du allerede er pï¿½meldt
-		$sql="INSERT INTO forum_listeinnlegg (listeid, flagg, brukerid, kommentar, tid) 
-			VALUES ('".post('listeinnlegg')."','".$flagg."','".$brukerid[post('medlemsid')]['id']."','".$kommentar."','".date('Y-m-d h:i:s')."')";
+		$sql="INSERT INTO forum_listeinnlegg_ny (listeid, flagg, brukerid, kommentar, tid) 
+			VALUES ('".post('listeinnlegg')."','".$flagg."','".$_SESSION["medlemsid"]."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 	};
 	
 	$temaid=get('id');
 	//henter ut alle innleggene i valgte forum/tema 
-	$sql="SELECT forum_tema.temaid, forum_innlegg.innleggid, forum_innlegg.tekst, forum_innlegg.skrevetav,  
-	forum_innlegg.skrevet FROM forum_tema, forum_innlegg 
-	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." ORDER BY skrevet;";
+	$sql="SELECT forum_tema.temaid, forum_innlegg_ny.innleggid, forum_innlegg_ny.tekst, forum_innlegg_ny.skrevetavid,  
+	forum_innlegg_ny.skrevet, medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn FROM forum_tema, forum_innlegg_ny, medlemmer 
+	WHERE forum_tema.temaid=".$temaid." AND forum_innlegg_ny.temaid=".$temaid." AND forum_innlegg_ny.skrevetavid=medlemsid ORDER BY skrevet;";
 	$foruminnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 	
 	//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
-	//TODO: Merk at brukerid i forum_listeinnlegg er 'id' i registrering tabellen (!=medlemsid) - Bï¿½R FIKSES SENERE
-	$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg
-	WHERE forum_liste.listeid=forum_innlegg.innleggid;";
+	$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg_ny
+		WHERE forum_liste.listeid=forum_innlegg_ny.innleggid;";
 	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 	
 	//henter ut alle aktuelle liste-oppfï¿½ringer
-	$sql="SELECT fnavn, enavn, forum_listeinnlegg.listeid, forum_listeinnlegg.tid, forum_listeinnlegg.innleggid, forum_listeinnlegg.kommentar, 
-	forum_listeinnlegg.flagg, forum_liste.expires 
-	FROM forum_liste, forum_innlegg, forum_listeinnlegg, forum_tema, medlemmer, registrering 
-	WHERE forum_liste.listeid=forum_innlegg.innleggid AND forum_liste.listeid=forum_listeinnlegg.listeid AND
-	 forum_tema.temaid=".$temaid." AND forum_innlegg.temaid=".$temaid." AND id=brukerid and registrering.medlemsid=medlemmer.medlemsid ORDER BY tid ;";
+	$sql="SELECT fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
+	forum_listeinnlegg_ny.kommentar, forum_listeinnlegg_ny.flagg, forum_liste.expires 
+	FROM forum_liste, forum_innlegg_ny, forum_listeinnlegg_ny, forum_tema, medlemmer 
+	WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_liste.listeid=forum_listeinnlegg_ny.listeid AND
+	 forum_tema.temaid=".$temaid." AND forum_innlegg_ny.temaid=".$temaid." AND brukerid=medlemmer.medlemsid ORDER BY tid ;";
 	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 		
 	//Henter ut siste uleste innlegg i trï¿½d
@@ -78,7 +75,7 @@
 		else{
 			echo"<tr>";
 		}
-		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['skrevetav']." </td>
+		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
    			<td>".$forum_innlegg['tekst'];
 		
       	//if som skriver ut liste hvis det hï¿½rer en liste til innlegget
@@ -114,8 +111,6 @@
 			<tr><td>Svar pÃ¥ innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
 			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 			<input type='hidden' name='temaid' value='".$temaid."'>
-			"; //TODO: Fjern denne og neste linje når det med registreringsid, og ikke medlemsid er fikset. 
-			echo"<input type='hidden' name='skrevetav' value='".$_SESSION['medlemsid']."'>
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
 		</form> 
 	</table>";
