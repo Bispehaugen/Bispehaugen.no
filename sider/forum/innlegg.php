@@ -42,7 +42,7 @@
 	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 	
 	//henter ut alle aktuelle liste-oppfï¿½ringer
-	$sql="SELECT fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
+	$sql="SELECT medlemsid, fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
 	forum_listeinnlegg_ny.kommentar, forum_listeinnlegg_ny.flagg, forum_liste.expires 
 	FROM forum_liste, forum_innlegg_ny, forum_listeinnlegg_ny, forum_tema, medlemmer 
 	WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_liste.listeid=forum_listeinnlegg_ny.listeid AND
@@ -89,11 +89,16 @@
 					}else{
 						echo "<tr><td>".$listeoppforing['fnavn']." ".$listeoppforing['enavn'];
 					};
-					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";		
+					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";
+					#For å vite om bruker står på lista og dermed ikke kan skrive seg på på nytt
+					if($listeoppforing['medlemsid']==$_SESSION["medlemsid"]){$oppfort_paa_liste=1;}	
 				};	
 			};
 			//Legger til tekstfelt for ï¿½ melde seg pï¿½ hvis ikke lista har expired
-			if(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
+			
+			if($oppfort_paa_liste==1){
+				echo "<tr><td colspan='2'><b>Du er allerede skrevet på lista</b></td></tr> ";						
+			}elseif(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
