@@ -3,7 +3,7 @@
 	//funksjonalitet
 	
 	//TODO bredde på tabellen, bare hente opp de 10 siste og ha en knapp med 'vis alle' som printer smtlige innlegg
-	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen
+	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen. I tillegg er det rot med brukerid-en i databasen.
 	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
@@ -20,8 +20,6 @@
 	
 	//hvis noen har skrevet seg p� en liste
 	if(has_post('listeinnlegg')){
-		//M� hente ut brukerid fra medlemmertabellen (atm medlemsid skrives og den er feil ift databasen) 
-		//TODO: f� dette til � g� p� medlemsid
 		$sql="SELECT id, medlemsid FROM registrering WHERE medlemsid='".post('medlemsid')."';";
 		$brukerid=hent_og_putt_inn_i_array($sql,$id_verdi="medlemsid");
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
@@ -116,6 +114,8 @@
 			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
 			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 			<input type='hidden' name='temaid' value='".$temaid."'>
+			"; //TODO: Fjern denne og neste linje n�r det med registreringsid, og ikke medlemsid er fikset. 
+			echo"<input type='hidden' name='skrevetav' value='".$_SESSION['medlemsid']."'>
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
 		</form> 
 	</table>";
