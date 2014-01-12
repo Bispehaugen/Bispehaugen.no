@@ -13,7 +13,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-    <section class="forside coverflow" data-scroll-index='1'>
+    <section class="forside side coverflow" data-scroll-index='1'>
       <a name="forside"></a>
       <div class="stottemedlem">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
       
@@ -47,7 +47,7 @@
             </ul>
         </nav>
     </div>
-    <section class="nyheter" data-scroll-index='2'>
+    <section class="side nyheter" data-scroll-index='2'>
         <a name="nyheter"></a>
         <div class='content'>
             <h2>Nyheter</h2>
@@ -70,7 +70,7 @@
 
       </div>
 </section>
-<section class="aktiviteter" data-scroll-index='3'>
+<section class="side aktiviteter" data-scroll-index='3'>
   <a name="aktiviteter"></a>
   <div class='content'>
     <h2>Aktiviteter</h2>
@@ -310,7 +310,7 @@
 </table>
 </div>
 </section>
-<section class="spilleoppdrag coverflow" data-scroll-index='4'>
+<section class="side spilleoppdrag coverflow" data-scroll-index='4'>
   <a name="spilleoppdrag"></a>
   <div class='content'>
     <h2>Spilleoppdrag</h2>
@@ -318,7 +318,7 @@
     <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
 </div>
 </section>
-<section class="blimedlem" data-scroll-index='5'>
+<section class="side blimedlem" data-scroll-index='5'>
   <a name="blimedlem"></a>
   <div class='content'>
 
@@ -327,14 +327,14 @@
 
 </div>
 </section>
-<section class="medlemmer" data-scroll-index='6'>
+<section class="side medlemmer" data-scroll-index='6'>
   <a name="medlemmer"></a>
   <div class='content'>
     <h2>Medlemmer</h2>
 
 </div>
 </section>
-<section class="korpset" data-scroll-index='7'>
+<section class="side korpset" data-scroll-index='7'>
   <a name="korpset"></a>
   <div class='content'>
     <h2>Korpset</h2>
@@ -429,7 +429,7 @@
 
         nav.toggleClass("top", (top >= navContainerTop));
 
-        if ($(window).width() > 750) {
+        if ($(window).width() > 700) {
 
             if (nav.hasClass("top")) {
                 var windowHeight = getHeight();
