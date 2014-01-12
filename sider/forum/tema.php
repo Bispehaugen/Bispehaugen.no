@@ -13,15 +13,10 @@
 	ORDER BY sisteinnleggid DESC;";
 	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
-	//Henter ut siste leste innlegg og siste innlegg for alle temaer
-	
-	//Denne skal hente ut en tabell med alle temaene på gitt forum i en tabell med tilhørende siste innlegg og siste leste innlegg
+	//Henter ut alle temaer med uleste innlegg
 	$medlemsid= $_SESSION["medlemsid"];
-	$sql = "SELECT forum_leste.temaid, forum_leste.sistelesteinnlegg, forum_innlegg.innleggid 
-	FROM forum_innlegg, forum_leste, forum_tema WHERE forum_tema.temaid=forum_innlegg.temaid AND forum_tema.temaid=forum_leste.temaid
-	AND forum_leste.medlemsid=".$medlemsid." ORDER BY innleggid LIMIT 1";
-	
-	$sist_leste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
+	$sql="SELECT forum_leste.temaid FROM forum_leste WHERE medlemsid=".$medlemsid.";";
+	$uleste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
     #Det som printes pï¿½ sida
     
@@ -32,14 +27,7 @@
   
    	//skriver ut alle temaene i forumet sortet pÃ¥ sist oppdaterte med siste innlegg og av hvem
    	foreach($forumtemaer as $temaid => $forumtema){
-   		
-   		$ulest = true;
-   		if (!empty($siste_leste_innlegg)) {
-   			$innlegg = $sist_leste_innlegg[$temaid];
-   			$ulest = !empty($temaid) && (empty($innlegg) || $innlegg['sistelesteinnlegg'] < $innlegg['innleggid']);
-   		}
-   		
-   		if($ulest){
+   		if($uleste_innlegg[$forumtema['temaid']]){
    			echo "<tr class='ulest'>";
    		}else{
 	   		echo "<tr>";
