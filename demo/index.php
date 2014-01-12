@@ -15,7 +15,7 @@
 <body>
     <section class="forside side coverflow" data-scroll-index='1'>
       <a name="forside"></a>
-      <div class="stottemedlem">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
+      <div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
       
       <header class="header">
       <img class="logo" src="icon_logo.png" />
@@ -105,7 +105,7 @@ Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (
   <div class='content'>
     <h2>Aktiviteter</h2>
 
-    <table cellspacing=0 style="width: 100%">
+    <table class="tabell" cellspacing=0 style="width: 100%">
       <thead>
           <tr style="text-align: left">
             <th colspan=2 width="22%"><b>Dato</th>
@@ -348,13 +348,78 @@ Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (
     <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
 </div>
 </section>
-<section class="side blimedlem" data-scroll-index='5'>
+<section class="side bli-medlem coverflow" data-scroll-index='5'>
   <a name="blimedlem"></a>
   <div class='content'>
 
-    <button><h2>Bli medlem!</h2></button>
-    <button><h2>Eller bli støttemedlem!</h2></button>
+  <div class="bli-medlem">
+    <h2>Bli medlem!</h2>
 
+    <form action="?side=bli_medlem" method="post">
+      <table>
+        <tr>
+          <td class="label">Navn:</td>
+          <td>
+          <input type="text" name="sNavn" value="<?php echo $sNavn; ?>"></td>
+        </tr>
+        <tr>
+          <td class="label">Instrument:</td>
+          <td>
+          <input type="text" name="sInstrument" value="<?php echo $sInstrument; ?>"></td>
+        </tr>
+        <tr>
+          <td class="label">E-post:</td>
+          <td>
+          <input type="text" name="sEpost" value="<?php echo $sEpost; ?>"></td>
+        </tr>
+        <tr>
+          <td class="label">Telefon:</td>
+          <td>
+          <input type="text" name="sTelefon" value="<?php echo $sTelefon; ?>"></td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <span class="label">Musikalsk bakgrunn:</span><br />
+            <textarea name="sAnnet"><?php echo $sAnnet; ?></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2>
+            <span class="label">Hvor fikk du høre om korpset?:</span><br />
+          <textarea name="sHvorKjentMed"><?php echo $sHvorKjentMed; ?></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td class="submit" colspan=2>
+            <div style="float: left;"><input id="registrering" type="checkbox" value="registrer" />
+              <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label></div>
+            <div><input type="submit" name="btnSubmit" value="Send skjema"></div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <div class="stottemedlem">
+    <h2>Eller bli støttemedlem!</h2>
+    <p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
+      Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
+      <p>
+      Vi tilbyr de som støtter oss noen fordeler. Disse er:
+      </p><ul>
+        <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
+        <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
+        <li>Personlig pålogging til våre egne web-sider som gir adgang til informasjon som
+          vanligvis bare er tilgjengelig for medlemmer</li>
+      </ul>
+      Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
+      legge på 300 eller 600kr.
+      <br />
+      Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
+    </p>
+  </div>
+
+<div class="clearfix"></div>
 </div>
 </section>
 <section class="side medlemmer" data-scroll-index='6'>
@@ -364,18 +429,42 @@ Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (
 
 </div>
 </section>
-<section class="side korpset" data-scroll-index='7'>
+<section class="side korpset full" data-scroll-index='7'>
   <a name="korpset"></a>
   <div class='content'>
     <h2>Korpset</h2>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
-    <p>Masse info om korpset kommer her</p>
+    <p>
+    <img width="250" src="../bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
+    Bispehaugen Ungdomskorps ble startet i 1923, og er således et av Trondheims eldste amatørkorps. Korpset har helt siden starten vært
+    kjent for å ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vært medlem av Bispehaugen. Vi liker å spille
+    allsidig musikk med kvalitet, fra underholdningsmusikk til større originalskrevne og klassiske verk. I dag teller vi drøyt
+
+    66 medlemmer, men
+    vi satser stort på rekruttering og håper å få med deg som medlem! 
+    </p><p>
+
+    <img width="100" src="../bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
+    Siden høsten 2000 har <a href="dirigenter.php">Tomas Carstensen</a> vært vår faste dirigent. Han har utdannelse som trompetist
+    og dirigent fra Musikkonservatoriet i Trondheim.
+    </p><p>
+
+    Korpset har i mange år hevdet seg i toppen av norsk 1. divisjon i NM janitsjar (<a href="meritter.php">se resultater</a>). Under NM i 2006 vant 
+    korpset 1. divisjon, og konkurrerte i elitedivisjonen i to år. I perioden 2009-2011 konkurrerte vi i 1. divisjon, og fra 2012 har korpset konkurrert i 2. divisjon
+    Vår musikalske målsetting er å ha full Symphonic Band-besetning, og å være et ungdomskorps i ordets rette forstand. Bispehaugen ønsker ikke å bli plassert i en bestemt bås, men skal
+    kjennetegnes av allsidighet og seriøs satsing innen flere områder.
+    </p><p>
+
+    <img width="180" src="../bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar på Frosta">
+    Bispehaugen legger vekt på et godt sosialt miljø både i og utenfor øvingslokalet. Korpset har utenommusikalske aktiviteter som
+    kafébesøk, fester og helgeturer utenbys. Medlemmene våre blir i stor grad rekruttert fra studentmiljøet i Trondheim, noe som setter standarden for våre utenommusikalske aktiviteter.
+    </p><p>
+
+    <img src="../bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
+    Vi øver mandager fra 19:30 på Bispehaugen skole på Møllenberg, sentralt i Trondheim. Det blir også noen ekstraøvelser før
+    konsertene. Dersom du er interessert i hva vi holder på med, kan du ta turen innom en av øvelsene, eller gå inn på <a href="../kontakt/blimedlem.php">kontaksskjema</a>.
+    </p>
+
+    <div class="clearfix"></div>
 </div>
 
 <div class="kontakt">
@@ -427,9 +516,12 @@ Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (
 
     function resizeHeight() {
         var height = getHeight();
-        height -= nav.height();
+
+        var forsideHeight = height - nav.height();
+
 
         $(".coverflow").css("height", height+"px");
+        $(".forside.coverflow").css("height", forsideHeight+"px");
     }
 
     function getHeight() {

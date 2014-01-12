@@ -47,7 +47,7 @@ a {
 ul {
   list-style: none; }
 
-.stottemedlem {
+.reklame.stottemedlem {
   background: white;
   position: absolute;
   top: 0px;
@@ -97,25 +97,6 @@ ul {
   font-size: 0.6em;
   letter-spacing: 0.23em;
 
-}
-
-.coverflow {
-  background-repeat:no-repeat;
-  background-position: 50% 0%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size:cover;
-  height: 100%;
-  text-align: center;
-}
-
-.forside {
-  background-image:url("3.jpg");
-}
-
-.spilleoppdrag {
-  background-image:url("3.jpg");
 }
 
 nav.top {
@@ -244,9 +225,33 @@ nav, .nav-container {
         */
 
 section.side {
-  padding: 5em 2em;
   min-height: 420px;
   width: 100%;
+  padding: 5em 2em;
+}
+
+section.coverflow {
+  background-repeat:no-repeat;
+  background-position: 50% 0%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size:cover;
+  height: 100%;
+  text-align: center;
+}
+
+section.full {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+section.forside {
+  background-image:url("3.jpg");
+}
+
+section.spilleoppdrag {
+  background-image:url("3.jpg");
 }
 
   section .content {
@@ -379,25 +384,44 @@ section:nth-child(odd) {
   section:nth-child(odd) a {
     color: white; }
 
-tbody tr:nth-child(even) {
+.tabell tbody tr:nth-child(even) {
   background-color: rgba(245, 245, 245, 1);
 }
-thead tr {
+.tabell thead tr {
   background-color: #efefef;
 }
 
-td {
+.tabell td {
   padding: 0.5em;
 
 }
 
-
-.kontakt {
-  background-color: rgba(34, 41, 51, 0.5);
-  color: white;
-  min-height: 530px;
+section.bli-medlem .bli-medlem, section.bli-medlem .stottemedlem{
+  float: left;
+  width: 50%;
 }
 
-.korpset {
-  padding-bottom: 0px;
+.bli-medlem input[type=text], .bli-medlem textarea {
+  width: 100%;
+}
+
+section.bli-medlem .content {
+  padding-top: 10%;
+  text-align: left;
+}
+
+section.korpset .kontakt {
+  background-color: rgba(34, 41, 51, 0.5);
+  color: white;
+  min-height: 13em;
+  padding: 1em 0 0 0;
+}
+
+section.korpset .content {
+  padding-bottom: 2em;
+}
+
+section.side.korpset {
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
