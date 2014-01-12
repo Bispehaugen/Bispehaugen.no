@@ -18,6 +18,11 @@ nav li a, .meny {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+p {
+  font-weight: 200;
+  font-size: 15px;
+}
+
 h1 {
   font-size: 48px;
   margin-top: 10px;
@@ -34,6 +39,10 @@ h4 {
 
 a {
   cursor: pointer; }
+
+.clearfix {
+  clear: both;
+}
 
 ul {
   list-style: none; }
@@ -259,26 +268,85 @@ section.side {
     border-radius: 5px;
   }
 
-  .image {
-    display: inline-block;
-    width: 20%;
+  .news {
+    clear: left;
+    cursor: pointer;
+  }
+
+@media screen and (min-width: 1025px) {
+  .news:hover {
+    background: #29313D;
+  }
+}
+
+  .news .date {
+    width: 5em;
+    padding: 0 0 0 0;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 1px 0 #000;
+    position: relative;
+    z-index: 8;
+    text-align: center;
+    float: left;
+  }
+
+    .news .month, .news .weekday {
+        font-size: 1.2em;
+        text-transform: uppercase;
+    }
+
+    .news .day {
+        font-size: 2em;
+        font-weight: bold;
+        margin: -5px 0;
+    }
+
+    .news .year {
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+
+  .news .bilde-og-innhold {
+    padding-left: 5em;
+    width: 100%;
+  }
+
+  .news .bilde {
+    float: left;
+    width: 200px;
     text-align: center;
   }
 
-  .innhold {
-    display: inline-block;
-    width: 79%;
+  .news .bilde img {
+    background-color: white;
+    border: 1px solid #c6c6c6;
+    max-width: 200px;
+  }
+
+  .news .innhold {
+    width: 100%;
+    padding-left: 200px;
     vertical-align: top;
   }
 
-  .innhold h4 {
+  .news .innhold h4 {
       margin: 0px;
   }
 
-  .news img {
-    padding: 10px;
-    background-color: white;
-    border: 1px solid #c6c6c6;
+  .news .innhold .ingress {
+    line-height: 1.5em;
+  }
+
+  @media screen and (max-width: 739px) {
+    .news .bilde {
+      width: 100%;
+    }
+
+    .news .innhold {
+        padding-left: 0px;
+        padding-top: 1em;
+        clear: left;
+    }
   }
 
 .banner { position: relative; overflow: auto; }

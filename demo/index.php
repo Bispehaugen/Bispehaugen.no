@@ -53,22 +53,52 @@
             <h2>Nyheter</h2>
 
             <div class="box news">
-                <div class="image">
+              <div class="date" datetime="2014-01-19T08:00:00">
+                <div class="weekday">søn</div>
+                <div class="day">19</div>
+                <div class="month">Jan</div>
+                <div class="year">2014</div>
+              </div>
+              <div class="bilde-og-innhold">
+                <div class="bilde">
                     <img src="../bilder/forside/logo.png">
                 </div>
                 <div class="innhold">
                     <h4>Kunne du tenke deg å bli støttemedlem?</h4>
-                    <p>Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
-                    <div class="date">
-                      06. May kl.23:05
-                        <div class="read_more"><a href="?side=nyhet&amp;id=1373">Les mer</a></div>
-                    </div>
+                    <p class="ingress">Ønsker du å støtte Bispehaugen Ungdomskorps? Hva med å bli støttemedlem? Dette er en ordning vi har hvor venner, familie og bekjente kan støtte oss med enten 300, 600 eller 900 kr i året.</p>
                 </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <div class="box news">
+              <div class="date" datetime="2014-01-19T08:00:00">
+                <div class="weekday">søn</div>
+                <div class="day">19</div>
+                <div class="month">Jan</div>
+                <div class="year">2014</div>
+              </div>
+              <div class="bilde-og-innhold">
+                <div class="bilde">
+                    <img src="../bilder/forside/logo.png">
+                </div>
+                <div class="innhold">
+                    <h4>Noter til årets juletrefester</h4>
+                    <p class="ingress">Nå er notene får årets juletrefester lagt ut, sjekk det ut FØR du skal spille juletrefest (NB! det er IKKE det samme som vi har spilt før.)<br />
+Notene finner du HER.
+<br />
+Foreløpig er det kun julesangene som er lagt ut, det kommer 4 lekesanger i tillegg innen juleaften. I år er det ikke håndskrevne noter, men skrevet inn på data. :)
+<br />
+Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (!) filer, så kan det ha skjedd noe kluss :)</p>
+                </div>
+                <div class="clearfix"></div>
+              </div>
             </div>
 
 
 
       </div>
+      <div class="clearfix"></div>
 </section>
 <section class="side aktiviteter" data-scroll-index='3'>
   <a name="aktiviteter"></a>
