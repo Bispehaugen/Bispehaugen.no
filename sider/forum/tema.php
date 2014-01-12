@@ -28,7 +28,7 @@
     //Her legges det inn en oversikt over alle forumene
     list_forum();
     
-    echo "<table class='forum'><tr><th></th><th>TrÃ¥d</th><th>Siste innlegg i trÃ¥d</th></tr>";
+    echo "<table class='forum'><tr><th></th><th>Tråd</th><th>Siste innlegg i tråd</th></tr>";
   
    	//skriver ut alle temaene i forumet sortet pÃ¥ sist oppdaterte med siste innlegg og av hvem
    	foreach($forumtemaer as $temaid => $forumtema){
