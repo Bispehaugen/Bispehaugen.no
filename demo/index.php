@@ -27,32 +27,33 @@
             <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
             <ul>
                 <li>
-                    <a href="#nyheter" data-scroll-nav='2'>Nyheter</a>
+                    <span data-scroll-nav='2'>Nyheter</span>
                 </li>
                 <li>
-                    <a href="#aktiviteter" data-scroll-nav='3'>Aktiviteter</a>
+                    <span data-scroll-nav='3'>Aktiviteter</span>
                 </li>
                 <li>
-                    <a href="#spilleoppdrag" data-scroll-nav='4'>Spilleoppdrag</a>
+                    <span data-scroll-nav='4'>Spilleoppdrag</span>
                 </li>
                 <li>
-                    <a href="#blimedlem" class="bli-medlem" data-scroll-nav='5'>Bli medlem</a>
+                    <span class="bli-medlem" data-scroll-nav='5'>Bli medlem</span>
                 </li>
                 <li>
-                    <a href="#medlemmer" data-scroll-nav='6'>Medlemmer</a>
+                    <span data-scroll-nav='6'>Medlemmer</span>
                 </li>
                 <li>
-                    <a href="#korpset" data-scroll-nav='7'>Korpset</a>
+                    <span data-scroll-nav='7'>Korpset</span>
                 </li>
             </ul>
         </nav>
     </div>
     <section class="side nyheter" data-scroll-index='2'>
         <a name="nyheter"></a>
-        <div class='content'>
+        <div class='content sidescroll' data-sidescroll-filter="nyhet">
+          <div class='scroll active visible' data-sidescroll-index='0'>
             <h2>Nyheter</h2>
 
-            <div class="box news">
+            <div class="box news next-scroll" data-sidescroll-url="/nyhet/1">
               <div class="date" datetime="2014-01-19T08:00:00">
                 <div class="weekday">søn</div>
                 <div class="day">19</div>
@@ -69,9 +70,10 @@
                 </div>
                 <div class="clearfix"></div>
               </div>
+              <div class="neste-pil"><i class="fa fa-chevron-right"></i></div>
             </div>
 
-            <div class="box news">
+            <div class="box news next-scroll" data-sidescroll-url="/nyhet/2">
               <div class="date" datetime="2014-01-19T08:00:00">
                 <div class="weekday">søn</div>
                 <div class="day">19</div>
@@ -85,260 +87,268 @@
                 <div class="innhold">
                     <h4>Noter til årets juletrefester</h4>
                     <p class="ingress">Nå er notene får årets juletrefester lagt ut, sjekk det ut FØR du skal spille juletrefest (NB! det er IKKE det samme som vi har spilt før.)<br />
-Notene finner du HER.
-<br />
-Foreløpig er det kun julesangene som er lagt ut, det kommer 4 lekesanger i tillegg innen juleaften. I år er det ikke håndskrevne noter, men skrevet inn på data. :)
-<br />
-Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (!) filer, så kan det ha skjedd noe kluss :)</p>
+                    Notene finner du HER.
+                    <br />
+                    Foreløpig er det kun julesangene som er lagt ut, det kommer 4 lekesanger i tillegg innen juleaften. I år er det ikke håndskrevne noter, men skrevet inn på data. :)
+                    <br />
+                    Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (!) filer, så kan det ha skjedd noe kluss :)</p>
                 </div>
-                <div class="clearfix"></div>
               </div>
+              <div class="neste-pil"><i class="fa fa-chevron-right"></i></div>
             </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class='scroll' data-sidescroll-index='1'>
+            <div class="prev-scroll tilbake-pil"><i class="fa fa-chevron-left"></i></div>
+            <div class="next-scroll"><i class="fa fa-chevron-right"></i></div>
 
-
-
+            Side 2
+          </div>
+          <div class='scroll' data-sidescroll-index='2'>
+            Side 3
+          </div>
       </div>
       <div class="clearfix"></div>
-</section>
-<section class="side aktiviteter" data-scroll-index='3'>
-  <a name="aktiviteter"></a>
-  <div class='content'>
-    <h2>Aktiviteter</h2>
+    </section>
+    <section class="side aktiviteter" data-scroll-index='3'>
+      <a name="aktiviteter"></a>
+      <div class='content'>
+        <h2>Aktiviteter</h2>
 
-    <table class="tabell" cellspacing=0 style="width: 100%">
-      <thead>
-          <tr style="text-align: left">
-            <th colspan=2 width="22%"><b>Dato</th>
-            <th width="35%"><b>Arrangement</th>
-            <th width="30%"><b>Sted</th>
-            <th width="10%"><b>Starter</th>
-            <th width="0">&nbsp;</th>
+        <table class="tabell" cellspacing=0 style="width: 100%">
+          <thead>
+              <tr style="text-align: left">
+                <th colspan=2 width="22%"><b>Dato</th>
+                <th width="35%"><b>Arrangement</th>
+                <th width="30%"><b>Sted</th>
+                <th width="10%"><b>Starter</th>
+                <th width="0">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>fre</td>
+            <td>01. nov</td>
+            <td>Seminar</td>
+            <td>Bispehaugen Skole</td>
+            <td>18:00</td>
+
+            <td>&nbsp;</td>
+
         </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>fre</td>
-        <td>01. nov</td>
-        <td>Seminar</td>
-        <td>Bispehaugen Skole</td>
-        <td>18:00</td>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>lør</td>
+            <td>02. nov</td>
+            <td>Seminar</td>
+            <td>Bispehaugen Skole</td>
+            <td>10:00</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>lør</td>
-        <td>02. nov</td>
-        <td>Seminar</td>
-        <td>Bispehaugen Skole</td>
-        <td>10:00</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>søn</td>
+            <td>03. nov</td>
+            <td>Seminar</td>
+            <td>Bispehaugen Skole</td>
+            <td>12:00</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>søn</td>
-        <td>03. nov</td>
-        <td>Seminar</td>
-        <td>Bispehaugen Skole</td>
-        <td>12:00</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>04. nov</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>04. nov</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>11. nov</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>11. nov</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>fre</td>
+            <td>15. nov</td>
+            <td>Jubileumskonsert</td>
+            <td>Trondheim Spektrum</td>
+            <td>09:00</td>
 
-    </tr>
+            <td class=small_text><href="?id=989&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>fre</td>
-        <td>15. nov</td>
-        <td>Jubileumskonsert</td>
-        <td>Trondheim Spektrum</td>
-        <td>09:00</td>
+        </tr>
 
-        <td class=small_text><href="?id=989&action=vis">&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>18. nov</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>18. nov</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>25. nov</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>25. nov</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>søn</td>
+            <td>01. des</td>
+            <td>Adventskonsert</td>
+            <td>Rosenborg Skole</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=975&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>søn</td>
-        <td>01. des</td>
-        <td>Adventskonsert</td>
-        <td>Rosenborg Skole</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=975&action=vis">&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>02. des</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>02. des</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>09. des</td>
+            <td>Øvelse</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>09. des</td>
-        <td>Øvelse</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>man</td>
+            <td>06. jan</td>
+            <td>Første øvelse jul</td>
+            <td>Bispehaugen Skole</td>
+            <td>19:30</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>man</td>
-        <td>06. jan</td>
-        <td>Første øvelse jul</td>
-        <td>Bispehaugen Skole</td>
-        <td>19:30</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>fre</td>
+            <td>17. jan</td>
+            <td>Prøvekorps dirigentsymposiumet</td>
+            <td>Hell</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>fre</td>
-        <td>17. jan</td>
-        <td>Prøvekorps dirigentsymposiumet</td>
-        <td>Hell</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>lør</td>
+            <td>18. jan</td>
+            <td>Prøvekorps dirigentsymposiumet</td>
+            <td>Hell</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>lør</td>
-        <td>18. jan</td>
-        <td>Prøvekorps dirigentsymposiumet</td>
-        <td>Hell</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>søn</td>
+            <td>19. jan</td>
+            <td>Prøvekorps dirigentsymposiumet</td>
+            <td>Hell</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td>&nbsp;</td>
 
-    <tr>
-        <td>søn</td>
-        <td>19. jan</td>
-        <td>Prøvekorps dirigentsymposiumet</td>
-        <td>Hell</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td>&nbsp;</td>
+        <tr>
+            <td>søn</td>
+            <td>02. feb</td>
+            <td>Trøndersk Mesterskap</td>
+            <td>Olavshallen, store sal</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=1009&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>søn</td>
-        <td>02. feb</td>
-        <td>Trøndersk Mesterskap</td>
-        <td>Olavshallen, store sal</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=1009&action=vis">&nbsp;</td>
+        <tr>
+            <td>fre</td>
+            <td>04. apr</td>
+            <td>NM 2014</td>
+            <td>Trondheim</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=1010&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>fre</td>
-        <td>04. apr</td>
-        <td>NM 2014</td>
-        <td>Trondheim</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=1010&action=vis">&nbsp;</td>
+        <tr>
+            <td>lør</td>
+            <td>05. apr</td>
+            <td>NM 2014</td>
+            <td>Trondheim</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=1011&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>lør</td>
-        <td>05. apr</td>
-        <td>NM 2014</td>
-        <td>Trondheim</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=1011&action=vis">&nbsp;</td>
+        <tr>
+            <td>tor</td>
+            <td>01. mai</td>
+            <td>1.Mai</td>
+            <td>Trondheim</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=1012&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>tor</td>
-        <td>01. mai</td>
-        <td>1.Mai</td>
-        <td>Trondheim</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=1012&action=vis">&nbsp;</td>
+        <tr>
+            <td>lør</td>
+            <td>17. mai</td>
+            <td>17.Mai</td>
+            <td>Trondheim</td>
+            <td>&nbsp;</td>
 
-    </tr>
+            <td class=small_text><href="?id=1013&action=vis">&nbsp;</td>
 
-    <tr>
-        <td>lør</td>
-        <td>17. mai</td>
-        <td>17.Mai</td>
-        <td>Trondheim</td>
-        <td>&nbsp;</td>
+        </tr>
 
-        <td class=small_text><href="?id=1013&action=vis">&nbsp;</td>
-
-    </tr>
-
-</tbody>
-</table>
-</div>
+    </tbody>
+    </table>
+    </div>
 </section>
 <section class="side spilleoppdrag coverflow" data-scroll-index='4'>
   <a name="spilleoppdrag"></a>
@@ -536,6 +546,72 @@ Dersom dere finner noe som er rart/feil, s si ifra! Etter å ha jobbet med 130 (
         $("nav.top ul").toggle();
     });
 
+    
+
+    function horizontalScroll(element) {
+        element.each(function(index, elem) {
+            var windowWidth = $(window).width();
+            var firstScroll = $(this).find(".scroll").first();
+
+            //debugger;
+            //.css("height", firstScroll.height());//
+            $(elem).addClass("animate");
+            $(elem).find(".scroll:not(:first)").css("left", windowWidth*3);
+
+            $(".next-scroll").click(function(){
+                var filter = element.data("sidescroll-filter");
+                var index = $(this).parent().data("sidescroll-index");
+                var url = $(this).data("sidescroll-url");
+
+                scrollToNextSide(filter, index, url);
+            });
+            $(".prev-scroll").click(function(){
+                var filter = element.data("sidescroll-filter");
+                var index = $(this).parent().data("sidescroll-index");
+                var url = $(this).data("sidescroll-url");
+
+                scrollToPrevSide(filter, index, url);
+            });            
+        });
+    }
+
+    horizontalScroll($(".sidescroll"));
+
+    function scrollToNextSide(filter, currentId, url) {
+        var container = $(".sidescroll[data-sidescroll-filter='" + filter + "']");
+        var prevSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId-1) + "']");
+        var currentSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + currentId + "']");
+        var nextActiveSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId+1) + "']");
+
+        if (nextActiveSide.length == 0) {
+            return;
+        }
+        nextActiveSide.toggleClass("active", true).css("left", 0);
+
+        var windowWidth = $(window).width();
+
+        container.css("height", nextActiveSide.height());
+
+        currentSide.css("left", -windowWidth*3).removeClass("active");
+    }
+
+    function scrollToPrevSide(filter, currentId, url) {
+        var container = $(".sidescroll[data-sidescroll-filter='" + filter + "']");
+        var prevSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId+1) + "']");
+        var currentSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + currentId + "']");
+        var nextActiveSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId-1) + "']");
+
+        if (nextActiveSide.length == 0) {
+            return;
+        }
+        nextActiveSide.toggleClass("active", true).css("left", 0);
+
+        var windowWidth = $(window).width();
+
+        container.css("height", nextActiveSide.height());
+
+        currentSide.css("left", windowWidth*3).removeClass("active");
+    }
     
     resizeHeight();
     $( window ).resize(function() {

@@ -14,7 +14,7 @@ h1, h2, h3, h4{
   font-family: 'Dosis', sans-serif;
   font-weight: 500;
 }
-nav li a, .meny {
+nav li span, .meny {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -68,7 +68,7 @@ ul {
 .header {
   margin: 0 auto;
   font-size: 6em;
-  width: 3.8em;
+  width: 4.3em; /*3.8*/
   text-align: center;
   background: rgba(255, 255, 255, 0.8);
 
@@ -121,6 +121,10 @@ nav, .nav-container {
     line-height: 113px;
     vertical-align: middle;
     display: block;
+  }
+
+  nav li span {
+    cursor: pointer;
   }
 
   .meny {
@@ -186,7 +190,7 @@ nav, .nav-container {
   }
 
   @media screen and (min-width: 740px) and (max-width: 900px) {
-    nav li a {
+    nav li span {
       font-size: 0.8em;
     }
   }
@@ -195,34 +199,27 @@ nav, .nav-container {
     nav li {
       margin-left: 2em;
     }
-    nav li a:hover, .meny:hover {
+    nav li span:hover, .meny:hover {
       color: rgba(34, 41, 51, 0.5);
       border-bottom: 2px solid;
     }
   }
 
-    nav li a {
+    nav li span {
       padding: 0.5em 1em 0.1em 1em;
     }
 
-    nav li a, .meny {
+    nav li span, .meny {
       color: #777;
       text-transform: uppercase;
       letter-spacing: 1px;
       text-decoration: none;
     }
 
-    nav li a.active, .meny.active {
+    nav li span.active, .meny.active {
       color: rgba(34, 41, 51, 1);
       border-bottom: 2px solid;
     }
-    /*
-  @media screen and (max-width: 1100px) {
-    nav {
-      width: 90%; }
-      nav li a {
-        font-size: 18px; } }
-        */
 
 section.side {
   min-height: 420px;
@@ -273,9 +270,48 @@ section.spilleoppdrag {
     border-radius: 5px;
   }
 
+  .sidescroll {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sidescroll .scroll {
+    position: absolute;
+
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .sidescroll .scroll.active {
+    opacity: 1;
+  }
+
+  .animate {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+
+    -webkit-transition-property: all, height, opacity;
+    -moz-transition-property: all, height, opacity;
+    -o-transition-property: all, height, opacity;
+    -ms-transition-property: all, height, opacity;
+    transition-property: all, height, opacity;
+    -webkit-transition-delay: 0s, 0.5s, 0.5s;
+    -moz-transition-delay: 0s, 0.5s, 0.5s;
+    -o-transition-delay: 0s, 0.5s, 0.5s;
+    -ms-transition-delay: 0s, 0.5s, 0.5s;
+    transition-delay: 0s, 0.5s, 0.5s;
+  }
+
   .news {
     clear: left;
     cursor: pointer;
+    position: relative;
   }
 
 @media screen and (min-width: 1025px) {
@@ -286,11 +322,8 @@ section.spilleoppdrag {
 
   .news .date {
     width: 5em;
-    padding: 0 0 0 0;
     color: rgba(255,255,255,0.8);
     text-shadow: 0 1px 0 #000;
-    position: relative;
-    z-index: 8;
     text-align: center;
     float: left;
   }
@@ -314,6 +347,7 @@ section.spilleoppdrag {
   .news .bilde-og-innhold {
     padding-left: 5em;
     width: 100%;
+    padding-right: 4em;
   }
 
   .news .bilde {
@@ -342,7 +376,24 @@ section.spilleoppdrag {
     line-height: 1.5em;
   }
 
+  .news .neste-pil {
+    font-size: 4em;
+    position: absolute;
+    right: 0.2em;
+    top: 35%;
+  }
+  .news .tilbake-pil {
+    font-size: 4em;
+    position: absolute;
+    left: 0.2em;
+    top: 35%;
+  }
+
   @media screen and (max-width: 739px) {
+    section.side.forside {
+      padding: 3em 0em;
+    }
+
     .news .bilde {
       width: 100%;
     }
@@ -357,24 +408,7 @@ section.spilleoppdrag {
 .banner { position: relative; overflow: auto; }
     .banner li { list-style: none; }
         .banner ul li { float: left; }
-/*
-    @media screen and (max-width: 1100px) {
-      section .content {
-        width: 90%;
-      } 
 
-
-      nav li {
-        display: block;
-        width: 100%;
-        margin: 1em;
-      }
-
-      section {
-        padding-top: 250px;
-      }
-    }
-          */
     section .content a {
       color: #002e40; }
 
