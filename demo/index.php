@@ -13,6 +13,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
+  <main>
     <section class="forside side coverflow" data-scroll-index='1'>
       <a name="forside"></a>
       <div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
@@ -49,11 +50,10 @@
     </div>
     <section class="side nyheter" data-scroll-index='2'>
         <a name="nyheter"></a>
-        <div class='content sidescroll' data-sidescroll-filter="nyhet">
-          <div class='scroll active visible' data-sidescroll-index='0'>
+        <div class='content'>
             <h2>Nyheter</h2>
 
-            <div class="box news next-scroll" data-sidescroll-url="/nyhet/1">
+            <div class="box news" data-popup-url="/nyhet/1">
               <div class="date" datetime="2014-01-19T08:00:00">
                 <div class="weekday">søn</div>
                 <div class="day">19</div>
@@ -73,7 +73,7 @@
               <div class="neste-pil"><i class="fa fa-chevron-right"></i></div>
             </div>
 
-            <div class="box news next-scroll" data-sidescroll-url="/nyhet/2">
+            <div class="box news" data-popup-url="/nyhet/2">
               <div class="date" datetime="2014-01-19T08:00:00">
                 <div class="weekday">søn</div>
                 <div class="day">19</div>
@@ -97,15 +97,6 @@
               <div class="neste-pil"><i class="fa fa-chevron-right"></i></div>
             </div>
             <div class="clearfix"></div>
-          </div>
-          <div class='scroll' data-sidescroll-index='1'>
-            <div class="prev-scroll tilbake-pil"><i class="fa fa-chevron-left"></i></div>
-            <div class="next-scroll"><i class="fa fa-chevron-right"></i></div>
-
-            Side 2
-          </div>
-          <div class='scroll' data-sidescroll-index='2'>
-            Side 3
           </div>
       </div>
       <div class="clearfix"></div>
@@ -491,6 +482,12 @@
   </div>
 </div>
 </section>
+</main>
+<section class="popup">
+    <span class="popup-close"><i class="fa fa-chevron-left"></i></span>
+    <div class="popup-content">Side 2</div>
+    <div class="clearfix"></div>
+</section>
 
 <script>
     $.scrollIt();
@@ -546,73 +543,34 @@
         $("nav.top ul").toggle();
     });
 
-    
 
-    function horizontalScroll(element) {
-        element.each(function(index, elem) {
-            var windowWidth = $(window).width();
-            var firstScroll = $(this).find(".scroll").first();
+    function visPopup(index, el) {
+        var elem = $(el);
+        var url = elem.data("popup-url");
 
-            //debugger;
-            //.css("height", firstScroll.height());//
-            $(elem).addClass("animate");
-            $(elem).find(".scroll:not(:first)").css("left", windowWidth*3);
+        var mainEl = $("main");
+        var popupEl = $(".popup");
 
-            $(".next-scroll").click(function(){
-                var filter = element.data("sidescroll-filter");
-                var index = $(this).parent().data("sidescroll-index");
-                var url = $(this).data("sidescroll-url");
+        var scrollTopBeforePopup = $(window).scrollTop();
 
-                scrollToNextSide(filter, index, url);
-            });
-            $(".prev-scroll").click(function(){
-                var filter = element.data("sidescroll-filter");
-                var index = $(this).parent().data("sidescroll-index");
-                var url = $(this).data("sidescroll-url");
-
-                scrollToPrevSide(filter, index, url);
-            });            
+        $.get(url, function(data) {
+            data = "test";
+            popupEl.addClass("vis").find(".popup-content").html(data);
+            mainEl.delay(500).hide(0);
         });
+
+        popupEl.find(".popup-close").click(function() {
+            popupEl.removeClass("vis").find(".popup-content").html("");
+            mainEl.show(0);
+
+            // promise?
+            $('html,body').scrollTop(scrollTopBeforePopup);
+        });
+
     }
 
-    horizontalScroll($(".sidescroll"));
+    $("[data-popup-url]").click(visPopup);
 
-    function scrollToNextSide(filter, currentId, url) {
-        var container = $(".sidescroll[data-sidescroll-filter='" + filter + "']");
-        var prevSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId-1) + "']");
-        var currentSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + currentId + "']");
-        var nextActiveSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId+1) + "']");
-
-        if (nextActiveSide.length == 0) {
-            return;
-        }
-        nextActiveSide.toggleClass("active", true).css("left", 0);
-
-        var windowWidth = $(window).width();
-
-        container.css("height", nextActiveSide.height());
-
-        currentSide.css("left", -windowWidth*3).removeClass("active");
-    }
-
-    function scrollToPrevSide(filter, currentId, url) {
-        var container = $(".sidescroll[data-sidescroll-filter='" + filter + "']");
-        var prevSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId+1) + "']");
-        var currentSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + currentId + "']");
-        var nextActiveSide = $(".sidescroll[data-sidescroll-filter='" + filter + "'] .scroll[data-sidescroll-index='" + (currentId-1) + "']");
-
-        if (nextActiveSide.length == 0) {
-            return;
-        }
-        nextActiveSide.toggleClass("active", true).css("left", 0);
-
-        var windowWidth = $(window).width();
-
-        container.css("height", nextActiveSide.height());
-
-        currentSide.css("left", windowWidth*3).removeClass("active");
-    }
-    
     resizeHeight();
     $( window ).resize(function() {
         resizeHeight();

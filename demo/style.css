@@ -270,44 +270,6 @@ section.spilleoppdrag {
     border-radius: 5px;
   }
 
-  .sidescroll {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sidescroll .scroll {
-    position: absolute;
-
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    -ms-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-  }
-
-  .sidescroll .scroll.active {
-    opacity: 1;
-  }
-
-  .animate {
-    -webkit-transition: all 0.5s ease-in-out;
-    -moz-transition: all 0.5s ease-in-out;
-    -o-transition: all 0.5s ease-in-out;
-    -ms-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-
-    -webkit-transition-property: all, height, opacity;
-    -moz-transition-property: all, height, opacity;
-    -o-transition-property: all, height, opacity;
-    -ms-transition-property: all, height, opacity;
-    transition-property: all, height, opacity;
-    -webkit-transition-delay: 0s, 0.5s, 0.5s;
-    -moz-transition-delay: 0s, 0.5s, 0.5s;
-    -o-transition-delay: 0s, 0.5s, 0.5s;
-    -ms-transition-delay: 0s, 0.5s, 0.5s;
-    transition-delay: 0s, 0.5s, 0.5s;
-  }
-
   .news {
     clear: left;
     cursor: pointer;
@@ -412,10 +374,10 @@ section.spilleoppdrag {
     section .content a {
       color: #002e40; }
 
-section:nth-child(odd) {
+section.side:nth-child(odd) {
   background-color: rgba(34, 41, 51, 1);
   color: white; }
-  section:nth-child(odd) a {
+  section.side:nth-child(odd) a {
     color: white; }
 
 .tabell tbody tr:nth-child(even) {
@@ -458,4 +420,32 @@ section.korpset .content {
 section.side.korpset {
   padding-bottom: 0;
   margin-bottom: 0;
+}
+
+section.popup {
+  opacity: 0;
+  position: fixed;
+  background: white;
+  top: -2000px;
+  
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  overflow: auto;
+
+  z-index: -1;
+
+  padding: 3em;
+  background-color: rgba(34, 41, 51, 1);
+  color: white;
+
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+section.popup.vis {
+  opacity: 1;
+  z-index: 10000;
+  top: 0px;
+  bottom: 0px;
 }
