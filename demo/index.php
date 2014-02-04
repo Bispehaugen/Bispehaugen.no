@@ -554,8 +554,8 @@
         var scrollTopBeforePopup = $(window).scrollTop();
 
         $.get(url, function(data) {
-            data = "test";
-            popupEl.addClass("vis").find(".popup-content").html(data);
+            popupEl.find(".popup-content").html(data);
+            popupEl.addClass("vis");
             mainEl.delay(500).hide(0);
         });
 

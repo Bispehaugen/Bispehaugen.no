@@ -426,10 +426,10 @@ section.popup {
   opacity: 0;
   position: fixed;
   background: white;
-  top: -2000px;
+  left: 2000px;
   
-  left: 0;
-  right: 0;
+  top: 0px;
+  right: 0px;
   bottom: 0px;
   overflow: auto;
 
@@ -439,13 +439,13 @@ section.popup {
   background-color: rgba(34, 41, 51, 1);
   color: white;
 
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
+  -webkit-transition: all 0.35s;
+  transition: all 0.35s;
 }
 
 section.popup.vis {
   opacity: 1;
   z-index: 10000;
-  top: 0px;
+  left: 0px;
   bottom: 0px;
 }
