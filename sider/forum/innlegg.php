@@ -3,7 +3,7 @@
 	//funksjonalitet
 	
 	//TODO bredde pÃ¥ tabellen, bare hente opp de 10 siste og ha en knapp med 'vis alle' som printer smtlige innlegg
-	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen. I tillegg er det rot med brukerid-en i databasen.
+	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen.
 	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
@@ -12,7 +12,7 @@
 	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(has_post('temaid')){
-		$tekst=post('tekst');
+		$tekst=mysql_escape_string(post('tekst'));
 		$sql="INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetavid, sistredigert) 
 			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d H:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
@@ -28,6 +28,9 @@
 		}
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
+		//legger inn temaiden i tematabellen som sisteinnleggid
+#		$sql="UPDATE forum_tema SET sisteinnleggid='".$id."' WHERE temaid='".post('temaid')."'";
+#		mysql_query($sql);
 	};
 	
 	//hvis noen har skrevet seg på en liste
@@ -135,10 +138,10 @@
 					echo"<br><a href='#'>Lik dette</i></a>";
 				};
   			}else{
-  				echo"<td></td>";
+  				echo"<td>";
   			};
 			
-			//viser endre/slett-knapper på egne innlegg og at admin har mulighet til å overstyre
+			//viser endre/slett-knapper på egne innlegg og for admin (så de har mulighet til å overstyre)
 			if($forum_innlegg['skrevetavid']==$_SESSION['medlemsid'] || $_SESSION['rettigheter']>1){
   				echo"<br><a href='?side=forum/innlegg&id=".$temaid."&sletteinnlegg=".$forum_innlegg['innleggid']."'>
   				<i class='icon-remove' title='Klikk for å slette'></i></a> / 
