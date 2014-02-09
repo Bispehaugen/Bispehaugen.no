@@ -46,8 +46,7 @@
    				echo "</td><td></td><td>
    				<a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>".$aktivitet['tittel']."</a></td><td>".$aktivitet['sted']."</td>";
 			}else{
-				echo "<tr><td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']))."</td><td>".
-   				strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
+				echo "</td><td>".strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
    				".$aktivitet['tittel']."</a>
    				</td><td>".$aktivitet['sted']."</td>";
 			}
