@@ -110,13 +110,13 @@ nav, .nav-container {
   width: 100%;
   z-index: 1000;
   height: 113px;
-
-  }
+}
   nav ul {
     padding: 0px;
     margin: 0px auto; 
     background: white;
   }
+
   nav li, .meny {
     line-height: 113px;
     vertical-align: middle;
