@@ -39,7 +39,7 @@ values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress
 	};
 	
 	//henter valgte aktivitet fra databasen
-	if(has('id')){	
+	if(has_get('id')){	
 		#Hente ut valgte nyhet hvis "endre"
 		$arrid=get('id');
 		$sql="SELECT * FROM `arrangement` WHERE `arrid`=".$arrid;

@@ -4,7 +4,7 @@
 	//funksjonalitet
 
 	//henter valgte medlem fra databasen
-	if(has('id')){	
+	if(has_get('id')){	
 		$id=get('id');
 		
 		$medlemmer = hent_brukerdata($id);

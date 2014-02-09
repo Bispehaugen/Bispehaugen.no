@@ -11,7 +11,7 @@ if ($tilkobling === false) {
 	exit ;
 }
 
-if (has("loggut")) {
+if (has_get("loggut")) {
 	logg_ut();
 }
 
@@ -19,7 +19,7 @@ if (has("loggut")) {
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 
 //lagrer alt innhold som en variabel
-if(has('side')){
+if(has_get('side')){
 	$side = get('side');
 } else {
 	$side = "sider";

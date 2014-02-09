@@ -11,7 +11,7 @@
 	$komiteer=hent_og_putt_inn_i_array($sql,$id_verdi="komiteid");
 	
 	//henter ut info om medlemmer++ om valgte komitÃ©
-	if(has('id')){
+	if(has_get('id')){
 		$sql="SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon, tittel, medlemmer.medlemsid, 
 		verv.medlemsid, epost, fnavn, enavn  FROM komite, verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND 
 		komite.komiteid=verv.komiteid AND komite.komiteid=".get('id')." ORDER BY komite.posisjon, verv.posisjon";
@@ -38,7 +38,7 @@
 			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
 			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>";
 			
-			if(has('slagverksgrupper')){
+			if(has_get('slagverksgrupper')){
 				echo"<tr><td><a href='?side=organisasjon'>skjul grupper</a></td><td colspan='3'></td></tr>
 				<tr><td></td><td><b>Gruppe 1</b></td><td colspan='2'>.......</td></tr>";
 

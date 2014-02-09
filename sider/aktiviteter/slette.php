@@ -9,7 +9,7 @@
 	
 	$id=get('id');
 	
-	if(has('id')){
+	if(has_get('id')){
 		$sql = "UPDATE arrangement SET slettet=true WHERE arrid = '".$id."';";
 		mysql_query($sql);
 		header('Location: ?side=aktiviteter/liste');

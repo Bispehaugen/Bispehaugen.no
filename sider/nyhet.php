@@ -1,7 +1,7 @@
 <?php
 setlocale(LC_TIME, "norwegian"); 	
 // Vis enkelnyhet
-if( has('id') ){
+if(has_get('id') ){
 
 	$id = get('id');
 	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE nyhetsid=".$id;

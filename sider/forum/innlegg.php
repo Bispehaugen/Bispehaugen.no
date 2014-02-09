@@ -10,6 +10,17 @@
 		header('Location: ../index.php');
 	};
 	
+	$temaid=get('id');
+	
+	//slette innlegg
+	if(has_get('sletteinnlegg')){
+		$sletteinnleggid=get('sletteinnlegg');
+		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=".$sletteinnleggid;
+		mysql_query($sql);
+		
+		header('Location: ?side=forum/innlegg&id='.$temaid.'');
+	};
+	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(has_post('temaid')){
 		$tekst=mysql_escape_string(post('tekst'));
@@ -44,7 +55,6 @@
 		mysql_query($sql);	
 	};
 	
-	$temaid=get('id');
 	//henter ut alle innleggene i valgte forum/tema 
 	$sql="SELECT forum_tema.temaid, forum_innlegg_ny.innleggid, forum_innlegg_ny.tekst, forum_innlegg_ny.skrevetavid,  
 	forum_innlegg_ny.skrevet, medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn FROM forum_tema, forum_innlegg_ny, medlemmer 
@@ -131,7 +141,7 @@
   		};
 			//legger til liker-ikon med antall likes (vises ikke for lister)
 			if($listeoppforing['listeid']!=$forum_innlegg['innleggid']){
-				echo"</td><td><i class='icon-thumbs-up' title='Antall som liker dette'>XX personer liker dette 
+				echo"</td><td><i class='icon-thumbs-up' title='Antall som liker dette'>XX  
 				<br>";
 				//du kan bare like andres innlegg
 				if($forum_innlegg['skrevetavid']!=$_SESSION['medlemsid']){

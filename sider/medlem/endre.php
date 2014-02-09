@@ -90,7 +90,7 @@
 		}
 		};
 	//henter valgte medlem fra databasen hvis "endre"
-	if(has('id')){	
+	if(has_get('id')){	
 		$medlemmer = hent_brukerdata($id);
 	} else {
 		$medlemmer = hent_brukerdata();
