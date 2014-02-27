@@ -206,7 +206,7 @@ function sett_sisteinnleggid($temaid){
 	mysql_query($sql);
 		
 	//oppdaterer sisteinnleggig i forum-tabellen
-	$sql="SELECT sisteinnleggid, forumid FROM forum_tema WHERE temaid=".$temaid." ORDER BY sisteinnleggid DESC LIMIT 1";
+	$sql="SELECT sisteinnleggid, forumid FROM forum_tema ORDER BY sisteinnleggid DESC LIMIT 1";
 	$sisteinnlegg = hent_og_putt_inn_i_array($sql, "sisteinnleggid");
 	
 	foreach($sisteinnlegg as $sisteinnleggid){
