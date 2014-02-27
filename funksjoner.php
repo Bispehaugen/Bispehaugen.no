@@ -207,10 +207,11 @@ function sett_sistelesteinnleggid($temaid){
 		
 	//oppdaterer sisteinnleggig i forum-tabellen
 	$sql="SELECT sisteinnleggid, forumid FROM forum_tema WHERE temaid=".$temaid." ORDER BY sisteinnleggid DESC LIMIT 1";
-	$result=mysql_query($sql);
-	$sisteinnleggid=mysql_result($result, '0');
+	$sisteinnlegg = hent_og_putt_inn_i_array($sql, "sisteinnleggid");
 	
-	$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
+	foreach($sisteinnlegg as $sisteinnleggid){
+		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
+	};
 	mysql_query($sql);
 };	
 	

@@ -1,5 +1,4 @@
 <?php 
-
 	//funksjonalitet
 	
 	//TODO bredde pÃ¥ tabellen, bare hente opp de 10 siste og ha en knapp med 'vis alle' som printer smtlige innlegg
@@ -42,7 +41,7 @@
 		mysql_query($sql);
 		
 		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
-		sett_sistelesteinnleggid($temaid);
+			
 	};
 	
 	//hvis noen har skrevet seg på en liste
