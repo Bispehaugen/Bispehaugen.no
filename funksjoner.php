@@ -34,7 +34,7 @@ function post($attributt) {
 	return isset($_POST[$attributt]) ? mysql_real_escape_string($_POST[$attributt]) : null; 
 }
 
-function has($attributt) {
+function has_get($attributt) {
 	return isset($_GET[$attributt]);
 }
 
@@ -191,9 +191,27 @@ function hent_aktiviteter() {
 	} elseif ( er_logget_inn() && $_SESSION['rettigheter']==1){
 			$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid; ";
 	} else {
-		$sql="SELECT * FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
+		$sql="SELECT arrangement.*, fnavn, enavn FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
 	}
 	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 }
+	
+function sett_sistelesteinnleggid($temaid){
+	//oppdaterer sisteinnleggid i forum_tema-tabellen
+	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=".$temaid." ORDER BY innleggid DESC LIMIT 1";
+	$result=mysql_query($sql);
+	$sisteinnleggid=mysql_result($result, '0');
+	
+	$sql="UPDATE forum_tema SET sisteinnleggid=".$sisteinnleggid." WHERE temaid=".$temaid;
+	mysql_query($sql);
+		
+	//oppdaterer sisteinnleggig i forum-tabellen
+	$sql="SELECT sisteinnleggid, forumid FROM forum_tema WHERE temaid=".$temaid." ORDER BY sisteinnleggid DESC LIMIT 1";
+	$result=mysql_query($sql);
+	$sisteinnleggid=mysql_result($result, '0');
+	
+	$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
+	mysql_query($sql);
+};	
 	
 ?>

@@ -40,9 +40,9 @@
 		}
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
-		//legger inn temaid-en i tematabellen som sisteinnleggid
-#		$sql="UPDATE forum_tema SET sisteinnleggid='".$id."' WHERE temaid='".post('temaid')."'";
-#		mysql_query($sql);
+		
+		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
+		sett_sistelesteinnleggid($temaid);
 	};
 	
 	//hvis noen har skrevet seg på en liste
