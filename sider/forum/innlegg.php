@@ -17,7 +17,7 @@
 		$sletteinnleggid=get('sletteinnlegg');
 		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=".$sletteinnleggid;
 		mysql_query($sql);
-		
+		sett_sistelesteinnleggid($temaid);
 		header('Location: ?side=forum/innlegg&id='.$temaid.'');
 	};
 	
@@ -32,6 +32,7 @@
 		//henter ut liste over alle aktive medlemmer
 		$sql="SELECT medlemsid FROM medlemmer WHERE status!='Sluttet';";
 		$aktivemedlemmer=hent_og_putt_inn_i_array($sql, "medlemsid");
+		//legger inn innlegget som ulest for alle aktive medlemmer
 		$sql="INSERT INTO `forum_leste`(`medlemsid`, `uleste_innlegg`, `temaid`) 
 			VALUES ";
 		foreach ($aktivemedlemmer as $medlemsid => $medlem) {
@@ -39,7 +40,7 @@
 		}
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
-		//legger inn temaiden i tematabellen som sisteinnleggid
+		//legger inn temaid-en i tematabellen som sisteinnleggid
 #		$sql="UPDATE forum_tema SET sisteinnleggid='".$id."' WHERE temaid='".post('temaid')."'";
 #		mysql_query($sql);
 	};
