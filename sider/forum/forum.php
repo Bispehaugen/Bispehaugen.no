@@ -12,8 +12,8 @@
 	//$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
 	//FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
 	
-	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggskrevet, sisteinnleggskrevetav
-	FROM forum ORDER BY forumid;";
+	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, skrevetavid, innleggid, skrevet, fnavn, enavn
+	FROM forum, forum_innlegg_ny, medlemmer WHERE skrevetavid=medlemsid AND innleggid=sisteinnleggid ORDER BY forumid;";
 	$forumer = hent_og_putt_inn_i_array($sql, "forumid");
 	
 	//henter forumid til forum som har uleste innlegg
@@ -38,8 +38,8 @@
 				echo "<tr>";
 			};
 			echo"<td></td><td><a href='?side=forum/tema&id=".$forum['forumid']."'>".$forum['tittel']."</a></td><td>
-   			".$forum['sisteinnleggskrevetav']." - ";
-   			echo ant_dager_siden($forum['sisteinnleggskrevet'])."</td></tr>";
+   			".$forum['fnavn']." ".$forum['enavn']." - ";
+   			echo ant_dager_siden($forum['skrevet'])."</td></tr>";
 		};
 	};	
 

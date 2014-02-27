@@ -16,7 +16,7 @@
 		$sletteinnleggid=get('sletteinnlegg');
 		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=".$sletteinnleggid;
 		mysql_query($sql);
-		sett_sistelesteinnleggid($temaid);
+		sett_sisteinnleggid($temaid);
 		header('Location: ?side=forum/innlegg&id='.$temaid.'');
 	};
 	
@@ -41,7 +41,7 @@
 		mysql_query($sql);
 		
 		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
-			
+		sett_sisteinnleggid($temaid);
 	};
 	
 	//hvis noen har skrevet seg på en liste

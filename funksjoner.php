@@ -196,7 +196,7 @@ function hent_aktiviteter() {
 	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 }
 	
-function sett_sistelesteinnleggid($temaid){
+function sett_sisteinnleggid($temaid){
 	//oppdaterer sisteinnleggid i forum_tema-tabellen
 	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=".$temaid." ORDER BY innleggid DESC LIMIT 1";
 	$result=mysql_query($sql);
