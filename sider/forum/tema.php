@@ -8,9 +8,9 @@
 	
 	$forumid=get('id');
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
-	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetav, tekst, innleggid, skrevet
-	FROM forum_tema, forum_innlegg WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid 
-	ORDER BY sisteinnleggid DESC;";
+	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetavid, tekst, enavn, fnavn, innleggid, skrevet
+	FROM forum_tema, forum_innlegg_ny, medlemmer WHERE forum_tema.forumid=".$forumid." AND innleggid=sisteinnleggid AND
+	medlemsid=skrevetavid ORDER BY sisteinnleggid DESC;";
 	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
 	//Henter ut alle temaer med uleste innlegg
@@ -33,7 +33,7 @@
 	   		echo "<tr>";
 		};
    		echo"<td></td><td><a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></td>
-   			<td><p>".$forumtema['tekst']."</p>".$forumtema['skrevetav']." - ".ant_dager_siden($forumtema['skrevet'])."</td></tr>";
+   			<td><p>".$forumtema['tekst']."</p>".$forumtema['fnavn']." ".$forumtema['enavn']." - ".ant_dager_siden($forumtema['skrevet'])."</td></tr>";
 	};	
 	echo "</table>";
 ?>
