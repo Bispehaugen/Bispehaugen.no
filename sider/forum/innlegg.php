@@ -4,6 +4,8 @@
 	//TODO bredde pÃ¥ tabellen, bare hente opp de 10 siste og ha en knapp med 'vis alle' som printer smtlige innlegg
 	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen.
 	
+	//TODO: bør slette post/get etter at de er hentet ut.
+	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
 		header('Location: ../index.php');
@@ -15,6 +17,15 @@
 	if(has_get('sletteinnlegg')){
 		$sletteinnleggid=get('sletteinnlegg');
 		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=".$sletteinnleggid;
+		mysql_query($sql);
+		sett_sisteinnleggid($temaid);
+		header('Location: ?side=forum/innlegg&id='.$temaid.'');
+	};
+	
+	//liker et innlegg
+	if(has_get('likerinnlegg')){
+		$likerinnleggid=get('likerinnlegg');
+		$sql="INSERT INTO `forum_liker`(`medlemsid`, `innleggid`) VALUES ('".$_SESSION["medlemsid"]."',".$likerinnleggid.")";
 		mysql_query($sql);
 		sett_sisteinnleggid($temaid);
 		header('Location: ?side=forum/innlegg&id='.$temaid.'');
@@ -145,7 +156,7 @@
 				<br>";
 				//du kan bare like andres innlegg
 				if($forum_innlegg['skrevetavid']!=$_SESSION['medlemsid']){
-					echo"<br><a href='#'>Lik dette</i></a>";
+					echo"<br><a href='?side=forum/innlegg&id=".$temaid."&likerinnlegg=".$forum_innlegg['innleggid']."'>Lik dette</i></a>";
 				};
   			}else{
   				echo"<td>";
