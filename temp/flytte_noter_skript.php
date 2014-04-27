@@ -24,11 +24,17 @@ foreach($notemapper as $notemappe){
 	$undermapper=hent_og_putt_inn_i_array($sql, 'id');
 	$foldertittel=clean($notemappe['tittel']);
 		foreach($undermapper as $undermappe){
-			$tittel=clean($undermappe['tittel']);
-			$command="mkdir ".escapeshellarg("../noter/".$foldertittel."/".$tittel);
-			#print_r($command);
+			$sql="SELECT tittel, id FROM lenker WHERE type='dir' AND katalog=".$undermappe['id'].";";
+			$underundermapper=hent_og_putt_inn_i_array($sql, 'id');
+			$undertittel=clean($undermappe['tittel']);
 			echo "<pre>".shell_exec($command)."</pre>";
 
+			foreach($underundermapper as $underundermappe){
+				$tittel=clean($underundermappe['tittel']);
+				$command="mkdir ".escapeshellarg("../noter/".$foldertittel."/".$undertittel."/".$tittel);
+				#print_r($command);
+				echo "<pre>".shell_exec($command)."</pre>";
+			};
 		};
 };
 ?>
