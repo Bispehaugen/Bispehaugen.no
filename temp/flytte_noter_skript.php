@@ -10,10 +10,17 @@ if ($tilkobling === false) {
 	exit ;
 }
 
+function clean($string) {
+   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+   $string = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+
+   return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
+}
 $sql="SELECT * FROM lenker WHERE type='dir' AND katalog=381;";
 $notemapper=hent_og_putt_inn_i_array($sql, 'id');
 foreach($notemapper as $notemappe){
-	$command="mkdir ".escapeshellarg("../noter/".$notemappe['tittel']);
+	$tittel=clean($notemappe['tittel']);
+	$command="mkdir ".escapeshellarg("../noter/".$tittel);
 	#print_r($command);
 	echo "<pre>".shell_exec($command)."</pre>";
 };
