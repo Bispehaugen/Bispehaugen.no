@@ -1,47 +1,54 @@
 <?php 
 
+	setlocale(LC_TIME, "Norwegian");
+
 	//funksjonalitet
 	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
 		header('Location: index.php');
 	};
-	
-	//henter ut alle forumene og lister de opp sammen med nÃ¥r siste innlegg var
-	//Denne skal egentlig brukse, men databasen er ikke tilstrekkelig oppdatert ennå
-	//$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
-	//FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
-	
-	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, skrevetavid, innleggid, skrevet, fnavn, enavn
-	FROM forum, forum_innlegg_ny, medlemmer WHERE skrevetavid=medlemsid AND innleggid=sisteinnleggid ORDER BY forumid;";
-	$forumer = hent_og_putt_inn_i_array($sql, "forumid");
-	
-	//henter forumid til forum som har uleste innlegg
-	$medlemsid= $_SESSION["medlemsid"];
-	$sql="SELECT forum_tema.forumid FROM forum_leste, forum_tema WHERE medlemsid=".$medlemsid." AND forum_leste.temaid=forum_tema.temaid;";
-	$uleste_forum = hent_og_putt_inn_i_array($sql, $id_verdi="forumid");
-	
-    #Det som printes pï¿½ sida
-    
-   //Her legges det inn en oversikt over alle forumene
-    list_forum();
-    
-    echo "<table class='forum'><tr><th></th><th>Forum</th><th>Sist oppdatert av</th></tr>";
-  
-   	//skriver ut alle forumene samt hvem som la inn siste innlegg og hvor lenge siden.
-   	foreach($forumer as $forum){
-   		//sjekker om man er admin og dermed skal se styret, webkom og musikkomite-forumene
-   		if($_SESSION['rettigheter']>2 || $forum['forumid']<3){
-   			if($uleste_forum[$forum['forumid']]){
-   				echo "<tr class='ulest'>";
-			}else{
-				echo "<tr>";
-			};
-			echo"<td></td><td><a href='?side=forum/tema&id=".$forum['forumid']."'>".$forum['tittel']."</a></td><td>
-   			".$forum['fnavn']." ".$forum['enavn']." - ";
-   			echo ant_dager_siden($forum['skrevet'])."</td></tr>";
-		};
-	};	
 
-	echo "</table>";
+	//Her legges det inn en oversikt over alle forumene
+    list_forum();
+	
+	$sql = "SELECT fi . * , ft.tittel as innleggtittel, f.tittel as tematittel
+			FROM forum_innlegg AS fi
+			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
+			LEFT JOIN forum AS f ON fi.forumid = f.forumid
+			ORDER BY skrevet DESC 
+			LIMIT 10";
+	$result = mysql_query($sql);
+	$sisteInnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
+
+
+	echo "
+		<section>
+			<ul>
+				<li>
+	";
+
+	foreach($sisteInnlegg as $id => $innlegg) {
+		$tid = strtotime($innlegg['skrevet']);
+
+		echo "<li>";
+		echo "<div class='info'>";
+			echo "<span class='forum-tittel'><a href='?side=forum/tema&id=".$innlegg['forumid']."'>".$innlegg['tematittel']."</a></span>";
+			echo " <i class='icon-caret-right'></i> ";
+			echo "<span class='tema-tittel'><a href='?side=forum/innlegg&id=".$innlegg['temaid']."'>".$innlegg['innleggtittel']."</a></span>";
+			echo "<span class='tid'>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</span>";
+		echo "</div>";
+
+		// Lag en hjelpefil for å hente ut mer profilinfo generelt i forum
+		echo "<div class='skrevetav'>".$innlegg['skrevetav']."</div>";
+
+		echo "<p class='tekst'>".$innlegg['tekst']."</p>";
+
+		echo "</li>";
+	}
+
+	echo "
+			</ul>
+		</section>
+	";
 ?>

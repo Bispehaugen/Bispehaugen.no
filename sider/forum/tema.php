@@ -27,7 +27,7 @@
   
    	//skriver ut alle temaene i forumet sortet på sist oppdaterte med siste innlegg og av hvem
    	foreach($forumtemaer as $temaid => $forumtema){
-   		if($uleste_innlegg[$forumtema['temaid']]){
+   		if(array_key_exists($temaid, $uleste_innlegg) && $uleste_innlegg[$temaid]){
    			echo "<tr class='ulest'>";
    		}else{
 	   		echo "<tr>";

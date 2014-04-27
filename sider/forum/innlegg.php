@@ -109,7 +109,7 @@
 
    	//skriver ut alle innleggene valgte forum og tema i forumet sortet pÃ¥ sist oppdaterte med siste innlegg og av hvem
    	foreach($foruminnlegg as $innleggId => $forum_innlegg){
-      	if($ulesteinnlegg[$forum_innlegg['innleggid']]){
+      	if(array_key_exists($innleggId, $ulesteinnlegg)){
 	      	echo "<tr class='ulest'>";
 		}
 		else{
@@ -119,7 +119,7 @@
    			<td>".$forum_innlegg['tekst'];
 		
       	//if som skriver ut liste hvis det hører en liste til innlegget
-		if($listeinnlegg[$forum_innlegg['innleggid']]){
+		if(array_key_exists($innleggId, $listeinnlegg)){
 			echo "<table>
 			<tr><th colspan='2'>".$listeinnlegg[$forum_innlegg['innleggid']]['tittel']."</th></tr>";
 			foreach($listeoppforinger as $listeoppforing){
@@ -151,8 +151,8 @@
 			echo "</form></table>";
   		};
 			//legger til liker-ikon med antall likes (vises ikke for lister)
-			if($listeoppforing['listeid']!=$forum_innlegg['innleggid']){
-				echo"</td><td><i class='icon-thumbs-up' title='Antall som liker dette'>XX  
+			if(!array_key_exists($innleggId, $listeinnlegg)){
+				echo"</td><td><i class='icon-thumbs-up' title='Antall som liker dette'>XX
 				<br>";
 				//du kan bare like andres innlegg
 				if($forum_innlegg['skrevetavid']!=$_SESSION['medlemsid']){
@@ -172,7 +172,7 @@
 	};	
 	echo "
 	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
-			<tr><td>Svar pÃ¥ innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
+			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
 			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 			<input type='hidden' name='temaid' value='".$temaid."'>
 			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
