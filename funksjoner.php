@@ -95,21 +95,47 @@ function hent_brukerdata($medlemid = ""){
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
 					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra 
-				FROM `medlemmer` 
-				WHERE `medlemsid`=".$medlemid;
+				FROM `medlemmer`";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
-				FROM `medlemmer` 
-				WHERE `medlemsid`=".$medlemid;
+				FROM `medlemmer`";
 	}
-	
+
+	if (is_array($medlemid)) {
+		sort($medlemid);
+		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
+	} else {
+		$sql .= " WHERE `medlemsid`=".$medlemid;
+	}
+	echo $sql;
 	$mysql_result = mysql_query($sql);
 
+	$medlemmer = Array();
+
 	while($medlem = mysql_fetch_assoc($mysql_result)) {
-		return $medlem;
+		if(is_array($medlemid)) {
+			$medlemmer[$medlem['medlemsid']] = $medlem;
+		} else {
+			return $medlem;
+		}
 	}
-	
-	return NULL;
+
+	return $medlemmer;
+}
+
+function brukerinfo_forum($listeMedMedlemsIder = []) {
+	$brukerdata = hent_brukerdata($listeMedMedlemsIder);
+
+	// Legger til html template
+	foreach(array_keys($brukerdata) as $brukerid)
+	{
+		$b = $brukerdata[$brukerid];
+	    $brukerdata[$brukerid]['innlegg_html'] = "
+			<div>".$b['fnavn']."</div>
+		";
+	}
+
+	return $brukerdata;
 }
 
 function er_logget_inn(){

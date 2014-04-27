@@ -21,6 +21,11 @@
 	$result = mysql_query($sql);
 	$sisteInnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 
+	$hentMedlemsid = function($innlegg) {
+		return $innlegg['skrevetavid'];
+	};
+	$brukerIder = array_map($hentMedlemsid, $sisteInnlegg);
+	$brukerinfo = brukerinfo_forum($brukerIder);
 
 	echo "
 		<section>
@@ -40,7 +45,10 @@
 		echo "</div>";
 
 		// Lag en hjelpefil for å hente ut mer profilinfo generelt i forum
-		echo "<div class='skrevetav'>".$innlegg['skrevetav']."</div>";
+		echo "<div class='skrevetav'>";
+		echo "Bruker: ".$innlegg['skrevetav'];
+		echo $brukerinfo[$innlegg['skrevetavid']]['innlegg_html'];
+		echo "</div>";
 
 		echo "<p class='tekst'>".nl2br($innlegg['tekst'])."</p>";
 
