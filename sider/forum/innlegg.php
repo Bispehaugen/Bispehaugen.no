@@ -116,7 +116,7 @@
 			echo"<tr>";
 		}
 		echo "<td class='liten_tekst'>".strftime("%a %d. %b", strtotime($forum_innlegg['skrevet']))." skrev ".$forum_innlegg['fnavn']." ".$forum_innlegg['enavn']." </td>
-   			<td>".$forum_innlegg['tekst'];
+   			<td>".nl2br($forum_innlegg['tekst']);
 		
       	//if som skriver ut liste hvis det hører en liste til innlegget
 		if(array_key_exists($innleggId, $listeinnlegg)){

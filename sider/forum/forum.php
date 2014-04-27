@@ -42,7 +42,7 @@
 		// Lag en hjelpefil for å hente ut mer profilinfo generelt i forum
 		echo "<div class='skrevetav'>".$innlegg['skrevetav']."</div>";
 
-		echo "<p class='tekst'>".$innlegg['tekst']."</p>";
+		echo "<p class='tekst'>".nl2br($innlegg['tekst'])."</p>";
 
 		echo "</li>";
 	}
