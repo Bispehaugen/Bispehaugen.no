@@ -19,9 +19,16 @@ function clean($string) {
 $sql="SELECT * FROM lenker WHERE type='dir' AND katalog=381;";
 $notemapper=hent_og_putt_inn_i_array($sql, 'id');
 foreach($notemapper as $notemappe){
-	$tittel=clean($notemappe['tittel']);
-	$command="mkdir ".escapeshellarg("../noter/".$tittel);
-	#print_r($command);
-	echo "<pre>".shell_exec($command)."</pre>";
+	#echo $notemappe['tittel'];
+	$sql="SELECT tittel, id FROM lenker WHERE type='dir' AND katalog=".$notemappe['id'].";";
+	$undermapper=hent_og_putt_inn_i_array($sql, 'id');
+	$foldertittel=clean($notemappe['tittel']);
+		foreach($undermapper as $undermappe){
+			$tittel=clean($undermappe['tittel']);
+			$command="mkdir ".escapeshellarg("../noter/".$foldertittel."/".$tittel);
+			#print_r($command);
+			echo "<pre>".shell_exec($command)."</pre>";
+
+		};
 };
 ?>
