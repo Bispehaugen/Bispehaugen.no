@@ -27,7 +27,7 @@ foreach($notemapper as $notemappe){
 			$sql="SELECT tittel, id FROM lenker WHERE type='dir' AND katalog=".$undermappe['id'].";";
 			$underundermapper=hent_og_putt_inn_i_array($sql, 'id');
 			$undertittel=clean($undermappe['tittel']);
-			echo "<pre>".shell_exec($command)."</pre>";
+			#echo "<pre>".shell_exec($command)."</pre>";
 
 			foreach($underundermapper as $underundermappe){
 				$tittel=clean($underundermappe['tittel']);
