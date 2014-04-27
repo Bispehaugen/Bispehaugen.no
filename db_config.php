@@ -1,7 +1,10 @@
 <?php
-
 if(file_exists("lokal_config.php")){
 	include("lokal_config.php");
+}
+
+if(file_exists("../lokal_config.php")){
+	include("../lokal_config.php");
 }
 
 /*
