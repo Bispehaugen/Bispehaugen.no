@@ -13,7 +13,8 @@ if ($tilkobling === false) {
 $sql="SELECT * FROM lenker WHERE type='dir' AND katalog=381;";
 $notemapper=hent_og_putt_inn_i_array($sql, 'id');
 foreach($notemapper as $notemappe){
-	$command="mkdir '../noter/".$notemappe['tittel']."'";
+	$command="mkdir ".escapeshellarg("../noter/".$notemappe['tittel']);
+	#print_r($command);
 	echo "<pre>".shell_exec($command)."</pre>";
 };
 ?>
