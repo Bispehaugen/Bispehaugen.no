@@ -15,3 +15,54 @@
 .ulest{
 	background-color: #FFCCCC;
 }
+
+
+.siste-poster .innlegg {
+	margin-bottom: 1em;
+	border: 1px solid #DDD;
+	background-color: #EFEFEF;
+	padding: 1em 1em 0em 1em;
+}
+
+.siste-poster .innlegg:before,
+.siste-poster .innlegg:after {
+    content: " ";
+    display: table;
+}
+
+.siste-poster .innlegg:after {
+    clear: both;
+}
+	
+
+	.siste-poster .innlegg header {
+
+	}
+
+	.siste-poster .innlegg article {
+	}
+
+	.siste-poster .innlegg header .navn {
+		margin: 0;
+		font-style: normal;
+	}
+
+	.siste-poster .innlegg header .plassering {
+		padding: 0;
+		display: inline-block;
+	}
+
+	.siste-poster .innlegg header .info {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.siste-poster .innlegg .foto {
+		width: 40px;
+		height: 40px;
+		margin-right: 5px;
+	}
+
+	.siste-poster .innlegg .tekst {
+		padding: 0.5em 0em 0.5em 0em;
+	}

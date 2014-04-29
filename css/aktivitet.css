@@ -1,8 +1,8 @@
-.info{
+.aktivitetsliste .info{
 	background-color: #e2e2e2;
 	padding: 0.5em;
 }
 
-.valgt{
+.aktivitetsliste .valgt{
 	font-weight:bold;
 }
