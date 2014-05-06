@@ -34,10 +34,9 @@
 	};
 	
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
-	if(has_post('temaid')){
-		$tekst=mysql_escape_string(post('tekst'));
+	if(has_post('tekst')){
 		$sql="INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".post('temaid')."','".$tekst."','".date('Y-m-d H:i:s')."','".post('medlemsid')."','".date('Y-m-d h:i:s')."')";
+			VALUES ('".$temaid."','".post('tekst')."','".date('Y-m-d H:i:s')."','".$_SESSION['medlemsid']."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);
 		//henter ut id til det nye innlegget
 		$id = mysql_insert_id();
@@ -48,7 +47,7 @@
 		$sql="INSERT INTO `forum_leste`(`medlemsid`, `uleste_innlegg`, `temaid`) 
 			VALUES ";
 		foreach ($aktivemedlemmer as $medlemsid => $medlem) {
-			$sql.="('".$medlem['medlemsid']."','".$id."','".post('temaid')."'),";
+			$sql.="('".$medlem['medlemsid']."','".$id."','".$temaid."'),";
 		}
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
@@ -67,21 +66,6 @@
 			VALUES ('".post('listeinnlegg')."','".$flagg."','".$_SESSION["medlemsid"]."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);	
 	};
-	
-	/*
-	//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
-	$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg_ny
-		WHERE forum_liste.listeid=forum_innlegg_ny.innleggid;";
-	$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
-	
-	//henter ut alle aktuelle liste-oppfåringer
-	$sql="SELECT medlemsid, fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
-	forum_listeinnlegg_ny.kommentar, forum_listeinnlegg_ny.flagg, forum_liste.expires 
-	FROM forum_liste, forum_innlegg_ny, forum_listeinnlegg_ny, forum_tema, medlemmer 
-	WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_liste.listeid=forum_listeinnlegg_ny.listeid AND
-	 forum_tema.temaid=".$temaid." AND forum_innlegg_ny.temaid=".$temaid." AND brukerid=medlemmer.medlemsid ORDER BY tid ;";
-	$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
-	*/
 		
 	$medlemsid= $_SESSION["medlemsid"];
 	
@@ -107,14 +91,25 @@
     echo "<section class='forum'>
     	<h1>".$tema['tittel']."</h1>";
 
-	forum_innlegg_liste($sql, "forum-innlegg-liste", $temaid);
+	echo forum_innlegg_liste($sql, "forum-innlegg-liste", $temaid);
+
+	$innlogget_bruker = innlogget_bruker();
+
+	echo "<section class='nytt-innlegg'>";
+		if (!empty($innlogget_bruker['foto'])) {
+			echo "<img class='foto' src='".$innlogget_bruker['foto']."' />";
+		}
+		echo "<div class='info'>";
+		echo "<h5 class='navn'>".$innlogget_bruker['fnavn']." ".$innlogget_bruker['enavn']."</h5>";
+		echo "<abbr>Nå</abbr>";
+		echo "</div>";
 
 	echo "
-	<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
-			<tr><td>Svar på innlegg:</td><td><textarea name='tekst' autofocus></textarea></td>
-			<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
-			<input type='hidden' name='temaid' value='".$temaid."'>
-			<input type='submit' name='nyttInnlegg' value='Lagre'></td></tr>
-		</form> 
+			<form method='post' action='?side=forum/innlegg&id=".$temaid."'>
+				<textarea name='tekst' class='tekst' autofocus></textarea>
+				<input type='submit' class='lagre' value='Lagre'>
+				<div class='clearfix'></div>
+			</form>
+		</section>
 	</section>";
 ?>

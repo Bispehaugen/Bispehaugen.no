@@ -52,19 +52,9 @@
 	.forum-innlegg-liste .innlegg article {
 	}
 
-	.forum-innlegg-liste .innlegg header .navn {
-		margin: 0;
-		font-style: normal;
-	}
-
 	.forum-innlegg-liste .innlegg header .plassering {
 		padding: 0;
 		display: inline-block;
-	}
-
-	.forum-innlegg-liste .innlegg header .info {
-		display: inline-block;
-		vertical-align: top;
 	}
 
 	.forum-innlegg-liste .innlegg header .tools {
@@ -76,15 +66,28 @@
 		margin-left: 0.5em;
 	}
 
-	.forum-innlegg-liste .innlegg .foto {
+	.forum-innlegg-liste .innlegg .tekst {
+		padding: 0.5em 0em 0.5em 0em;
+		word-wrap: break-word;
+	}
+
+	.forum .foto {
 		width: 40px;
 		height: 40px;
 		margin-right: 5px;
 	}
 
-	.forum-innlegg-liste .innlegg .tekst {
-		padding: 0.5em 0em 0.5em 0em;
-		word-wrap: break-word;
+	.forum .navn {
+		margin: 0;
+		font-style: normal;
+	}
+
+	.forum .info {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.forum .tekst {
 		line-height: 1.2em;
 		font-size: 1.2em;
 	}
@@ -93,4 +96,28 @@
 	padding: 1em;
 	margin-bottom: 1em;
 	background: #eaeaea;
+}
+
+.forum .nytt-innlegg {
+	text-align: left;
+	margin-top: 3em;
+}
+
+.forum .nytt-innlegg form {
+	width: 100%;
+}
+
+.forum .nytt-innlegg textarea {
+	width: 95%;
+	margin: 0.5em;
+}
+
+.forum .nytt-innlegg {
+	width: 100%;
+	text-align: left;
+}
+
+.forum .nytt-innlegg .lagre {
+	float: right;
+	margin: 0.5em;
 }

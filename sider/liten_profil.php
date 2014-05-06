@@ -1,5 +1,5 @@
 <?php
-	$bruker = hent_brukerdata();
+	$bruker = innlogget_bruker();
 	
 	$bilde = $bruker['foto'];
 	

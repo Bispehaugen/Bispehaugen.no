@@ -274,6 +274,17 @@ function sett_sisteinnleggid($temaid){
 		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
 	};
 	mysql_query($sql);
-};	
+}
+
+function innlogget_bruker() {
+	if (isset($_SESSION['innlogget_bruker'])){
+		$bruker = $_SESSION['innlogget_bruker'];
+	} else {
+		$bruker = hent_brukerdata();
+		$_SESSION['innlogget_bruker'] = $bruker;
+	}
+
+	return $bruker;
+}
 	
 ?>
