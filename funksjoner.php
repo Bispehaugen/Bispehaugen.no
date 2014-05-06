@@ -122,46 +122,6 @@ function hent_brukerdata($medlemid = ""){
 	return $medlemmer;
 }
 
-function forum_innlegg_topp($innleggliste = []) {
-	if (!is_array($innleggliste)) die("forum_innlegg_topp tar bare imot arrays");
-
-	$hentMedlemsid = function($innleggliste) {
-		return $innleggliste['skrevetavid'];
-	};
-	$brukerIder = array_map($hentMedlemsid, $innleggliste);
-
-	$brukerdata = hent_brukerdata($brukerIder);
-
-	$returHtml = Array();
-
-	foreach($innleggliste as $id => $innlegg) {
-		$b = $brukerdata[$innlegg['skrevetavid']];
-		$tid = strtotime($innlegg['skrevet']);
-
-		$html = "";
-
-		if (!empty($b['foto'])) {
-			$html .= "<img class='foto' src='".$b['foto']."' />";
-		}
-
-
-		$html .= "<div class='info'>";
-		$html .= "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
-		$html .= "<abbr class='tid timeago' title='".date("c", $tid)."''>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</abbr>";
-		$html .= " i ";
-		$html .= "<span class='plassering'>";
-		$html .= "<span class='forum-tittel'><a href='?side=forum/tema&id=".$innlegg['forumid']."'>".$innlegg['tematittel']."</a></span>";
-		$html .= " <i class='icon-caret-right'></i> ";
-		$html .= "<span class='tema-tittel'><a href='?side=forum/innlegg&id=".$innlegg['temaid']."'>".$innlegg['innleggtittel']."</a></span>";
-		$html .= "</span>";
-		$html .= "</div>";
-
-		$returHtml[$id] = $html;
-	}
-
-	return $returHtml;
-}
-
 function er_logget_inn(){
 	return isset($_SESSION["medlemsid"]);
 }

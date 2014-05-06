@@ -8,6 +8,10 @@
 	height:4em;
 }
 
+.forum h1 {
+	margin: 1em 0em 0em 0em;
+}
+
 .liten_tekst{
 	font-size:0.8em;
 }
@@ -16,53 +20,77 @@
 	background-color: #FFCCCC;
 }
 
+.forum .skrek-igjennom {
+	text-decoration: line-through;
+}
 
-.siste-poster .innlegg {
+.forum-innlegg-liste .innlegg {
 	margin-bottom: 1em;
 	border: 1px solid #DDD;
 	background-color: #EFEFEF;
 	padding: 1em 1em 0em 1em;
 }
 
-.siste-poster .innlegg:before,
-.siste-poster .innlegg:after {
+.forum-innlegg-liste .innlegg:before,
+.forum-innlegg-liste .innlegg:after {
     content: " ";
     display: table;
 }
 
-.siste-poster .innlegg:after {
+.forum-innlegg-liste ul {
+	padding: 0;
+}
+
+.forum-innlegg-liste .innlegg:after {
     clear: both;
 }
-	
 
-	.siste-poster .innlegg header {
+	.forum-innlegg-liste .innlegg header {
 
 	}
 
-	.siste-poster .innlegg article {
+	.forum-innlegg-liste .innlegg article {
 	}
 
-	.siste-poster .innlegg header .navn {
+	.forum-innlegg-liste .innlegg header .navn {
 		margin: 0;
 		font-style: normal;
 	}
 
-	.siste-poster .innlegg header .plassering {
+	.forum-innlegg-liste .innlegg header .plassering {
 		padding: 0;
 		display: inline-block;
 	}
 
-	.siste-poster .innlegg header .info {
+	.forum-innlegg-liste .innlegg header .info {
 		display: inline-block;
 		vertical-align: top;
 	}
 
-	.siste-poster .innlegg .foto {
+	.forum-innlegg-liste .innlegg header .tools {
+		display: inline-block;
+		float: right;
+	}
+
+	.forum-innlegg-liste .innlegg header .tools .tool {
+		margin-left: 0.5em;
+	}
+
+	.forum-innlegg-liste .innlegg .foto {
 		width: 40px;
 		height: 40px;
 		margin-right: 5px;
 	}
 
-	.siste-poster .innlegg .tekst {
+	.forum-innlegg-liste .innlegg .tekst {
 		padding: 0.5em 0em 0.5em 0em;
+		word-wrap: break-word;
+		line-height: 1.2em;
+		font-size: 1.2em;
 	}
+
+.forum .paameldingsliste {
+	padding: 1em;
+	margin-bottom: 1em;
+	background: #eaeaea;
+}

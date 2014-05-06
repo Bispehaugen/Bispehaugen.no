@@ -1,4 +1,5 @@
 <?php 
+	include_once("sider/forum/funksjoner.php");
 
 	setlocale(LC_TIME, "Norwegian");
 
@@ -18,34 +19,6 @@
 			LEFT JOIN forum AS f ON fi.forumid = f.forumid
 			ORDER BY skrevet DESC 
 			LIMIT 10";
-	$result = mysql_query($sql);
-	$sisteInnlegg=hent_og_putt_inn_i_array($sql, "innleggid");
 
-	$forum_innlegg_topp_template = forum_innlegg_topp($sisteInnlegg);
-
-	echo "
-		<section class='siste-poster'>
-			<ul>
-	";
-
-	foreach($sisteInnlegg as $id => $innlegg) {
-		echo "<li class='innlegg'>";
-
-		echo "<header>";
-
-		echo $forum_innlegg_topp_template[$id];
-
-		echo "</header>";
-
-		echo "<article>";
-			echo "<p class='tekst'>".nl2br($innlegg['tekst'])."</p>";
-		echo "</article>";
-
-		echo "</li>";
-	}
-
-	echo "
-			</ul>
-		</section>
-	";
+	forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster");
 ?>	

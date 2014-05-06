@@ -62,6 +62,13 @@ $innhold = ob_get_clean();
 
 			$("abbr.timeago").timeago();
 		});
+
+		function confirm_url(url, tekst) {
+			var bekreft = confirm(tekst);
+			if (bekreft) {
+				window.location = url;
+			}
+		}
 	</script>
 </script>
 </head>
