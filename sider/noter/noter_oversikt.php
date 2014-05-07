@@ -49,7 +49,7 @@
 	//liste med notesettene
 	foreach($notesett as $sett){
 		echo"<tr>
-				<td><a href='../..".$sett['filpath']."'>".$sett['tittel']."<a></td>
+				<td><a href='../../buk/ny".$sett['filpath']."'>".$sett['tittel']."<a></td>
 				<td>".$sett['komponist']."</td>
 				<td>".$sett['besetningstype']."</td>
 				<td>".$sett['arkivnr']."</td>
