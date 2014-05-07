@@ -14,11 +14,11 @@
 	
 	if(has_post('arrid') && $konsertid!='alle'){
 		
-		$sql="SELECT * FROM noter_notesett, noter_konsert 
-		WHERE arrid=".$konsertid." AND noter_notesett.noteid=noter_konsert.noteid ORDER BY tittel;";
+		$sql="SELECT * FROM noter_notesett, noter_konsert, noter_besetning 
+		WHERE arrid=".$konsertid." AND noter_notesett.noteid=noter_konsert.noteid AND noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
 	}
 	else{
-		$sql="SELECT * FROM noter_notesett ORDER BY tittel;";
+		$sql="SELECT * FROM noter_notesett, noter_besetning WHERE noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
 	};
 	$notesett=hent_og_putt_inn_i_array($sql,'noteid');
 	
@@ -39,7 +39,7 @@
 						echo"<option value=".$konsert['arrid'];
 							//sjekk for om det er valgte konsert
 							if($konsertid==$konsert['arrid']){echo " selected ";}
-						echo">".$konsert['tittel']."</option>";};
+						echo">".$konsert['tittel']." ".$konsert['dato']."</option>";};
 	echo "												  							
   					</select></td>
   				<td><input type='submit' name='nyttInnlegg' value='finn noter!'></td></tr>
@@ -49,9 +49,9 @@
 	//liste med notesettene
 	foreach($notesett as $sett){
 		echo"<tr>
-				<td><a href='".$sett['filpath']."'>".$sett['tittel']."<a></td>
+				<td><a href='../..".$sett['filpath']."'>".$sett['tittel']."<a></td>
 				<td>".$sett['komponist']."</td>
-				<td>".$sett['besetningsid']."</td>
+				<td>".$sett['besetningstype']."</td>
 				<td>".$sett['arkivnr']."</td>
 			</tr>
 		";
