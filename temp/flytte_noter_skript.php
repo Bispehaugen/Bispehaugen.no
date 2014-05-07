@@ -16,9 +16,10 @@ function clean($string) {
 
    return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
 }
-$sql="SELECT * FROM lenker WHERE type='dir' AND katalog=381;";
-$notemapper=hent_og_putt_inn_i_array($sql, 'id');
 
+echo "<pre>".shell_exec("cp ../../filer/dokumenter/ ../noter/")."</pre>";
+
+/*
 foreach($notemapper as $notemappe){
 	#echo $notemappe['tittel'];
 	$sql="SELECT tittel, id FROM lenker WHERE type='dir' AND katalog=".$notemappe['id'].";";
@@ -55,5 +56,5 @@ foreach($notemapper as $notemappe){
 				}
 			};
 		};
-};
+};*/
 ?>
