@@ -8,10 +8,116 @@
 	height:4em;
 }
 
+.forum h1 {
+	margin: 1em 0em 0em 0em;
+}
+
 .liten_tekst{
 	font-size:0.8em;
 }
 
 .ulest{
 	background-color: #FFCCCC;
+}
+
+.forum .skrek-igjennom {
+	text-decoration: line-through;
+}
+
+.forum-innlegg-liste .innlegg {
+	margin-bottom: 1em;
+	border: 1px solid #DDD;
+	background-color: #EFEFEF;
+	padding: 1em 1em 0em 1em;
+}
+
+.forum-innlegg-liste .innlegg:before,
+.forum-innlegg-liste .innlegg:after {
+    content: " ";
+    display: table;
+}
+
+.forum-innlegg-liste ul {
+	padding: 0;
+}
+
+.forum-innlegg-liste .innlegg:after {
+    clear: both;
+}
+
+	.forum-innlegg-liste .innlegg header {
+
+	}
+
+	.forum-innlegg-liste .innlegg article {
+	}
+
+	.forum-innlegg-liste .innlegg header .plassering {
+		padding: 0;
+		display: inline-block;
+	}
+
+	.forum-innlegg-liste .innlegg header .tools {
+		display: inline-block;
+		float: right;
+	}
+
+	.forum-innlegg-liste .innlegg header .tools .tool {
+		margin-left: 0.5em;
+	}
+
+	.forum-innlegg-liste .innlegg .tekst {
+		padding: 0.5em 0em 0.5em 0em;
+		word-wrap: break-word;
+	}
+
+	.forum .foto {
+		width: 40px;
+		height: 40px;
+		margin-right: 5px;
+	}
+
+	.forum .navn {
+		margin: 0;
+		font-style: normal;
+	}
+
+	.forum .info {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.forum .tekst {
+		line-height: 1.2em;
+		font-size: 1.2em;
+	}
+
+.forum .paameldingsliste {
+	padding: 1em;
+	margin-bottom: 1em;
+	background: #eaeaea;
+}
+
+.forum .nytt-innlegg {
+	text-align: left;
+	margin-top: 3em;
+}
+
+.forum .nytt-innlegg form {
+	width: 100%;
+}
+
+.forum .nytt-innlegg textarea {
+	width: 95%;
+	margin: 0.5em;
+}
+
+.forum .nytt-innlegg {
+	width: 100%;
+	text-align: left;
+}
+
+.forum .nytt-innlegg .lagre {
+	float: right;
+	margin: 0.5em;
 }

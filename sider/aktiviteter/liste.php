@@ -16,7 +16,7 @@
 	};
 
     #Det som printes på sida
-    echo "<table><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
+    echo "<table class='aktivitetsliste'><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	
     	<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){

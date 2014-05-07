@@ -81,6 +81,11 @@ a img {
     border: 0;
 }
 
+.clearfix {
+  clear: both;
+}
+
+
 #header_stripe {
     background: #CCC;
     height: 5em;

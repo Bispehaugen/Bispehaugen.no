@@ -95,21 +95,31 @@ function hent_brukerdata($medlemid = ""){
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
 					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra 
-				FROM `medlemmer` 
-				WHERE `medlemsid`=".$medlemid;
+				FROM `medlemmer`";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
-				FROM `medlemmer` 
-				WHERE `medlemsid`=".$medlemid;
+				FROM `medlemmer`";
 	}
-	
+
+	if (is_array($medlemid)) {
+		sort($medlemid);
+		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
+	} else {
+		$sql .= " WHERE `medlemsid`=".$medlemid;
+	}
 	$mysql_result = mysql_query($sql);
 
+	$medlemmer = Array();
+
 	while($medlem = mysql_fetch_assoc($mysql_result)) {
-		return $medlem;
+		if(is_array($medlemid)) {
+			$medlemmer[$medlem['medlemsid']] = $medlem;
+		} else {
+			return $medlem;
+		}
 	}
-	
-	return NULL;
+
+	return $medlemmer;
 }
 
 function er_logget_inn(){
@@ -264,6 +274,17 @@ function sett_sisteinnleggid($temaid){
 		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
 	};
 	mysql_query($sql);
-};	
+}
+
+function innlogget_bruker() {
+	if (isset($_SESSION['innlogget_bruker'])){
+		$bruker = $_SESSION['innlogget_bruker'];
+	} else {
+		$bruker = hent_brukerdata();
+		$_SESSION['innlogget_bruker'] = $bruker;
+	}
+
+	return $bruker;
+}
 	
 ?>
