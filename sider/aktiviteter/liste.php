@@ -59,18 +59,31 @@
 			}else{
 				echo "<td></td></tr>";
 			};
-			
+
 			//Viser mer info hvis trykket på en hendelse
 			if($valgt_id==$aktivitet['arrid']){
-				echo" <tr><td></td><td class='info' colspan='4'> 
-					Varighet: ".strftime("%H:%M", strtotime($aktivitet['dato']))."kl ".strftime("%H:%M", strtotime($aktivitet['dato']))." til ";
+				echo" <tr><td></td><td class='info' colspan='4'>";
+
+				if ($aktivitet['start'] != $aktivitet['slutt']) {
+					echo "<p>Varighet: kl " . dato("H:i", $aktivitet['start'])." til ";
 					
-					if($aktivitet['tildato'] > $aktivitet['dato']){echo strftime("%H:%M", strtotime($aktivitet['dato']));};
-					
-					echo strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
-					<br>Kakebaker: ".$kakebaker['fnavn']."
-					<br>Bæregruppe: ".$aktivitet['hjelpere']."</td></tr>";
-			};
+					if(dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start'])){
+						echo dato("H:i", $aktivitet['slutt']);
+					} else {
+						echo "kl. ".dato("H:m d.m.Y", $aktivitet['slutt']);
+					}
+					echo "</p>";
+				}
+				
+				if (!empty($kakebaker)) {
+					echo "<p>Kakebaker: " . brukerlenke($kakebaker) . "</p>";
+				}
+
+				if (!empty($aktivitet['hjelpere'])) {
+					echo "<p>Kakebaker: ".$aktivitet['hjelpere'] . "</p>";
+				}
+				echo "</td></tr>";
+			}
 		}
 		
 		if($_SESSION['rettigheter']>1){
