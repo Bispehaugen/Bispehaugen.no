@@ -16,7 +16,7 @@
 	};
 
     #Det som printes på sida
-    echo "<table class='aktivitetsliste'><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
+    echo "<table class='aktivitetsliste'><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	
     	<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){
@@ -35,12 +35,14 @@
    				echo "<tr>";
    			};
  
- 			echo "<td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']));
+ 			echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
+
+ 			echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
 			
 			#hvis tildato er satt eller lik
- 			if($aktivitet['tildato'] > $aktivitet['dato']){
- 				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['tildato']));
- 			}
+ 			if(dato("d", $aktivitet['slutt']) !== dato("d", $aktivitet['start'])){
+ 				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
+			}
  
    			if($aktivitet['starttid']=="00:00:00"){
    				echo "</td><td></td><td>
