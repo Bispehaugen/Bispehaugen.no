@@ -22,11 +22,12 @@
 			mysql_query($sql);
 			header('Location: ?side=noter/noter_oversikt');
 		 }else{
-		 	//stripp filnavn så det brukes som mappenavn - OG opprett mappa på serveren	
+		 	//utkommenteres for å ikke lage bøtter og spamm av mapper lokalt
+		 	//echo "<pre>".shell_exec("mkdir ../noter/".$filpath)."</pre>";
 			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
 			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','/noter/".$filpath."/')";
 			mysql_query($sql);
-			header('Location: ?side=noter/noter_oversikt');
+			##header('Location: ?side=noter/noter_oversikt');
 		 }
 			};
 	
