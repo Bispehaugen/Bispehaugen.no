@@ -53,13 +53,17 @@
 				<td>".$sett['komponist']."</td>
 				<td>".$sett['arrangor']."</td>
 				<td>".$sett['besetningstype']."</td>
-				<td>".$sett['arkivnr']."</td>";
+				<td>";
+					if($sett['arkivnr']!='0'){
+						echo $sett['arkivnr'];
+					};
+					echo "</td>";
 				if($_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='icon-edit' 
-				title='Klikk for å endre'></i></a></td></tr>";
-			}else{
-				echo "<td></td></tr>";
-			};
+					echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='icon-edit' 
+					title='Klikk for å endre'></i></a></td></tr>";
+				}else{
+					echo "<td></td></tr>";
+				};
 			echo"
 			</tr>
 		";
