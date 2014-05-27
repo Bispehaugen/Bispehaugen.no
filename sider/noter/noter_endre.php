@@ -27,12 +27,12 @@
 			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
 			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','/noter/".$filpath."/')";
 			mysql_query($sql);
-			##header('Location: ?side=noter/noter_oversikt');
+			header('Location: ?side=noter/noter_oversikt');
 		 }
 			};
 	
 	//henter valgte notesett fra databasen
-	if(has_get('noteid')){	
+	if(has_get('noteid')){
 		$noteid=get('noteid');
 		$sql="SELECT * FROM `noter_notesett` WHERE `noteid`=".$noteid;
 		$mysql_result=mysql_query($sql);
@@ -76,9 +76,9 @@
 			<input type='hidden' name='noteid' value='".get('noteid')."'>
 			<a href='?side=noter/noter_oversikt'>Avbryt</a>
 			<input type='submit' name='endreNote' value='Lagre'>
-		</form> 
-		
-		<p>
+		</form>"; 
+				
+		echo"<p>
 		Info til deg som skal legge inn noter:
 		<ul>
 		<li>- Endringer i lista over besetningstyper?? - kontakt webkom</li>
