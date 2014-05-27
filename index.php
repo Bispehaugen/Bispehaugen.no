@@ -15,6 +15,13 @@ if (has_get("loggut")) {
 	logg_ut();
 }
 
+
+if (!$er_produksjon) {
+	if(file_exists("migrering.php")){
+		include("migrering.php");
+	}
+}
+
 //Henter ut mobilnummeret til leder
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 

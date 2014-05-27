@@ -16,7 +16,7 @@
 	};
 
     #Det som printes på sida
-    echo "<table class='aktivitetsliste'><th>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
+    echo "<table class='aktivitetsliste'><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
     	
     	<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){
@@ -35,12 +35,14 @@
    				echo "<tr>";
    			};
  
- 			echo "<td>".strftime("%a %#d. %b", strtotime($aktivitet['dato']));
+ 			echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
+
+ 			echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
 			
 			#hvis tildato er satt eller lik
- 			if($aktivitet['tildato'] > $aktivitet['dato']){
- 				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['tildato']));
- 			}
+ 			if(dato("d", $aktivitet['slutt']) !== dato("d", $aktivitet['start'])){
+ 				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
+			}
  
    			if($aktivitet['starttid']=="00:00:00"){
    				echo "</td><td></td><td>
@@ -59,18 +61,31 @@
 			}else{
 				echo "<td></td></tr>";
 			};
-			
+
 			//Viser mer info hvis trykket på en hendelse
 			if($valgt_id==$aktivitet['arrid']){
-				echo" <tr><td></td><td class='info' colspan='4'> 
-					Varighet: ".strftime("%H:%M", strtotime($aktivitet['dato']))."kl ".strftime("%H:%M", strtotime($aktivitet['dato']))." til ";
+				echo" <tr><td></td><td class='info' colspan='4'>";
+
+				if ($aktivitet['start'] != $aktivitet['slutt']) {
+					echo "<p>Varighet: kl " . dato("H:i", $aktivitet['start'])." til ";
 					
-					if($aktivitet['tildato'] > $aktivitet['dato']){echo strftime("%H:%M", strtotime($aktivitet['dato']));};
-					
-					echo strftime("%a %#d. %b", strtotime($aktivitet['sluttid']))."
-					<br>Kakebaker: ".$kakebaker['fnavn']."
-					<br>Bæregruppe: ".$aktivitet['hjelpere']."</td></tr>";
-			};
+					if(dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start'])){
+						echo dato("H:i", $aktivitet['slutt']);
+					} else {
+						echo "kl. ".dato("H:m d.m.Y", $aktivitet['slutt']);
+					}
+					echo "</p>";
+				}
+				
+				if (!empty($kakebaker)) {
+					echo "<p>Kakebaker: " . brukerlenke($kakebaker) . "</p>";
+				}
+
+				if (!empty($aktivitet['hjelpere'])) {
+					echo "<p>Kakebaker: ".$aktivitet['hjelpere'] . "</p>";
+				}
+				echo "</td></tr>";
+			}
 		}
 		
 		if($_SESSION['rettigheter']>1){

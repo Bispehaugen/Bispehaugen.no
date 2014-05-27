@@ -286,5 +286,24 @@ function innlogget_bruker() {
 
 	return $bruker;
 }
-	
+
+function brukerlenke($bruker, $fulltNavn = true) {
+	if (empty($bruker)) {
+		return "";
+	}
+
+	$html = "<a href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
+	$html .= $bruker['fnavn'];
+	if($fulltNavn) {
+		$html .= " " . $bruker['enavn'];
+	}
+	$html .= "</a>";
+
+	return $html;
+}
+
+function dato($format, $tid) {
+	return date($format, strtotime($tid));
+}
+
 ?>

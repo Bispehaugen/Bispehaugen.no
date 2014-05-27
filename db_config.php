@@ -1,4 +1,7 @@
 <?php
+
+$er_produksjon = false;
+
 if(file_exists("lokal_config.php")){
 	include("lokal_config.php");
 }
