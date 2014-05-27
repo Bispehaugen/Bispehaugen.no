@@ -19,7 +19,7 @@
 			$sql="UPDATE noter_notesett SET tittel='".$tittel."',komponist='".$komponist."',arrangor='".$arrangor."',
 			arkivnr='".$arkivnr."',besetningsid='".$besetningsid."' WHERE noteid='".$noteid."';";
 			mysql_query($sql);
-			header('Location: ?side=aktiviteter/liste');
+			header('Location: ?side=noter/noter_oversikt');
 		 }else{
 		 	//stripp filnavn så det brukes som mappenavn - OG opprett mappa på serveren	
 			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
@@ -59,11 +59,14 @@
 				<tr><td>Arkivnr:</td><td><input type='text' name='arkivnr' value='".$noter['arkivnr']."'></td></tr>
 				<tr><td>Filplassering:</td><td><input type='text' name='filpath' value='".$noter['filpath']."' disabled></td></tr>
 				<tr><td>Besetningstype:</td><td>
-					<select name='besetningsid'>
-					<option value='".$noter['besetningsid']."'>".$noter['besetningstype']."</option>";
+					<select name='besetningsid'>";
 					foreach($besetningstyper as $besetning){
 						echo"
-  							<option value='".$besetning['besetningsid']."'>".$besetning['besetningstype']."</option>";
+  							<option value='".$besetning['besetningsid']."'";
+							if($besetning['besetningsid']==$noter['besetningsid']){
+  								echo " selected";
+  							};
+  							echo">".$besetning['besetningstype']."</option>";
 						};
 						echo "</select></td></tr>
 			</table>
