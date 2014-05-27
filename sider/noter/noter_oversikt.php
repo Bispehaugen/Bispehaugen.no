@@ -58,15 +58,22 @@
 						echo $sett['arkivnr'];
 					};
 					echo "</td>";
-				if($_SESSION['rettigheter']>1){
+				if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
 					echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='icon-edit' 
 					title='Klikk for å endre'></i></a></td></tr>";
 				}else{
 					echo "<td></td></tr>";
 				};
 			echo"
-			</tr>
-		";
+			</tr>"
+		;
 	};
+	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+			echo"
+			<tr><td colspan='5'></td></tr>
+			<tr><td colspan='5'></td></tr>
+			<tr><td colspan='5'><a href='?side=noter/noter_endre'><i class='icon-plus'></i> Legg til nytt notesett</a></td></tr>";
+	}
+		
 	echo"</table>";
 ?>
