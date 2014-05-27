@@ -40,9 +40,8 @@ migrering(1, "opprett migreringer tabell",
 migrering(2, "Drop diverse arrangement",
 	"ALTER TABLE `arrangement` DROP `tildato`;",
 	"ALTER TABLE `arrangement` DROP `starttid`;",
-	"ALTER TABLE `arrangement` DROP `sluttid`;",
-	"ALTER TABLE `arrangement` DROP `tildato`;"
-);
+	"ALTER TABLE `arrangement` DROP `sluttid`;"
+	);
 
 migrering(3, "Diverse",
 	"SELECT * FROM `medlemmer`"
