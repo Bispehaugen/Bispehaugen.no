@@ -39,20 +39,28 @@
 						echo"<option value=".$konsert['arrid'];
 							//sjekk for om det er valgte konsert
 							if($konsertid==$konsert['arrid']){echo " selected ";}
-						echo">".$konsert['tittel']." ".$konsert['dato']."</option>";};
+						echo">".$konsert['tittel']." ".date('Y', strtotime($konsert['dato']))."</option>";};
 	echo "												  							
   					</select></td>
   				<td><input type='submit' name='nyttInnlegg' value='finn noter!'></td></tr>
 			</form> 
 				<tr><td></td><td></td></tr>
-				<tr><th>Tittel</th><th>Komponist:</th><th>Besetning:</th><th>Arkivnummer</th></tr>";
+				<tr><th>Tittel</th><th>Komponist:</th><th>Arrangør:</th><th>Besetning:</th><th>Arkivnr.</th><th></th></tr>";
 	//liste med notesettene
 	foreach($notesett as $sett){
 		echo"<tr>
 				<td><a href='../../buk/ny".$sett['filpath']."'>".$sett['tittel']."<a></td>
 				<td>".$sett['komponist']."</td>
+				<td>".$sett['arrangor']."</td>
 				<td>".$sett['besetningstype']."</td>
-				<td>".$sett['arkivnr']."</td>
+				<td>".$sett['arkivnr']."</td>";
+				if($_SESSION['rettigheter']>1){
+				echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='icon-edit' 
+				title='Klikk for å endre'></i></a></td></tr>";
+			}else{
+				echo "<td></td></tr>";
+			};
+			echo"
 			</tr>
 		";
 	};
