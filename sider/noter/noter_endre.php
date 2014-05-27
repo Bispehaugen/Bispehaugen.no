@@ -13,6 +13,7 @@
 		  $arrangor=post('arrangor');
 		 $arkivnr=post('arkivnr');
 		 $filpath=post('filpath');
+		 if(empty($filpath)){$filpath=clean($tittel);}
 		 $besetningsid=post('besetningsid');
 	     //sjekker om man vil legge til eller endre et notesett
 		 if ($noteid){
@@ -23,8 +24,9 @@
 		 }else{
 		 	//stripp filnavn så det brukes som mappenavn - OG opprett mappa på serveren	
 			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
-			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','".$filpath."')";
-			print_r($sql);
+			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','/noter/".$filpath."/')";
+			mysql_query($sql);
+			header('Location: ?side=noter/noter_oversikt');
 		 }
 			};
 	
