@@ -34,6 +34,10 @@ function post($attributt) {
 	return isset($_POST[$attributt]) ? mysql_real_escape_string($_POST[$attributt]) : null; 
 }
 
+function session($attributt) {
+	return isset($_SESSION[$attributt]) ? mysql_real_escape_string($_SESSION[$attributt]) : null; 
+}
+
 function has_get($attributt) {
 	return isset($_GET[$attributt]);
 }
@@ -41,6 +45,11 @@ function has_get($attributt) {
 function has_post($attributt) {
 	return isset($_POST[$attributt]);
 }
+
+function has_session($attributt) {
+	return isset($_SESSION[$attributt]);
+}
+
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
@@ -248,11 +257,11 @@ function hent_aktiviteter() {
 
 	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
 
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, starttid; ";		
+		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, start; ";		
 	} elseif ( er_logget_inn() && $_SESSION['rettigheter']==1){
-			$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, starttid; ";
+			$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, start; ";
 	} else {
-		$sql="SELECT arrangement.*, fnavn, enavn FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, starttid; ";
+		$sql="SELECT arrangement.*, fnavn, enavn FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, start; ";
 	}
 	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 }

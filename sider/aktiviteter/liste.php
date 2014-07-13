@@ -14,11 +14,10 @@
 		$sql="SELECT fnavn, enavn, medlemsid, arrid, kakebaker FROM medlemmer, arrangement WHERE arrid = ".$valgt_id." AND kakebaker=medlemsid";
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
+	
+	echo "<h2>Aktiviteter</h2>";
 
-    #Det som printes på sida
-    echo "<table class='aktivitetsliste'><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th>
-    	
-    	<script type='text/javascript'>
+	echo "<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){
 				var ask = confirm('Vil du slette ..... ?');
 				if(!!ask){
@@ -26,15 +25,27 @@
 				}
 			}
 		</script>";
-  
+
+    #Det som printes på sida
+    echo "<table class='aktivitetsliste'>
+    <thead><tr><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th></tr></thead>";
+	
+	$forrigeAktivitetesAar = date("Y");
+    
    	foreach($aktiviteter as $aktivitet){
+   		
+			$startdatosAar = date("Y", strtotime($aktivitet['start']));
+			if ($startdatosAar != $forrigeAktivitetesAar) {
+				echo "<tr><td colspan=6><h4 class='aarskille'>".$startdatosAar."</h4></td></tr>";
+				$forrigeAktivitetesAar = $startdatosAar;
+			}
+		
  			#aktiviteten printes i bold hvis den er valgt
    			if($valgt_id==$aktivitet['arrid']){
    				echo "<tr class='valgt'>";
    			}else{
    				echo "<tr>";
    			};
- 
  			echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
 
  			echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
@@ -43,18 +54,19 @@
  			if(dato("d", $aktivitet['slutt']) !== dato("d", $aktivitet['start'])){
  				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
 			}
+			echo "</td>";
  
-   			if($aktivitet['starttid']=="00:00:00"){
-   				echo "</td><td></td><td>
+   			if($aktivitet['start']=="0000-00-00 00:00:00"){
+   				echo "<td></td><td>
    				<a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>".$aktivitet['tittel']."</a></td><td>".$aktivitet['sted']."</td>";
 			}else{
-				echo "</td><td>".strftime("%H:%M", strtotime($aktivitet['starttid']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
+				echo "<td>".strftime("%H:%M", strtotime($aktivitet['start']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
    				".$aktivitet['tittel']."</a>
    				</td><td>".$aktivitet['sted']."</td>";
 			}
 
 			#Viser endre/slettkapper hvis man er admin
-			if($_SESSION['rettigheter']>1){
+			if(session('rettigheter')>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='icon-edit' 
 				title='Klikk for å endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
 				".$aktivitet['tittel']."\")'><i class='icon-remove' title='Klikk for å slette'></i></a></td></tr>";
@@ -88,7 +100,7 @@
 			}
 		}
 		
-		if($_SESSION['rettigheter']>1){
+		if(session('rettigheter')>1){
 			echo"
 			<tr><td></td><td></td><td></td><td></td><td></td></tr>
 			<tr><td></td><td></td><td></td><td></td><th><a href='?side=aktiviteter/endre'>legg til ny</a></th></tr>";

@@ -23,7 +23,7 @@ function migrering($id) {
 }
 
 /*
-migrering(7, "Neste kommer her", 
+migrering(9, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */
@@ -37,11 +37,6 @@ migrering(1, "opprett migreringer tabell",
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
 );
 
-migrering(2, "Drop diverse arrangement",
-	"ALTER TABLE `arrangement` DROP `tildato`;",
-	"ALTER TABLE `arrangement` DROP `starttid`;",
-	"ALTER TABLE `arrangement` DROP `sluttid`;"
-	);
 
 migrering(3, "Diverse",
 	"SELECT * FROM `medlemmer`"
@@ -52,13 +47,11 @@ migrering(3, "Diverse",
 	"UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '4' WHERE  `forum_innlegg_ny`.`skrevetavid` is NULL",
 	"UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '111' WHERE  `forum_innlegg_ny`.`skrevetavid` = 0",
 	"UPDATE medlemmer, forum_innlegg_ny SET skrevetavid=medlemmer.medlemsid WHERE CONCAT(medlemmer.fnavn," ", medlemmer.enavn)=forum_innlegg_ny.skrevetav",
-	"ALTER TABLE  `arrangement` ADD  `start` DATETIME NOT NULL AFTER  `sted`",
-	"ALTER TABLE  `arrangement` ADD  `slutt` DATETIME NOT NULL AFTER  `sted`",
-	"UPDATE `arrangement` SET `start` = CONCAT( dato, " ", starttid )",
-	"UPDATE `arrangement` SET `slutt` = CONCAT( dato, " ", sluttid )"
+
 */
 
 );
+
 
 migrering(4, "Noter og besetning",
 "CREATE TABLE IF NOT EXISTS `noter_besetning` (
@@ -497,3 +490,16 @@ migrering(6, "Noter notesett",
 (407, 'you-know-my-name', NULL, '/noter/you-know-my-name/', 1, NULL),
 (408, 'aa-s-svinger-vi', NULL, '/noter/aa-s-svinger-vi/', 1, NULL)  ON DUPLICATE KEY UPDATE arkivnr = arkivnr"
 );
+
+
+
+migrering(7, "Neste kommer her", 
+	"UPDATE `arrangement` SET `start` = CONCAT( dato, \" \", starttid )",
+	"UPDATE `arrangement` SET `slutt` = CONCAT( dato, \" \", sluttid )"
+	);
+
+migrering(8, "Drop diverse arrangement",
+	"ALTER TABLE `arrangement` DROP `tildato`;",
+	"ALTER TABLE `arrangement` DROP `starttid`;",
+	"ALTER TABLE `arrangement` DROP `sluttid`;"
+	);

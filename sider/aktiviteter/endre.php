@@ -26,13 +26,13 @@
 		//sjekker om man vil legge til eller endre en aktivitet
 		if ($id){
 			$sql="UPDATE arrangement SET tittel='".$tittel."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
-			,starttid='".$starttid."',sluttid='".$sluttid."',ingress='".$ingress."',public='".$public."',hjelpere='".$hjelpere."'
+			,start='".$dato." ".$starttid."',slutt='".$dato." ".$sluttid."',ingress='".$ingress."',public='".$public."',hjelpere='".$hjelpere."'
 			,kakebaker='".$kakebaker."' WHERE arrid='".$id."';";
 			mysql_query($sql);
 			header('Location: ?side=aktiviteter/liste');
 		}else{			
-			$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,starttid,sluttid,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
-values ('$tittel','','$sted','$dato','$oppmote','$starttid','$sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
+			$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
+values ('$tittel','','$sted','$dato','$oppmote','$dato $starttid','$dato $sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
 			mysql_query($sql);
 			header('Location: ?side=aktiviteter/liste');
 		};

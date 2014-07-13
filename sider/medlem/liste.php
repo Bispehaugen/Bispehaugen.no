@@ -32,7 +32,9 @@
     	echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive</a>";
     }
     
-    echo "<table>";
+    echo "<h2>Medlemmer</h2>";
+    
+    echo "<section class='medlemsliste'>";
 	#Brukes for ÔøΩ skrive ut en rad med instrumentnavn.
 	$temp_instr="Test";
 
@@ -42,50 +44,46 @@
    			$instr=$medlem['instrument'];
    			//sjekker om instrument er samme som forrige, hvis nei skives ut en headerlinje med instrumentnavn
    			if($temp_instr!=$instr){
-   				echo "<tr><th colspan='5'>".$medlem['instrument']."</th></tr>";
+   				echo "<h3>".$medlem['instrument']."</h3>";
 				$temp_instr=$medlem['instrument'];
-	   			};
-       		echo "<tr><td><a href='?side=medlem/vis&id=".$medlem['medlemsid']."'>".$medlem['fnavn']." ".$medlem['enavn']."</a>";
+   			}
+       		echo "<section class='medlem'>";
+       		
+       		echo "<span class='navn'><a href='?side=medlem/vis&id=".$medlem['medlemsid']."'>".$medlem['fnavn']." ".$medlem['enavn']."</a></span>";
 				//sjekker om permisjon eller sluttet - i s√• fall printes en bokstav etter navnet
 				if($medlem['status']!='Aktiv'){
-   					echo " (".$medlem['status'].") ";
-   				};
+   					echo "<span class='tag permisjon'>".$medlem['status']."</span>";
+   				}
 				//sjekker p√• gruppeleder og skriver ut dette etter navnet hvis ja
        			if($medlem['grleder'] == true){
-       				echo " - Gruppeleder";
-       			};
-				
-       		echo "</td><td>";
+       				echo "<span class='tag gruppeleder'>Gruppeleder</span>";
+       			}
 
 			//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
 			$medlemsid = $medlem['medlemsid'];
    			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
-   				echo "<a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a>";
+   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
-			echo "</td><td>";
+
+
 			if(er_logget_inn() && get('alle')==0 && $medlem ['tlfmobil']){
 					//hvis man er logget inn vises mobilnummeret til alle medlemmer
-					echo "<a href='tel:".$medlem ['tlfmobil']."'><i class='icon-phone'></i> ".$medlem ['tlfmobil']."</a></a>";
+					echo "<span class='telefon'><a href='tel:".$medlem ['tlfmobil']."'><i class='icon-phone'></i> ".$medlem ['tlfmobil']."</a></span>";
 			}
-			echo"<td></td>";	
-			
 		}
 
 		//hvis brukeren er admin kommer det opp endre/slette knapp p√• alle medlemmer
 
-		if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-				echo"<td><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='icon-edit' title='Klikk for Â endre'></i></a></td></tr>";
-		}else{
-			echo"<td></td></tr>";
-		};
-	};    
+		//if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='icon-edit' title='Klikk for Â endre'></i></a></span>";
+		//}
+		echo "<div class='clearfix'></div>";
+		echo "</section>";
+	}    
 
 	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-			echo"
-			<tr><td colspan='5'></td></tr>
-			<tr><td colspan='5'></td></tr>
-			<tr><td colspan='5'><a href='?side=medlem/endre'><i class='icon-plus'></i> Legg til ny</a></td></tr>";
+			echo "<a href='?side=medlem/endre'><i class='icon-plus'></i> Legg til ny</a>";
 		}
-	echo "</table>";
+	echo "</section>";
     
 ?>
