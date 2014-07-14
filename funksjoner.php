@@ -322,4 +322,7 @@ function clean($string) {
    return preg_replace('/-+/', '-', $string); // Replaces multiple hyphens with single one.
 }
 
+function erForside() {
+	return !has_get("side") || strtolower(get('side')) == "forside";
+}
 ?>

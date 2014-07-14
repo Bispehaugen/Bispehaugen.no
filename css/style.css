@@ -38,7 +38,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 	float: right;
 }
 
-nav li span, .meny {
+nav li span, .meny, nav li a, .meny a {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -148,7 +148,7 @@ nav, .nav-container {
     display: block;
   }
 
-  nav li span {
+  nav li span, nav li a {
     cursor: pointer;
   }
 
@@ -197,8 +197,7 @@ nav, .nav-container {
     nav.top {
       height: auto;
       background: white;
-    background: rgba(1, 1, 1, 0.5);
-
+      background: rgba(1, 1, 1, 0.5);
     }
 
     nav ul {
@@ -215,7 +214,7 @@ nav, .nav-container {
   }
 
   @media screen and (min-width: 740px) and (max-width: 900px) {
-    nav li span {
+    nav li span, nav li a {
       font-size: 0.8em;
     }
   }
@@ -224,24 +223,24 @@ nav, .nav-container {
     nav li {
       margin-left: 2em;
     }
-    nav li span:hover, .meny:hover {
+    nav li span:hover, .meny:hover, nav li a:hover, .meny a:hover {
       color: rgba(34, 41, 51, 0.5);
       border-bottom: 2px solid;
     }
   }
 
-    nav li span {
+    nav li span, nav li a {
       padding: 0.5em 1em 0.1em 1em;
     }
 
-    nav li span, .meny {
+    nav li span, .meny, nav li a, .meny a {
       color: #777;
       text-transform: uppercase;
       letter-spacing: 1px;
       text-decoration: none;
     }
 
-    nav li span.active, .meny.active {
+    nav li span.active, .meny.active, nav li a.active, .meny a.active {
       color: rgba(34, 41, 51, 1);
       border-bottom: 2px solid;
     }
@@ -398,15 +397,15 @@ nav, .nav-container {
     .side .content a {
       color: #002e40; }
 
-.side:nth-child(odd) {
+.side:nth-child(even) {
   background-color: rgba(34, 41, 51, 1);
   color: white; }
-  .side:nth-child(odd) a {
+  .side:nth-child(even) a {
     color: white; }
 
-.side:nth-child(odd) table {
+.side:nth-child(even) table {
 	color: #002e40; }
-  .side:nth-child(odd) table a {
+  .side:nth-child(even) table a {
     color: #002e40; }
     
 .side.side-invertert table {
@@ -507,9 +506,10 @@ table .aarskille {
 		padding-left: 1em;
 	}
 	
-	.medlemsliste .verktoy {
+	.medlemsliste .verktoy, .medlemsliste .telefon {
 		display: inline-block;
 		float: right;
+		margin-left: 1em;
 	}
 
 .bli-medlem .bli-medlem, .bli-medlem .stottemedlem{

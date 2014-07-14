@@ -14,19 +14,17 @@ if(er_logget_inn()){
 </ul>
 
 <?php
-} else if (!has_post('side')) {
+} else {
+if (!erForside()) {
 ?>
 <ul>
-    <li><a href="?">Hovedside</a></li>
-    <li><a href="?#">Nyheter</a></li>
-    <li><a href="?#">Nyheter</a></li>
-    <li><a href="?#">Spilleoppdrag</a></li>
-    <li><a class="bli-medlem" href="?#">Bli medlem</a></li>
-    <li><a href="?#">Medlemmer</a></li>
-    <li><a href="?#">Annet</a></li>
-    <li><a href="?#korpset">Organisasjonen</a></li>
+    <li><a href="?side=forside#nyheter">Nyheter</a></li>
+    <li><a href="?side=forside#aktiviteter">Aktiviteter</a></li>
+    <li><a href="?side=forside#spilleoppdrag">Spilleoppdrag</a></li>
+    <li><a href="?side=forside#blimedlem" class="bli-medlem">Bli medlem</a></li>
+    <li><a href="?side=forside#medlemmer">Medlemmer</a></li>
+    <li><a href="?side=forside#korpset">Annet</a></li>
 </ul>
-
 <?php
 } else {
 ?>
@@ -41,7 +39,7 @@ if(er_logget_inn()){
         <span data-scroll-nav='4'>Spilleoppdrag</span>
     </li>
     <li>
-        <span class="bli-medlem" data-scroll-nav='5'>Bli medlem</span>
+        <span data-scroll-nav='5' class="bli-medlem">Bli medlem</span>
     </li>
     <li>
         <span data-scroll-nav='6'>Medlemmer</span>
@@ -52,4 +50,5 @@ if(er_logget_inn()){
 </ul>
 
 <?php
+}
 }

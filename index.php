@@ -53,7 +53,7 @@ $innhold = ob_get_clean();
     <script type="text/javascript" src="javascript/jquery.timeago.js"></script>
     <script type="text/javascript" src="javascript/jquery.timeago.no.js"></script>
     
-    <?php if (!has_get("side")) { ?>
+    <?php if (erForside()) { ?>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <?php } ?>
     
@@ -110,7 +110,7 @@ $innhold = ob_get_clean();
 				unset($_SESSION["Errors"]);
 			}
 			
-			if (has_get("side")) {
+			if (!erForside()) {
 				echo "<section class=\"side alene-side\" data-scroll-index='2'>";
 				echo $innhold;
 				echo "</section>";
@@ -123,13 +123,13 @@ $innhold = ob_get_clean();
 <script>
     $.scrollIt();
 
-    function changeHash(toHash) {
+    function changeHash(href) {
         if (href) {
             if (history.pushState) {
                 history.pushState(null, null, href);
             } else {
                 var scrollTopBeforeHashChange = $('body').scrollTop();
-                window.location.hash = toHash;
+                window.location.hash = href;
                 $('html,body').scrollTop(scrollTopBeforeHashChange);
             }
         }
@@ -210,7 +210,7 @@ $innhold = ob_get_clean();
     });
 </script>
 
-<?php if (!has_get("side")) { ?>
+<?php if (erForside()) { ?>
 <footer id="map_canvas" class="map"></footer>
 
 <script>
