@@ -69,46 +69,46 @@ if (!er_logget_inn()) {
 		<div class="bli-medlem">
 		    <h2>Bli medlem!</h2>
 		    
-			<b>Vil du være med oss og spille?</b>
+			<b>Vil du vÃ¦re med oss og spille?</b>
 			<p>
-			Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
+			Vi Ã¸nsker nye medlemmer velkomne! VÃ¥re sentrale verdier bestÃ¥r i Ã¥ vÃ¦re inkluderende, ambisiÃ¸se og lekne.
 			<br>
-			Dette innebærer at vi lover våre medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
-			og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
+			Dette innebÃ¸rer at vi lover vÃ¦re medlemmer Ã¥ spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav bÃ¥de til dirigent
+			og musikere. Dessuten synes vi det er viktig Ã¥ gi publikum gode konsertopplevelser. 
 			</p>
 			<p>
-			Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
+			Vil du vÃ¦re med oss og spille, lover vi Ã¥ fÃ¥ deg til Ã¥ fÃ¸le deg velkommen!<br>
 			<b>Tar du utfordringen?</b>
 			</p>
 		
 			<p>	
-				Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
-				på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under
+				Du kan ogsÃ¥ ta turen innom pÃ¥ en av vÃ¥re Ã¸velser, mandager kl 19:30 i gymsalen
+				pÃ¥ <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Ã˜vings- og konsertplanen finner du under
 			<a href="?side=aktiviteter">aktiviteter</a>.
 			</p>
 			
 			<p>
-			<span class="viktig">Interessert i å være med i Bispehaugen?
-			Fyll ut skjemaet så tar vi kontakt med deg!</span>
+			<span class="viktig">Interessert i Ã¥ vÃ¦re med i Bispehaugen?
+			Fyll ut skjemaet sÃ¥ tar vi kontakt med deg!</span>
 			</p>
 		</div>
 		
 		<div class="stottemedlem">
-			<h2>Eller bli støttemedlem!</h2>
-			<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
-			  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
+			<h2>Eller bli stÃ¸ttemedlem!</h2>
+			<p><b>Det er ressurskrevende Ã¥ drive et ambisiÃ¸st korps som Bispehaugen.</b>
+			  Vi har derfor etablert en stÃ¸ttemedlemskapsordning for Ã¥ skaffe ekstra midler til korpset.
 			  <p>
-			  Vi tilbyr de som støtter oss noen fordeler. Disse er:
+			  Vi tilbyr de som stÃ¸tter oss noen fordeler. Disse er:
 			  </p><ul>
-			    <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
+			    <li>Billetter til student/honnÃ¸rpris pÃ¥ konserter arrangert av Bispehaugen</li>
 			    <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
-			    <li>Personlig pålogging til våre egne web-sider som gir adgang til informasjon som
+			    <li>Personlig pÃ¥logging til vÃ¦re egne web-sider som gir adgang til informasjon som
 			      vanligvis bare er tilgjengelig for medlemmer</li>
 			  </ul>
-			  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
-			  legge på 300 eller 600kr.
+			  StÃ¸ttemedlemsskap i Bispehaugen koster 300 kr i Ã¥ret, dersom du vil stÃ¸tte mer kan du 
+			  legge pÃ¥ 300 eller 600kr.
 			  <br />
-			  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
+			  Ta kontakt pÃ¥ mail pÃ¥ <a href="mailto:styret@bispehaugen.no?subject=StÃ¸ttemedlemsskap">styret@bispehaugen.no</a>.
 			</p>
 		</div>
 		<div class="clearfix"></div>
@@ -139,14 +139,14 @@ if (!er_logget_inn()) {
 	        </tr>
 	        <tr>
 	          <td colspan=2>
-	            <span class="label">Hvor fikk du høre om korpset?</span><br />
+	            <span class="label">Hvor fikk du hÃ¸re om korpset?</span><br />
 	          <textarea name="sHvorKjentMed"></textarea>
 	          </td>
 	        </tr>
 	        <tr>
 	          <td class="submit" colspan=2>
 	            <input id="registrering" type="checkbox" value="registrer" />
-	            <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
+	            <label for="registrering"> Jeg Ã¸nsker Ã¥ opprette bruker pÃ¥ internsiden med en gang</label>
 	          </td>
 	        </tr>
 	        <tr class="passord-rad">
@@ -178,33 +178,31 @@ if (!er_logget_inn()) {
     <h2>Korpset</h2>
     <p>
     <img width="250" src="../bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
-    Bispehaugen Ungdomskorps ble startet i 1923, og er således et av Trondheims eldste amatørkorps. Korpset har helt siden starten vårt
-    kjent for å ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vårt medlem av Bispehaugen. Vi liker å spille
-    allsidig musikk med kvalitet, fra underholdningsmusikk til større originalskrevne og klassiske verk. I dag teller vi drøyt
-
-    66 medlemmer, men
-    vi satser stort på rekruttering og håper å få med deg som medlem! 
+    Bispehaugen Ungdomskorps ble startet i 1923, og er sÃ¥ledes et av Trondheims eldste amatÃ¸rkorps. Korpset har helt siden starten vÃ¦rt
+    kjent for Ã¥ ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vÃ¦rt medlem av Bispehaugen. Vi liker Ã¥ spille
+    allsidig musikk med kvalitet, fra underholdningsmusikk til stÃ¸rre originalskrevne og klassiske verk. I dag teller vi drÃ¸yt 66 medlemmer, 
+    men vi satser stort pÃ¥ rekruttering og hÃ¥per Ã¥ fÃ¥ med deg som medlem! 
     </p><p>
 
     <img width="100" src="../bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
-    Siden høsten 2000 har Tomas Carstensen vært vår faste dirigent. Han har utdannelse som trompetist
+    Siden hÃ¸sten 2000 har Tomas Carstensen vÃ¦rt vÃ¥r faste dirigent. Han har utdannelse som trompetist
     og dirigent fra Musikkonservatoriet i Trondheim.
     </p><p>
 
-    Korpset har i mange år hevdet seg i toppen av norsk 1. divisjon i NM janitsjar (<a href="meritter.php">se resultater</a>). Under NM i 2006 vant 
-    korpset 1. divisjon, og konkurrerte i elitedivisjonen i to år. I perioden 2009-2011 konkurrerte vi i 1. divisjon, og fra 2012 har korpset konkurrert i 2. divisjon
-    Vår musikalske målsetting er å ha full Symphonic Band-besetning, og å være et ungdomskorps i ordets rette forstand. Bispehaugen ønsker ikke å bli plassert i en bestemt bås, men skal
-    kjennetegnes av allsidighet og seriøs satsing innen flere områder.
+    Korpset har i mange Ã¥r hevdet seg i toppen av norsk 1. divisjon i NM janitsjar (<a href="meritter.php">se resultater</a>). Under NM i 2006 vant 
+    korpset 1. divisjon, og konkurrerte i elitedivisjonen i to Ã¥r. I perioden 2009-2011 konkurrerte vi i 1. divisjon, og fra 2012 har korpset konkurrert i 2. divisjon
+    VÃ¥r musikalske mÃ¥lsetting er Ã¥ ha full Symphonic Band-besetning, og Ã¥ vÃ¦re et ungdomskorps i ordets rette forstand. Bispehaugen Ã¸nsker ikke Ã¥ bli plassert i en bestemt bÃ¥s, men skal
+    kjennetegnes av allsidighet og seriÃ¸s satsing innen flere omrÃ¥der.
     </p><p>
 
-    <img width="180" src="../bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar på Frosta">
-    Bispehaugen legger vekt på et godt sosialt miljø¸ både i og utenfor øvingslokalet. Korpset har utenommusikalske aktiviteter som
-    kafébesøk, fester og helgeturer utenbys. Medlemmene våre blir i stor grad rekruttert fra studentmiljøet i Trondheim, noe som setter standarden for våre utenommusikalske aktiviteter.
+    <img width="180" src="../bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar pÃ¥ Frosta">
+    Bispehaugen legger vekt pÃ¥ et godt sosialt miljÃ¸ bÃ¥de i og utenfor Ã¸vingslokalet. Korpset har utenommusikalske aktiviteter som
+    kafÃ©besÃ¸k, fester og helgeturer utenbys. Medlemmene vÃ¥re blir i stor grad rekruttert fra studentmiljÃ¸et i Trondheim, noe som setter standarden for vÃ¥re utenommusikalske aktiviteter.
     </p><p>
 
     <img src="../bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
-    Vi øver mandager fra 19:30 på Bispehaugen skole på Møllenberg, sentralt i Trondheim. Det blir også noen ekstraøvelser får
-    konsertene. Dersom du er interessert i hva vi holder på med, kan du ta turen innom en av øvelsene, eller gå inn på <a href="../kontakt/blimedlem.php">kontaksskjema</a>.
+    Vi Ã¸ver mandager fra 19:30 pÃ¥ Bispehaugen skole pÃ¥ MÃ¸llenberg, sentralt i Trondheim. Det blir ogsÃ¥ noen ekstraÃ¸velser fÃ¸r
+    konsertene. Dersom du er interessert i hva vi holder pÃ¥ med, kan du ta turen innom en av Ã¸velsene, eller gÃ¥ inn pÃ¥ <a href="<?php if(!erForside()){echo "?side=forside";}?>#blimedlem">kontaksskjema</a>.
     </p>
 
     <div class="clearfix"></div>
@@ -216,7 +214,6 @@ if (!er_logget_inn()) {
 	<div class="content">
 		<h2>Kontakt oss</h2>
 		
-		
 		<section class="kontakt-float">
 			<h4>E-post</h4>
 			<p><script type="text/javascript">document.write("<a href=\"mailto:sty" + "ret" + "@" + "bispe" + "haugen" + "." + ".no\">");</script>styre<span class="hidden">EAT THIS ROBOTS</span>@bispehaugen.no</a></p>
@@ -224,7 +221,7 @@ if (!er_logget_inn()) {
 			<h4>Telefon leder</h4>
 			<p><a href="tel:+47<?php echo $leder['tlfmobil']; ?>">+47 <?php echo $leder['tlfmobil']; ?></a></p>
 		
-			<a href="https://www.facebook.com/BispehaugenUngdomskorps" title="Besøk BUK på Facebook">
+			<a href="https://www.facebook.com/BispehaugenUngdomskorps" title="BesÃ¸k BUK pÃ¥ Facebook">
 				<svg class='svg-icon' version="1.1" id="FacebookIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 					 width="56.693px" height="56.693px" viewBox="0 0 56.693 56.693" enable-background="new 0 0 56.693 56.693" xml:space="preserve">
 					<path d="M40.43,21.739h-7.645v-5.014c0-1.883,1.248-2.322,2.127-2.322c0.877,0,5.395,0,5.395,0V6.125l-7.43-0.029
@@ -233,7 +230,7 @@ if (!er_logget_inn()) {
 				</svg>
 	
 			</a>
-			<a href="https://twitter.com/Bispehaugen" title="Følg BUK på Twitter">
+			<a href="https://twitter.com/Bispehaugen" title="FÃ¸lg BUK pÃ¥ Twitter">
 				<svg class='svg-icon' version="1.1" id="TwitterIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 		 width="56.693px" height="56.693px" viewBox="0 0 56.693 56.693" enable-background="new 0 0 56.693 56.693" xml:space="preserve">
 					<path d="M52.837,15.065c-1.811,0.805-3.76,1.348-5.805,1.591c2.088-1.25,3.689-3.23,4.444-5.592c-1.953,1.159-4.115,2-6.418,2.454
@@ -265,7 +262,7 @@ if (!er_logget_inn()) {
 		<div class="clearfix"></div>
 		
 		<section class="besok-oss">
-			<h4>Besøksadresse</h4>
+			<h4>BesÃ¸ksadresse</h4>
 			<p>
 				Bispehaugen skole<br />
 				7014 Trondheim

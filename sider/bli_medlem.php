@@ -37,8 +37,8 @@ if(has_post("sEpost")){
 	     die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
 	 }
 	
-	$message="Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
-	nye medlemmer. Husk at Bispehaugen lover å ta kontakt innen en uke.
+	$message="Denne personen har besÃ¸kt BUK sine websider og sendt inn skjemaet for
+	nye medlemmer. Husk at Bispehaugen lover Ã¥ ta kontakt innen en uke.
 	
 	NAVN:           $sNavn
 	INSTRUMENT:     $sInstrument
@@ -48,20 +48,20 @@ if(has_post("sEpost")){
 	Musikalsk bakgrunn:
 	$sAnnet
 	
-	Hvor fikk du høre om Bispehaugen:
+	Hvor fikk du hÃ¸re om Bispehaugen:
 	$sHvorBleKjent";
 	
 	if (!isset($sNavn) || $sNavn=="" || ($sTelefon=="" && $sEpost=="")) { 
-	   $feilmeldinger[] =  "<font color=red>Du må fylle inn navn og kontaktinformasjon</font>"; 
+	   $feilmeldinger[] =  "<font color=red>Du mÃ¥ fylle inn navn og kontaktinformasjon</font>"; 
 	} 
 	elseif (preg_match("/@mail.com/",$sEpost)>0){ 
-	   $feilmeldinger[] =  "<font color=red>Forespørsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
+	   $feilmeldinger[] =  "<font color=red>ForespÃ¸rsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
 	}
 	elseif ($sEpost!="" && preg_match("/@/",$sEpost)==0){
-	   $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";
+	   $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. ForespÃ¸rselen er blitt blokkert p.g.a. problemer med spam.</font>";
 	}
 	elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
-	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
+	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. ForespÃ¸rselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
 	} 
 	//elseif (mail($to,$subject,$message,$header)) {
 	elseif (true) {
@@ -78,26 +78,26 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 <h1>Bli Medlem!</h1>
 <div>
 	
-	<b>Vil du være med oss og spille?</b>
+	<b>Vil du vÃ¦re med oss og spille?</b>
 	<p>
-	Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
+	Vi Ã¸nsker nye medlemmer velkomne! VÃ¥re sentrale verdier bestÃ¥r i Ã¥ vÃ¦re inkluderende, ambisiÃ¸se og lekne.
 	<br>
-	Dette innebærer at vi lover våre medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
-	og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
+	Dette innebÃ¦rer at vi lover vÃ¥re medlemmer Ã¥ spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav bÃ¥de til dirigent
+	og musikere. Dessuten synes vi det er viktig Ã¥ gi publikum gode konsertopplevelser. 
 	</p>
 	<p>
-	Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen! <b>Tar du utfordringen?</b>
+	Vil du vÃ¦re med oss og spille, lover vi Ã¥ fÃ¥ deg til Ã¥ fÃ¸le deg velkommen! <b>Tar du utfordringen?</b>
 	</p>
 
 	<p>	
-		Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
-		på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under
+		Du kan ogsÃ¥ ta turen innom pÃ¥ en av vÃ¥re Ã¸velser, mandager kl 19:30 i gymsalen
+		pÃ¥ <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Ã˜vings- og konsertplanen finner du under
 	<a href="?side=aktiviteter">aktiviteter</a>.
 	</p>
 	
 	<p>
-	<span class="viktig">Interessert i å være med i Bispehaugen?
-	Fyll ut skjemaet så tar vi kontakt med deg!</span>
+	<span class="viktig">Interessert i Ã¥ vÃ¦re med i Bispehaugen?
+	Fyll ut skjemaet sÃ¥ tar vi kontakt med deg!</span>
 	</p>
 </div>
 <br />
@@ -140,14 +140,14 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 		</tr>
 		<tr>
 			<td colspan=2>
-				<span class="label">Hvor fikk du høre om korpset?:</span><br />
+				<span class="label">Hvor fikk du hÃ¸re om korpset?:</span><br />
 			<textarea name="sHvorKjentMed"><?php echo $sHvorKjentMed; ?></textarea>
 			</td>
 		</tr>
 		<tr>
 			<td class="submit" colspan=2>
 				<div style="float: left;"><input id="registrering" type="checkbox" value="registrer" />
-					<label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label></div>
+					<label for="registrering"> Jeg Ã¸nsker Ã¥ opprette bruker pÃ¥ internsiden med en gang</label></div>
 				<div><input type="submit" name="btnSubmit" value="Send skjema"></div>
 			</td>
 		</tr>

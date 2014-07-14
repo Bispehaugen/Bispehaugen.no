@@ -13,7 +13,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 			WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_innlegg_ny.temaid=".$temaid.";";
 		$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 		
-		//henter ut alle aktuelle liste-oppfåringer
+		//henter ut alle aktuelle liste-oppfÃ¸ringer
 		$sql="SELECT medlemsid, fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
 		forum_listeinnlegg_ny.kommentar, forum_listeinnlegg_ny.flagg, forum_liste.expires 
 		FROM forum_liste, forum_innlegg_ny, forum_listeinnlegg_ny, forum_tema, medlemmer 
@@ -22,7 +22,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
 
 
-		//Henter ut siste uleste innlegg i tråd
+		//Henter ut siste uleste innlegg i trÃ¥d
 		$sql="SELECT uleste_innlegg FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
 		$ulesteinnlegg=hent_og_putt_inn_i_array($sql, "uleste_innlegg");		
 	}
@@ -77,14 +77,14 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		echo "</section>";
 
 
-		//viser endre/slett-knapper på egne innlegg og for admin (så de har mulighet til å overstyre)
+		//viser endre/slett-knapper pÃ¥ egne innlegg og for admin (sÃ¥ de har mulighet til Ã¥ overstyre)
 		if(($innlegg['skrevetavid']==$medlemsid || $_SESSION['rettigheter']>1) && $har_temaid){
 			echo "<section class='tools'>";
-				//echo "<i class='fa fa-edit tool' title='Klikk for å endre'></i> ";
+				//echo "<i class='fa fa-edit tool' title='Klikk for Ã¥ endre'></i> ";
 				echo "<a class='tool' href='javascript:void(0)' 
 						onclick='confirm_url(\"?side=forum/innlegg&id=".$temaid."&sletteinnlegg=".$id."\", 
-											 \"Er du sikker på at du vil slette kommentaren?\")'>";
-					echo "<i class='fa fa-remove' title='Klikk for å slette'></i>";
+											 \"Er du sikker pÃ¥ at du vil slette kommentaren?\")'>";
+					echo "<i class='fa fa-remove' title='Klikk for Ã¥ slette'></i>";
 				echo "</a>";
 			echo "</section>";
 		}
@@ -94,7 +94,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		echo "<article>";
 			echo "<p class='tekst'>".nl2br($innlegg['tekst'])."</p>";
 		
-      	//if som skriver ut liste hvis det hører en liste til innlegget
+      	//if som skriver ut liste hvis det hÃ¸rer en liste til innlegget
 		if(array_key_exists($id, $listeinnlegg)){
 			$oppfort_paa_liste = False;
 			echo "<table class='paameldingsliste'>";
@@ -105,22 +105,22 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 					echo $listeoppforing['fnavn']." ".$listeoppforing['enavn'];
 					echo "</td><td>".$listeoppforing['kommentar']."</td></tr>";
 					
-					#For å vite om bruker står på lista og dermed ikke kan skrive seg på på nytt
+					#For Ã¥ vite om bruker stÃ¥r pÃ¥ lista og dermed ikke kan skrive seg pÃ¥ nytt
 					if($listeoppforing['medlemsid']==$medlemsid){$oppfort_paa_liste=True;}	
 				};	
 			};
-			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
+			//Legger til tekstfelt for Ã¥ melde seg pÃ¥ hvis ikke lista har expired
 			
 			if($oppfort_paa_liste){
-				echo "<tr><td colspan='2'><b>Du er allerede skrevet på lista</b></td></tr> ";						
+				echo "<tr><td colspan='2'><b>Du er allerede skrevet pÃ¥ lista</b></td></tr> ";						
 			}elseif(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$innlegg['innleggid']]['listeid']."'>
-				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";
+				<input type='submit' name='nyttListeInnlegg' value='Skriv meg pÃ¥ lista'></td></tr>";
 			}else{
-				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig å melde seg på denne lista</b></td></tr> ";	
+				echo "<tr><td colspan='2'><b>Det er ikke lenger mulig Ã¥ melde seg pÃ¥ denne lista</b></td></tr> ";	
 			};
 			echo "</form></table>";
   		};

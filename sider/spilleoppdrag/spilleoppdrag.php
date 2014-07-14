@@ -6,7 +6,7 @@ include_once "funksjoner.php";
 ?>
 <h1>Levende musikk for anledningen?</h1>
 <div>
-	Ønsker du underholdning til ditt arrangement? Bispehaugen Ungdomskorps er alltid klare til å heve stemningen i selskapet!
+	Ã˜nsker du underholdning til ditt arrangement? Bispehaugen Ungdomskorps er alltid klare til Ã¥ heve stemningen i selskapet!
 </div>
 <br>
 <div>
@@ -16,7 +16,7 @@ include_once "funksjoner.php";
 		<li>Juletrefester og julebord</li>
 		<li>Kundearrangement</li>
 		<li>Fester/selskap</li>
-		<li>Åpningssermonier</li>
+		<li>Ã…pningssermonier</li>
 		<li>Eksamenssermonier</li>
 		<li>Bryllyp</li>
 	</ul>
@@ -30,8 +30,8 @@ include_once "funksjoner.php";
 	</ul>
 
 	<p>
-	<b>Kontakt oss på <a href="mailto:styret@bispehaugen.no"> styret@bispehaugen.no</a>,
-		så finner vi noe som kan passe for din anledning </b>
+	<b>Kontakt oss pÃ¥ <a href="mailto:styret@bispehaugen.no"> styret@bispehaugen.no</a>,
+		sÃ¥ finner vi noe som kan passe for din anledning </b>
 	</p>
 	<p><b>Du kan eventuelt fylle ut bestillingsskjemaet nedenfor.</b></p>
 </div>
@@ -73,8 +73,8 @@ if(has_post("sEpost")){
 	     die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
 	 }
 	
-	$message="Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
-	spilleoppdrag. BUK lover å ta kontakt for en uforpliktende samtale.
+	$message="Denne personen har besÃ¸kt BUK sine websider og sendt inn skjemaet for
+	spilleoppdrag. BUK lover Ã¥ ta kontakt for en uforpliktende samtale.
 	
 	NAVN:           $sNavn
 	ORGANISASJON     $sOrganisasjon
@@ -85,21 +85,21 @@ if(has_post("sEpost")){
 	$sAnnet";
 
 	if (!isset($sNavn) || $sNavn=="" || ($sTelefon=="" && $sEpost=="")) { 
-	   $feilmeldinger[] =  "<font color=red>Du må fylle inn navn og kontaktinformasjon</font>"; 
+	   $feilmeldinger[] =  "<font color=red>Du mÃ¥ fylle inn navn og kontaktinformasjon</font>"; 
 	} 
 	elseif (preg_match("/@mail.com/",$sEpost)>0){ 
-	   $feilmeldinger[] =  "<font color=red>Forespørsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
+	   $feilmeldinger[] =  "<font color=red>ForespÃ¸rsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
 	}
 	elseif ($sEpost!="" && preg_match("/@/",$sEpost)==0){
-	   $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";
+	   $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. ForespÃ¸rselen er blitt blokkert p.g.a. problemer med spam.</font>";
 	}
 	elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
-	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
+	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. ForespÃ¸rselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
 	} 
 	//elseif (mail($to,$subject,$message,$header)) {
 	elseif (true) {
 		#echo "<div class=\"header1\">Nye medlemmer</div>";
-		echo "<br>Takk for interessen! Vi vil ta kontakt så fort vi kan.";
+		echo "<br>Takk for interessen! Vi vil ta kontakt sÃ¥ fort vi kan.";
 		$har_alle_feltene_utfylt_og_sendt_mail = true;
 	}
 

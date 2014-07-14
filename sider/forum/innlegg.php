@@ -6,7 +6,7 @@
 	//TODO bredde pÃ¥ tabellen, bare hente opp de 10 siste og ha en knapp med 'vis alle' som printer smtlige innlegg
 	//og blar til bunnen, format og ev bilde i 'skrevet av' kolonnen.
 	
-	//TODO: bør slette post/get etter at de er hentet ut.
+	//TODO: bÃ¸r slette post/get etter at de er hentet ut.
 	
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
@@ -52,16 +52,16 @@
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
 		
-		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
+		//oppdaterer sistelesteid i bÃ¥de forum- og forum_tema-tabellen
 		sett_sisteinnleggid($temaid);
 	};
 	
-	//hvis noen har skrevet seg på en liste
+	//hvis noen har skrevet seg pÃ¥ en liste
 	if(has_post('listeinnlegg')){
 		//fjerner alt skummelt fra kommentarfeltet og setter inn feltet
 		$kommentar=post('kommentar');
 		if(post('flagg')==1){$flagg=1;}else{$flagg=0;};
-		//sql - databasen er sånn at pdd. kan du ikke melde deg på når du allerede er påmeldt
+		//sql - databasen er sÃ¥nn at pdd. kan du ikke melde deg pÃ¥ nÃ¥r du allerede er pÃ¥meldt
 		$sql="INSERT INTO forum_listeinnlegg_ny (listeid, flagg, brukerid, kommentar, tid) 
 			VALUES ('".post('listeinnlegg')."','".$flagg."','".$_SESSION["medlemsid"]."','".$kommentar."','".date('Y-m-d h:i:s')."')";
 		mysql_query($sql);	
@@ -74,11 +74,11 @@
 	$mysql_result=mysql_query($sql);
 	$tema = mysql_fetch_array($mysql_result);
 	
-	//Setter alle innlegg i aktuelle tråd som lest i databasen (så neste gang blir de merket som lest)
+	//Setter alle innlegg i aktuelle trÃ¥d som lest i databasen (sÃ¥ neste gang blir de merket som lest)
 	$sql = "DELETE FROM `forum_leste` WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
 	mysql_query($sql);
 	
-    #Det som printes på sida
+    #Det som printes pÃ¥ sida
     
     //Her legges det inn en oversikt over alle forumene
     list_forum();
@@ -101,7 +101,7 @@
 		}
 		echo "<div class='info'>";
 		echo "<h5 class='navn'>".$innlogget_bruker['fnavn']." ".$innlogget_bruker['enavn']."</h5>";
-		echo "<abbr>Nå</abbr>";
+		echo "<abbr>NÃ¥</abbr>";
 		echo "</div>";
 
 	echo "

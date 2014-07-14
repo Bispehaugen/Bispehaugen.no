@@ -18,12 +18,12 @@
 	$sql="SELECT forum_leste.temaid FROM forum_leste WHERE medlemsid=".$medlemsid.";";
 	$uleste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
 
-    #Det som printes p� sida
+    #Det som printes på sida
     
     //Her legges det inn en oversikt over alle forumene
     list_forum();
     
-    echo "<table class='forum'><tr><th></th><th>Tr�d</th><th>Siste innlegg i tr�d</th></tr>";
+    echo "<table class='forum'><tr><th></th><th>Tråd</th><th>Siste innlegg i tråd</th></tr>";
   
    	//skriver ut alle temaene i forumet sortet på sist oppdaterte med siste innlegg og av hvem
    	foreach($forumtemaer as $temaid => $forumtema){

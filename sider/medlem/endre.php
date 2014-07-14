@@ -97,7 +97,7 @@
 	}
 	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet");
 	
-	//printer ut skjema med forh�ndsutfylte verdier hvis disse eksisterer
+	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
 		
 	echo "
     <script>

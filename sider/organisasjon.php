@@ -18,25 +18,25 @@
 	    $valgtekomiteer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 	};
 	
-	//det som skrives ut på side	
+	//det som skrives ut pÃ¥ side	
 	
 	echo"<table>
-			<tr><th colspan='4'>Kjekt å vite: </th></tr>
-			<tr><td><b>Fravær:</b></td><td colspan='3'>Fravær meldes til nestleder på e-post eller sms. <br>
-			Du kan også fylle ut skjemaet under så autogenereres en mail for deg</td></tr>
+			<tr><th colspan='4'>Kjekt Ã¥ vite: </th></tr>
+			<tr><td><b>FravÃ¦r:</b></td><td colspan='3'>FravÃ¦r meldes til nestleder pÃ¥ e-post eller sms. <br>
+			Du kan ogsÃ¥ fylle ut skjemaet under sÃ¥ autogenereres en mail for deg</td></tr>
 			<form method='post' action='?side=oranisasjon'>
-				<tr><td></td><td>Hvilken øvelse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
+				<tr><td></td><td>Hvilken Ã¸velse:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<tr><td></td><td>Grunn:</td><td colspan='2'><input type='textfield' name='tekst'></td></tr>
 				<input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
 
-			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes på e-post til styret. 
-				Husk å oppgi periode og årsak til permisjonen.</td></tr>
-			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det går på rundgang se ruten oppe til høyre om neste gang 
-			det er din tur eller trykk på aktiviteten for å se.</td></tr>
-			<tr><td><b>Slagverksbæregrupper:</b></td><td colspan='3'>Du kan se i ruten til høyre neste gang du skal bære slagverk 
-			og på profilen din ståre det også hvilken gruppe du er på.</td></tr>";
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Slknad om permisjon sendes pÃ¥ e-post til styret. 
+				Husk Ã¥ oppgi periode og Ã¥rsak til permisjonen.</td></tr>
+			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det gÃ¸r pÃ¥ rundgang se ruten oppe til hÃ¸yre om neste gang 
+			det er din tur eller trykk pÃ¥ aktiviteten for Ã¥ se.</td></tr>
+			<tr><td><b>SlagverksbÃ¦regrupper:</b></td><td colspan='3'>Du kan se i ruten til hÃ¸yre neste gang du skal bÃ¦re slagverk 
+			og pÃ¥ profilen din stÃ¥r det ogsÃ¥ hvilken gruppe du er pÃ¥.</td></tr>";
 			
 			if(has_get('slagverksgrupper')){
 				echo"<tr><td><a href='?side=organisasjon'>skjul grupper</a></td><td colspan='3'></td></tr>

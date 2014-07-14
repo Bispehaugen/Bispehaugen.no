@@ -1,6 +1,6 @@
 <?php
     
-    //SQL-sp�rringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
+    //SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
     //sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
     if(er_logget_inn() && get('alle')==1){
    		$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
@@ -19,7 +19,7 @@
 
     $medlemmer = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
 
-	//sp�rring som henter ut medlemsid til alle styrevervene
+	//spørring som henter ut medlemsid til alle styrevervene
 	$sql="SELECT vervid, tittel, medlemsid, epost FROM verv WHERE komiteid='3'";
 	$styreverv = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
     
@@ -27,7 +27,7 @@
     
     //lager en link til å vise alle
     if(er_logget_inn() && get('alle')==0){
-    	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede ogs�</a>";
+    	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede også</a>";
     }if(er_logget_inn() && get('alle')==1){
     	echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive</a>";
     }
@@ -35,7 +35,7 @@
     echo "<h2>Medlemmer</h2>";
     
     echo "<section class='medlemsliste'>";
-	#Brukes for � skrive ut en rad med instrumentnavn.
+	#Brukes for å skrive ut en rad med instrumentnavn.
 	$temp_instr="Test";
 
    	foreach($medlemmer as $medlem){
@@ -79,7 +79,7 @@
 		//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
 
 		if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for � endre'></i></a></span>";
+				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a></span>";
 		}
 		echo "<div class='clearfix'></div>";
 		echo "</section>";

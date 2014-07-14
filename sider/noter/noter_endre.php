@@ -5,7 +5,7 @@
 		header('Location: ?side=noter/liste');
 	};
 		
-	// //hvis en aktivitet er lagt inn og noen har trykket pÃå lagre hentes verdiene ut
+	// //hvis en aktivitet er lagt inn og noen har trykket pÃ¥ï¿½ lagre hentes verdiene ut
 	 if(has_post('noteid')){
 		  $noteid=post('noteid');
 		  $tittel=post('tittel');
@@ -22,7 +22,7 @@
 			mysql_query($sql);
 			header('Location: ?side=noter/noter_oversikt');
 		 }else{
-		 	//utkommenteres for å ikke lage bøtter og spamm av mapper lokalt
+		 	//utkommenteres for Ã¥ ikke lage bÃ¸tter og spamm av mapper lokalt
 		 	//echo "<pre>".shell_exec("mkdir ../noter/".$filpath)."</pre>";
 			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
 			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','/noter/".$filpath."/')";
@@ -58,7 +58,7 @@
 				<th>Endre notesett</th><th></th>
 				<tr><td>Tittel:</td><td><input type='text' name='tittel' value='".$noter['tittel']."'></td></tr>
 				<tr><td>Komponist:</td><td><input type='text' name='komponist' value='".$noter['komponist']."'></td></tr>
-				<tr><td>Arrangør:</td><td><input type='text' name='arrangor' value='".$noter['arrangor']."'></td></tr>
+				<tr><td>ArrangÃ¸r:</td><td><input type='text' name='arrangor' value='".$noter['arrangor']."'></td></tr>
 				<tr><td>Arkivnr:</td><td><input type='text' name='arkivnr' value='".$noter['arkivnr']."'></td></tr>
 				<tr><td>Filplassering:</td><td><input type='text' name='filpath' value='".$noter['filpath']."' disabled></td></tr>
 				<tr><td>Besetningstype:</td><td>
@@ -82,10 +82,10 @@
 		Info til deg som skal legge inn noter:
 		<ul>
 		<li>- Endringer i lista over besetningstyper?? - kontakt webkom</li>
-		<li>- Koblingen mellom noter og konserter gjøres på aktivitetssida. Merk! Arrangementet bør være en konsert</li>
-		<li>- Webkom oppfordrer til å ha intrumentnavn i filnavnet på opplastede noter</li>
+		<li>- Koblingen mellom noter og konserter gjÃ¸res pÃ¥ aktivitetssida. Merk! Arrangementet bÃ¸r vÃ¦re en konsert</li>
+		<li>- Webkom oppfordrer til Ã¥ ha intrumentnavn i filnavnet pÃ¥ opplastede noter</li>
 		<li>- Filplassering er automatisk genererert og kan ikke endres. </li>
-		<li>- Enn så lenge er det ikke mulig å slette notesett</li>
+		<li>- Enn sÃ¥ lenge er det ikke mulig Ã¥ slette notesett</li>
 		</ul>
 		</p>
 	";

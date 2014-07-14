@@ -1,10 +1,10 @@
 <?php
-    
+    setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
     //TODO legge inn googlecal og ical eksport
         
     #fuksjonalitet
     
-    //spørring som henter ut alle aktiviteter
+    //spÃ¸rring som henter ut alle aktiviteter
 	$aktiviteter=hent_aktiviteter();
 	
 	$valgt_id = get('id');
@@ -26,7 +26,7 @@
 			}
 		</script>";
 
-    #Det som printes på sida
+    #Det som printes pÃ¥ sida
     echo "<table class='aktivitetsliste'>
     <thead><tr><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th><th colspan='2'>Sted:</th></tr></thead>";
 	
@@ -68,13 +68,13 @@
 			#Viser endre/slettkapper hvis man er admin
 			if(session('rettigheter')>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
-				title='Klikk for å endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
-				".$aktivitet['tittel']."\")'><i class='fa fa-remove' title='Klikk for å slette'></i></a></td></tr>";
+				title='Klikk for Ã¥ endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
+				".$aktivitet['tittel']."\")'><i class='fa fa-remove' title='Klikk for Ã¥ slette'></i></a></td></tr>";
 			}else{
 				echo "<td></td></tr>";
 			};
 
-			//Viser mer info hvis trykket på en hendelse
+			//Viser mer info hvis trykket pÃ¥ en hendelse
 			if($valgt_id==$aktivitet['arrid']){
 				echo" <tr><td></td><td class='info' colspan='4'>";
 

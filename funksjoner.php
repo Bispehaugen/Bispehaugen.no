@@ -1,7 +1,7 @@
 <?php
 
 // Felles funksjoner som skal brukes mange plasser
-// Ellers legg ting pï¿½ samme side
+// Ellers legg ting pÃ¥ samme side
 
 session_start();
 
@@ -12,7 +12,7 @@ function koble_til_database($database_host, $database_user, $database_string, $d
     $connection = mysql_connect($database_host, $database_user, $database_string);
 	
     if (!$connection) {
-        echo "Kunne ikke koble opp mot database.<br>Prøv igjen senere...";
+        echo "Kunne ikke koble opp mot database.<br>PrÃ¸v igjen senere...";
         return false;
     }
 
@@ -22,6 +22,13 @@ function koble_til_database($database_host, $database_user, $database_string, $d
    		echo "Kunne ikke velge database";
    		return false;
    	}
+	
+	$utf8_db = mysql_set_charset("utf8", $connection);
+	
+	if (!$utf8_db) {
+		echo "Kunne ikke bruke utf8 mot databasen";
+		return false;
+	}
 
     return true;
 }
@@ -56,7 +63,7 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
-	// hvis $page inneholder .. eller / så prøver noen å gå i undermapper, det vil vi ikke
+	// hvis $page inneholder .. eller / sÃ¥ prÃ¸ver noen Ã¥ gÃ¥ i undermapper, det vil vi ikke
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
@@ -143,10 +150,10 @@ function list_forum(){
 	<td><a href='?side=forum/tema&id=2'>musikk & konserter</a></td>
 	<td><a href='?side=forum/tema&id=1'>aktuelt</a></td>
     <td><a href=''>sosialt</a></td>
-    <td><a href=''>påmeldinger</a></td>";  
+    <td><a href=''>pÃ¥meldinger</a></td>";  
     if($_SESSION['rettigheter']>1){
 		echo"
-    	<td><a href=''>musikkomitéen</a></td>
+    	<td><a href=''>musikkomitÃ©en</a></td>
     	<td><a href='?side=forum/tema&id=4'>styret</a></td>
     	<td><a href='?side=forum/tema&id=3'>webkom</a></td></tr>";
 	};
@@ -159,7 +166,7 @@ function list_forum(){
 
 
     //henter ut alle forumene og lister de opp sammen med nÃ¥r siste innlegg var
-	//Denne skal egentlig brukse, men databasen er ikke tilstrekkelig oppdatert ennå
+	//Denne skal egentlig brukse, men databasen er ikke tilstrekkelig oppdatert ennÃ¥
 	//$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
 	//FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
 	
@@ -172,7 +179,7 @@ function list_forum(){
 	$sql="SELECT forum_tema.forumid FROM forum_leste, forum_tema WHERE medlemsid=".$medlemsid." AND forum_leste.temaid=forum_tema.temaid;";
 	$uleste_forum = hent_og_putt_inn_i_array($sql, $id_verdi="forumid");
 	
-    #Det som printes på sida
+    #Det som printes pÃ¥ sida
     
    
     
@@ -238,7 +245,7 @@ function ant_dager_siden($dato){
    				$dagersiden_som_tekst = " i dag";
    			}
 			elseif ($dagersiden==1){
-   				$dagersiden_som_tekst = " i går";
+   				$dagersiden_som_tekst = " i gÃ¥r";
    			}
 			elseif($dagersiden<7){
 				$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
@@ -246,7 +253,7 @@ function ant_dager_siden($dato){
 			elseif($dagersiden<31){
 				$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
 			}elseif($dagersiden<256){
-				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." mÃ¥neder siden";
 			}else{
 				$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
 			};

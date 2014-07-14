@@ -25,7 +25,7 @@
 	
 	
 
-	#If setning for å sjekke mot medlemmer for md5passord (brukes kun hvis brukernavn/passord-kombinasjonen ikke finnes i medlemmer-tabellen)
+	#If setning for Ã¥ sjekke mot medlemmer for md5passord (brukes kun hvis brukernavn/passord-kombinasjonen ikke finnes i medlemmer-tabellen)
 	if($row["COUNT(brukernavn)"] == 0){
 		$sql="SELECT COUNT(brukernavn) FROM registrering WHERE brukernavn='".$username."' AND passord='".$password_md5."'";
 		$mysql_result=mysql_query($sql);
@@ -50,7 +50,7 @@
 
 	$rettigheter=mysql_result($mysql_result, 0);
 	if($rettigheter==0){
-		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
+		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom pÃ¥ 
 		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det.";
 		header('Location: index.php');
 		die();

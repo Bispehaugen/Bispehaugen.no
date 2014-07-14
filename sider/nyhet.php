@@ -14,7 +14,7 @@ if(has_get('id') ){
 	$nyhet = hent_og_putt_inn_i_array($sql);
 	
 	if (empty($nyhet)) {
-		echo "Du må logge inn for å lese denne nyheten :)";
+		echo "Du mÃ¥ logge inn for Ã¥ lese denne nyheten :)";
 	} else {
 	
 	$bilde = $nyhet['bilde'];

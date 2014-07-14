@@ -1,7 +1,7 @@
 <?php
 
 // Fjern denne linja
-setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
+setlocale(LC_TIME, "nb_NO.utf8");
 include_once "db_config.php";
 include_once "funksjoner.php";
 
@@ -38,7 +38,7 @@ $innhold = ob_get_clean();
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="ISO-8859-1"/>
+    <meta charset="UTF-8"/>
     <title>Bispehaugen Ungdomskorps</title>
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
     <link rel="stylesheet" href="css/style.css" type="text/css" />
@@ -60,7 +60,7 @@ $innhold = ob_get_clean();
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
     <link href='css/font-awesome.css' rel='stylesheet'>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -81,7 +81,7 @@ $innhold = ob_get_clean();
 	<div class="site">
 		<section class="forside side coverflow" data-scroll-index='1'>
 	      <a name="forside"></a>
-	      <div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
+	      <div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>stÃ¸ttemedlem</a></em> i dag!</div>
 	      
 	      <header class="header">
 	      <img class="logo" src="icon_logo.png" />

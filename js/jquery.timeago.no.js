@@ -11,8 +11,8 @@ jQuery.timeago.settings.strings = {
   hours: "ca. %d timer",
   day: "en dag",
   days: "%d dager",
-  month: "ca. en måned",
-  months: "%d måneder",
-  year: "ca. et år",
-  years: "%d år"
+  month: "ca. en mÃ¥ned",
+  months: "%d mÃ¥neder",
+  year: "ca. et Ã¥r",
+  years: "%d Ã¥r"
 };

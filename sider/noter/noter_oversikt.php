@@ -8,7 +8,7 @@
 		header('Location: ../index.php');
 	};
 	
-	//henter ut alle stykkene i db sortert etter tittel og evt. filtrert på konsert hvis konsert er valgt
+	//henter ut alle stykkene i db sortert etter tittel og evt. filtrert pÃ¥ konsert hvis konsert er valgt
 	//(Bruker tabellene noter_konsert og noter_notesett)
 	$konsertid=post('arrid');
 	
@@ -27,10 +27,10 @@
 	WHERE noter_konsert.arrid=arrangement.arrid ORDER BY dato DESC;";
 	$konserter=hent_og_putt_inn_i_array($sql,'arrid');
 	
-	//printer ut det som skal vises på sida
+	//printer ut det som skal vises pÃ¥ sida
 	echo"<table>";
 	
-	//form med muligheter for å velge ut noter til en konsert
+	//form med muligheter for Ã¥ velge ut noter til en konsert
 	echo" <form class='forum' method='post' action='?side=noter/noter_oversikt'>
 				<tr><td>Konsert:</td><td>
 					<select name='arrid'>
@@ -45,7 +45,7 @@
   				<td><input type='submit' name='nyttInnlegg' value='finn noter!'></td></tr>
 			</form> 
 				<tr><td></td><td></td></tr>
-				<tr><th>Tittel</th><th>Komponist:</th><th>Arrangør:</th><th>Besetning:</th><th>Arkivnr.</th><th></th></tr>";
+				<tr><th>Tittel</th><th>Komponist:</th><th>ArrangÃ¸r:</th><th>Besetning:</th><th>Arkivnr.</th><th></th></tr>";
 	//liste med notesettene
 	foreach($notesett as $sett){
 		echo"<tr>
@@ -60,7 +60,7 @@
 					echo "</td>";
 				if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
 					echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='fa fa-edit' 
-					title='Klikk for å endre'></i></a></td></tr>";
+					title='Klikk for Ã¥ endre'></i></a></td></tr>";
 				}else{
 					echo "<td></td></tr>";
 				};
