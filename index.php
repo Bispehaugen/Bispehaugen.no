@@ -1,7 +1,7 @@
 <?php
 
 // Fjern denne linja
-setlocale(LC_TIME, "Norwegian");
+setlocale(LC_TIME, "Norwegian", "no_NO", "nb_NO");
 include_once "db_config.php";
 include_once "funksjoner.php";
 
