@@ -84,7 +84,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 				echo "<a class='tool' href='javascript:void(0)' 
 						onclick='confirm_url(\"?side=forum/innlegg&id=".$temaid."&sletteinnlegg=".$id."\", 
 											 \"Er du sikker på at du vil slette kommentaren?\")'>";
-					echo "<i class='fa fa-remove' title='Klikk for å slette'></i>";
+					echo "<i class='fa fa-times' title='Klikk for å slette'></i>";
 				echo "</a>";
 			echo "</section>";
 		}

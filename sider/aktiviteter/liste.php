@@ -69,7 +69,7 @@
 			if(session('rettigheter')>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
 				title='Klikk for å endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
-				".$aktivitet['tittel']."\")'><i class='fa fa-remove' title='Klikk for å slette'></i></a></td></tr>";
+				".$aktivitet['tittel']."\")'><i class='fa fa-times' title='Klikk for å slette'></i></a></td></tr>";
 			}else{
 				echo "<td></td></tr>";
 			};

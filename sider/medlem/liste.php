@@ -62,7 +62,7 @@
 			//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
 			$medlemsid = $medlem['medlemsid'];
    			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
-   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
+   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-o' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
 
 
