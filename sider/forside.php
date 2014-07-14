@@ -16,7 +16,7 @@ if (!er_logget_inn()) {
 				
 				$bilde = $nyhet['bilde'];
 				if(empty($bilde)){
-					$bilde = "bilder/forside/logo.png";
+					$bilde = "icon_logo.png";
 				}
 				
 			echo '
@@ -149,8 +149,8 @@ if (!er_logget_inn()) {
   <div class='content'>
     <h2>Korpset</h2>
     <p>
-    <img width="250" src="../bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
-    Bispehaugen Ungdomskorps ble startet i 1923, og er sÃ¥ledes et av Trondheims eldste amatørkorps. Korpset har helt siden starten vårt
+    <img width="250" src="bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
+    Bispehaugen Ungdomskorps ble startet i 1923, og er således et av Trondheims eldste amatørkorps. Korpset har helt siden starten vårt
     kjent for å ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vårt medlem av Bispehaugen. Vi liker å spille
     allsidig musikk med kvalitet, fra underholdningsmusikk til større originalskrevne og klassiske verk. I dag teller vi drøyt
 
@@ -158,8 +158,8 @@ if (!er_logget_inn()) {
     vi satser stort på rekruttering og håper å få med deg som medlem! 
     </p><p>
 
-    <img width="100" src="../bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
-    Siden høsten 2000 har <a href="dirigenter.php">Tomas Carstensen</a> vært vår faste dirigent. Han har utdannelse som trompetist
+    <img width="100" src="bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
+    Siden høsten 2000 har Tomas Carstensen vært vår faste dirigent. Han har utdannelse som trompetist
     og dirigent fra Musikkonservatoriet i Trondheim.
     </p><p>
 
@@ -169,12 +169,12 @@ if (!er_logget_inn()) {
     kjennetegnes av allsidighet og seriøs satsing innen flere områder.
     </p><p>
 
-    <img width="180" src="../bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar pÃ¥ Frosta">
+    <img width="180" src="bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar pÃ¥ Frosta">
     Bispehaugen legger vekt pÃ¥ et godt sosialt miljø¸ både i og utenfor øvingslokalet. Korpset har utenommusikalske aktiviteter som
     kafébesøk, fester og helgeturer utenbys. Medlemmene våre blir i stor grad rekruttert fra studentmiljøet i Trondheim, noe som setter standarden for våre utenommusikalske aktiviteter.
     </p><p>
 
-    <img src="../bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
+    <img src="bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
     Vi øver mandager fra 19:30 på Bispehaugen skole på Møllenberg, sentralt i Trondheim. Det blir også noen ekstraøvelser får
     konsertene. Dersom du er interessert i hva vi holder på med, kan du ta turen innom en av øvelsene, eller gå inn på <a href="../kontakt/blimedlem.php">kontaksskjema</a>.
     </p>

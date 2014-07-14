@@ -44,11 +44,10 @@ $innhold = ob_get_clean();
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
     <link rel="stylesheet" href="css/font-awesome-ie7.css" type="text/css" />
-    <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png">
+    <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
-    <link rel="shortcut icon" href="bilder/icon_logo.png" type="image/png" />
     <script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.js'></script>
     <script type="text/javascript" src="javascript/jquery.timeago.js"></script>
     <script type="text/javascript" src="javascript/jquery.timeago.no.js"></script>
