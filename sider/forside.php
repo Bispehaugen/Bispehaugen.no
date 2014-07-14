@@ -1,5 +1,5 @@
 <?php
-
+setlocale(LC_TIME, "Norwegian");
 $siste_nyheter = hent_siste_nyheter(4);
 
 //Henter ut mobilnummeret til leder
