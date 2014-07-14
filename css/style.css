@@ -344,7 +344,8 @@ nav, .nav-container {
   .news .bilde img {
     background-color: white;
     border: 1px solid #c6c6c6;
-    max-width: 200px;
+    max-width: 125px;
+    padding: 1px;
   }
 
   .news .innhold {
