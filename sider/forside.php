@@ -165,7 +165,7 @@ if (!er_logget_inn()) {
 
     Korpset har i mange år hevdet seg i toppen av norsk 1. divisjon i NM janitsjar (<a href="meritter.php">se resultater</a>). Under NM i 2006 vant 
     korpset 1. divisjon, og konkurrerte i elitedivisjonen i to år. I perioden 2009-2011 konkurrerte vi i 1. divisjon, og fra 2012 har korpset konkurrert i 2. divisjon
-    VÃ¥r musikalske målsetting er å ha full Symphonic Band-besetning, og å være et ungdomskorps i ordets rette forstand. Bispehaugen ønsker ikke å bli plassert i en bestemt bås, men skal
+    Vår musikalske målsetting er å ha full Symphonic Band-besetning, og å være et ungdomskorps i ordets rette forstand. Bispehaugen ønsker ikke å bli plassert i en bestemt bås, men skal
     kjennetegnes av allsidighet og seriøs satsing innen flere områder.
     </p><p>
 
