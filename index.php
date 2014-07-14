@@ -49,8 +49,8 @@ $innhold = ob_get_clean();
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
     <script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.js'></script>
-    <script type="text/javascript" src="javascript/jquery.timeago.js"></script>
-    <script type="text/javascript" src="javascript/jquery.timeago.no.js"></script>
+    <script type="text/javascript" src="js/jquery.timeago.js"></script>
+    <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
     
     <?php if (erForside()) { ?>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
