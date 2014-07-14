@@ -43,7 +43,6 @@ $innhold = ob_get_clean();
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
     <link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
-    <link rel="stylesheet" href="css/font-awesome-ie7.css" type="text/css" />
     <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />

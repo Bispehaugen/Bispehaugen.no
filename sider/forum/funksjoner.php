@@ -59,7 +59,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 			echo " i ";
 			echo "<span class='plassering'>";
 			echo "<span class='forum-tittel'><a href='?side=forum/tema&id=".$innlegg['forumid']."'>".$innlegg['tematittel']."</a></span>";
-			echo " <i class='icon-caret-right'></i> ";
+			echo " <i class='fa fa-caret-right'></i> ";
 			echo "<span class='tema-tittel'><a href='?side=forum/innlegg&id=".$innlegg['temaid']."'>".$innlegg['innleggtittel']."</a></span>";
 			echo "</span>";
 		}
@@ -67,7 +67,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 /*
 		//legger til liker-ikon med antall likes (vises ikke for lister)
 		if(!$innlegg['liste']){
-			echo"<i class='icon-thumbs-up' title='Antall som liker dette'>XX";
+			echo"<i class='fa fa-thumbs-up' title='Antall som liker dette'>XX";
 			//du kan bare like andres innlegg
 			if($forum_innlegg['skrevetavid']!=$_SESSION['medlemsid']){
 				echo"<br><a href='?side=forum/innlegg&id=".$temaid."&likerinnlegg=".$forum_innlegg['innleggid']."'>Lik dette</i></a>";
@@ -80,11 +80,11 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		//viser endre/slett-knapper på egne innlegg og for admin (så de har mulighet til å overstyre)
 		if(($innlegg['skrevetavid']==$medlemsid || $_SESSION['rettigheter']>1) && $har_temaid){
 			echo "<section class='tools'>";
-				//echo "<i class='icon-edit tool' title='Klikk for å endre'></i> ";
+				//echo "<i class='fa fa-edit tool' title='Klikk for å endre'></i> ";
 				echo "<a class='tool' href='javascript:void(0)' 
 						onclick='confirm_url(\"?side=forum/innlegg&id=".$temaid."&sletteinnlegg=".$id."\", 
 											 \"Er du sikker på at du vil slette kommentaren?\")'>";
-					echo "<i class='icon-remove' title='Klikk for å slette'></i>";
+					echo "<i class='fa fa-remove' title='Klikk for å slette'></i>";
 				echo "</a>";
 			echo "</section>";
 		}

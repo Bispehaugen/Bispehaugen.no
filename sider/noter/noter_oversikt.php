@@ -59,7 +59,7 @@
 					};
 					echo "</td>";
 				if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-					echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='icon-edit' 
+					echo"<td><a href='?side=noter/noter_endre&noteid=".$sett['noteid']."'><i class='fa fa-edit' 
 					title='Klikk for å endre'></i></a></td></tr>";
 				}else{
 					echo "<td></td></tr>";
@@ -72,7 +72,7 @@
 			echo"
 			<tr><td colspan='5'></td></tr>
 			<tr><td colspan='5'></td></tr>
-			<tr><td colspan='5'><a href='?side=noter/noter_endre'><i class='icon-plus'></i> Legg til nytt notesett</a></td></tr>";
+			<tr><td colspan='5'><a href='?side=noter/noter_endre'><i class='fa fa-plus'></i> Legg til nytt notesett</a></td></tr>";
 	}
 		
 	echo"</table>";

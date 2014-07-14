@@ -62,79 +62,107 @@ if (!er_logget_inn()) {
     <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
 </div>
 </section>
-<section class="side bli-medlem coverflow" data-scroll-index='5'>
-  <a name="blimedlem"></a>
-  <div class='content'>
+<section class="side bli-medlem" data-scroll-index='5'>
+ 	<a name="blimedlem"></a>
+ 	<div class='content'>
 
-  <div class="bli-medlem">
-    <h2>Bli medlem!</h2>
+		<div class="bli-medlem">
+		    <h2>Bli medlem!</h2>
+		    
+			<b>Vil du være med oss og spille?</b>
+			<p>
+			Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
+			<br>
+			Dette innebærer at vi lover våre medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
+			og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
+			</p>
+			<p>
+			Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
+			<b>Tar du utfordringen?</b>
+			</p>
+		
+			<p>	
+				Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
+				på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under
+			<a href="?side=aktiviteter">aktiviteter</a>.
+			</p>
+			
+			<p>
+			<span class="viktig">Interessert i å være med i Bispehaugen?
+			Fyll ut skjemaet så tar vi kontakt med deg!</span>
+			</p>
+		</div>
+		
+		<div class="stottemedlem">
+			<h2>Eller bli støttemedlem!</h2>
+			<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
+			  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
+			  <p>
+			  Vi tilbyr de som støtter oss noen fordeler. Disse er:
+			  </p><ul>
+			    <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
+			    <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
+			    <li>Personlig pålogging til våre egne web-sider som gir adgang til informasjon som
+			      vanligvis bare er tilgjengelig for medlemmer</li>
+			  </ul>
+			  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
+			  legge på 300 eller 600kr.
+			  <br />
+			  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
+			</p>
+		</div>
+		<div class="clearfix"></div>
+		
+		<form>
+	      <table>
+	        <tr>
+	          <td class="label">Navn</td>
+	          <td><input type="text" name="sNavn"></td>
+	        </tr>
+	        <tr>
+	          <td class="label">Instrument</td>
+	          <td><input type="text" name="sInstrument"></td>
+	        </tr>
+	        <tr>
+	          <td class="label">E-post</td>
+	          <td><input type="text" name="sEpost"></td>
+	        </tr>
+	        <tr>
+	          <td class="label">Telefon</td>
+	          <td><input type="text" name="sTelefon"></td>
+	        </tr>
+	        <tr>
+	          <td colspan=2>
+	            <span class="label">Musikalsk bakgrunn</span><br />
+	            <textarea name="sAnnet"></textarea>
+	          </td>
+	        </tr>
+	        <tr>
+	          <td colspan=2>
+	            <span class="label">Hvor fikk du høre om korpset?</span><br />
+	          <textarea name="sHvorKjentMed"></textarea>
+	          </td>
+	        </tr>
+	        <tr>
+	          <td class="submit" colspan=2>
+	            <input id="registrering" type="checkbox" value="registrer" />
+	            <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
+	          </td>
+	        </tr>
+	        <tr class="passord-rad">
+	          <td class="label">Passord</td>
+	          <td><input type="password" name="sPassord"></td>
+	        </tr>
+	        <tr>
+	          <td colspan=2>
+	            <p class="right"><input type="submit" name="btnSubmit" value="Send skjema"></p>
+	          </td>
+	        </tr>
+	      </table>
+	    </form>
 
-    <form action="?side=bli_medlem" method="post">
-      <table>
-        <tr>
-          <td class="label">Navn:</td>
-          <td>
-          <input type="text" name="sNavn"></td>
-        </tr>
-        <tr>
-          <td class="label">Instrument:</td>
-          <td>
-          <input type="text" name="sInstrument"></td>
-        </tr>
-        <tr>
-          <td class="label">E-post:</td>
-          <td>
-          <input type="text" name="sEpost"></td>
-        </tr>
-        <tr>
-          <td class="label">Telefon:</td>
-          <td>
-          <input type="text" name="sTelefon"></td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <span class="label">Musikalsk bakgrunn:</span><br />
-            <textarea name="sAnnet"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td colspan=2>
-            <span class="label">Hvor fikk du høre om korpset?:</span><br />
-          <textarea name="sHvorKjentMed"></textarea>
-          </td>
-        </tr>
-        <tr>
-          <td class="submit" colspan=2>
-            <input id="registrering" type="checkbox" value="registrer" />
-            <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
-            <p><input class="right" type="submit" name="btnSubmit" value="Send skjema"></p>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </div>
-
-  <div class="stottemedlem">
-    <h2>Eller bli støttemedlem!</h2>
-    <p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
-      Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
-      <p>
-      Vi tilbyr de som støtter oss noen fordeler. Disse er:
-      </p><ul>
-        <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
-        <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
-        <li>Personlig pålogging til våre egne web-sider som gir adgang til informasjon som
-          vanligvis bare er tilgjengelig for medlemmer</li>
-      </ul>
-      Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
-      legge på 300 eller 600kr.
-      <br />
-      Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
-    </p>
-  </div>
-
-<div class="clearfix"></div>
-</div>
+		<div class="clearfix"></div>
+	</div>
 </section>
 <section class="side medlemmer side-invertert" data-scroll-index='6'>
   <a name="medlemmer"></a>
@@ -149,7 +177,7 @@ if (!er_logget_inn()) {
   <div class='content'>
     <h2>Korpset</h2>
     <p>
-    <img width="250" src="bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
+    <img width="250" src="../bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
     Bispehaugen Ungdomskorps ble startet i 1923, og er således et av Trondheims eldste amatørkorps. Korpset har helt siden starten vårt
     kjent for å ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vårt medlem av Bispehaugen. Vi liker å spille
     allsidig musikk med kvalitet, fra underholdningsmusikk til større originalskrevne og klassiske verk. I dag teller vi drøyt
@@ -158,7 +186,7 @@ if (!er_logget_inn()) {
     vi satser stort på rekruttering og håper å få med deg som medlem! 
     </p><p>
 
-    <img width="100" src="bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
+    <img width="100" src="../bilder/medlemsfoto/Tomas_2.jpg" style="float:left;margin-right:8px" alt="Tomas Carstensen">
     Siden høsten 2000 har Tomas Carstensen vært vår faste dirigent. Han har utdannelse som trompetist
     og dirigent fra Musikkonservatoriet i Trondheim.
     </p><p>
@@ -169,12 +197,12 @@ if (!er_logget_inn()) {
     kjennetegnes av allsidighet og seriøs satsing innen flere områder.
     </p><p>
 
-    <img width="180" src="bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar pÃ¥ Frosta">
-    Bispehaugen legger vekt pÃ¥ et godt sosialt miljø¸ både i og utenfor øvingslokalet. Korpset har utenommusikalske aktiviteter som
+    <img width="180" src="../bilder/frostaseminar.jpg" style="float:right;margin-left:7px;margin-bottom:8px" alt="Seminar på Frosta">
+    Bispehaugen legger vekt på et godt sosialt miljø¸ både i og utenfor øvingslokalet. Korpset har utenommusikalske aktiviteter som
     kafébesøk, fester og helgeturer utenbys. Medlemmene våre blir i stor grad rekruttert fra studentmiljøet i Trondheim, noe som setter standarden for våre utenommusikalske aktiviteter.
     </p><p>
 
-    <img src="bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
+    <img src="../bilder/fest.jpg" width="180" height="138" style="float:left;margin-right:8px">
     Vi øver mandager fra 19:30 på Bispehaugen skole på Møllenberg, sentralt i Trondheim. Det blir også noen ekstraøvelser får
     konsertene. Dersom du er interessert i hva vi holder på med, kan du ta turen innom en av øvelsene, eller gå inn på <a href="../kontakt/blimedlem.php">kontaksskjema</a>.
     </p>

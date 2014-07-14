@@ -62,7 +62,7 @@
 			//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
 			$medlemsid = $medlem['medlemsid'];
    			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
-   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='icon-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
+   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-alt' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
 
 
@@ -71,7 +71,7 @@
 				
 				foreach($flere_telefonnummer as $telefonnummer) {
 					//hvis man er logget inn vises mobilnummeret til alle medlemmer
-					echo "<span class='telefon'><a href='tel:".$telefonnummer."'><i class='icon-phone'></i> ".$telefonnummer."</a></span>";
+					echo "<span class='telefon'><a href='tel:".$telefonnummer."'><i class='fa fa-phone'></i> ".$telefonnummer."</a></span>";
 				}
 			}
 		}
@@ -79,14 +79,14 @@
 		//hvis brukeren er admin kommer det opp endre/slette knapp pÃ¥ alle medlemmer
 
 		if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='icon-edit' title='Klikk for å endre'></i></a></span>";
+				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a></span>";
 		}
 		echo "<div class='clearfix'></div>";
 		echo "</section>";
 	}    
 
 	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-			echo "<a href='?side=medlem/endre'><i class='icon-plus'></i> Legg til ny</a>";
+			echo "<a href='?side=medlem/endre'><i class='fa fa-plus'></i> Legg til ny</a>";
 		}
 	echo "</section>";
     
