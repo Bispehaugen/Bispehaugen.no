@@ -3,70 +3,115 @@
 	
 	//funksjonalitet
 
-	//henter valgte medlem fra databasen
-	if(has_get('id')){	
-		$id=get('id');
-		
-		$medlemmer = hent_brukerdata($id);
+	
+	$id=get('id');
+	
+	if (empty($id)) {
+		inkluder_side_fra_undermappe("ikke_funnet");	
 	}
+		
+	//henter valgte medlem fra databasen
+	$medlemmer = hent_brukerdata($id);
 	
-	
+	echo '
+		<section class="informasjonslinje">
+			<h2 class="back-link"><a href="?side=medlem/liste" title="Vis medlemsliste">
+				<i class="fa fa-chevron-left"></i> Medlemmer</a>
+			</h2>
+			
+			';
+			
+			if(session('medlemsid')==$id || session('rettigheter') >2){
+				echo"<div class='verktoy'><a href='?side=medlem/endre&id=".$id."'><i class='fa fa-edit'></i> Endre</a></div>";
+			}
+echo '
+		</section>';
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
-		
-	echo "
-  
-			<table>
-				<tr><th>".$medlemmer['fnavn']." ".$medlemmer['enavn']."</th><th>";
-				if($_SESSION['medlemsid']==get('id') || ($_SESSION['rettigheter']>2)){
-						echo"<a href='?side=medlem/endre&id=".$id."'>endre</a>";
-				};
-				echo"</th></tr>
-				<tr><td>".$medlemmer['instrument'];
-				if($medlemmer['grleder']==1){
-					echo" - gruppeleder";
-				};
-				if(!($medlemmer['status']=='Aktiv')){
-					echo " (".$medlemmer['status'].")";
-				};
-				echo"</td><td rowspan='15'>HER KOMMER BILDE</td></tr>
-				<tr><td></td></tr>";
-				if(er_logget_inn()){
-					echo"<tr><td><b>Født</b>: </td></tr>
-					<tr><td></td></tr>
-					<tr><td>".date("d. m. Y",strtotime(substr($medlemmer['fdato'],0,10)))."</td></tr>
-					<tr><td></td></tr>
-					<tr><td><b>Kontaktinfo:</b></td></tr>
-					<tr><td>".$medlemmer['tlfmobil']."</td></tr>
-					<tr><td>".$medlemmer['email']."</td></tr>
-					<tr><td></td></tr>				
-					<tr><td></td></tr>
-					<tr><td>".$medlemmer['adresse']."</td></tr>
-					<tr><td>".$medlemmer['postnr']." ".$medlemmer['poststed']."</td></tr>
-					<tr><td></td></tr>
-					<tr><td></td></tr>
-					<tr><td><b>Startet i BUK:</b> ".date("d. M Y",strtotime(substr($medlemmer['startetibuk_date'],0,10)))."</td></tr>";
-					if($medlemmer['sluttetibuk_date']>0){
-						echo"<tr><td><b>Sluttet i BUK:</b>".date("d. M Y",strtotime(substr($medlemmer['sluttetibuk_date'],0,10)))."</td></tr>";
-					}
-					if(!empty($medlemmer['studieyrke'])){
-						echo" <tr><td><b>Studie/yrke:</b></td></tr>
-						<tr><td>".$medlemmer['studieyrke']."</td></tr>";
-					};
-					if(!empty($medlemmer['ommegselv'])){
-						echo"<tr><td><b>Litt om meg:</b></td></tr>
-						<tr><td>".$medlemmer['ommegselv']."</td></tr>";
-					};	
-				};
-				if(!empty($medlemmer['bakgrunn'])){
-						echo"<tr><td><b>Musikalsk bakgrunn:</b></td></tr>
-						<tr><td>".$medlemmer['bakgrunn']."</td></tr>";
-					};
-				if(!empty($medlemmer['kommerfra'])){			
-					echo"<tr><td><b>Kommer fra:</b></td></tr>
-					<tr><td>".$medlemmer['kommerfra']."</td></tr>";
-				};
-				echo"
-				</table>
-	";	
-?>
+	
+	$bilde = isset($medlemmer['foto']) ? $medlemmer['foto'] : "";
+	?>
+
+<article class="medlem">
+	
+<?php if (!empty($bilde)) { ?>
+<div class="profilbilde"><img src='<?php echo $bilde; ?>' /></div>
+<?php } ?>
+
+<h1><?php echo $medlemmer['fnavn']." ".$medlemmer['enavn']; ?></h1>
+
+<p>
+	<strong>Instrument:</strong> <?php echo $medlemmer['instrument']; ?>
+	<?php if($medlemmer['grleder']==1){ ?>
+		<span class="tag gruppeleder">Gruppeleder</span></b>
+	<?php } ?>
+</p>
+
+<p>
+	<strong>Status:</strong> <?php echo $medlemmer['status']; ?>
+</p>
+
+<?php if(!er_logget_inn()){ ?>
+	<p>
+		<strong>Født:</strong> <?php echo isset($medlemmer['fdato']) ? date("d. m. Y", strtotime($medlemmer['fdato'])) : "Ukjent"; ?>
+	</p>
+	
+	<?php if(isset($medlemmer['startetibuk_date'])) { ?>
+	<p>
+		<strong>Startet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlemmer['startetibuk_date'])); ?>
+	</p>
+	<?php } ?>
+	<?php if(isset($medlemmer['sluttetibuk_date'])) { ?>
+	<p>
+		<strong>Sluttet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlemmer['sluttetibuk_date'])); ?>
+	</p>
+	<?php } ?>
+	
+	<?php if(isset($medlemmer['studieyrke'])) { ?>
+	<p>
+		<strong>Studie/yrke:</strong> <?php echo $medlemmer['studieyrke']; ?>
+	</p>
+	<?php } ?>
+	
+	<h4>Kontaktinfo</h4>
+	<?php if(isset($medlemmer['tlfmobil'])) { ?>
+	<p>
+		<strong>Mobil:</strong> 
+		<a href="tel:<?php echo $medlemmer['tlfmobil']; ?>"><?php echo $medlemmer['tlfmobil']; ?></a>
+	</p>
+	<?php } ?>
+	
+	<?php if(isset($medlemmer['email'])) { ?>
+	<p>
+		<strong>E-post:</strong> 
+		<a href="mailto:<?php echo $medlemmer['email']; ?>"><?php echo $medlemmer['email']; ?></a>
+	</p>
+	<?php } ?>
+	
+	<?php if(isset($medlemmer['adresse'])) { ?>
+	<p>
+		<strong>Adresse:</strong> <?php echo $medlemmer['adresse']; ?>
+		<br /> <?php echo $medlemmer['postnr']." ".$medlemmer['poststed']; ?>
+	</p>
+	<?php } ?>
+
+
+<?php } ?>
+<?php if(!empty($medlemmer['kommerfra'])){ ?>
+<p>
+	<strong>Kommer fra:</strong> <?php echo $medlemmer['kommerfra']; ?>
+</p>
+<?php } ?>
+
+	
+<?php if(er_logget_inn() && isset($medlemmer['ommegselv'])) { ?>
+<h4>Litt om meg</h4>
+<p><?php echo nl2br($medlemmer['ommegselv']); ?></p>
+<?php } ?>
+
+<?php if(!empty($medlemmer['bakgrunn'])){ ?>
+<h4>Musikalsk bakgrunn</h4>
+<p><?php echo nl2br($medlemmer['bakgrunn']); ?></p>
+<?php } ?>
+
+</article>

@@ -95,9 +95,8 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 	</p>
 	<p>
 	Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
-	<b>Tar du utfordringen?</b>
 	</p>
-
+	<b>Tar du utfordringen?</b>
 	<p>	
 		Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
 		på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under

@@ -2,6 +2,7 @@ body {
   padding: 0px;
   margin: 0px;
   font-family: "Open Sans", sans-serif;
+  background-color: rgba(34, 41, 51, 1);
  }
 
 /* apply a natural box layout model to all elements */
@@ -41,6 +42,10 @@ p.right {
 
 .right {
 	float: right;
+}
+
+nav {
+	background-color: white;
 }
 
 nav li span, .meny, nav li a, .meny a {
@@ -454,6 +459,12 @@ nav, .nav-container {
     .side .content a {
       color: #002e40; }
 
+.side:nth-child(odd) {
+  background-color: white;
+  color: black; }
+  .side:nth-child(odd) a {
+    color: black; }
+
 .side:nth-child(even) {
   background-color: rgba(34, 41, 51, 1);
   color: white; }
@@ -547,25 +558,6 @@ table .aarskille {
 
 	.medlemsliste .navn {
 		display: inline-block;
-	}
-	
-	.medlemsliste .tag {
-		display: inline-block;
-		white-space: nowrap;
-		margin-left: 0.5em;
-		padding: 0.2em 0.5em;
-		
-		border-radius: 5px;
-	}
-	
-	.medlemsliste .tag.gruppeleder {
-		background-color: rgba(41, 49, 61, 1);
-		color: white;
-	}
-	
-	.medlemsliste .tag.permisjon {
-		background-color: #aaa;
-		color: white;
 	}
 	
 	.medlemsliste .epost-lenke {
@@ -742,8 +734,12 @@ table .aarskille {
 	display: inline-block;
 }
 
-.informasjonslinje .back-link {
+.back-link {
 	margin: 0;
+}
+
+.back-link i {
+	margin-right: 0.2em;
 }
 
 .nyhet .fancy-date {
@@ -755,24 +751,9 @@ table .aarskille {
 	margin: 0em 0em 1.5em 1.5em;
 }
 
-/*
-.informasjonslinje .fancy-date {
+.informasjonslinje .verktoy {
 	float: right;
-	width: auto;
-	vertical-align: baseline;
 }
-
-.informasjonslinje .fancy-date > * {
-	display: inline-block;
-	float: left;
-	margin: 0;
-	margin-bottom: -5px;
-	vertical-align: baseline;
-	padding-right: 0.3em;
-	text-transform: none;
-	font-size: 1em;
-}
-*/
 
 .informasjonslinje .brukerlenke {
 	float: right;
@@ -780,6 +761,54 @@ table .aarskille {
 
 .informasjonslinje .brukerlenke span {
 	vertical-align: middle;	
+}
+
+.tag {
+	display: inline-block;
+	white-space: nowrap;
+	margin-left: 0.5em;
+	padding: 0.2em 0.5em;
+	
+	border-radius: 5px;
+}
+
+.tag.gruppeleder {
+	background-color: rgba(41, 49, 61, 1);
+	color: white;
+}
+
+.tag.permisjon {
+	background-color: #aaa;
+	color: white;
+}
+
+.medlem h1 {
+	display: inline-block;	
+}
+
+.medlem .profilbilde {
+	width: 100%;
+	text-align: center;
+	margin: 1em auto;
+}
+
+.medlem .profilbilde img {
+	max-width: 100%;
+	max-height: 500px;
+}
+
+@media screen and (min-width: 1000px) {
+	.medlem .profilbilde {
+		float: right;
+		width: auto;
+		display: inline-block;
+	}
+	.medlem .profilbilde img {
+		max-width: 600px;
+		min-width: 300px;
+		max-height: 500px;
+		margin: 0em 0em 1em 1em;
+	}
 }
 
 .besok-oss {
