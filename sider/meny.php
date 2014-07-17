@@ -18,7 +18,7 @@ if(er_logget_inn()){
 if (!erForside()) {
 ?>
 <ul>
-	<li><a href="?side=forside" class="small-logo"><img src="icon_logo.svg" /></a></li>
+	<li class="small-logo"><a href="?side=forside"><img src="icon_logo.svg" /></a></li>
     <li><a href="?side=nyheter/liste">Nyheter</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag">Spilleoppdrag</a></li>

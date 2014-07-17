@@ -12,7 +12,9 @@ Kontakt
 Fikse alle lenker til infosider
 Fikse infosider
 
-Nyheter / enkelnyheter, vis flere
+Endre nyhet
+
+Endre medlem
 
 Vis ferre aktiviteter
 
@@ -27,3 +29,5 @@ Bildealbum
 Mailliste
 
 Dokumenter
+
+Neste konsert på forsiden

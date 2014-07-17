@@ -249,6 +249,9 @@ nav, .nav-container {
       color: rgba(34, 41, 51, 0.5);
       border-bottom: 2px solid;
     }
+    nav li.small-logo span:hover, nav li.small-logo a:hover {
+		border-bottom: 0px;    	
+    }
   }
 
     nav li span, nav li a {
