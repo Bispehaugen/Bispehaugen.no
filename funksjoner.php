@@ -307,10 +307,11 @@ function brukerlenke($bruker, $fulltNavn = true, $visBilde = false) {
 	if (empty($bruker)) {
 		return "";
 	}
+	
+	$bilde = isset($bruker['foto']) ? $bruker['foto'] : "";
 
 	$html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
-	if($visBilde) {
-		$bilde = !empty($bruker['foto']) ? $bruker['foto']: "icon_logo.png";
+	if($visBilde && !empty($bilde)) {
 		$html .= "<img src='".$bilde."' />";
 	}
 	$html .= "<span>";
