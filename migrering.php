@@ -22,12 +22,6 @@ function migrering($id) {
 	mysql_query("INSERT INTO `migreringer` (`id`, `kommentar`) VALUES ('".$id."', '".$arg_list[1]."')");
 }
 
-/*
-migrering(9, "Neste kommer her", 
-	"INSERT INTO ..."
-);
-*/
-
 migrering(1, "opprett migreringer tabell",
 "CREATE TABLE IF NOT EXISTS `migreringer` (
   `id` int(11) NOT NULL,
@@ -493,7 +487,7 @@ migrering(6, "Noter notesett",
 
 
 
-migrering(7, "Neste kommer her", 
+migrering(7, "Legg til start og slutt istede enn starttid og sluttid", 
 	"UPDATE `arrangement` SET `start` = CONCAT( dato, \" \", starttid )",
 	"UPDATE `arrangement` SET `slutt` = CONCAT( dato, \" \", sluttid )"
 	);
@@ -503,3 +497,19 @@ migrering(8, "Drop diverse arrangement",
 	"ALTER TABLE `arrangement` DROP `starttid`;",
 	"ALTER TABLE `arrangement` DROP `sluttid`;"
 	);
+	
+migrering(9, "Legger til skrevetavid", 
+	"ALTER TABLE  `nyheter` ADD  `skrevetavid` INT NOT NULL AFTER `skrevetav` ;",
+	"UPDATE nyheter, medlemmer SET nyheter.skrevetavid = medlemmer.medlemsid WHERE nyheter.skrevetav = CONCAT(medlemmer.fnavn, CONCAT(\" \", medlemmer.enavn));",
+	'UPDATE `nyheter` SET `skrevetavid` = 241 WHERE `nyhetsid` IN ("1227","1269","1270","1272","1273","1276","1281","1287","1291","1298","1299","1300","1305","1306","1308","1317","1332","1335","1340","1345","1347","1353","1354","1355","1362","1363","1372","1379","1390")',
+	'UPDATE `nyheter` SET `skrevetavid` = 290 WHERE `nyhetsid` IN ("1265","1302","1303","1319","1356","1357","1385","1391")',
+	'UPDATE `nyheter` SET `skrevetavid` = 312 WHERE `nyhetsid` IN ("1377")'
+);
+
+
+	
+	/*
+migrering(10, "Neste kommer her", 
+	"INSERT INTO ..."
+);
+*/

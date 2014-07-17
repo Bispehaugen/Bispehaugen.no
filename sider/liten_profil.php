@@ -1,5 +1,7 @@
 <?php
-	$bruker = innlogget_bruker();
+	global $bruker_liten_profil;
+
+	$bruker = isset($bruker_liten_profil) ? $bruker_liten_profil : innlogget_bruker();
 	
 	$bilde = $bruker['foto'];
 	

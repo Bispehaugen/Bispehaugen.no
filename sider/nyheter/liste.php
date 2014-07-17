@@ -7,7 +7,7 @@
 	
 	?>
 	
-	<h2><a href="?side=nyheter/liste#main" title="Les flere nyheter">Nyheter</a></h2>
+	<h2><a href="?side=nyheter/liste" title="Les flere nyheter">Nyheter</a></h2>
 	
 	<?php
 	
@@ -20,12 +20,7 @@
 		
 	echo '
 		<article class="box news">
-          <div class="date" datetime="'.date("c", strtotime($nyhet['tid'])).'">
-            <div class="weekday">'.strftime("%a", strtotime($nyhet['tid'])).'</div>
-            <div class="day">'.date("j", strtotime($nyhet['tid'])).'</div>
-            <div class="month">'.strftime("%b", strtotime($nyhet['tid'])).'</div>
-            <div class="year">'.date("Y", strtotime($nyhet['tid'])).'</div>
-          </div>
+          '.nyhetsdato($nyhet['tid']).'
           <div class="bilde-og-innhold">
             <div class="bilde">
                 <img src="'.$bilde.'" />
@@ -36,7 +31,7 @@
             </div>
             <div class="clearfix"></div>
           </div>
-          <div class="neste-pil" title="Les nyhet"><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'#main"><i class="fa fa-chevron-right"></i></a></div>
+          <div class="neste-pil" title="Les nyhet"><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
         </article>
 		';
 	}

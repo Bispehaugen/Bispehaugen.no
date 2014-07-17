@@ -8,144 +8,44 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 
 if (!er_logget_inn()) {
 ?>
-	<section class="side nyheter" data-scroll-index='2'>
-        <a name="nyheter"></a>
-    	<div class='content'>
-    		<?php
-				inkluder_side_fra_undermappe("nyheter/liste");
-			?>
-            <div class="clearfix"></div>
-        </div>
-    	<div class="clearfix"></div>
-    </section>
-    <section class="side aktiviteter" data-scroll-index='3'>
-      <a name="aktiviteter"></a>
-      <div class='content'>        
-        <?php
-        	inkluder_side_fra_undermappe("aktiviteter/liste");
-        ?>
+<section class="side nyheter" data-scroll-index='2' data-scroll-url="?side=nyheter/liste">
+	<div class='content'>
+		<?php
+			inkluder_side_fra_undermappe("nyheter/liste");
+		?>
+        <div class="clearfix"></div>
     </div>
+	<div class="clearfix"></div>
+</section>
+<section class="side aktiviteter" data-scroll-index='3' data-scroll-url="?side=aktiviteter/liste">
+	<div class='content'>        
+    <?php
+    	inkluder_side_fra_undermappe("aktiviteter/liste");
+    ?>
+	</div>
 </section>
 <section class="side spilleoppdrag coverflow" data-scroll-index='4'>
-  <a name="spilleoppdrag"></a>
   <div class='content'>
     <h2>Spilleoppdrag</h2>
     <p>Tyrolerorkester, fanfareoppdrag</p>
     <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
 </div>
 </section>
-<section class="side bli-medlem" data-scroll-index='5'>
- 	<a name="blimedlem"></a>
+<section class="side" data-scroll-index='5' data-scroll-url="?side=bli-medlem">
  	<div class='content'>
-
-		<div class="bli-medlem">
-		    <h2>Bli medlem!</h2>
-		    
-			<b>Vil du være med oss og spille?</b>
-			<p>
-			Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
-			<br>
-			Dette innebører at vi lover være medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
-			og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
-			</p>
-			<p>
-			Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
-			<b>Tar du utfordringen?</b>
-			</p>
-		
-			<p>	
-				Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
-				på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under
-			<a href="?side=aktiviteter">aktiviteter</a>.
-			</p>
-			
-			<p>
-			<span class="viktig">Interessert i å være med i Bispehaugen?
-			Fyll ut skjemaet så tar vi kontakt med deg!</span>
-			</p>
-		</div>
-		
-		<div class="stottemedlem">
-			<h2>Eller bli støttemedlem!</h2>
-			<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
-			  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
-			  <p>
-			  Vi tilbyr de som støtter oss noen fordeler. Disse er:
-			  </p><ul>
-			    <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
-			    <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
-			    <li>Personlig pålogging til være egne web-sider som gir adgang til informasjon som
-			      vanligvis bare er tilgjengelig for medlemmer</li>
-			  </ul>
-			  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
-			  legge på 300 eller 600kr.
-			  <br />
-			  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
-			</p>
-		</div>
-		<div class="clearfix"></div>
-		
-		<form>
-	      <table>
-	        <tr>
-	          <td class="label">Navn</td>
-	          <td><input type="text" name="sNavn"></td>
-	        </tr>
-	        <tr>
-	          <td class="label">Instrument</td>
-	          <td><input type="text" name="sInstrument"></td>
-	        </tr>
-	        <tr>
-	          <td class="label">E-post</td>
-	          <td><input type="text" name="sEpost"></td>
-	        </tr>
-	        <tr>
-	          <td class="label">Telefon</td>
-	          <td><input type="text" name="sTelefon"></td>
-	        </tr>
-	        <tr>
-	          <td colspan=2>
-	            <span class="label">Musikalsk bakgrunn</span><br />
-	            <textarea name="sAnnet"></textarea>
-	          </td>
-	        </tr>
-	        <tr>
-	          <td colspan=2>
-	            <span class="label">Hvor fikk du høre om korpset?</span><br />
-	          <textarea name="sHvorKjentMed"></textarea>
-	          </td>
-	        </tr>
-	        <tr>
-	          <td class="submit" colspan=2>
-	            <input id="registrering" type="checkbox" value="registrer" />
-	            <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
-	          </td>
-	        </tr>
-	        <tr class="passord-rad">
-	          <td class="label">Passord</td>
-	          <td><input type="password" name="sPassord"></td>
-	        </tr>
-	        <tr>
-	          <td colspan=2>
-	            <p class="right"><input type="submit" name="btnSubmit" value="Send skjema"></p>
-	          </td>
-	        </tr>
-	      </table>
-	    </form>
-
-		<div class="clearfix"></div>
+		<?php
+			inkluder_side_fra_undermappe("bli-medlem");
+		?>
 	</div>
 </section>
-<section class="side medlemmer side-invertert" data-scroll-index='6'>
-  <a name="medlemmer"></a>
+<section class="side medlemmer side-invertert" data-scroll-index='6' data-scroll-url="?side=medlem/liste">
   <div class='content'>
     <?php
 		inkluder_side_fra_undermappe("medlem/liste");
     ?>
 </div>
 </section>
-<section class="side korpset" data-scroll-index='7'>
-  <a name="korpset"></a>
+<section class="side korpset" data-scroll-index='7' data-scroll-url="?side=annet">
   <div class='content'>
     <h2>Korpset</h2>
     <p>
@@ -181,8 +81,7 @@ if (!er_logget_inn()) {
 </div>
 </section>
     	
-<section class="side kontakt" data-scroll-index='8'>
-	<a name="kontakt"></a>
+<section class="side kontakt" data-scroll-index='8' data-scroll-url="?side=annet">
 	<div class="content">
 		<h2>Kontakt oss</h2>
 		
@@ -237,6 +136,7 @@ if (!er_logget_inn()) {
 			<h4>Besøksadresse</h4>
 			<p>
 				Bispehaugen skole<br />
+				Nonnegata 19 <br />
 				7014 Trondheim
 			</p>
 			

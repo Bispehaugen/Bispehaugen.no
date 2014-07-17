@@ -75,18 +75,27 @@ if(has_post("sEpost")){
 if($har_alle_feltene_utfylt_og_sendt_mail == false){
 ?>
 
-<h1>Bli Medlem!</h1>
-<div>
-	
+<div class="bli-medlem">
+<ul class="feilmeldinger">
+	<?php 
+		foreach($feilmeldinger as $feilmelding){
+			echo "<li class='feil'>$feilmelding</li>";
+		}
+	?>
+</ul>
+<div class="bli-medlem">
+    <h2>Bli medlem!</h2>
+    
 	<b>Vil du være med oss og spille?</b>
 	<p>
 	Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
 	<br>
-	Dette innebærer at vi lover våre medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
+	Dette innebører at vi lover være medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
 	og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
 	</p>
 	<p>
-	Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen! <b>Tar du utfordringen?</b>
+	Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
+	<b>Tar du utfordringen?</b>
 	</p>
 
 	<p>	
@@ -100,63 +109,76 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 	Fyll ut skjemaet så tar vi kontakt med deg!</span>
 	</p>
 </div>
-<br />
 
-<ul class="feilmeldinger">
-	<?php 
-		foreach($feilmeldinger as $feilmelding){
-			echo "<li class='feil'>$feilmelding</li>";
-		}
-	?>
-</ul>
+<div class="stottemedlem">
+	<h2>Eller bli støttemedlem!</h2>
+	<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
+	  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
+	  <p>
+	  Vi tilbyr de som støtter oss noen fordeler. Disse er:
+	  </p><ul>
+	    <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
+	    <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
+	    <li>Personlig pålogging til være egne web-sider som gir adgang til informasjon som
+	      vanligvis bare er tilgjengelig for medlemmer</li>
+	  </ul>
+	  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
+	  legge på 300 eller 600kr.
+	  <br />
+	  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
+	</p>
+</div>
+<div class="clearfix"></div>
 
-<form action="?side=bli_medlem" method="post">
-	<table>
-		<tr>
-			<td class="label">Navn:</td>
-			<td>
-			<input type="text" name="sNavn" value="<?php echo $sNavn; ?>"></td>
-		</tr>
-		<tr>
-			<td class="label">Instrument:</td>
-			<td>
-			<input type="text" name="sInstrument" value="<?php echo $sInstrument; ?>"></td>
-		</tr>
-		<tr>
-			<td class="label">E-post:</td>
-			<td>
-			<input type="text" name="sEpost" value="<?php echo $sEpost; ?>"></td>
-		</tr>
-		<tr>
-			<td class="label">Telefon:</td>
-			<td>
-			<input type="text" name="sTelefon" value="<?php echo $sTelefon; ?>"></td>
-		</tr>
-		<tr>
-			<td colspan=2>
-				<span class="label">Musikalsk bakgrunn:</span><br />
-				<textarea name="sAnnet"><?php echo $sAnnet; ?></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td colspan=2>
-				<span class="label">Hvor fikk du høre om korpset?:</span><br />
-			<textarea name="sHvorKjentMed"><?php echo $sHvorKjentMed; ?></textarea>
-			</td>
-		</tr>
-		<tr>
-			<td class="submit" colspan=2>
-				<div style="float: left;"><input id="registrering" type="checkbox" value="registrer" />
-					<label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label></div>
-				<div><input type="submit" name="btnSubmit" value="Send skjema"></div>
-			</td>
-		</tr>
-	</table>
+<form>
+  <table>
+    <tr>
+      <td class="label">Navn</td>
+      <td><input type="text" name="sNavn"></td>
+    </tr>
+    <tr>
+      <td class="label">Instrument</td>
+      <td><input type="text" name="sInstrument"></td>
+    </tr>
+    <tr>
+      <td class="label">E-post</td>
+      <td><input type="text" name="sEpost"></td>
+    </tr>
+    <tr>
+      <td class="label">Telefon</td>
+      <td><input type="text" name="sTelefon"></td>
+    </tr>
+    <tr>
+      <td colspan=2>
+        <span class="label">Musikalsk bakgrunn</span><br />
+        <textarea name="sAnnet"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td colspan=2>
+        <span class="label">Hvor fikk du høre om korpset?</span><br />
+      <textarea name="sHvorKjentMed"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td class="submit" colspan=2>
+        <input id="registrering" type="checkbox" value="registrer" />
+        <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
+      </td>
+    </tr>
+    <tr class="passord-rad">
+      <td class="label">Passord</td>
+      <td><input type="password" name="sPassord"></td>
+    </tr>
+    <tr>
+      <td colspan=2>
+        <p class="right"><input type="submit" name="btnSubmit" value="Send skjema"></p>
+      </td>
+    </tr>
+  </table>
 </form>
-</td>
-</tr>
-</table>
-<img src="bilder/forside/figurer_medtekst_stor.png" class="center" />
 
+<div class="clearfix"></div>
+</div>
 <?php 
 }

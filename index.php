@@ -76,7 +76,7 @@ $innhold = ob_get_clean();
 </script>
 </head>
 
-<body class="">
+<body>
 	<div class="site">
 		<?php if (erForside()) { ?>
 		<section class="forside side coverflow" data-scroll-index='1'>
@@ -123,9 +123,18 @@ $innhold = ob_get_clean();
 			 }
 			?>
 		</main>
+		
+<?php if(erForside()) { ?>
+	<script>
+	var onPageChange = function(index) {
+		var url = $("[data-scroll-index='"+index+"']").data("scroll-url");
+		changeHash(url);
+	};
 
-<script>
-    $.scrollIt();
+    $.scrollIt({
+	  scrollTime: 300,       // how long (in ms) the animation takes
+	  onPageChange: onPageChange,    // function(pageIndex) that is called when page is changed
+	});
 
     function changeHash(href) {
         if (href) {
@@ -143,6 +152,10 @@ $innhold = ob_get_clean();
         event.preventDefault();
         changeHash($(this).attr("href"));
     });
+</script>
+<?php } ?>
+
+<script>
 
     var navElements = $("nav li");
     var nav = $("nav").first();

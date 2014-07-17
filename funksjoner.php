@@ -101,10 +101,10 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 
 function hent_brukerdata($medlemid = ""){
 	if(empty($medlemid)){
-		$medlemid = $_SESSION['medlemsid'];
-		
-		if (empty($medlemid)) {
-			$medlemid = "-99";
+		if (isset($_SESSION['medlemsid'])) {
+			$medlemid = $_SESSION['medlemsid'];
+		} else {
+			return Array();
 		}
 	}
 
@@ -303,18 +303,24 @@ function innlogget_bruker() {
 	return $bruker;
 }
 
-function brukerlenke($bruker, $fulltNavn = true) {
+function brukerlenke($bruker, $fulltNavn = true, $visBilde = false) {
 	if (empty($bruker)) {
 		return "";
 	}
 
-	$html = "<a href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
+	$html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
+	if($visBilde) {
+		$bilde = !empty($bruker['foto']) ? $bruker['foto']: "icon_logo.png";
+		$html .= "<img src='".$bilde."' />";
+	}
+	$html .= "<span>";
 	$html .= $bruker['fnavn'];
 	if($fulltNavn) {
 		$html .= " " . $bruker['enavn'];
 	}
+	$html .= "</span>";
 	$html .= "</a>";
-
+	
 	return $html;
 }
 
@@ -332,4 +338,17 @@ function clean($string) {
 function erForside() {
 	return !has_get("side") || strtolower(get('side')) == "forside";
 }
+
+function nyhetsdato($tid) {
+	$time = strtotime($tid); 
+	return '
+<time class="fancy-date" datetime="'.date("c", $time).'" title="'.strftime("%c", $time).'">
+	<div class="weekday">'.strftime("%a", $time).'</div>
+	<div class="day">'.date("j", $time).'.</div>
+	<div class="month">'.strftime("%b", $time).'</div>
+	<div class="year">'.date("Y", $time).'</div>
+</time>
+';
+}
+
 ?>

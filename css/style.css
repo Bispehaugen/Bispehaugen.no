@@ -47,6 +47,18 @@ nav li span, .meny, nav li a, .meny a {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+nav .small-logo img {
+	max-width: 27px;
+	padding: 0;
+	
+	position: relative;
+	bottom: -7px;
+}
+
+nav .small-logo li a {
+	padding: 0;
+}
+
 p {
   font-weight: 200;
   font-size: 15px;
@@ -161,7 +173,7 @@ nav, .nav-container {
     cursor: pointer;
   }
 
-  @media screen and (min-width: 740px) {
+  @media screen and (min-width: 800px) {
     .mobil {
       display: none;
     }
@@ -176,7 +188,7 @@ nav, .nav-container {
 
   }
 
-  @media screen and (max-width: 739px) {
+  @media screen and (max-width: 799px) {
     body {
       font-size: 13px;
     }
@@ -218,13 +230,13 @@ nav, .nav-container {
     }
   }
 
-  @media screen and (min-width: 740px) and (max-width: 900px) {
+  @media screen and (min-width: 800px) and (max-width: 950px) {
     nav li span, nav li a {
       font-size: 0.8em;
     }
   }
 
-  @media screen and (min-width: 1100px) {
+  @media screen and (min-width: 1200px) {
     nav li {
       margin-left: 2em;
     }
@@ -314,9 +326,7 @@ nav, .nav-container {
   
 	.nyhet .ingressbilde {
 		text-align: center;
-		padding: 0em 2em 2em 0em;
-		
-		
+		margin: 0em 2em 2em 0em;
 	}
 	
 	@media screen and (min-width: 900px) { 
@@ -329,8 +339,6 @@ nav, .nav-container {
 		max-height: 400px;
 		max-width: 100%;
 		margin: 0 auto;
-		
-		
 	}
 	
 	@media screen and (max-width: 700px) { 
@@ -353,7 +361,7 @@ nav, .nav-container {
   	background: #29313D;
   }
 
-  .news .date {
+  .fancy-date {
     width: 5em;
     color: rgba(255,255,255,0.8);
     text-shadow: 0 1px 0 #000;
@@ -361,18 +369,18 @@ nav, .nav-container {
     float: left;
   }
 
-    .news .month, .news .weekday {
+    .fancy-date .month, .fancy-date .weekday {
         font-size: 1.2em;
         text-transform: uppercase;
     }
 
-    .news .day {
+    .fancy-date .day {
         font-size: 2em;
         font-weight: bold;
         margin: -5px 0;
     }
 
-    .news .year {
+    .fancy-date .year {
         font-size: 0.9em;
         font-weight: bold;
     }
@@ -423,7 +431,7 @@ nav, .nav-container {
     top: 35%;
   }
 
-  @media screen and (max-width: 739px) {
+  @media screen and (max-width: 799px) {
     .side.forside {
       padding: 3em 0em;
     }
@@ -599,6 +607,10 @@ table .aarskille {
   text-align: left;
 }
 
+.bli-medlem form {
+	margin-top: 2em;	
+}
+
 .content .album {
     display: inline-block;
     text-align: center;
@@ -713,6 +725,61 @@ table .aarskille {
 	
 	display: -webkit-flex;
 	display: flex;
+}
+
+.brukerlenke img {
+	height: 3.5em;
+	margin-right: 0.5em
+}
+
+.informasjonslinje {
+	margin-bottom: 3em;
+	line-height: 3.5em;
+}
+
+.informasjonslinje * {
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.informasjonslinje .back-link {
+	margin: 0;
+}
+
+.nyhet .fancy-date {
+	display: inline-block;
+	background: white;
+	color: rgba(34, 41, 51, 1);	
+	line-height: 2em;
+	float: right;
+	margin: 0em 0em 1.5em 1.5em;
+}
+
+/*
+.informasjonslinje .fancy-date {
+	float: right;
+	width: auto;
+	vertical-align: baseline;
+}
+
+.informasjonslinje .fancy-date > * {
+	display: inline-block;
+	float: left;
+	margin: 0;
+	margin-bottom: -5px;
+	vertical-align: baseline;
+	padding-right: 0.3em;
+	text-transform: none;
+	font-size: 1em;
+}
+*/
+
+.informasjonslinje .brukerlenke {
+	float: right;
+}
+
+.informasjonslinje .brukerlenke span {
+	vertical-align: middle;	
 }
 
 .besok-oss {
