@@ -1,0 +1,29 @@
+Fikse meny for aleneside / forside
+
+Fikse for mobil:
+Menyen
+Aktiviteter
+
+Fikse skjema:
+Bli medlem
+Kontakt
+?
+
+Fikse alle lenker til infosider
+Fikse infosider
+
+Nyheter / enkelnyheter, vis flere
+
+Vis ferre aktiviteter
+
+Spilleoppdrag / kontakt
+
+Forum
+
+Noter
+
+Bildealbum
+
+Mailliste
+
+Dokumenter

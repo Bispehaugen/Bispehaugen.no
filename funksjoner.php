@@ -69,7 +69,7 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 		if ( file_exists($php_fil) ) {
 			include $php_fil;
 		} else {
-			include "sider/forside.php";
+			include "sider/ikke_funnet.php";
 		}
 		
 	} else {

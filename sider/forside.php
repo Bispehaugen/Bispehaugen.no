@@ -1,6 +1,7 @@
 <?php
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
-$siste_nyheter = hent_siste_nyheter(4);
+global $antall_nyheter;
+$antall_nyheter = 4;
 
 //Henter ut mobilnummeret til leder
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
@@ -10,38 +11,9 @@ if (!er_logget_inn()) {
 	<section class="side nyheter" data-scroll-index='2'>
         <a name="nyheter"></a>
     	<div class='content'>
-    		<h2><a href="?side=nyhet" title="Les flere nyheter">Nyheter</a></h2>
     		<?php
-			foreach($siste_nyheter as $nyhet){
-				
-				$bilde = $nyhet['bilde'];
-				if(empty($bilde)){
-					$bilde = "icon_logo.png";
-				}
-				
-			echo '
-				<article class="box news">
-	              <div class="date" datetime="'.date("c", strtotime($nyhet['tid'])).'">
-	                <div class="weekday">'.strftime("%a", strtotime($nyhet['tid'])).'</div>
-	                <div class="day">'.date("j", strtotime($nyhet['tid'])).'</div>
-	                <div class="month">'.strftime("%b", strtotime($nyhet['tid'])).'</div>
-	                <div class="year">'.date("Y", strtotime($nyhet['tid'])).'</div>
-	              </div>
-	              <div class="bilde-og-innhold">
-	                <div class="bilde">
-	                    <img src="'.$bilde.'" />
-	                </div>
-	                <div class="innhold">
-	                    <h4>'.$nyhet['overskrift'].'</h4>
-	                    <p class="ingress">'.$nyhet['ingress'].'</p>
-	                </div>
-	                <div class="clearfix"></div>
-	              </div>
-	              <div class="neste-pil"><a href="?side=nyhet&id='.$nyhet['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
-	            </article>
-				';
-			}
-?>
+				inkluder_side_fra_undermappe("nyheter/liste");
+			?>
             <div class="clearfix"></div>
         </div>
     	<div class="clearfix"></div>

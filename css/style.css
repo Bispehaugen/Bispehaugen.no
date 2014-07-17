@@ -28,6 +28,7 @@ h1, h2, h3, h4, h5, h6 {
   /*font-family: "Headland One", Georgia, serif;*/
   font-family: 'Dosis', sans-serif;
   font-weight: 500;
+  line-height: 1.1em;
 }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -305,12 +306,47 @@ nav, .nav-container {
     opacity: 0.95;
     border-radius: 5px;
   }
+  
+  	.nyhet, .nyhet p {
+  		line-height: 1.5em;
+		font-size: 1em;
+  	}
+  
+	.nyhet .ingressbilde {
+		text-align: center;
+		padding: 0em 2em 2em 0em;
+		
+		
+	}
+	
+	@media screen and (min-width: 900px) { 
+		.nyhet .ingressbilde {
+			float: left;
+		}
+	}
+	
+	.nyhet img {
+		max-height: 400px;
+		max-width: 100%;
+		margin: 0 auto;
+		
+		
+	}
+	
+	@media screen and (max-width: 700px) { 
+		.nyhet img {
+			max-height: initial;
+		}
+	}
 
   .news {
     clear: left;
-    cursor: pointer;
     position: relative;
     padding: 1em 0em;
+  }
+  
+  .news img {
+  	max-width: 100%;
   }
 
   .news:nth-child(odd) {
@@ -421,8 +457,14 @@ nav, .nav-container {
   .side:nth-child(even) table a {
     color: #002e40; }
     
+.side:nth-child(even).side-invertert table {
+	color: white; }
+  .side:nth-child(even).side-invertert table a {
+    color: white; }
+    
 .side.side-invertert table {
-	color: white; 
+	background-color: rgba(34, 41, 51, 1);
+	color: white;
 	background-color: inherit;
 }
 
@@ -430,15 +472,11 @@ nav, .nav-container {
 	color: white;
 }
 
-table, .alene-side {
+table {
 	width: 100%;
-	background: white;
-	color: #002e40;
 }
 
-table, .alene-side a {
-	color: #002e40;
-	
+table {
 	border-spacing: 0;
     border-collapse: collapse;
 }
@@ -456,21 +494,30 @@ table td {
   padding: 0.5em 1em;
 }
 
+.side-invertert table thead th {
+	background-color: rgba(41, 49, 61, 1); }
+}
+
+.aktivitetsliste tbody tr:nth-child(even) {
+  background-color: rgba(245, 245, 245, 1);
+}
+
+.side-invertert table tbody tr:nth-child(even) {
+	background-color: rgba(41, 49, 61, 0.6); } /*29313D*/
+.side-invertert table tbody tr:nth-child(odd) {
+	background-color: rgba(41, 49, 61, 0.3); }
+
 table .aarskille {
 	margin: 0;
 }
 
-.alene-side h1 {
+.side-invertert h1 {
 	color: white;
 }
 
 .skille {
 	background-color: rgba(34, 41, 51, 1);
 	height: 2em;
-}
-
-.aktivitetsliste tbody tr:nth-child(even) {
-  background-color: rgba(245, 245, 245, 1);
 }
 
 .medlemsliste .medlem:nth-child(even) {
@@ -526,12 +573,18 @@ table .aarskille {
 	}
 
 .bli-medlem .bli-medlem, .bli-medlem .stottemedlem {
-  float: left;
-  width: 50%;
+    width: 100%;
 }
 
-.bli-medlem .stottemedlem {
-	padding-left: 2em;
+@media screen and (min-width: 600px) {
+	.bli-medlem .bli-medlem, .bli-medlem .stottemedlem {
+	  	float: left;
+    	width: 50%;
+	}
+	
+	.bli-medlem .stottemedlem {
+		padding-left: 2em;
+	}
 }
 
 .bli-medlem .stottemedlem ul {

@@ -26,7 +26,7 @@ if (!$er_produksjon) {
 if(has_get('side')){
 	$side = get('side');
 } else {
-	$side = "sider";
+	$side = "forside";
 }
 
 ob_start();
@@ -41,7 +41,6 @@ $innhold = ob_get_clean();
     <meta charset="UTF-8"/>
     <title>Bispehaugen Ungdomskorps</title>
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
     <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
     <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
@@ -79,15 +78,19 @@ $innhold = ob_get_clean();
 
 <body class="">
 	<div class="site">
+		<?php if (erForside()) { ?>
 		<section class="forside side coverflow" data-scroll-index='1'>
-	      <a name="forside"></a>
-	      <div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
-	      
-	      <header class="header">
-	      <img class="logo" src="icon_logo.png" />
-	      <h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
-	      </header>
+	    	<a name="forside"></a>
+	   		<div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
+
+		
+	    	<header class="header">
+				<img class="logo" src="icon_logo.png" />
+		    	<h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
+	      	</header>
 	    </section>
+	    <?php } ?>
+	    
 		<div class='nav-container'>
 	        <nav>
 	            <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
@@ -96,6 +99,7 @@ $innhold = ob_get_clean();
 				?>
 	        </nav>
     	</div>
+    	
 		<main class="main">
 			<a name="main"></a>
 			<?php
@@ -109,9 +113,11 @@ $innhold = ob_get_clean();
 			}
 			
 			if (!erForside()) {
-				echo "<section class=\"side alene-side\" data-scroll-index='2'>";
-				echo $innhold;
-				echo "</section>";
+				echo "<section class=\"side side-invertert\" data-scroll-index='2'>
+						<div class='content'>";
+						echo $innhold;
+				echo "	</div>
+					</section>";
 			} else {
 			 	echo $innhold;
 			 }
