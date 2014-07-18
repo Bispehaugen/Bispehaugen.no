@@ -44,8 +44,9 @@ p.right {
 	float: right;
 }
 
-nav {
+.nav-container {
 	background-color: white;
+	z-index: 10000;
 }
 
 nav li span, .meny, nav li a, .meny a {
@@ -98,7 +99,7 @@ ul {
   background: white;
   position: absolute;
   top: 0px;
-  right: 20px;
+  left: 20px;
   padding: 0.5em 1em;
   color: rgba(34, 41, 51, 1);
   background: rgba(255, 255, 255, 0.5);
@@ -111,6 +112,62 @@ ul {
   border-bottom-left-radius: 10px;
 }
 
+.login-box {
+	margin: 2em auto;
+	padding: 2em;
+	max-width: 30em;
+	width: 100%;
+	background: white;
+}
+
+.login .feilmelding {
+	display: none;	
+}
+
+.login label {
+	position: relative;	
+}
+
+.login label i {
+	position: absolute;
+	bottom: -0.1em;
+	right: 0.4em;
+}
+
+.login .overskrift {
+	margin: 0em 0em 1em 0em;
+}
+
+.login input {
+	padding-right: 2em;	
+}
+
+.login input, .login button {
+	width: 100%;
+	font-size: 1.5em;
+	margin-bottom: 0.5em;
+}
+
+.login button {
+	background-color: rgba(34, 41, 51, 1);
+	color: white;
+	padding: 1em;
+	border: 0px;
+	margin-top: 0.5em;
+}
+
+.login button:disabled {
+	background-color: #555;
+}
+
+.login button:active {
+	background-color: #29313D;
+}
+
+.login .spinner {
+	margin-right: 0.5em;
+	display: none;
+}
 
 .header {
   margin: 0 auto;
@@ -293,6 +350,19 @@ nav, .nav-container {
 
 .error {
 	color: #d9534f;
+}
+
+input.error {
+	border: 1px solid #d9534f;
+	background-color: #d9534f;
+	color: white;
+}
+
+.errors {
+	background-color: #d9534f;
+	color: white;
+    padding: 1em 2em;
+    font-size: 150%;
 }
 
 .full {
@@ -694,14 +764,6 @@ table .aarskille {
 
 .clear {
     clear: both;
-}
-
-.errors {
-    border: 1px solid red;
-    background: #FF9494;
-    color: white;
-    padding: 1em 2em;
-    font-size: 150%;
 }
 
 .svg-icon path {

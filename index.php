@@ -44,7 +44,6 @@ $innhold = ob_get_clean();
     <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
     <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
-	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
     <script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.js'></script>
     <script type="text/javascript" src="js/jquery.timeago.js"></script>
@@ -53,6 +52,11 @@ $innhold = ob_get_clean();
     <?php if (erForside()) { ?>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <?php } ?>
+    
+    <?php if (er_logget_inn()) { ?>
+	<link rel="stylesheet" href="css/forum.css" type="text/css" />
+	<link rel="stylesheet" href="css/internside.css" type="text/css" />
+   	<?php } ?>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src='scrollIt.js' type='text/javascript'></script>
@@ -78,9 +82,8 @@ $innhold = ob_get_clean();
 
 <body>
 	<div class="site">
-		<?php if (erForside()) { ?>
+		<?php if (erForside() && !er_logget_inn()) { ?>
 		<section class="forside side coverflow" data-scroll-index='1'>
-	    	<a name="forside"></a>
 	   		<div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
 
 		
@@ -98,19 +101,40 @@ $innhold = ob_get_clean();
 					inkluder_side_fra_undermappe("meny");
 				?>
 	        </nav>
+			<div class="clearfix"></div>
     	</div>
+    	
+<?php
+#sjekker om det er satt noen errors og evt. skriver dem ut
+if (isset($_SESSION["Errors"])) {
+	echo "<div class='errors'>
+		" . $_SESSION["Errors"] . "
+		</div>";
+	
+	unset($_SESSION["Errors"]);
+}
+?>
+    	
+	<?php if(!er_logget_inn()) { ?>
+		<section class="login">
+			<div class="errors feilmelding">
+				Kunne ikke logge inn, brukernavn eller passord er feil. Kontakt webkom hvis dette fortsetter :)
+			</div>
+			<div class="login-box">
+				<h2 class="overskrift">Internsiden</h2>
+				<form action="login.php" method="POST">
+					<label><input id="username" name="username" type="text" placeholder="Brukernavn" required="required" /><i class="fa fa-2x fa-user"></i></label>
+					<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
+					<button class="login-button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+		</section>
+	<?php } ?>
     	
 		<main class="main">
 			<a name="main"></a>
 			<?php
-			#sjekker om det er satt noen errors og evt. skriver dem ut
-			if (isset($_SESSION["Errors"])) {
-				echo "<div class='errors'>
-					" . $_SESSION["Errors"] . "
-					</div>";
-				
-				unset($_SESSION["Errors"]);
-			}
 			
 			if (!erForside()) {
 				echo "<section class=\"side side-invertert\" data-scroll-index='2'>
@@ -225,9 +249,68 @@ $innhold = ob_get_clean();
             }
         }
     });
+    
+    <?php if (!er_logget_inn()) { ?>
+    	    	
+    	var clearErrors = function() {
+    		$(".login-button").prop("disabled", false);
+    		$(this).removeClass("error");
+    	};
+    	
+    	var login = function(event) {
+    		event.preventDefault();
+    		
+    		$(this).attr("disabled", "disabled");
+    		
+    		var username = $(".login-box #username");
+    		var password = $(".login-box #password");
+    		
+    		var has_error = false;
+    		
+    		if (username.val().length == 0) {
+    			username.addClass("error");
+    			has_error = true;
+    		}
+    		
+    		if (password.val().length == 0) {
+    			password.addClass("error");
+    			has_error = true;
+    		}
+    		
+    		if (has_error) {
+    			$(this).prop("disabled", false);
+    			
+    			return;
+    		}
+    		
+    		clearErrors();
+    		
+    		$(".login .spinner").show();
+    		
+    		var data = {username: username.val(), password: password.val()};
+    		
+    		$.post("login.php?ajax=true", data)
+    			.done(function(data){
+    				location.reload(true);
+    			})
+    			.fail(function(data){
+    				debugger;
+    				$(".login .feilmelding").show();
+    				
+    				// Videresendes på done, så trenger ikke å fjerne spinner der, ser bare rart ut
+    				clearErrors();
+    				$(".login .spinner").hide();
+    			});
+    	};
+    	
+    	$(".login-button").click(login);
+    	
+    	$(".login input").focus(clearErrors);
+    <?php } ?>
+    
 </script>
 
-<?php if (erForside()) { ?>
+<?php if (erForside() && !er_logget_inn()) { ?>
 <footer id="map_canvas" class="map"></footer>
 
 <script>

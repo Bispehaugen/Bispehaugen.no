@@ -31,7 +31,7 @@
 				<tr><td colspan='3'></td><td><input type='submit' name='nyttInnlegg' value='Send'></td></tr>
 			</form></td><td colspan='2'></td></tr>
 
-			<tr><td><b>Permisjon:</b></td><td colspan='3'>Slknad om permisjon sendes på e-post til styret. 
+			<tr><td><b>Permisjon:</b></td><td colspan='3'>Søknad om permisjon sendes på e-post til styret. 
 				Husk å oppgi periode og årsak til permisjonen.</td></tr>
 			<tr><td><b>Kakebaker:</b></td><td colspan='3'>Det gør på rundgang se ruten oppe til høyre om neste gang 
 			det er din tur eller trykk på aktiviteten for å se.</td></tr>

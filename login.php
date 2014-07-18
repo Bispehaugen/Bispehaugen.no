@@ -1,3 +1,4 @@
+
 <?php 
 	include_once "db_config.php";
 	include_once "funksjoner.php";
@@ -57,7 +58,11 @@
 	}
 	
 	logg_inn($medlemsid, $rettigheter);
-	header('Location: index.php');
 	
-?>
-
+	if (has_post("ajax")){
+		header('Location: index.php');
+	} else {
+		echo "{} && {login: true}";
+	}
+	
+	

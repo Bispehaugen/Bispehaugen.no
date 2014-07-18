@@ -10,7 +10,7 @@ if(er_logget_inn()){
     <li><a href="?side=noter/noter_oversikt">Noter</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
-    <li><a href="?side=organisasjon">Organisasjonen</a></li>
+    <li><a href="?side=organisasjon">Praktisk</a></li>
 </ul>
 
 <?php

@@ -169,6 +169,27 @@ if (!er_logget_inn()) {
 </section>
 
 <?php
+} else {
+?>
+
+
+<section class="side side-invertert internside">
+<h1>Internsiden</h1>
+
+<h3>Neste øvelse</h3>
+
+<h3>Neste konsert</h3>
+<h3>Gjeldende noter?</h3>
+
+<h3>Neste gang du skal bake kake</h3>
+<h3>Neste gang du skal være slagværk</h3>
+<h3>Neste gang du skal kjøre med henger</h3>
+
+<h3>Siste på forum</h3>
+<h3>Siste nytt</h3>
+</section>
+	
+<?php
 }
 
 
