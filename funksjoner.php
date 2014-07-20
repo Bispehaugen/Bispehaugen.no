@@ -303,7 +303,14 @@ function innlogget_bruker() {
 	return $bruker;
 }
 
-function brukerlenke($bruker, $fulltNavn = true, $visBilde = false) {
+abstract class Navnlengde
+{
+    const FulltNavn = 0;
+    const Fornavn = 1;
+    const Ingen = 2;
+}
+
+function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false) {
 	if (empty($bruker)) {
 		return "";
 	}
@@ -314,12 +321,19 @@ function brukerlenke($bruker, $fulltNavn = true, $visBilde = false) {
 	if($visBilde && !empty($bilde)) {
 		$html .= "<img src='".$bilde."' />";
 	}
-	$html .= "<span>";
-	$html .= $bruker['fnavn'];
-	if($fulltNavn) {
-		$html .= " " . $bruker['enavn'];
+	
+	switch ($fulltNavn) {
+		case Navnlengde::FulltNavn:
+			$html .= "<span>". $bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
+			break;
+		case Navnlengde::Ingen:
+			break;
+		case Navnlengde::Fornavn:
+		default:
+			$html .= "<span>". $bruker['fnavn'] ."</span>";
+			break;
 	}
-	$html .= "</span>";
+	$html .= "";
 	$html .= "</a>";
 	
 	return $html;

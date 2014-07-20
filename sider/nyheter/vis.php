@@ -24,7 +24,7 @@ if(has_get('id') ){
 	
 	<section class="informasjonslinje">
 		<h2 class="back-link"><a href="?side=nyheter/liste" title="Les flere nyheter"><i class="fa fa-chevron-left"></i> Nyheter</a></h2>
-		<?php echo brukerlenke($skrevet_av, false, true, "<time>".$nyhet['tid']."</time>"); ?>
+		<?php echo brukerlenke($skrevet_av, Navnlengde::Fornavn, true, "<time>".$nyhet['tid']."</time>"); ?>
 	</section>
 	
 	<article class="nyhet">

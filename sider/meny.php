@@ -1,16 +1,22 @@
 <?php
 if(er_logget_inn()){
+	
+	$bruker = innlogget_bruker();
+	$profilbilde = isset($bruker['foto']) ? $bruker['foto'] : "icon_logo.png";
 ?>
 
 <ul>
     <li><a href="">Hovedside</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
+    <!--
     <li><a href="?side=bilder/bilder">Bilder</a></li>
     <li><a href="?side=dokumenter">Dokumenter</a></li>
     <li><a href="?side=noter/noter_oversikt">Noter</a></li>
+    -->
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=organisasjon">Praktisk</a></li>
+    <li><a href="?side=innstillinger"><img src="<?php echo $profilbilde; ?>" /></a></li>
 </ul>
 
 <?php
