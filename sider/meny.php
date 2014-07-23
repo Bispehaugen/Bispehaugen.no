@@ -17,8 +17,8 @@ if(er_logget_inn()){
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=organisasjon">Praktisk</a></li>
     <li class="no-border profilbilde">
-        <span>
-            <img class="liten profilbilde" src="<?php echo $profilbilde; ?>" />
+        <span class="profil-lenke">
+            <img class="liten profilbilde" src="<?php echo $profilbilde; ?>" /> <?php echo $bruker['fnavn']; ?> 
             <i class="fa fa-caret-down"></i>
         </span>
         <ul class="profilbilde-valg">
