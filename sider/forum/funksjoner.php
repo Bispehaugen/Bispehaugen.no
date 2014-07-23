@@ -1,5 +1,7 @@
 <?php
 
+define("antall_tema_per_side", 25);
+
 function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 	$innleggliste=hent_og_putt_inn_i_array($sql, "innleggid");
 	$medlemsid = $_SESSION["medlemsid"];
@@ -7,6 +9,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 	$har_temaid =  ($temaid > 0);
 
 	$ulesteinnlegg = Array();
+	$listeinnlegg = Array();
 	if ($temaid != 0) {
 		//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
 		$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg_ny
@@ -134,4 +137,128 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 			</ul>
 		</section>
 	";
+}
+
+function forum_list_tema($forumid, $skip) {
+	if (empty($skip)) $skip = 0;
+
+	//henter ut alle temaene i valgte forum og henter ut siste innlegg
+	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetavid, tekst, innleggid, skrevet
+	FROM forum_tema LEFT JOIN forum_innlegg_ny ON innleggid=sisteinnleggid WHERE forum_tema.forumid=".$forumid." ORDER BY sisteinnleggid DESC LIMIT ".$skip." , ".antall_tema_per_side.";";
+
+	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
+
+	$hentMedlemsid = function($innlegg) {
+		return $innlegg['skrevetavid'];
+	};
+	$brukerIder = array_map($hentMedlemsid, $forumtemaer);
+
+	$brukerdata = hent_brukerdata($brukerIder);
+
+	//Henter ut alle temaer med uleste innlegg
+	$medlemsid= $_SESSION["medlemsid"];
+	$sql="SELECT forum_leste.temaid FROM forum_leste WHERE medlemsid=".$medlemsid.";";
+	$uleste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
+
+	echo "<section class='forum temaliste'>";
+
+   	//skriver ut alle temaene i forumet sortet på sist oppdaterte med siste innlegg og av hvem
+   	foreach($forumtemaer as $temaid => $forumtema){
+   		$b = hent_bruker($brukerdata, $forumtema['skrevetavid']);
+		$tid = strtotime($forumtema['skrevet']);
+
+   		echo "<article class='tema";
+   		if(array_key_exists($temaid, $uleste_innlegg) && $uleste_innlegg[$temaid]){
+   			echo " uleste-poster";
+   		}
+   		echo "'>";
+
+   		echo"<h1 class='overskrift'><a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></h1>
+   			<div class='siste-post'>";
+			if (!empty($b['foto'])) {
+				$foto = $b['foto'];
+			} else {
+				$foto = "bilder/icon_logo.png";
+			}
+			echo "<img class='foto' src='".$foto."' />";
+			echo "<section class='info'>";
+			echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
+			echo "<abbr class='tid timeago' title='".date("c", $tid)."''>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</abbr>";
+			echo "</div>";
+		echo "</article>";
+	}
+	echo "</section>";
+
+}
+
+function forum_paginering($id, $skip, $type) {
+
+	switch($type) {
+		case "tema":
+			$sql = "SELECT COUNT( temaid ) AS antall FROM forum_tema WHERE forumid=".$id;
+		break;
+		case "innlegg":
+			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=".$id;
+			die("IKKE IMPLEMENTERT");
+		break;
+		default:
+			die("Pagineringstype ".$type." finnes ikke");
+	}
+
+	$query = mysql_query($sql);
+	$antall = mysql_result($query, 0);
+
+	$max_antall_sider = floor($antall / antall_tema_per_side);
+	$midtside = floor($max_antall_sider/2);
+	//die("FIX ME");
+
+	$sideNr = 1;
+	echo "<ul class='forum pagenation'>";
+
+	if ($skip > 0) {
+		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip-antall_tema_per_side)."'><i class='icon-chevron-left'></i> Forrige</a></li>";
+	}
+
+	if ($antall > 12 * antall_tema_per_side) {
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=0'>1</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(1*antall_tema_per_side)."'>2</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(2*antall_tema_per_side)."'>3</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(3*antall_tema_per_side)."'>4</a></li>";
+
+			echo "<li class='dotdotdot'>...</li>";
+
+			$midtSideMinusEn = ($midtside-2);
+			$midtSide = ($midtside-1);
+			$midtSidePlussEn = ($midtside);
+			$midtSidePlussTo = ($midtside+1);
+
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$midtSideMinusEn*antall_tema_per_side."'>".$midtSideMinusEn."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$midtSide*antall_tema_per_side."'>".$midtside."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$midtSidePlussEn*antall_tema_per_side."'>".$midtSidePlussEn."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$midtSidePlussTo*antall_tema_per_side."'>".$midtSidePlussTo."</a></li>";
+
+			echo "<li class='dotdotdot'>...</li>";
+
+			$fjerdeSisteSide = ($max_antall_sider-4);
+			$tredjeSisteSide = ($max_antall_sider-3);
+			$nestSisteSide = ($max_antall_sider-2);
+			$sisteSide = $max_antall_sider-1;
+
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$fjerdeSisteSide*antall_tema_per_side."'>".$fjerdeSisteSide."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$tredjeSisteSide*antall_tema_per_side."'>".$tredjeSisteSide."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$nestSisteSide*antall_tema_per_side."'>".$nestSisteSide."</a></li>";
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$sisteSide*antall_tema_per_side."'>".$sisteSide."</a></li>";
+		
+	} else {
+		echo $antall;
+		for($i = 0; $i <= $antall; $i+=25) {
+			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$i."'>".$sideNr."</a></li>";
+			$sideNr++;
+		}
+	}
+
+	if ($skip < ($max_antall_sider-1)*antall_tema_per_side) {
+		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip+antall_tema_per_side)."'>Neste <i class='icon-chevron-right'></i></a></li>";
+	}
+	echo "</ul>";
 }

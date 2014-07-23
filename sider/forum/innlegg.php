@@ -101,12 +101,12 @@
 		}
 		echo "<div class='info'>";
 		echo "<h5 class='navn'>".$innlogget_bruker['fnavn']." ".$innlogget_bruker['enavn']."</h5>";
-		echo "<abbr>Nå</abbr>";
+		echo "<abbr></abbr>";
 		echo "</div>";
 
 	echo "
 			<form method='post' action='?side=forum/innlegg&id=".$temaid."'>
-				<textarea name='tekst' class='tekst' autofocus></textarea>
+				<textarea name='tekst' class='tekst' placeholder='Din kommentar...' autofocus></textarea>
 				<input type='submit' class='lagre' value='Lagre'>
 				<div class='clearfix'></div>
 			</form>

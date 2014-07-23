@@ -20,5 +20,9 @@
 			ORDER BY skrevet DESC 
 			LIMIT 10";
 
+	echo "<section class='forum'>";
+
 	forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster");
+
+	echo "</section>";
 ?>	

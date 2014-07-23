@@ -1,3 +1,9 @@
+.forum {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 .forum td{
 	padding: 0.5em;
 	border-bottom:1px dotted black;
@@ -5,11 +11,12 @@
 
 .forum textarea{ 
 	width: 90%;
-	height:4em;
+	min-height: 6em;
 }
 
-.forum h1 {
+.forum .overskrift, .forum .overskrift a {
 	margin: 1em 0em 0em 0em;
+	color: black;
 }
 
 .liten_tekst{
@@ -22,6 +29,10 @@
 
 .forum .skrek-igjennom {
 	text-decoration: line-through;
+}
+
+.forum-innlegg-liste {
+	color: black;
 }
 
 .forum-innlegg-liste .innlegg {
@@ -88,8 +99,8 @@
 	}
 
 	.forum .tekst {
-		line-height: 1.2em;
-		font-size: 1.2em;
+		line-height: 1.3em;
+		font-size: 1em;
 	}
 
 .forum .paameldingsliste {
@@ -108,16 +119,69 @@
 }
 
 .forum .nytt-innlegg textarea {
-	width: 95%;
-	margin: 0.5em;
+	width: 100%;
 }
 
 .forum .nytt-innlegg {
 	width: 100%;
 	text-align: left;
+	padding: 0.5em;
 }
 
 .forum .nytt-innlegg .lagre {
 	float: right;
 	margin: 0.5em;
+}
+
+
+.forum.temaliste .tema {
+	background: #efefef;
+	padding: 0;
+}
+
+.forum.temaliste .tema:nth-of-type(even) {
+	background: #eaeaea;
+}
+
+.forum.temaliste .tema:first-of-type {
+	/*
+	border-top-left-radius: 10px 10px;
+	border-top-right-radius: 10px 10px;
+	*/
+	margin-top: 2em;
+}
+
+.forum.temaliste .overskrift {
+	display: inline-block;
+
+	font-size: 1.2em;
+	font-style: normal;
+	padding: 1em 0em 1em 1em;
+	margin: 0;
+	width: 50%;
+}
+
+.forum.temaliste .siste-post {
+	display: inline-block;
+	width: 40%;
+	position: relative;
+	top: 1em;
+}
+
+.forum.pagenation {
+	list-style: none;
+	text-align: center;
+	font-size: 1.1em;
+	padding: 0;
+}
+.forum.pagenation li {
+	display: inline-block;
+
+	padding: 0.5em;
+	margin: 0.2em;
+	border: 1px solid #eaeaea;
+}
+
+.forum.pagenation li.dotdotdot {
+	border: 0px none;
 }

@@ -506,10 +506,14 @@ migrering(9, "Legger til skrevetavid",
 	'UPDATE `nyheter` SET `skrevetavid` = 312 WHERE `nyhetsid` IN ("1377")'
 );
 
+migrering(10, "Ukjente datoer blir satt til 2004", 
+	"UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` IS NULL;",
+	"UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` = \"0000-00-00 00:00:00\";"
+);
 
 	
 	/*
-migrering(10, "Neste kommer her", 
+migrering(11, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */

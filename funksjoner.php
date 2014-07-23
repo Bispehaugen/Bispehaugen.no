@@ -118,16 +118,21 @@ function hent_brukerdata($medlemid = ""){
 	}
 
 	if (is_array($medlemid)) {
+		$medlemid = array_filter($medlemid);
 		sort($medlemid);
 		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
 	} else {
 		$sql .= " WHERE `medlemsid`=".$medlemid;
 	}
-	$mysql_result = mysql_query($sql);
+	$query = mysql_query($sql);
+
+	if ($query === false) {
+		die("Oppsto en feil i hent_brukerdata. Sql: " . $sql);
+	}
 
 	$medlemmer = Array();
 
-	while($medlem = mysql_fetch_assoc($mysql_result)) {
+	while($medlem = mysql_fetch_assoc($query)) {
 		if(is_array($medlemid)) {
 			$medlemmer[$medlem['medlemsid']] = $medlem;
 		} else {
@@ -135,7 +140,17 @@ function hent_brukerdata($medlemid = ""){
 		}
 	}
 
+	$medlemmer[0] = Array("fnavn" => "Ukjent", "enavn" => "", "medlemsid" => 0);
+
 	return $medlemmer;
+}
+
+function hent_bruker($brukerdata, $id) {
+
+	if (array_key_exists($id, $brukerdata)) {
+		return $brukerdata[$id];
+	}
+	return $brukerdata[0];
 }
 
 function er_logget_inn(){
