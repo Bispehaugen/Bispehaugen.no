@@ -65,8 +65,11 @@
    				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-o' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
 
+      if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+          echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a></span>";
+      }
 
-			if(!er_logget_inn() && get('alle')==0 && $medlem ['tlfmobil']){
+			if(er_logget_inn() && get('alle')==0 && $medlem ['tlfmobil']){
 				$flere_telefonnummer = explode("/", $medlem['tlfmobil']);
 				
 				foreach($flere_telefonnummer as $telefonnummer) {
@@ -77,10 +80,6 @@
 		}
 
 		//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
-
-		if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-				echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a></span>";
-		}
 		echo "<div class='clearfix'></div>";
 		echo "</section>";
 	}    
