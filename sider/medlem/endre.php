@@ -167,7 +167,7 @@
 				echo "'></td></tr>
 				<tr>
 				<td></td>
-				<td>
+				<td class='right'>
 					<a href='?side=medlem/liste'>Avbryt</a>
 					<input type='submit' name='endreMedlem' value='Lagre'>
 				</td>
