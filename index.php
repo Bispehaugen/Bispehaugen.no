@@ -48,7 +48,7 @@ $innhold = ob_get_clean();
     <script type="text/javascript" src="js/jquery.timeago.js"></script>
     <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
     
-    <?php if (erForside()) { ?>
+    <?php if (visKartNederst()) { ?>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
     <?php } ?>
     
@@ -319,7 +319,7 @@ if (isset($_SESSION["Errors"])) {
     
 </script>
 
-<?php if (erForside() && !er_logget_inn()) { ?>
+<?php if (visKartNederst()) { ?>
 <footer id="map_canvas" class="map"></footer>
 
 <script>

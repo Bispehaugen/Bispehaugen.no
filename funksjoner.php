@@ -393,4 +393,6 @@ function nyhetsdato($tid) {
 ';
 }
 
-?>
+function visKartNederst() {
+	return (erForside() || get('side') === "annet") && !er_logget_inn();
+}

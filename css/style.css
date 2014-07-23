@@ -336,7 +336,7 @@ nav, .nav-container {
     }
 
 .side {
-  min-height: 420px;
+  min-height: 475px;
   width: 100%;
   padding: 5em 2em;
 
@@ -392,6 +392,11 @@ input.error {
   .side .content {
     margin: 0px auto;
     max-width: 1100px;
+  }
+
+  .side.kontakt .content {
+    width: 420px;
+    max-width: 100%;
   }
 
   .side .content .banner ul {
@@ -986,4 +991,8 @@ footer.map {
 
 .feilmeldinger {
   padding: 0;
+}
+
+.tall {
+  white-space: nowrap;
 }
