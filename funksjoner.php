@@ -230,8 +230,12 @@ function hent_siste_nyheter($antall, $type="Public"){
 	return hent_og_putt_inn_i_array($sql, "nyhetsid");
 }
 
-function hent_eldre_konserter($antall, $type="nestekonsert"){
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=0 AND type='".$type."' ORDER BY tid DESC LIMIT ".$antall;
+function hent_konserter($antall = "", $type="nestekonsert"){
+	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid FROM `nyheter` WHERE type='".$type."' ORDER BY tid DESC";
+
+	if (!empty($antall)) {
+		$sql .= " LIMIT ".$antall;
+	}
 
 	return hent_og_putt_inn_i_array($sql, "nyhetsid");
 }
@@ -381,18 +385,33 @@ function erForside() {
 	return !has_get("side") || strtolower(get('side')) == "forside";
 }
 
-function nyhetsdato($tid) {
+function fancyDato($tid, $visTimer = false) {
 	$time = strtotime($tid); 
-	return '
-<time class="fancy-date" datetime="'.date("c", $time).'" title="'.strftime("%c", $time).'">
-	<div class="weekday">'.strftime("%a", $time).'</div>
-	<div class="day">'.date("j", $time).'.</div>
-	<div class="month">'.strftime("%b", $time).'</div>
-	<div class="year">'.date("Y", $time).'</div>
-</time>
-';
+
+	if($time == 0) {
+		return '';
+	}
+
+	$html = '<time class="fancy-date" datetime="'.date("c", $time).'" title="'.strftime("%c", $time).'">';
+
+	$html .= '
+		<div class="boks">
+			<div class="weekday">'.strftime("%a", $time).'</div>
+			<div class="day">'.date("j", $time).'.</div>
+			<div class="month">'.strftime("%b", $time).'</div>
+			<div class="year">'.date("Y", $time).'</div>
+		</div>
+	';
+
+	if ($visTimer === true) {
+		$html .= '<div class="time boks">kl. '.date("H:i", $time).'</div>';
+	}
+
+	$html .= '</time>';
+
+	return $html;
 }
 
 function visKartNederst() {
-	return (erForside() || get('side') === "annet") && !er_logget_inn();
+	return (erForside() || get('side') === "annet" ) && !er_logget_inn();
 }

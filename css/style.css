@@ -413,45 +413,45 @@ input.error {
     border-radius: 5px;
   }
   
-  	.nyhet, .nyhet p {
+  	.nyhet, .nyhet p, .konsert, .konsert p {
   		line-height: 1.5em;
-		font-size: 1em;
+		  font-size: 1em;
   	}
   
-	.nyhet .ingressbilde {
+	.nyhet .ingressbilde, .konsert .ingressbilde {
 		text-align: center;
 		margin: 0em 2em 2em 0em;
 	}
 	
 	@media screen and (min-width: 900px) { 
-		.nyhet .ingressbilde {
+		.nyhet .ingressbilde, .konsert .ingressbilde {
 			float: left;
 		}
 	}
 	
-	.nyhet img {
+	.nyhet img, .konsert img {
 		max-height: 400px;
 		max-width: 100%;
 		margin: 0 auto;
 	}
 	
 	@media screen and (max-width: 700px) { 
-		.nyhet img {
+		.nyhet img, .konsert img {
 			max-height: initial;
 		}
 	}
 
-  .news {
+  .box {
     clear: left;
     position: relative;
     padding: 1em 0em;
   }
   
-  .news img {
+  .box img {
   	max-width: 100%;
   }
 
-  .news:nth-child(odd) {
+  .box:nth-child(odd) {
   	background: #29313D;
   }
 
@@ -473,52 +473,55 @@ input.error {
         font-weight: bold;
         margin: -5px 0;
     }
+    .konsert .fancy-date .day {
+      margin: 0;
+    }
 
     .fancy-date .year {
         font-size: 0.9em;
         font-weight: bold;
     }
 
-  .news .bilde-og-innhold {
+  .box .bilde-og-innhold {
     padding-left: 5em;
     width: 100%;
     padding-right: 4em;
   }
 
-  .news .bilde {
+  .box .bilde {
     float: left;
     width: 200px;
     text-align: center;
   }
 
-  .news .bilde img {
+  .box .bilde img {
     background-color: white;
     border: 1px solid #c6c6c6;
     max-width: 125px;
     padding: 1px;
   }
 
-  .news .innhold {
+  .box .innhold {
     width: 100%;
     padding-left: 200px;
     vertical-align: top;
   }
 
-  .news .innhold h4 {
+  .box .innhold h4 {
       margin: 0px;
   }
 
-  .news .innhold .ingress {
+  .box .innhold .ingress {
     line-height: 1.5em;
   }
 
-  .news .neste-pil {
+  .box .neste-pil {
     font-size: 4em;
     position: absolute;
     right: 0.2em;
     top: 35%;
   }
-  .news .tilbake-pil {
+  .box .tilbake-pil {
     font-size: 4em;
     position: absolute;
     left: 0.2em;
@@ -530,11 +533,11 @@ input.error {
       padding: 3em 0em;
     }
 
-    .news .bilde {
+    .box .bilde {
       width: 100%;
     }
 
-    .news .innhold {
+    .box .innhold {
         padding-left: 0px;
         padding-top: 1em;
         clear: left;
@@ -871,13 +874,31 @@ li.profilbilde {
 	margin-right: 0.2em;
 }
 
-.nyhet .fancy-date {
+.nyhet .sidebar-info, .konsert .sidebar-info {
+  float: right;
+  margin: 0em 0em 1.5em 1.5em;
+  max-width: 14em;
+}
+
+.sidebar-info .fancy-date {
+  float: right;
+}
+
+.sidebar-info .sted a {
+  color: black;
+}
+
+.sidebar-info .fancy-date .boks,
+.sidebar-info .pris,
+.sidebar-info .sted
+ {
 	display: inline-block;
 	background: white;
 	color: rgba(34, 41, 51, 1);	
 	line-height: 2em;
-	float: right;
-	margin: 0em 0em 1.5em 1.5em;
+  width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .informasjonslinje .verktoy {
@@ -995,4 +1016,22 @@ footer.map {
 
 .tall {
   white-space: nowrap;
+}
+
+.konsert.box.neste-konsert {
+  /*
+  background-color: white; 
+  color: rgb(34, 41, 51);
+  */
+
+  background: none;
+  margin-bottom: 7em;
+}
+
+.neste-konsert .bilde {
+   border-color: rgb(34, 41, 51);
+}
+
+.neste-konsert .fancy-date {
+  /*color: rgb(34, 41, 51);*/
 }

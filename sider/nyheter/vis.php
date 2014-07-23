@@ -1,5 +1,5 @@
 <?php
-setlocale(LC_TIME, "norwegian"); 	
+setlocale(LC_TIME, "nb_NO.utf8");
 // Vis enkelnyhet
 if(has_get('id') ){
 
@@ -28,7 +28,9 @@ if(has_get('id') ){
 	</section>
 	
 	<article class="nyhet">
-		<?php echo nyhetsdato($nyhet['tid']); ?>
+		<aside class="sidebar-info">
+		<?php echo fancyDato($nyhet['tid']); ?>
+		</aside>
 		
 		<?php if (!empty($bilde)) { ?>
 		<div class="ingressbilde"><img src='<?php echo $bilde; ?>' /></div>

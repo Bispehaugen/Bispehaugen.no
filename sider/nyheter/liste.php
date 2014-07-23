@@ -20,7 +20,7 @@
 		
 	echo '
 		<article class="box news">
-          '.nyhetsdato($nyhet['tid']).'
+          '.fancyDato($nyhet['tid']).'
           <div class="bilde-og-innhold">
             <div class="bilde">
                 <img src="'.$bilde.'" />
