@@ -148,7 +148,7 @@ if (isset($_SESSION["Errors"])) {
 			?>
 		</main>
 		
-<?php if(erForside()) { ?>
+<?php if(erForside() && !er_logget_inn()) { ?>
 	<script>
 	var onPageChange = function(index) {
 		var url = $("[data-scroll-index='"+index+"']").data("scroll-url");
@@ -172,7 +172,7 @@ if (isset($_SESSION["Errors"])) {
         }
     }
 
-    $("nav a").click(function(event) {
+    $("nav > ul > li > a").click(function(event) {
         event.preventDefault();
         changeHash($(this).attr("href"));
     });
@@ -181,7 +181,7 @@ if (isset($_SESSION["Errors"])) {
 
 <script>
 
-    var navElements = $("nav li");
+    var navElements = $("nav > ul > li");
     var nav = $("nav").first();
 
     function resizeHeight() {
@@ -249,6 +249,16 @@ if (isset($_SESSION["Errors"])) {
             }
         }
     });
+
+	<?php if (er_logget_inn()) { ?>
+		$("li.profilbilde")
+			.mouseenter(function() {
+				$(".profilbilde-valg").show();
+			})
+			.mouseleave(function() {
+				$(".profilbilde-valg").hide();
+			});
+	<?php } ?>
     
     <?php if (!er_logget_inn()) { ?>
     	    	

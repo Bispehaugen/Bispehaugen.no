@@ -49,7 +49,7 @@ p.right {
 	z-index: 10000;
 }
 
-nav li span, .meny, nav li a, .meny a {
+nav > ul > li > span, .meny, nav > ul > li > a, .meny > a {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -210,25 +210,34 @@ nav.top {
 }
 
 nav, .nav-container {
+  color: #777;
   text-align: center;
   width: 100%;
   z-index: 1000;
   height: 113px;
 }
-  nav ul {
+
+  .nav-container a {
+    color: #777;
+  }
+  nav > ul {
     padding: 0px;
     margin: 0px auto; 
     background: white;
   }
 
-  nav li, .meny {
+  nav > ul > li, .meny {
     line-height: 113px;
     vertical-align: middle;
     display: block;
   }
 
-  nav li span, nav li a {
+  nav > ul > li > span, nav > ul > li > a {
     cursor: pointer;
+  }
+
+  nav > ul > li.no-border > a {
+    padding-right: 0;
   }
 
   .meny {
@@ -240,11 +249,11 @@ nav, .nav-container {
       display: none;
     }
 
-    nav li:first-of-type {
+    nav > ul > li:first-of-type {
       margin-left: 0;
     }
 
-    nav li {
+    nav > ul > li {
       display: inline-block;
     }
 
@@ -279,50 +288,49 @@ nav, .nav-container {
       background: rgba(1, 1, 1, 0.5);
     }
 
-    nav ul {
+    nav > ul {
       display: none;      
     }
 
-    nav li, .meny {
+    nav > ul > li, .meny {
       line-height: 3.5em;
     }
 
-    .meny.vis, nav li:last-of-type {
+    .meny.vis, nav > ul > li:last-of-type {
       border-bottom: 1px solid black;
     }
   }
 
-  @media screen and (min-width: 800px) and (max-width: 950px) {
-    nav li span, nav li a {
+  @media screen and (min-width: 800px) and (max-width: 970px) {
+    nav > ul > li > span, nav > ul > li > a {
       font-size: 0.8em;
     }
   }
 
   @media screen and (min-width: 1200px) {
-    nav li {
+    nav > ul > li {
       margin-left: 2em;
     }
-    nav li span:hover, .meny:hover, nav li a:hover, .meny a:hover {
+    nav > ul > li > span:hover, .meny:hover, nav > ul > li > a:hover, .meny > a:hover {
       color: rgba(34, 41, 51, 0.5);
       border-bottom: 2px solid;
     }
-    nav li.small-logo span:hover, nav li.small-logo a:hover {
+    nav > ul > li.no-border > span:hover, nav > ul > li.no-border > a:hover {
 		border-bottom: 0px;    	
     }
   }
 
-    nav li span, nav li a {
+    nav > ul > li > span, nav > ul > li > a {
       padding: 0.5em 1em 0.1em 1em;
     }
 
-    nav li span, .meny, nav li a, .meny a {
-      color: #777;
+    nav > ul > li > span, .meny, nav > ul > li > a, .meny > a {
       text-transform: uppercase;
       letter-spacing: 1px;
       text-decoration: none;
     }
 
-    nav li span.active, .meny.active, nav li a.active, .meny a.active {
+    nav > ul > li > span.active, .meny.active, nav > ul > li > a.active, .meny > a.active {
       color: rgba(34, 41, 51, 1);
       border-bottom: 2px solid;
     }
@@ -569,8 +577,9 @@ table {
 }
 
 table {
-	border-spacing: 0;
-    border-collapse: collapse;
+  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 table th {
@@ -584,6 +593,14 @@ table thead tr {
 
 table td {
   padding: 0.5em 1em;
+}
+
+table input[type="text"], textarea {
+  width: 100%;
+}
+
+table textarea {
+  min-height: 8em;
 }
 
 .side-invertert table thead th {
@@ -756,6 +773,41 @@ table .aarskille {
     position: relative;
     bottom: 1.5em;
     left: 3em;
+}
+
+
+.liten.profilbilde {
+  height: 25px;
+  vertical-align: middle;
+}
+
+li.profilbilde {
+  position: relative;
+}
+
+.profilbilde-valg {
+  display: none;
+  position: absolute;
+
+  line-height: 2.5em;
+  text-align: left;
+  background-color: white;
+  padding: 0em;
+  width: 11em;
+
+  border: 1px solid #ccc;
+}
+
+.profilbilde-valg li {
+    padding: 0em 1em;
+}
+
+.profilbilde-valg a {
+  cursor: pointer;
+}
+
+.profilbilde-valg li:not(:first-child) {
+  border-top: 1px dotted #ccc;
 }
 
 .hidden {

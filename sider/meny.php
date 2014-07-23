@@ -6,7 +6,7 @@ if(er_logget_inn()){
 ?>
 
 <ul>
-    <li><a href="">Hovedside</a></li>
+    <li><a href="?side=intern">Hovedsiden</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <!--
     <li><a href="?side=bilder/bilder">Bilder</a></li>
@@ -16,7 +16,16 @@ if(er_logget_inn()){
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=organisasjon">Praktisk</a></li>
-    <li><a href="?side=innstillinger"><img src="<?php echo $profilbilde; ?>" /></a></li>
+    <li class="no-border profilbilde">
+        <span>
+            <img class="liten profilbilde" src="<?php echo $profilbilde; ?>" />
+            <i class="fa fa-caret-down"></i>
+        </span>
+        <ul class="profilbilde-valg">
+            <li><a href="?side=medlem/endre"><i class="fa fa-fw fa-user"></i> Endre profil</a></li>
+            <li><a href="logout.php"><i class="fa fa-fw fa-sign-out"></i> Logg ut</a></li>
+        </ul>
+    </li>
 </ul>
 
 <?php
@@ -24,7 +33,7 @@ if(er_logget_inn()){
 if (!erForside()) {
 ?>
 <ul>
-	<li class="small-logo"><a href="?side=forside"><img src="icon_logo.svg" /></a></li>
+	<li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /></a></li>
     <li><a href="?side=nyheter/liste">Nyheter</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag">Spilleoppdrag</a></li>

@@ -1,8 +1,18 @@
 <?php 
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
-	
+
 	//funksjonalitet
-	$id = get('id');
+
+	if (has_get('id')) {
+		$id = get('id');
+	} else {
+		if(isset($_SESSION['medlemsid'])) {
+			$id = $_SESSION['medlemsid'];
+		} else {
+			die("Du må logge inn");
+		}
+	}
+	
 	
 	//sjekker om man er admin eller prøver å endre seg selv
 	if($_SESSION['medlemsid']==$id){
@@ -10,6 +20,7 @@
 	}
 	elseif($_SESSION['rettigheter']<2){
 		header('Location: ?side=medlem/liste');
+		die();
 	};
 	
 	//henter ut alle instrumenter
@@ -105,9 +116,9 @@
         $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;
     });
     </script>
+    	<h2>Rediger medlem</h2>
 		<form method='post' action='?side=medlem/endre'>
 			<table>
-				<th>Rediger medlem</th><th></th>
 				<tr><td>Gruppeleder:</td><td><input type='checkbox' name='grleder' value='true' ";
 				if(isset($medlemmer['grleder']) && $medlemmer['grleder']) echo "checked";	
 				echo "'></td></tr>
@@ -154,10 +165,16 @@
 				<tr><td>Vises kun for innloggede:</td><td><input type='checkbox' name='begrenset' value='true' ";
 				if (isset($medlemmer['begrenset']) && $medlemmer['begrenset']) echo "checked";
 				echo "'></td></tr>
+				<tr>
+				<td></td>
+				<td>
+					<a href='?side=medlem/liste'>Avbryt</a>
+					<input type='submit' name='endreMedlem' value='Lagre'>
+				</td>
+				</tr>
 				</table>
 			<input type='hidden' name='id' value='".$medlemmer['medlemsid']."'>
-			<a href='?side=medlem/liste'>Avbryt</a>
-			<input type='submit' name='endreMedlem' value='Lagre'>
+			
 		</form> 
 	";
 ?>

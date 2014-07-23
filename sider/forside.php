@@ -189,6 +189,7 @@ if (!er_logget_inn()) {
 
 <h3>Siste på forum</h3>
 <h3>Siste nytt</h3>
+<h3>Dette er informasjonen vi har om deg:</h3>
 </section>
 	
 <?php
