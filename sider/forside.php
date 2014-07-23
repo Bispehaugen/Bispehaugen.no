@@ -47,11 +47,11 @@ if (!er_logget_inn()) {
     ?>
 	</div>
 </section>
-<section class="side spilleoppdrag coverflow" data-scroll-index='4'>
+<section class="side spilleoppdrag" data-scroll-index='4'>
   <div class='content'>
-    <h2>Spilleoppdrag</h2>
-    <p>Tyrolerorkester, fanfareoppdrag</p>
-    <p>Slider her, med siste slide er andre oppdrag og hvordan bestille :)</p>
+    <?php
+		inkluder_side_fra_undermappe("spilleoppdrag/vis");
+	?>
 </div>
 </section>
 <section class="side" data-scroll-index='5' data-scroll-url="?side=bli-medlem">

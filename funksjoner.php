@@ -275,16 +275,28 @@ function ant_dager_siden($dato){
 			return "<i>".$dagersiden_som_tekst."</i>";
 };
 
-function hent_aktiviteter() {
+function hent_aktiviteter($skip = "", $take = "") {
+
+	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ";
 
 	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
-
-		$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ORDER BY dato, start; ";		
+		$sql .= "";
 	} elseif ( er_logget_inn() && $_SESSION['rettigheter']==1){
-			$sql="SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public < 2 ORDER BY dato, start; ";
+		$sql .= " AND public < 2";
 	} else {
-		$sql="SELECT arrangement.*, fnavn, enavn FROM medlemmer, `arrangement` WHERE dato >= CURDATE() AND slettet=false AND public = 1 ORDER BY dato, start; ";
+		$sql .= " AND public = 1";
 	}
+
+	$sql .= " ORDER BY dato, start ";
+
+	if (!empty($skip)) {
+		$sql .= " LIMIT ".$skip;
+		
+		if (!empty($take)) {
+			$sql .= " , ".$take;
+		}
+	}
+
 	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
 }
 	

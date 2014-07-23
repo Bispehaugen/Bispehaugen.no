@@ -199,7 +199,7 @@ function forum_paginering($id, $skip, $type) {
 		break;
 		case "innlegg":
 			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=".$id;
-			die("IKKE IMPLEMENTERT");
+			die("IKKE IMPLEMENTERT, sjekk om dette er riktig...");
 		break;
 		default:
 			die("Pagineringstype ".$type." finnes ikke");
@@ -210,7 +210,7 @@ function forum_paginering($id, $skip, $type) {
 
 	$max_antall_sider = floor($antall / antall_tema_per_side);
 	$midtside = floor($max_antall_sider/2);
-	//die("FIX ME");
+	die("FIX ME, vis hvilken som er valgt");
 
 	$sideNr = 1;
 	echo "<ul class='forum pagenation'>";

@@ -1,9 +1,3 @@
-.forum {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
 .forum td{
 	padding: 0.5em;
 	border-bottom:1px dotted black;
@@ -71,6 +65,7 @@
 	.forum-innlegg-liste .innlegg header .tools {
 		display: inline-block;
 		float: right;
+		color: black;
 	}
 
 	.forum-innlegg-liste .innlegg header .tools .tool {

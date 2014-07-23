@@ -339,6 +339,9 @@ nav, .nav-container {
   min-height: 420px;
   width: 100%;
   padding: 5em 2em;
+
+  background-repeat:no-repeat;
+  background-position: 50% 0%;
 }
 
 .coverflow {
@@ -378,11 +381,11 @@ input.error {
   padding-right: 0;
 }
 
-.forside {
+.side.forside {
   background-image:url("../images/3.jpg");
 }
 
-.spilleoppdrag {
+.side.spilleoppdrag {
   background-image:url("../images/1.jpg");
 }
 
@@ -595,11 +598,11 @@ table td {
   padding: 0.5em 1em;
 }
 
-table input[type="text"], textarea {
+form input[type="text"], textarea {
   width: 100%;
 }
 
-table textarea {
+form textarea {
   min-height: 8em;
 }
 
@@ -958,4 +961,29 @@ footer.map {
     width: 100%;
     height: 400px;
     background-color: #CCC;
+}
+
+.spilleoppdrag {
+  text-align: left;
+}
+
+.spilleoppdrag .gjennomsiktig-boks {
+  background-color: rgba(41, 49, 61, 0.8);
+  padding: 2em;
+}
+
+.spilleoppdrag .informasjon {
+  margin-bottom: 5em;
+}
+
+@media screen and (min-width: 1000px) {
+  .spilleoppdrag .informasjon, .spilleoppdrag form {
+    float: left;
+    display: inline-block;
+    width: 50%;
+  }
+}
+
+.feilmeldinger {
+  padding: 0;
 }

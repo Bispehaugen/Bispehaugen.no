@@ -1,6 +1,5 @@
 <?php
 
-// Fjern denne linja
 setlocale(LC_TIME, "nb_NO.utf8");
 include_once "db_config.php";
 include_once "funksjoner.php";
@@ -45,7 +44,7 @@ $innhold = ob_get_clean();
     <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
-    <script type="text/javascript" src='http://code.jquery.com/jquery-1.11.0.js'></script>
+    <script type="text/javascript" src='js/jquery-1.10.2.min.js'></script>
     <script type="text/javascript" src="js/jquery.timeago.js"></script>
     <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
     
@@ -115,7 +114,7 @@ if (isset($_SESSION["Errors"])) {
 }
 ?>
     	
-	<?php if(!er_logget_inn()) { ?>
+	<?php if(!er_logget_inn() && erForside()) { ?>
 		<section class="login">
 			<div class="errors feilmelding">
 				Kunne ikke logge inn, brukernavn eller passord er feil. Kontakt webkom hvis dette fortsetter :)

@@ -3,6 +3,7 @@
     //TODO legge inn googlecal og ical eksport
         
     #fuksjonalitet
+
     
     //spørring som henter ut alle aktiviteter
 	$aktiviteter=hent_aktiviteter();
@@ -15,7 +16,11 @@
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
 	
-	echo "<h2>Aktiviteter</h2>";
+	echo "<h2 class='aktivitetsliste-overskrift'>Aktiviteter</h2>";
+
+	if(session('rettigheter')>1){
+		echo"<h3 class='legg-til-aktivitet'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
+	}
 
 	echo "<script type='text/javascript'>
 			function slett_aktivitet(id,tittel){
@@ -99,14 +104,4 @@
 				echo "</td></tr>";
 			}
 		}
-		
-		if(session('rettigheter')>1){
-			echo"
-			<tr><td></td><td></td><td></td><td></td><td></td></tr>
-			<tr><td></td><td></td><td></td><td></td><th><a href='?side=aktiviteter/endre'>legg til ny</a></th></tr>";
-		}
 		echo "</table>";
-	
-	
-    
-?>

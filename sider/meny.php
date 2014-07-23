@@ -6,13 +6,11 @@ if(er_logget_inn()){
 ?>
 
 <ul>
-    <li><a href="?side=intern">Hovedsiden</a></li>
+    <li><a href="?side=forside">Hovedsiden</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
-    <!--
     <li><a href="?side=bilder/bilder">Bilder</a></li>
     <li><a href="?side=dokumenter">Dokumenter</a></li>
     <li><a href="?side=noter/noter_oversikt">Noter</a></li>
-    -->
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=organisasjon">Praktisk</a></li>
@@ -36,7 +34,7 @@ if (!erForside()) {
 	<li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /></a></li>
     <li><a href="?side=nyheter/liste">Nyheter</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
-    <li><a href="?side=spilleoppdrag">Spilleoppdrag</a></li>
+    <li><a href="?side=spilleoppdrag/vis">Spilleoppdrag</a></li>
     <li><a href="?side=bli-medlem" class="bli-medlem">Bli medlem</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=annet">Annet</a></li>
