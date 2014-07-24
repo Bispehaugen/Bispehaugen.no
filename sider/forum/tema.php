@@ -17,6 +17,7 @@
     list_forum();
 
     echo "<section class='forum'>";
+    echo "<h2>Temaer</h2>";
     
     forum_list_tema($forumid, $skip);
 

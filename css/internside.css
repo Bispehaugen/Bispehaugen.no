@@ -4,3 +4,11 @@
 	margin: 1em;
 	display: inline-block;
 }
+
+.komite ul {
+	padding-left: 1em;
+}
+
+.komite .brukerlenke img {
+	height: 1em;
+}

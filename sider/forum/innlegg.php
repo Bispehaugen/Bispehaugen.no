@@ -89,7 +89,7 @@
 
 	//skriver ut temaet for denne tråden
     echo "<section class='forum'>
-    	<h1>".$tema['tittel']."</h1>";
+    	<h2>".$tema['tittel']."</h2>";
 
 	echo forum_innlegg_liste($sql, "forum-innlegg-liste", $temaid);
 

@@ -18,9 +18,10 @@
 			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
 			LEFT JOIN forum AS f ON fi.forumid = f.forumid
 			ORDER BY skrevet DESC 
-			LIMIT 10";
+			LIMIT 5";
 
 	echo "<section class='forum'>";
+	echo "<h2>Siste poster</h2>";
 
 	forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster");
 

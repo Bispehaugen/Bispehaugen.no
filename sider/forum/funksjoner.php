@@ -178,12 +178,14 @@ function forum_list_tema($forumid, $skip) {
 			if (!empty($b['foto'])) {
 				$foto = $b['foto'];
 			} else {
-				$foto = "bilder/icon_logo.png";
+				$foto = "icon_logo.png";
 			}
 			echo "<img class='foto' src='".$foto."' />";
 			echo "<section class='info'>";
 			echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
-			echo "<abbr class='tid timeago' title='".date("c", $tid)."''>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</abbr>";
+			if ($tid != 0) {
+				echo "<abbr class='tid timeago' title='".date("c", $tid)."''>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</abbr>";
+			}
 			echo "</div>";
 		echo "</article>";
 	}
@@ -210,21 +212,24 @@ function forum_paginering($id, $skip, $type) {
 
 	$max_antall_sider = floor($antall / antall_tema_per_side);
 	$midtside = floor($max_antall_sider/2);
-	die("FIX ME, vis hvilken som er valgt");
+	//die("FIX ME, vis hvilken som er valgt");
 
 	$sideNr = 1;
-	echo "<ul class='forum pagenation'>";
+	echo "<ul class='forum pagination'>";
 
 	if ($skip > 0) {
 		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip-antall_tema_per_side)."'><i class='icon-chevron-left'></i> Forrige</a></li>";
 	}
 
 	if ($antall > 12 * antall_tema_per_side) {
-			echo "<li><a href='?side=forum/tema&id=".$id."&skip=0'>1</a></li>";
-			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(1*antall_tema_per_side)."'>2</a></li>";
-			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(2*antall_tema_per_side)."'>3</a></li>";
-			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".(3*antall_tema_per_side)."'>4</a></li>";
 
+		for($lokalSkip = 0; $lokalSkip < 4*antall_tema_per_side; $lokalSkip += antall_tema_per_side) {
+			$erAktiv = pagineringErAktiv($lokalSkip, $skip, antall_tema_per_side);
+
+			pagineringslenke($id, $lokalSkip, $sideNr, $erAktiv);
+
+			$sideNr += 1;
+		}
 			echo "<li class='dotdotdot'>...</li>";
 
 			$midtSideMinusEn = ($midtside-2);
@@ -250,9 +255,11 @@ function forum_paginering($id, $skip, $type) {
 			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$sisteSide*antall_tema_per_side."'>".$sisteSide."</a></li>";
 		
 	} else {
-		echo $antall;
-		for($i = 0; $i <= $antall; $i+=25) {
-			echo "<li><a href='?side=forum/tema&id=".$id."&skip=".$i."'>".$sideNr."</a></li>";
+		for($lokalSkip = 0; $lokalSkip <= $antall; $lokalSkip+=antall_tema_per_side) {
+			$erAktiv = pagineringErAktiv($lokalSkip, $skip, antall_tema_per_side);
+
+			pagineringslenke($id, $lokalSkip, $sideNr, $erAktiv);
+
 			$sideNr++;
 		}
 	}
@@ -261,4 +268,16 @@ function forum_paginering($id, $skip, $type) {
 		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip+antall_tema_per_side)."'>Neste <i class='icon-chevron-right'></i></a></li>";
 	}
 	echo "</ul>";
+}
+
+function pagineringslenke($id, $skip, $nummer, $erAktiv = false) {
+	echo "<li";
+	if ($erAktiv) {
+		echo " class='aktiv'";
+	}
+	echo "><a href='?side=forum/tema&id=".$id."&skip=".$skip."'>".$nummer."</a></li>";
+}
+
+function pagineringErAktiv($lokalSkip, $skip, $antall_tema_per_side) {
+	return $lokalSkip <= $skip && ($lokalSkip + $antall_tema_per_side) > $skip;
 }

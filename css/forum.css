@@ -77,6 +77,10 @@
 		word-wrap: break-word;
 	}
 
+	.forum-innlegg-liste .innlegg a {
+		color: inherit;
+	}
+
 	.forum .foto {
 		width: 40px;
 		height: 40px;
@@ -161,15 +165,16 @@
 	width: 40%;
 	position: relative;
 	top: 1em;
+	color: black;
 }
 
-.forum.pagenation {
+.forum.pagination {
 	list-style: none;
 	text-align: center;
 	font-size: 1.1em;
 	padding: 0;
 }
-.forum.pagenation li {
+.forum.pagination li {
 	display: inline-block;
 
 	padding: 0.5em;
@@ -177,6 +182,15 @@
 	border: 1px solid #eaeaea;
 }
 
-.forum.pagenation li.dotdotdot {
+.forum.pagination li.aktiv {
+	background-color: #eaeaea;
+}
+
+.forum.pagination li.aktiv a {
+	color: rgba(34, 41, 51, 1);
+}
+
+
+.forum.pagination li.dotdotdot {
 	border: 0px none;
 }
