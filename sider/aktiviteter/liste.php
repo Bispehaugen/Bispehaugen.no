@@ -16,10 +16,10 @@
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
 	
-	echo "<h2 class='aktivitetsliste-overskrift'>Aktiviteter</h2>";
+	echo "<h2 class='overskrift-som-er-inline-block'>Aktiviteter</h2>";
 
 	if(session('rettigheter')>1){
-		echo"<h3 class='legg-til-aktivitet'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
 	}
 
 	echo "<script type='text/javascript'>

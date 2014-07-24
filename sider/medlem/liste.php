@@ -25,15 +25,21 @@
     
     #Det som printes p� sida
     
-    //lager en link til å vise alle
-    if(er_logget_inn() && get('alle')==0){
-    	echo" <a href='?side=medlem/liste&alle=1'>Vis sluttede også</a>";
-    }if(er_logget_inn() && get('alle')==1){
-    	echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive</a>";
+
+    echo "<h2 class='overskrift-som-er-inline-block'>Medlemmer</h2>";
+    
+    if (er_logget_inn()) {
+      echo "<h3 class='lenke-som-er-inline-med-overskrift'>";
+      //lager en link til å vise alle
+      if(get('alle')==0){
+        echo" <a href='?side=medlem/liste&alle=1'>Vis også sluttede <i class='fa fa-users'></i></a>";
+      } else {
+        echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive <i class='fa fa-user'></i></a>";
+      }
+      
+      echo "</h3>";
     }
-    
-    echo "<h2>Medlemmer</h2>";
-    
+
     echo "<section class='medlemsliste'>";
 	#Brukes for å skrive ut en rad med instrumentnavn.
 	$temp_instr="Test";
@@ -52,7 +58,7 @@
        		echo "<span class='navn'><a href='?side=medlem/vis&id=".$medlem['medlemsid']."'>".$medlem['fnavn']." ".$medlem['enavn']."</a></span>";
 				//sjekker om permisjon eller sluttet - i så fall printes en bokstav etter navnet
 				if($medlem['status']!='Aktiv'){
-   					echo "<span class='tag permisjon'>".$medlem['status']."</span>";
+   					echo "<span class='tag ".$medlem['status']."'>".$medlem['status']."</span>";
    				}
 				//sjekker på gruppeleder og skriver ut dette etter navnet hvis ja
        			if($medlem['grleder'] == true){

@@ -56,18 +56,18 @@ echo '
 		<strong>Født:</strong> <?php echo isset($medlem['fdato']) ? date("d. m. Y", strtotime($medlem['fdato'])) : "Ukjent"; ?>
 	</p>
 	
-	<?php if(isset($medlem['startetibuk_date'])) { ?>
+	<?php if(isset($medlem['startetibuk_date']) && strtotime($medlem['startetibuk_date']) > 0) { ?>
 	<p>
 		<strong>Startet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlem['startetibuk_date'])); ?>
 	</p>
 	<?php } ?>
-	<?php if(isset($medlem['sluttetibuk_date'])) { ?>
+	<?php if(isset($medlem['sluttetibuk_date']) && strtotime($medlem['sluttetibuk_date']) > 0) { ?>
 	<p>
 		<strong>Sluttet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlem['sluttetibuk_date'])); ?>
 	</p>
 	<?php } ?>
 	
-	<?php if(isset($medlem['studieyrke'])) { ?>
+	<?php if(isset($medlem['studieyrke']) && !empty($medlem['studieyrke'])) { ?>
 	<p>
 		<strong>Studie/yrke:</strong> <?php echo $medlem['studieyrke']; ?>
 	</p>
@@ -75,7 +75,7 @@ echo '
 	
 <?php } ?>
 
-<?php if(!empty($medlem['kommerfra'])){ ?>
+<?php if(isset($medlem['kommerfra']) && !empty($medlem['kommerfra'])){ ?>
 	<p>
 		<strong>Kommer fra:</strong> <?php echo $medlem['kommerfra']; ?>
 	</p>

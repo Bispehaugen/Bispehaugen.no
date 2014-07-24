@@ -938,13 +938,17 @@ li.profilbilde {
 }
 
 .tag.gruppeleder {
-	background-color: rgba(41, 49, 61, 1);
+	background-color: green;
 	color: white;
 }
 
-.tag.permisjon {
-	background-color: #aaa;
-	color: white;
+.tag.Permisjon {
+  background-color: #ccc;
+  color: black;
+}
+
+.tag.Sluttet {
+  background-color: black;
 }
 
 .medlem h1 {
@@ -1047,6 +1051,11 @@ footer.map {
    border-color: rgb(34, 41, 51);
 }
 
-.neste-konsert .fancy-date {
-  /*color: rgb(34, 41, 51);*/
+.overskrift-som-er-inline-block {
+  display: inline-block;
+}
+
+.lenke-som-er-inline-med-overskrift {
+  float: right;
+  display: inline-block;
 }

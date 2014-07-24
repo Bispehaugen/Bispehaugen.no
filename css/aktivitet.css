@@ -5,12 +5,3 @@
 .aktivitetsliste .valgt{
 	font-weight:bold;
 }
-
-.aktivitetsliste-overskrift {
-	display: inline-block;
-}
-
-.legg-til-aktivitet {
-	float: right;
-	display: inline-block;
-}
