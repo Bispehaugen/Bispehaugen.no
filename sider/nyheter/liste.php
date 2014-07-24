@@ -26,7 +26,7 @@
                 <img src="'.$bilde.'" />
             </div>
             <div class="innhold">
-                <h4>'.$nyhet['overskrift'].'</h4>
+                <h4><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'">'.$nyhet['overskrift'].'</a></h4>
                 <p class="ingress">'.$nyhet['ingress'].'</p>
             </div>
             <div class="clearfix"></div>

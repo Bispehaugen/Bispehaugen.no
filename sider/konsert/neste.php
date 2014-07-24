@@ -9,7 +9,7 @@ foreach($konserter as $konsert){
 
   echo '
     <article class="box konsert neste-konsert">
-          '.fancyDato($konsert['konsert_tid']).'
+          '.fancyDato($konsert['konsert_tid'], true).'
           <div class="bilde-og-innhold">
 ';
 
@@ -22,30 +22,30 @@ if (isset($konsert['bilde'])) {
 
 echo '
             <div class="innhold">
-                <h4>'.$konsert['overskrift'].'</h4>';
+                <h4><a href="?side=konsert/vis&id='.$konsert['nyhetsid'].'">'.$konsert['overskrift'].'</a></h4>';
 
 if (isset($konsert['sted'])) {
   echo '         <p class="sted"><b>Sted:</b> '.$konsert['sted'].'</p>';
 }
 
 echo '
-                <p class="ingress">'.$konsert['ingress'].'</p>
-                <p class="pris">
+                <p class="pris"><b>Pris:</b> 
 ';
 
-if (isset($konsert['student_pris'])) {
-  echo 'BARN/STUDENT/HONØR/STØTTEMEDLEM:' . $konsert['student_pris'] . ' kr';
+if (isset($konsert['normal_pris']) && $konsert['normal_pris'] > 0) {
+  echo $konsert['normal_pris'] . ',- ';
 }
 
-if (isset($konsert['normal_pris'])) {
-  echo 'VOKSEN:' . $konsert['normal_pris'] . ' kr';
+if (isset($konsert['student_pris']) && $konsert['student_pris'] > 0) {
+  echo ' / ' . $konsert['student_pris'] . ',-';
 }
 
 echo '
+                <p class="ingress">'.$konsert['ingress'].'</p>
             </div>
             <div class="clearfix"></div>
           </div>
-          <div class="neste-pil" title="Les nyhet"><a href="?side=konsert/vis&id='.$konsert['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
+          <div class="neste-pil" title="Les mer om konserten"><a href="?side=konsert/vis&id='.$konsert['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
         </article>
     ';
 

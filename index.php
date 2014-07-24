@@ -55,6 +55,17 @@ $innhold = ob_get_clean();
     <?php if (er_logget_inn()) { ?>
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/internside.css" type="text/css" />
+	<link rel="stylesheet" href="vendor/pickadate/themes/default.css" type="text/css" />
+	<link rel="stylesheet" href="vendor/pickadate/themes/default.date.css" type="text/css" />
+	<link rel="stylesheet" href="vendor/pickadate/themes/default.time.css" type="text/css" />
+
+    <script type="text/javascript" src="vendor/pickadate/legacy.js"></script>
+    <script type="text/javascript" src="vendor/pickadate/picker.js"></script>
+    <script type="text/javascript" src="vendor/pickadate/picker.date.js"></script>
+    <script type="text/javascript" src="vendor/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="vendor/pickadate/picker.time.js"></script>
+    <script type="text/javascript" src="vendor/pickadate/translations/no_NO.js"></script>
+
    	<?php } ?>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

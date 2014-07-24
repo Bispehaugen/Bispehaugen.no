@@ -57,6 +57,22 @@ function has_session($attributt) {
 	return isset($_SESSION[$attributt]);
 }
 
+function kanskje($array, $key) {
+	if (is_array($array)) {
+		if (array_key_exists($key, $array)) {
+			return $array[$key];
+		}
+	}
+	return null;
+}
+
+function bare_tidspunkt($datetime) {
+	if (!empty($datetime)) {
+		$tid = strtotime($datetime);
+		return date("H:i", $tid);
+	} 
+	return null;
+}
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
@@ -231,7 +247,7 @@ function hent_siste_nyheter($antall, $type="Public"){
 }
 
 function hent_konserter($antall = "", $type="nestekonsert"){
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid FROM `nyheter` WHERE type='".$type."' ORDER BY tid DESC";
+	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='".$type."' ORDER BY tid DESC";
 
 	if (!empty($antall)) {
 		$sql .= " LIMIT ".$antall;
@@ -382,7 +398,7 @@ function clean($string) {
 }
 
 function erForside() {
-	return !has_get("side") || strtolower(get('side')) == "forside";
+	return (!has_get("side") || strtolower(get('side')) == "forside") && !er_logget_inn();
 }
 
 function fancyDato($tid, $visTimer = false) {

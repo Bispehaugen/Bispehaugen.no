@@ -8,9 +8,12 @@ if(er_logget_inn()){
 <ul>
     <li><a href="?side=forside">Hovedsiden</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
+<li><a href="?side=arkiv">Arkiv</a></li>
+    <!--
     <li><a href="?side=bilder/bilder">Bilder</a></li>
     <li><a href="?side=dokumenter">Dokumenter</a></li>
     <li><a href="?side=noter/noter_oversikt">Noter</a></li>
+    //-->
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=organisasjon">Praktisk</a></li>
