@@ -203,6 +203,14 @@ if (isset($_SESSION["Errors"])) {
 			.mouseleave(function() {
 				$(".profilbilde-valg").hide();
 			});
+
+		$("li.arkiv")
+			.mouseenter(function() {
+				$(".arkiv-valg").show();
+			})
+			.mouseleave(function() {
+				$(".arkiv-valg").hide();
+			});
 	<?php } ?>
     
     <?php if (!er_logget_inn()) { ?>

@@ -792,6 +792,10 @@ table .aarskille {
     max-width: 100px;
 }
 
+nav .arkiv {
+  cursor: pointer;
+}
+
 .profil_bilde {
     height: 50px;
     max-width: 50px;
@@ -800,7 +804,6 @@ table .aarskille {
     bottom: 1.5em;
     left: 3em;
 }
-
 
 .liten.profilbilde {
   height: 25px;
@@ -815,7 +818,7 @@ li.profilbilde {
   text-transform: none;
 }
 
-.profilbilde-valg {
+.profilbilde-valg, .arkiv-valg {
   display: none;
   position: absolute;
 
@@ -828,11 +831,11 @@ li.profilbilde {
   border: 1px solid #ccc;
 }
 
-.profilbilde-valg li {
+.profilbilde-valg li, .arkiv-valg li {
     padding: 0em 1em;
 }
 
-.profilbilde-valg a {
+.profilbilde-valg a, .arkiv-valg a {
   cursor: pointer;
 }
 
