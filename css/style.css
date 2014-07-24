@@ -203,7 +203,7 @@ ul {
 
 }
 
-nav.top {
+.forside nav.top {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -214,7 +214,18 @@ nav, .nav-container {
   text-align: center;
   width: 100%;
   z-index: 1000;
+}
+
+nav {
+  position: fixed;
+}
+
+.forside nav, .forside .nav-container {
   height: 113px;
+}
+
+.forside nav {
+  position: absolute;
 }
 
   .nav-container a {
@@ -227,9 +238,13 @@ nav, .nav-container {
   }
 
   nav > ul > li, .meny {
-    line-height: 113px;
+    line-height: 49px;
     vertical-align: middle;
     display: block;
+  }
+
+  .forside nav > ul > li, .meny {
+    line-height: 113px;
   }
 
   nav > ul > li > span, nav > ul > li > a {

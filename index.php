@@ -91,7 +91,7 @@ $innhold = ob_get_clean();
 </head>
 
 <body>
-	<div class="site">
+	<div class="site<?php if(erForside()) { echo " forside"; } ?>">
 		<?php if (erForside() && !er_logget_inn()) { ?>
 		<section class="forside side coverflow" data-scroll-index='1'>
 	   		<div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
@@ -191,6 +191,23 @@ if (isset($_SESSION["Errors"])) {
 
 <script>
 
+    $("nav .meny").click(function(event) {
+        $("nav.top ul").toggle();
+    });
+
+	<?php if (er_logget_inn()) { ?>
+		$("li.profilbilde")
+			.mouseenter(function() {
+				$(".profilbilde-valg").show();
+			})
+			.mouseleave(function() {
+				$(".profilbilde-valg").hide();
+			});
+	<?php } ?>
+    
+    <?php if (!er_logget_inn()) { ?>
+
+
     var navElements = $("nav > ul > li");
     var nav = $("nav").first();
 
@@ -198,7 +215,6 @@ if (isset($_SESSION["Errors"])) {
         var height = getHeight();
 
         var forsideHeight = height - nav.height();
-
 
         $(".coverflow").css("height", height+"px");
         $(".forside.coverflow").css("height", forsideHeight+"px");
@@ -211,10 +227,6 @@ if (isset($_SESSION["Errors"])) {
         }
         return height;
     }
-
-    $("nav .meny").click(function(event) {
-        $("nav.top ul").toggle();
-    });
 
     resizeHeight();
     $( window ).resize(function() {
@@ -259,68 +271,56 @@ if (isset($_SESSION["Errors"])) {
             }
         }
     });
-
-	<?php if (er_logget_inn()) { ?>
-		$("li.profilbilde")
-			.mouseenter(function() {
-				$(".profilbilde-valg").show();
-			})
-			.mouseleave(function() {
-				$(".profilbilde-valg").hide();
-			});
-	<?php } ?>
-    
-    <?php if (!er_logget_inn()) { ?>
     	    	
-    	var clearErrors = function() {
-    		$(".login-button").prop("disabled", false);
-    		$(this).removeClass("error");
-    	};
-    	
-    	var login = function(event) {
-    		event.preventDefault();
-    		
-    		$(this).attr("disabled", "disabled");
-    		
-    		var username = $(".login-box #username");
-    		var password = $(".login-box #password");
-    		
-    		var has_error = false;
-    		
-    		if (username.val().length == 0) {
-    			username.addClass("error");
-    			has_error = true;
-    		}
-    		
-    		if (password.val().length == 0) {
-    			password.addClass("error");
-    			has_error = true;
-    		}
-    		
-    		if (has_error) {
-    			$(this).prop("disabled", false);
-    			
-    			return;
-    		}
-    		
-    		clearErrors();
-    		
-    		$(".login .spinner").show();
-    		
-    		var data = {username: username.val(), password: password.val()};
-    		
-    		$.post("login.php?ajax=true", data)
-    			.done(function(data){
-    				location.reload(true);
-    			})
-    			.fail(function(data){
-    				debugger;
-    				$(".login .feilmelding").show();
-    				
-    				// Videresendes på done, så trenger ikke å fjerne spinner der, ser bare rart ut
-    				clearErrors();
-    				$(".login .spinner").hide();
-    			});
+	var clearErrors = function() {
+		$(".login-button").prop("disabled", false);
+		$(this).removeClass("error");
+	};
+	
+	var login = function(event) {
+		event.preventDefault();
+		
+		$(this).attr("disabled", "disabled");
+		
+		var username = $(".login-box #username");
+		var password = $(".login-box #password");
+		
+		var has_error = false;
+		
+		if (username.val().length == 0) {
+			username.addClass("error");
+			has_error = true;
+		}
+		
+		if (password.val().length == 0) {
+			password.addClass("error");
+			has_error = true;
+		}
+		
+		if (has_error) {
+			$(this).prop("disabled", false);
+			
+			return;
+		}
+		
+		clearErrors();
+		
+		$(".login .spinner").show();
+		
+		var data = {username: username.val(), password: password.val()};
+		
+		$.post("login.php?ajax=true", data)
+			.done(function(data){
+				location.reload(true);
+			})
+			.fail(function(data){
+				debugger;
+				$(".login .feilmelding").show();
+				
+				// Videresendes på done, så trenger ikke å fjerne spinner der, ser bare rart ut
+				clearErrors();
+				$(".login .spinner").hide();
+			});
     	};
     	
     	$(".login-button").click(login);
