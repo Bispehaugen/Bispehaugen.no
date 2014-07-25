@@ -947,6 +947,8 @@ li.profilbilde {
 
 .informasjonslinje .verktoy {
 	float: right;
+  margin-left: 1em;
+  cursor: pointer;
 }
 
 .informasjonslinje .brukerlenke {
@@ -1060,6 +1062,10 @@ footer.map {
 
 .feilmeldinger {
   padding: 0;
+  color: white;
+  background-color: #d9534f;
+  font-size: 1em;
+  padding: 1em 2em;
 }
 
 .tall {

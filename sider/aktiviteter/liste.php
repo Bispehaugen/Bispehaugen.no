@@ -22,14 +22,23 @@
 		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
 	}
 
-	echo "<script type='text/javascript'>
-			function slett_aktivitet(id,tittel){
-				var ask = confirm('Vil du slette ..... ?');
-				if(!!ask){
-					window.location = '?side=aktiviteter/slette&id='+id;
-				}
+	?>
+	<script type='text/javascript'>
+		function slett_aktivitet(){
+			var id = $(this).data("id");
+			var tittel = $(this).data("title").replace(/\\/g, '');
+
+			var ask = confirm('Vil du slette ' + tittel + '?');
+			if(!!ask){
+				window.location = '?side=aktiviteter/slette&id='+id;
 			}
-		</script>";
+		}
+
+		$(function() {
+			$(".slett-aktivitet").click(slett_aktivitet);
+		});
+	</script>
+	<?php
 
     #Det som printes på sida
     echo "<table class='aktivitetsliste'>
@@ -73,8 +82,7 @@
 			#Viser endre/slettkapper hvis man er admin
 			if(session('rettigheter')>1){
 				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
-				title='Klikk for å endre'></i></a> / <a href='#' onclick='slett_aktivitet(".$aktivitet['arrid'].",\"
-				".$aktivitet['tittel']."\")'><i class='fa fa-times' title='Klikk for å slette'></i></a></td></tr>";
+				title='Klikk for å endre'></i></a> / <a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a></td></tr>";
 			}else{
 				echo "<td></td></tr>";
 			};

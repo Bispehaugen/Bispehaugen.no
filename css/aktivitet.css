@@ -5,3 +5,7 @@
 .aktivitetsliste .valgt{
 	font-weight:bold;
 }
+
+.dato .fjern-dato {
+	cursor: pointer;
+}

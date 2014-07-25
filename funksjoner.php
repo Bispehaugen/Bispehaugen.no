@@ -38,7 +38,15 @@ function get($attributt) {
 }
 
 function post($attributt) {
-	return isset($_POST[$attributt]) ? mysql_real_escape_string($_POST[$attributt]) : null; 
+	if (isset($_POST[$attributt])) {
+		$data = $_POST[$attributt];
+		if (is_array($data)) {
+			return array_map('mysql_real_escape_string', $data);
+		} else {
+			return mysql_real_escape_string($data);
+		}
+	}
+	return null; 
 }
 
 function session($attributt) {
@@ -49,7 +57,10 @@ function has_get($attributt) {
 	return isset($_GET[$attributt]);
 }
 
-function has_post($attributt) {
+function has_post($attributt = "") {
+	if (empty($attributt)) {
+		return isset($_POST) && !empty($_POST);
+	}
 	return isset($_POST[$attributt]);
 }
 
