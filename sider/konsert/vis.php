@@ -35,15 +35,15 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
 				}
 				?>
 
-				<?php if((isset($konsert['normal_pris']) && !empty($konsert['normal_pris'])) || (isset($konsert['student_pris']) && !empty($konsert['student_pris']))) { ?>
+				<?php if(isset($konsert['normal_pris']) || isset($konsert['student_pris'])) { ?>
 				<section class="pris">
 					<h2>Pris</h2>
 					<?php
-						if (isset($konsert['normal_pris']) && !empty($konsert['normal_pris'])) {
+						if (isset($konsert['normal_pris'])) {
 							echo "<p><b>Ordinær:</b> " . $konsert['normal_pris'] . ",-</p>";
 						}
 
-						if (isset($konsert['student_pris']) && !empty($konsert['student_pris'])) {
+						if (isset($konsert['student_pris'])) {
 							echo '<p><b>Barn/student/honør:</b> ' . $konsert['student_pris'] . ',-</p>';
 						}
 					?>

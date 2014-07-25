@@ -521,8 +521,15 @@ migrering(12, "Standarden var 0 før, blank nå, kunne vært null, men jeg er la
 	"UPDATE `nyheter` SET student_pris = \"\" WHERE student_pris = \"0\""
 );
 
+migrering(13, "Konsertpriser må kunne være null, da 0 gir empty() true -.-", 
+	"ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NULL",
+	"ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NULL",
+	"UPDATE `nyheter` SET normal_pris = null WHERE normal_pris = \"\"",
+	"UPDATE `nyheter` SET student_pris = null WHERE student_pris = \"\""
+);
+
 	/*
-migrering(13, "Neste kommer her", 
+migrering(14, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */
