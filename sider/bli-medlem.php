@@ -25,8 +25,8 @@ if(has_post("sEpost")){
 	$sRegistrering = post("sRegistrering");
 
 	# Definerer headere til mailen som skal sendes
-	$from = "From: !!BUK web-skjema!! <buk-webskjema@stud.ntnu.no>";
-	$to = 'buk-webskjema@stud.ntnu.no';
+	$from = "From: Bispehaugen.no Web-skjema <buk-webskjema@bispehaugen.no>";
+	$to = 'tkthekiller@gmail.com';//'buk-webskjema@stud.ntnu.no';
 	$replyto = "Reply-To: $sNavn <$sEpost>";
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 	$realfrom = "Real-From: $realfrom_tmp";
