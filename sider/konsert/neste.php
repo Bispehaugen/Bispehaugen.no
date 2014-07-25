@@ -40,8 +40,7 @@ echo '
     }
 
 echo "</p>"
-
-?>
+}
 
 echo '
                 <p class="ingress">'.$konsert['ingress'].'</p>
