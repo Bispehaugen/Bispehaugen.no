@@ -1,6 +1,6 @@
 <?php
 setlocale(LC_TIME, "nb_NO.utf8");
-$konserter = hent_konserter(1);
+$konserter = neste_konsert();
 
 
 echo "<h2><a href='?side=konsert/liste'>Neste konsert</a></h2>";

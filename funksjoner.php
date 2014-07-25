@@ -256,7 +256,12 @@ function hent_konserter($antall = "", $type="nestekonsert"){
 		$sql .= " LIMIT ".$antall;
 	}
 
-	return hent_og_putt_inn_i_array($sql, "nyhetsid");
+	$id_verdi = "nyhetsid";
+	if ($antall == 1) {
+		$id_verdi = "";
+	}
+
+	return hent_og_putt_inn_i_array($sql, $id_verdi);
 }
 
 
@@ -312,15 +317,20 @@ function hent_aktiviteter($skip = "", $take = "") {
 
 	$sql .= " ORDER BY dato, start ";
 
-	if (!empty($skip)) {
+	if ($skip != "" || $skip === 0) {
 		$sql .= " LIMIT ".$skip;
 		
-		if (!empty($take)) {
+		if ($take != "" || $take === 0) {
 			$sql .= " , ".$take;
 		}
 	}
 
-	return hent_og_putt_inn_i_array($sql, $id_verdi="arrid");
+	$id_verdi = "arrid";
+	if ($take == 1) {
+		$id_verdi = "";
+	}
+
+	return hent_og_putt_inn_i_array($sql, $id_verdi);
 }
 	
 function sett_sisteinnleggid($temaid){
@@ -433,4 +443,13 @@ function fancyDato($tid, $visTimer = false) {
 
 function visKartNederst() {
 	return (erForside() || get('side') === "annet" ) && !er_logget_inn();
+}
+
+function neste_ovelse() {
+	return hent_aktiviteter(0, 1);
+}
+
+function neste_konsert() {
+	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND type='Konsert' AND slettet=false ORDER BY dato, start LIMIT 1";
+	return hent_og_putt_inn_i_array($sql);
 }

@@ -1,1 +1,2 @@
-dokumentene finner du her
+<h2>Dokumenter</h2>
+<p>Kommer ... :)</p>

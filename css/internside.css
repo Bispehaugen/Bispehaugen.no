@@ -1,8 +1,21 @@
-.internside h3 {
+.internside .widget {
 	border: 1px solid white;
-	padding: 2em;
+	padding: 1em 2em;
 	margin: 1em;
 	display: inline-block;
+	vertical-align: top;
+}
+
+.widget.markert {
+	background-color: white;
+}
+
+.widget.markert, .widget.markert a {
+	color: rgba(34, 41, 51, 1);
+}
+
+.widget.neste-ovelse p, .widget.neste-konsert p {
+	text-transform: capitalize;
 }
 
 .komite ul {
@@ -11,4 +24,29 @@
 
 .komite .brukerlenke img {
 	height: 1em;
+}
+
+.widget.profil {
+	width: 13em;
+	display: inline-block;
+	float: right;
+	padding: 1em;
+}
+
+.widget.profil h3 {
+	margin-top: 0em;
+}
+
+.widget.profil .brukerlenke img {
+	width: 100%;
+	height: auto;
+	padding-bottom: 1em;
+}
+
+.widget.profil .brukerlenke span {
+	display: inline-block;
+}
+
+.widget.profil .endre {
+	margin: 0;
 }

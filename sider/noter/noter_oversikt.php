@@ -10,28 +10,23 @@
 	
 	//henter ut alle stykkene i db sortert etter tittel og evt. filtrert på konsert hvis konsert er valgt
 	//(Bruker tabellene noter_konsert og noter_notesett)
-	$konsertid=post('arrid');
+	$konsertid= has_get('arrid') ? get('arrid') : "alle";
 	
-	if(has_post('arrid') && $konsertid!='alle'){
-		
-		$sql="SELECT * FROM noter_notesett, noter_konsert, noter_besetning 
-		WHERE arrid=".$konsertid." AND noter_notesett.noteid=noter_konsert.noteid AND noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
-	}
-	else{
-		$sql="SELECT * FROM noter_notesett, noter_besetning WHERE noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
-	};
-	$notesett=hent_og_putt_inn_i_array($sql,'noteid');
+	$notesett = hent_noter($konsertid);
 	
 	//henter alle konsertene
 	$sql="SELECT DISTINCT noter_konsert.arrid, tittel, dato FROM noter_konsert, arrangement 
 	WHERE noter_konsert.arrid=arrangement.arrid ORDER BY dato DESC;";
 	$konserter=hent_og_putt_inn_i_array($sql,'arrid');
 	
+	echo "<h2>Noter</h2>";
+
 	//printer ut det som skal vises på sida
 	echo"<table>";
 	
 	//form med muligheter for å velge ut noter til en konsert
-	echo" <form class='forum' method='post' action='?side=noter/noter_oversikt'>
+	echo" <form class='forum' method='get' action='?side=noter/noter_oversikt'>
+			<input type='hidden' name='side' value='noter/noter_oversikt' />
 				<tr><td>Konsert:</td><td>
 					<select name='arrid'>
 							<option value='alle'>alle noter</option>";
@@ -42,7 +37,7 @@
 						echo">".$konsert['tittel']." ".date('Y', strtotime($konsert['dato']))."</option>";};
 	echo "												  							
   					</select></td>
-  				<td><input type='submit' name='nyttInnlegg' value='finn noter!'></td></tr>
+  				<td><input type='submit' value='finn noter!'></td></tr>
 			</form> 
 				<tr><td></td><td></td></tr>
 				<tr><th>Tittel</th><th>Komponist:</th><th>Arrangør:</th><th>Besetning:</th><th>Arkivnr.</th><th></th></tr>";
