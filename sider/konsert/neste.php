@@ -32,11 +32,20 @@ echo '
 ';
 
     if (isset($konsert['normal_pris'])) {
-      echo $konsert['normal_pris'] . ',- ';
+      if ($konsert['normal_pris'] == 0) {
+        echo "Gratis!";
+      } else {
+        echo $konsert['normal_pris'] . ',- ';
+      }
     }
 
     if (isset($konsert['student_pris'])) {
-      echo ' / ' . $konsert['student_pris'] . ',-';
+      if ($konsert['student_pris'] == 0) {
+        echo "Gratis!";
+      } else {
+        echo " / " . $konsert['student_pris'] . ',- ';
+      }
+      
     }
 
 echo "</p>";
