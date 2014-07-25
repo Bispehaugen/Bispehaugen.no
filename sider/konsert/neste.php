@@ -25,17 +25,23 @@ if (isset($konsert['sted'])) {
   echo '         <p class="sted"><b>Sted:</b> '.$konsert['sted'].'</p>';
 }
 
+if((isset($konsert['normal_pris']) && $konsert['normal_pris'] > 0) || (isset($konsert['student_pris']) && $konsert['student_pris'] > 0)) {
+        
 echo '
                 <p class="pris"><b>Pris:</b> 
 ';
 
-if (isset($konsert['normal_pris']) && $konsert['normal_pris'] > 0) {
-  echo $konsert['normal_pris'] . ',- ';
-}
+    if (isset($konsert['normal_pris']) && $konsert['normal_pris'] > 0) {
+      echo $konsert['normal_pris'] . ',- ';
+    }
 
-if (isset($konsert['student_pris']) && $konsert['student_pris'] > 0) {
-  echo ' / ' . $konsert['student_pris'] . ',-';
-}
+    if (isset($konsert['student_pris']) && $konsert['student_pris'] > 0) {
+      echo ' / ' . $konsert['student_pris'] . ',-';
+    }
+
+echo "</p>"
+
+?>
 
 echo '
                 <p class="ingress">'.$konsert['ingress'].'</p>
