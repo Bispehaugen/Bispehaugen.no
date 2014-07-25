@@ -528,8 +528,14 @@ migrering(13, "Konsertpriser må kunne være null, da 0 gir empty() true -.-",
 	"UPDATE `nyheter` SET student_pris = null WHERE student_pris = \"\""
 );
 
+migrering(14, "Legger til rettigheter på forum", 
+	"ALTER TABLE  `forum` ADD  `rettigheter` TINYINT NOT NULL DEFAULT  '0' AFTER  `pos`",
+	"UPDATE `forum` SET  `rettigheter` =  '2' WHERE  `forumid`=3 AND `forumid` = 4"
+);
+
+
 	/*
-migrering(14, "Neste kommer her", 
+migrering(15, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */

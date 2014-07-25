@@ -10,7 +10,6 @@
 
 .forum .overskrift, .forum .overskrift a {
 	margin: 1em 0em 0em 0em;
-	color: black;
 }
 
 .liten_tekst{
@@ -25,14 +24,10 @@
 	text-decoration: line-through;
 }
 
-.forum-innlegg-liste {
-	color: black;
-}
-
 .forum-innlegg-liste .innlegg {
 	margin-bottom: 1em;
-	border: 1px solid #DDD;
-	background-color: #EFEFEF;
+	border: 1px solid rgba(41, 49, 61, 0.6);
+	background-color: rgba(41, 49, 61, 1.0);
 	padding: 1em 1em 0em 1em;
 }
 
@@ -65,7 +60,6 @@
 	.forum-innlegg-liste .innlegg header .tools {
 		display: inline-block;
 		float: right;
-		color: black;
 	}
 
 	.forum-innlegg-liste .innlegg header .tools .tool {
@@ -134,12 +128,13 @@
 
 
 .forum.temaliste .tema {
-	background: #efefef;
+	background: rgba(41, 49, 61, 0.6);
 	padding: 0;
+	color: white;
 }
 
 .forum.temaliste .tema:nth-of-type(even) {
-	background: #eaeaea;
+	background: rgba(41, 49, 61, 1.0);
 }
 
 .forum.temaliste .tema:first-of-type {
@@ -165,7 +160,6 @@
 	width: 40%;
 	position: relative;
 	top: 1em;
-	color: black;
 }
 
 .forum.pagination {
@@ -193,4 +187,29 @@
 
 .forum.pagination li.dotdotdot {
 	border: 0px none;
+}
+
+.forum h2 {
+	margin-top: 2em;
+}
+
+.forum-liste ul {
+	margin: 0;
+	display: inline-block;
+	display: -webkit-flex;
+	display: flex;
+	
+	flex-flow: row wrap;
+	justify-content: space-around;
+}
+
+.forum-liste li {
+	display: inline-block;
+	padding: 0em 1em;
+	margin: auto;
+}
+
+.forum-liste li.aktiv a {
+	padding-bottom: 0.25em;
+	border-bottom: 1px solid white;
 }

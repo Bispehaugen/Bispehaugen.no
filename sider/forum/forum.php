@@ -17,6 +17,7 @@
 			FROM forum_innlegg_ny AS fi
 			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
 			LEFT JOIN forum AS f ON fi.forumid = f.forumid
+			WHERE f.rettigheter <= " . session('rettigheter') . "
 			ORDER BY skrevet DESC 
 			LIMIT 5";
 

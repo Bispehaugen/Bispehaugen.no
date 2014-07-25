@@ -14,6 +14,8 @@
 	};
 	
 	$temaid=get('id');
+
+	har_tilgang_til_forum("", $temaid);
 	
 	//slette innlegg
 	if(has_get('sletteinnlegg')){

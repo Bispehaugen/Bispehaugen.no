@@ -11,13 +11,14 @@
 	$forumid=get('id');
 	$skip=get('skip');
 
+	har_tilgang_til_forum($forumid);
+
     #Det som printes på sida
     
     //Her legges det inn en oversikt over alle forumene
-    list_forum();
+    list_forum($forumid);
 
     echo "<section class='forum'>";
-    echo "<h2>Temaer</h2>";
     
     forum_list_tema($forumid, $skip);
 

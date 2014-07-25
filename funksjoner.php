@@ -176,70 +176,6 @@ function er_logget_inn(){
 	return isset($_SESSION["medlemsid"]);
 }
 
-//lister opp alle forumene med link til hvert forum 
-function list_forum(){
-	echo"
-	<table>
-	<tr><td>Velg forum: </td>
-	<td><a href='?side=forum/tema&id=2'>musikk & konserter</a></td>
-	<td><a href='?side=forum/tema&id=1'>aktuelt</a></td>
-    <td><a href=''>sosialt</a></td>
-    <td><a href=''>påmeldinger</a></td>";  
-    if($_SESSION['rettigheter']>1){
-		echo"
-    	<td><a href=''>musikkomitéen</a></td>
-    	<td><a href='?side=forum/tema&id=4'>styret</a></td>
-    	<td><a href='?side=forum/tema&id=3'>webkom</a></td></tr>";
-	};
-    echo"<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    </table>";
-
-
-    /*
-
-
-
-    //henter ut alle forumene og lister de opp sammen med når siste innlegg var
-	//Denne skal egentlig brukse, men databasen er ikke tilstrekkelig oppdatert ennå
-	//$sql="SELECT tittel, forum.forumid, pos, sisteinnleggid, innleggid, forum_innlegg.skrevetavid, forum_innlegg.skrevet, fnavn, enavn, medlemsid 
-	//FROM forum, medlemmer, forum_innlegg WHERE innleggid=sisteinnleggid AND medlemsid=skrevetavid ORDER BY forumid;";
-	
-	$sql="SELECT tittel, forum.forumid, pos, sisteinnleggskrevet, sisteinnleggskrevetav
-	FROM forum ORDER BY forumid;";
-	$forumer = hent_og_putt_inn_i_array($sql, "forumid");
-	
-	//henter forumid til forum som har uleste innlegg
-	$medlemsid= $_SESSION["medlemsid"];
-	$sql="SELECT forum_tema.forumid FROM forum_leste, forum_tema WHERE medlemsid=".$medlemsid." AND forum_leste.temaid=forum_tema.temaid;";
-	$uleste_forum = hent_og_putt_inn_i_array($sql, $id_verdi="forumid");
-	
-    #Det som printes på sida
-    
-   
-    
-    echo "<table class='forum'><tr><th></th><th>Forum</th><th>Sist oppdatert av</th></tr>";
-  
-   	//skriver ut alle forumene samt hvem som la inn siste innlegg og hvor lenge siden.
-   	foreach($forumer as $forumid=>$forum){
-   		//sjekker om man er admin og dermed skal se styret, webkom og musikkomite-forumene
-   		if($_SESSION['rettigheter']>2 || $forum['forumid']<3){
-   			if(array_key_exists($forumid, $uleste_forum) && $uleste_forum[$forumid]){
-   				echo "<tr class='ulest'>";
-			}else{
-				echo "<tr>";
-			};
-			echo"<td></td><td><a href='?side=forum/tema&id=".$forum['forumid']."'>".$forum['tittel']."</a></td><td>
-   			".$forum['sisteinnleggskrevetav']." - ";
-   			echo ant_dager_siden($forum['sisteinnleggskrevet'])."</td></tr>";
-		};
-	};	
-
-	echo "</table>";
-
-
- */
-}
-
 /*
  * Hent $antall siste nyheter av typen Public (default)
  */
@@ -328,25 +264,6 @@ function hent_aktiviteter($skip = "", $take = "") {
 	}
 
 	return hent_og_putt_inn_i_array($sql, $id_verdi);
-}
-	
-function sett_sisteinnleggid($temaid){
-	//oppdaterer sisteinnleggid i forum_tema-tabellen
-	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=".$temaid." ORDER BY innleggid DESC LIMIT 1";
-	$result=mysql_query($sql);
-	$sisteinnleggid=mysql_result($result, '0');
-	
-	$sql="UPDATE forum_tema SET sisteinnleggid=".$sisteinnleggid." WHERE temaid=".$temaid;
-	mysql_query($sql);
-		
-	//oppdaterer sisteinnleggig i forum-tabellen
-	$sql="SELECT sisteinnleggid, forumid FROM forum_tema ORDER BY sisteinnleggid DESC LIMIT 1";
-	$sisteinnlegg = hent_og_putt_inn_i_array($sql, "sisteinnleggid");
-	
-	foreach($sisteinnlegg as $sisteinnleggid){
-		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
-	};
-	mysql_query($sql);
 }
 
 function innlogget_bruker() {
