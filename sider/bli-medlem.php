@@ -3,7 +3,7 @@
 include_once "funksjoner.php";
 
 $har_alle_feltene_utfylt_og_sendt_mail = false;
-$feilmeldinger = array();
+$feilmeldinger = Array();
 
 $sAnnet = "";
 $sNavn = "";
@@ -22,6 +22,7 @@ if(has_post("sEpost")){
 	$sHvorKjentMed = post("sHvorKjentMed");
 	$sEpost = post("sEpost");
 	$sTelefon = post("sTelefon");
+	$sRegistrering = post("sRegistrering");
 
 	# Definerer headere til mailen som skal sendes
 	$from = "From: !!BUK web-skjema!! <buk-webskjema@stud.ntnu.no>";
@@ -49,7 +50,14 @@ if(has_post("sEpost")){
 	$sAnnet
 	
 	Hvor fikk du høre om Bispehaugen:
-	$sHvorBleKjent";
+	$sHvorKjentMed
+	";
+
+	if ($sRegistrering == "registrer") {
+		$message .= "
+		Personen ønsker å opprette en bruker
+		";
+	}
 	
 	if (!isset($sNavn) || $sNavn=="" || ($sTelefon=="" && $sEpost=="")) { 
 	   $feilmeldinger[] =  "<font color=red>Du må fylle inn navn og kontaktinformasjon</font>"; 
@@ -63,10 +71,9 @@ if(has_post("sEpost")){
 	elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
 	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
 	} 
-	//elseif (mail($to,$subject,$message,$header)) {
-	elseif (true) {
-		#echo "<div class=\"header1\">Nye medlemmer</div>";
-		echo "<br>Takk for interessen! En person fra korpset vil kontakte deg innen en uke.";
+	elseif (mail($to,$subject,$message,$header)) {
+	//elseif (true) {
+		echo "<h1>Takk for interessen!</h1><p>En person fra korpset vil kontakte deg innen en uke.</p>";
 		$har_alle_feltene_utfylt_og_sendt_mail = true;
 	}
 
@@ -76,13 +83,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 ?>
 
 <div class="bli-medlem">
-<ul class="feilmeldinger">
-	<?php 
-		foreach($feilmeldinger as $feilmelding){
-			echo "<li class='feil'>$feilmelding</li>";
-		}
-	?>
-</ul>
+
 <div class="bli-medlem">
     <h2>Bli medlem!</h2>
     
@@ -129,45 +130,49 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 </div>
 <div class="clearfix"></div>
 
-<form>
+<ul class="feilmeldinger">
+	<?php 
+		foreach($feilmeldinger as $feilmelding){
+			echo "<li class='feil'>$feilmelding</li>";
+		}
+	?>
+</ul>
+
+<form method="POST" action="?side=bli-medlem">
   <table>
     <tr>
       <td class="label">Navn</td>
-      <td><input type="text" name="sNavn"></td>
+      <td><input type="text" name="sNavn" value="<?php echo $sNavn; ?>"></td>
     </tr>
     <tr>
       <td class="label">Instrument</td>
-      <td><input type="text" name="sInstrument"></td>
+      <td><input type="text" name="sInstrument" value="<?php echo $sInstrument; ?>"></td>
     </tr>
     <tr>
       <td class="label">E-post</td>
-      <td><input type="text" name="sEpost"></td>
+      <td><input type="text" name="sEpost" value="<?php echo $sEpost; ?>"></td>
     </tr>
     <tr>
       <td class="label">Telefon</td>
-      <td><input type="text" name="sTelefon"></td>
+      <td><input type="text" name="sTelefon" value="<?php echo $sTelefon; ?>"></td>
     </tr>
     <tr>
       <td colspan=2>
-        <span class="label">Musikalsk bakgrunn</span><br />
-        <textarea name="sAnnet"></textarea>
+        <h3 class="label">Musikalsk bakgrunn</h3>
+        <textarea name="sAnnet"><?php echo $sAnnet; ?></textarea>
       </td>
     </tr>
     <tr>
       <td colspan=2>
-        <span class="label">Hvor fikk du høre om korpset?</span><br />
-      <textarea name="sHvorKjentMed"></textarea>
+        <h3 class="label">Hvor fikk du høre om korpset?</h3>
+      <textarea name="sHvorKjentMed"><?php echo $sHvorKjentMed; ?></textarea>
       </td>
     </tr>
     <tr>
       <td class="submit" colspan=2>
-        <input id="registrering" type="checkbox" value="registrer" />
+        <input id="registrering" name="sRegistrering" type="checkbox" value="registrer" <?php if(has_post('sRegistrering') && "registrer" == $sRegistrering) echo "checked"; ?> />
         <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
       </td>
-    </tr>
-    <tr class="passord-rad">
-      <td class="label">Passord</td>
-      <td><input type="password" name="sPassord"></td>
     </tr>
     <tr>
       <td colspan=2>
