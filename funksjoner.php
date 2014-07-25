@@ -282,25 +282,22 @@ function logg_ut() {
 	
 function ant_dager_siden($dato){
 	//dager siden siste innlegg
-   			$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($dato,0,10)))/ (60*60*24));
-   			
-   			if ($dagersiden==0){
-   				$dagersiden_som_tekst = " i dag";
-   			}
-			elseif ($dagersiden==1){
-   				$dagersiden_som_tekst = " i går";
-   			}
-			elseif($dagersiden<7){
-				$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
-			}
-			elseif($dagersiden<31){
-				$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
-			}elseif($dagersiden<256){
-				$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
-			}else{
-				$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
-			};
-			return "<i>".$dagersiden_som_tekst."</i>";
+	$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($dato,0,10)))/ (60*60*24));
+	
+	if ($dagersiden==0){
+		$dagersiden_som_tekst = " i dag";
+	} elseif ($dagersiden==1){
+		$dagersiden_som_tekst = " i går";
+	} elseif($dagersiden<7){
+		$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
+	} elseif($dagersiden<31){
+		$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
+	} elseif($dagersiden<256){
+		$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+	} else {
+		$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
+	};
+	return "<i>".$dagersiden_som_tekst."</i>";
 };
 
 function hent_aktiviteter($skip = "", $take = "") {
@@ -449,7 +446,11 @@ function neste_ovelse() {
 	return hent_aktiviteter(0, 1);
 }
 
-function neste_konsert() {
+function neste_konsert_arrangement() {
 	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND type='Konsert' AND slettet=false ORDER BY dato, start LIMIT 1";
 	return hent_og_putt_inn_i_array($sql);
+}
+
+function neste_konsert_nyhet() {
+	return hent_konserter(1);
 }

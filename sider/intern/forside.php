@@ -1,5 +1,4 @@
 <section class="internside">
-	<p>Sorter ettter dato, hvis du snart skal ha med kake blir den å finne høyt opp</p>
 	<h1>Internsiden</h1>
 
 
@@ -52,7 +51,7 @@
 
 	<?php
 		// Neste konsert
-		$neste_konsert = neste_konsert();
+		$neste_konsert = neste_konsert_arrangement();
 		$neste_konsert_tid = strtotime($neste_konsert['dato']." ".$neste_konsert['oppmoetetid']);
 		$neste_konsert_varsle_n_dager_for = 14;
 		$neste_konsert_markert = $neste_konsert_tid - (86400 * $neste_konsert_varsle_n_dager_for) < time();
@@ -85,11 +84,15 @@
 		<?php } ?>
 	</section>
 
-	<h3 style="color: red">Bake kake?
-		<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p></h3>
+
+	<h2>Mer som kommer:</h2>
+	<section>
+	<h3>Bake kake?</h3>
+		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
 	<h3>Bære slagværk?</h3>
 	<h3>Kjøre med henger?</h3>
 
 	<h3>Siste på forum</h3>
 	<h3>Siste nytt</h3>
+	</section>
 </section>

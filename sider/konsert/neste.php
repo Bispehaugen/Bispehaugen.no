@@ -1,15 +1,12 @@
 <?php
 setlocale(LC_TIME, "nb_NO.utf8");
-$konserter = neste_konsert();
-
+$konsert = neste_konsert_nyhet();
 
 echo "<h2><a href='?side=konsert/liste'>Neste konsert</a></h2>";
 
-foreach($konserter as $konsert){
-
-  echo '
+echo '
     <article class="box konsert neste-konsert">
-          '.fancyDato($konsert['konsert_tid'], true).'
+          '.fancyDato(kanskje($konsert, 'konsert_tid'), true).'
           <div class="bilde-og-innhold">
 ';
 
@@ -49,4 +46,3 @@ echo '
         </article>
     ';
 
-}
