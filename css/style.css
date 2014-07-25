@@ -397,11 +397,37 @@ input.error {
 }
 
 .side.forside {
-  background-image:url("../images/3.jpg");
+  background-image:url("../images/front_mobile.jpg");
+}
+@media screen and (min-width: 800px) {
+  .side.forside {
+    background-image:url("../images/front_tablet.jpg");
+  }
+}
+@media screen and (min-width: 1024px) {
+  .side.forside {
+    background-image:url("../images/front_large.jpg");
+  }
+}
+@media screen and (min-width: 2048px) {
+  .side.forside {
+    background-image:url("../images/front_full.jpg");
+  }
 }
 
+
 .side.spilleoppdrag {
-  background-image:url("../images/1.jpg");
+  background-image:url("../images/spille_mobile.jpg");
+}
+@media screen and (min-width: 800px) {
+  .side.forside {
+    background-image:url("../images/spille_tablet.jpg");
+  }
+}
+@media screen and (min-width: 1024px) {
+  .side.forside {
+    background-image:url("../images/spille_full.jpg");
+  }
 }
 
   .side .content {
