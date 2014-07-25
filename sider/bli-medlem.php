@@ -25,8 +25,8 @@ if(has_post("sEpost")){
 	$sRegistrering = post("sRegistrering");
 
 	# Definerer headere til mailen som skal sendes
-	$from = "From: Bispehaugen.no Web-skjema <buk-webskjema@bispehaugen.no>";
-	$to = 'tkthekiller@gmail.com';//'buk-webskjema@stud.ntnu.no';
+	$from = "From: Bispehaugen.no<ikke-svar@bispehaugen.no>";
+	$to = 'buk-webskjema@stud.ntnu.no';
 	$replyto = "Reply-To: $sNavn <$sEpost>";
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 	$realfrom = "Real-From: $realfrom_tmp";
@@ -38,7 +38,8 @@ if(has_post("sEpost")){
 	     die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
 	 }
 	
-	$message="Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
+	$message="
+	Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
 	nye medlemmer. Husk at Bispehaugen lover å ta kontakt innen en uke.
 	
 	NAVN:           $sNavn
@@ -55,7 +56,7 @@ if(has_post("sEpost")){
 
 	if ($sRegistrering == "registrer") {
 		$message .= "
-		Personen ønsker å opprette en bruker
+	Personen ønsker å opprette en bruker
 		";
 	}
 	
