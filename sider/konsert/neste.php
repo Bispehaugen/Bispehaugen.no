@@ -39,7 +39,7 @@ echo '
       echo ' / ' . $konsert['student_pris'] . ',-';
     }
 
-echo "</p>"
+echo "</p>";
 }
 
 echo '
