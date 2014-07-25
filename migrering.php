@@ -511,9 +511,18 @@ migrering(10, "Ukjente datoer blir satt til 2004",
 	"UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` = \"0000-00-00 00:00:00\";"
 );
 
+migrering(11, "Pris 0 som standard er uheldig", 
+	"ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NOT NULL",
+	"ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NOT NULL"
+);
 	
+migrering(12, "Standarden var 0 før, blank nå, kunne vært null, men jeg er lat",
+	"UPDATE `nyheter` SET normal_pris = \"\" WHERE normal_pris = \"0\"",
+	"UPDATE `nyheter` SET student_pris = \"\" WHERE student_pris = \"0\""
+);
+
 	/*
-migrering(11, "Neste kommer her", 
+migrering(13, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */
