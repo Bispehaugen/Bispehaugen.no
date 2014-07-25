@@ -420,12 +420,12 @@ input.error {
   background-image:url("../images/spille_mobile.jpg");
 }
 @media screen and (min-width: 800px) {
-  .side.forside {
+  .side.spilleoppdrag {
     background-image:url("../images/spille_tablet.jpg");
   }
 }
 @media screen and (min-width: 1024px) {
-  .side.forside {
+  .side.spilleoppdrag {
     background-image:url("../images/spille_full.jpg");
   }
 }
