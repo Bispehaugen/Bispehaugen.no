@@ -2,4 +2,3 @@
 <p>Vi fant dessverre ikke siden :(</p>
 
 <?php
-die();

@@ -1,7 +1,9 @@
 <?php
 setlocale(LC_TIME, "nb_NO.utf8");
 // Vis enkelnyhet
-if(has_get('id') ){
+if(!has_get('id') ){
+	throw new Exception();	
+}
 
 	$id = get('id');
 	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid FROM `nyheter` WHERE nyhetsid=".$id;
@@ -45,6 +47,3 @@ if(has_get('id') ){
 	<div class="clearfix"></div>
 	<?php
 	}
-} else {
-	inkluder_side_fra_undermappe("ikke_funnet");
-}

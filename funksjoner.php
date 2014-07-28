@@ -87,6 +87,17 @@ function bare_tidspunkt($datetime) {
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
+	if (!er_logget_inn()) {
+		$reservertePlasser = Array("intern/", "forum/", "bilder/", "noter/");
+		
+		foreach($reservertePlasser as $plass) {
+			if ( strpos($sidenavn, $plass) === 0) {
+				$sidenavn = "ikke_funnet";
+				break;
+			}
+		}
+	}
+	
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
@@ -94,7 +105,11 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
-			include $php_fil;
+			try {
+				include $php_fil;
+			} catch (Exception $e) {
+			    include "sider/ikke_funnet.php";
+			}
 		} else {
 			include "sider/ikke_funnet.php";
 		}

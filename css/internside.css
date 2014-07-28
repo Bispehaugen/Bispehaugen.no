@@ -27,10 +27,13 @@
 }
 
 .widget.profil {
+	display: none;
+	
 	width: 13em;
-	display: inline-block;
 	float: right;
 	padding: 1em;
+	
+	border: none;
 }
 
 .widget.profil h3 {
@@ -50,3 +53,109 @@
 .widget.profil .endre {
 	margin: 0;
 }
+
+.footer .intern.bunn {
+	text-align: center;
+	color: white;
+}
+
+.footer .intern.bunn a {
+	color: white;
+}
+
+
+.profilbilde {
+	display: none; /* bare på desktop, ikke mobil */
+}
+
+.liten.profilbilde {
+  height: 25px;
+  vertical-align: middle;
+}
+
+li.profilbilde {
+  position: relative;
+}
+
+.arkiv-valg {
+	padding: 0;
+	background-color: #efefef;
+}
+
+.profil-lenke {
+  text-transform: none;
+}
+
+.profilbilde-valg li, .arkiv-valg li {
+    padding: 0em 1em;
+}
+
+.profilbilde-valg a, .arkiv-valg a {
+  cursor: pointer;
+}
+
+.profilbilde-valg li:not(:first-child) {
+  border-top: 1px dotted #ccc;
+}
+
+.mobil.brukervalg {
+	padding: 0;
+}
+
+.praktisk p {
+	padding-left: 1em;
+}
+
+.praktisk h3 {
+	margin-top: 2em;
+}
+
+.praktisk .submit {
+	margin-top: 0.5em;
+}
+
+.styret-og-komiteer {
+	margin-top: 4em;
+}
+
+.mobil.brukervalg .valg a {
+	border: 1px solid grey;
+	padding: 1em;
+	margin: 0.5em;
+	width: 10em;
+	display: inline-block;
+}
+
+@media screen and (min-width: 800px) {
+	.widget.profil {
+		display: inline-block;
+	}
+	
+	.profilbilde-valg, .arkiv-valg {
+		display: none;
+		position: absolute;
+		
+		line-height: 2.5em;
+		text-align: left;
+		background-color: white;
+		padding: 0em;
+		width: 11em;
+		
+		border: 1px solid #ccc;
+	}
+	
+	.profilbilde {
+		display: inline-block;
+	}
+	
+	.footer .intern.bunn {
+		display: none;	
+	}
+	
+	.halv {
+		width: 48%;
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+
