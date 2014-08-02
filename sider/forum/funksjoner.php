@@ -52,7 +52,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		echo "<header>";
 		
 		if (!empty($b['foto'])) {
-			echo "<img class='foto' src='".$b['foto']."' />";
+			echo "<span class='foto'><img src='".$b['foto']."' /></span>";
 		}
 		echo "<section class='info'>";
 		echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
@@ -188,7 +188,7 @@ function forum_list_tema($forumid, $skip) {
 			} else {
 				$foto = "icon_logo_hvit.png";
 			}
-			echo "<img class='foto' src='".$foto."' />";
+			echo "<span class='foto'><img src='".$foto."' /></span>";
 			echo "<section class='info'>";
 			echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
 			if ($tid != 0) {
