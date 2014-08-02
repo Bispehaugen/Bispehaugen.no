@@ -48,6 +48,8 @@ Webkom";
 				$feilmeldinger[] = "Det oppstod en feil under sendelse av epost.";
 			}
  		}
+	} else {
+		$epost_sendt = true;
 	}
 }
 
