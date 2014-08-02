@@ -534,8 +534,21 @@ migrering(14, "Legger til rettigheter på forum",
 );
 
 
+migrering(15, "Legger til nye forum_innlegg_ny",
+"INSERT INTO `forum_innlegg_ny` SELECT * FROM `forum_innlegg` ;",
+"UPDATE `forum_innlegg_ny` SET `skrevetavid` = '5' WHERE `forum_innlegg_ny`.`innleggid` =4832",
+"UPDATE `forum_innlegg_ny` SET  `skrevetavid` =  '4' WHERE  `forum_innlegg_ny`.`skrevetavid` is NULL",
+"UPDATE `forum_innlegg_ny` SET  `skrevetavid` =  '111' WHERE  `forum_innlegg_ny`.`skrevetavid` = 0",
+"UPDATE medlemmer, forum_innlegg_ny SET skrevetavid=medlemmer.medlemsid WHERE CONCAT(medlemmer.fnavn,\" \", medlemmer.enavn)=forum_innlegg_ny.skrevetav"
+);
+
+
+migrering(16, "Legger til glemt passord token på medlemmer",
+"ALTER TABLE  `medlemmer` ADD  `bytt_passord_token` VARCHAR( 40 ) NULL DEFAULT NULL ;"
+);
+
 	/*
-migrering(15, "Neste kommer her", 
+migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
 );
 */

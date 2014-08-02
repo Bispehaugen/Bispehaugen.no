@@ -120,6 +120,19 @@ ul {
 	background: white;
 }
 
+.login-box .overskrift {
+	display: inline-block;
+}
+
+.login-box .glemt-passord {
+	display: inline-block;
+	float: right;
+}
+
+.login-box .glemt-passord a {
+	color: rgba(34, 41, 51, 1);
+}
+
 .login .feilmelding {
 	display: none;	
 }

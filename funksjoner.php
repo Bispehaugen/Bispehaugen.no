@@ -397,3 +397,35 @@ function neste_konsert_arrangement() {
 function neste_konsert_nyhet() {
 	return hent_konserter(1);
 }
+
+function epost($to,$replyto,$subject,$message,$extra_header = "") {
+	$from = "From: Bispehaugen.no<ikke-svar@bispehaugen.no>";
+	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
+	$realfrom = "Real-From: $realfrom_tmp";
+	
+	$header="$from\r\n"."$replyto\r\n"."$realfrom";
+	if (!empty($extra_header)) {
+		$header .= "\r\n".$extra_header;
+	}
+
+	return mail($to,$subject,$message,$header);
+}
+
+function feilmeldinger($feilmeldinger) {
+	$html = "";
+	
+	if(!empty($feilmeldinger)) {
+		
+		$html = '<ul class="feilmeldinger">';
+		
+		foreach($feilmeldinger as $feilmelding){
+			$html .= "<li class='feil'>$feilmelding</li>";
+		}
+		$html .= "</ul>";
+	}
+	return $html;
+}
+
+function generer_passord_hash($passord) {
+	return sha1($passord);
+}

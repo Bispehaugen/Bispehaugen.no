@@ -67,14 +67,9 @@ if(has_post("sEpost")){
 	$sTelefon = post("sTelefon");
 
 	# Definerer headere til mailen som skal sendes
-	$from = "From: !!BUK web-skjema!! <buk-webskjema@stud.ntnu.no>";
 	$to = 'buk-webskjema@stud.ntnu.no';
 	$replyto = "Reply-To: $sNavn <$sEpost>";
-	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
-	$realfrom = "Real-From: $realfrom_tmp";
 	$subject = "Nytt spilleoppdrag registrert via web-skjema";
-	
-	$header="$from\r\n"."$replyto\r\n"."$realfrom";
 	
 	 if (preg_match(SPAMFILTER, $sAnnet) || preg_match(SPAMFILTER, $sNavn) || preg_match(SPAMFILTER, $sOrganisasjon) || preg_match(SPAMFILTER, $sEpost) || preg_match(SPAMFILTER, $sTelefon)){
 	     die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
@@ -103,7 +98,7 @@ if(has_post("sEpost")){
 	elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
 	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
 	} 
-	//elseif (mail($to,$subject,$message,$header)) { // TODO: faktisk send mail igjen
+	//elseif (epost($to,$replyto,$subject,$message)) { // TODO: faktisk send mail igjen
 	elseif (true) {
 		echo "<h2>Takk for interessen!</h3><p>Vi vil ta kontakt så fort vi kan.</p>";
 		$har_alle_feltene_utfylt_og_sendt_mail = true;
@@ -117,13 +112,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 	<form action="?side=spilleoppdrag/vis" method="post">
 		<h2>Kontaktskjema</h2>
 
-		<ul class="feilmeldinger">
-			<?php 
-				foreach($feilmeldinger as $feilmelding){
-					echo "<li class='feil'>".$feilmelding."</li>";
-				}
-			?>
-		</ul>
+		<?php echo feilmeldinger($feilmeldinger); ?>
 		<p>
 			<input type="text" name="sNavn" placeholder="Navn" value="<?php echo $sNavn; ?>">
 		</p>

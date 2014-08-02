@@ -143,16 +143,8 @@
     });
     </script>
 
-<?php if (!empty($feilmeldinger)) { ?>
-	<ul class="feilmeldinger">
 <?php 
-	foreach($feilmeldinger as $feilmelding){
-		echo "<li class='feil'>$feilmelding</li>";
-	}
-?>
-	</ul>
-<?php
-}
+echo feilmeldinger($feilmeldinger);
 
 $aktivitetsdato = kanskje($aktiviteter, 'dato');
 $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsdato);
