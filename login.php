@@ -59,8 +59,8 @@
 	
 	logg_inn($medlemsid, $rettigheter);
 	
-	if (has_post("ajax")){
-		header('Location: index.php');
+	if (!has_post("ajax")){
+		header('Location: index.php?side=forside');
 	} else {
 		echo "{} && {login: true}";
 	}
