@@ -77,6 +77,8 @@
 .forum .foto {
 	width: 40px;
 	margin-right: 5px;
+	text-align: center;
+	display: inline-block;
 }
 
 .forum .foto img {
