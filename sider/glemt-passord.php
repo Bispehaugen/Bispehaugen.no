@@ -44,6 +44,8 @@ Webkom";
 	
 			if (epost($to,$replyto,$subject,$message)) {
 				$epost_sendt = true;
+			} else {
+				$feilmeldinger[] = "Det oppstod en feil under sendelse av epost.";
 			}
  		}
 	}
@@ -66,6 +68,8 @@ Webkom";
 <p>Hvis du ikke får epost med en gang, sjekk Spam-filteret ditt, hvis ikke, prøv en annen epost.</p>
 <?php
 }
+
+echo feilmeldinger($feilmeldinger);
 ?>
 
 <form action="?side=glemt-passord" method="POST">
