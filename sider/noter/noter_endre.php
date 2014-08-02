@@ -54,13 +54,18 @@
 		
 	echo " 
 		<form method='post' action='?side=noter/noter_endre'>
-			<table>
-				<th>Endre notesett</th><th></th>
-				<tr><td>Tittel:</td><td><input type='text' name='tittel' value='".$noter['tittel']."'></td></tr>
+			<table>";
+				if(has_get('noteid')){
+					echo"<th>Endre notesett</th><th></th>";
+				}
+				else{
+					echo"<th>Nytt notesett</th><th></th>";
+				};
+				echo"<tr><td>Tittel:</td><td><input type='text' name='tittel' value='".$noter['tittel']."'></td></tr>
 				<tr><td>Komponist:</td><td><input type='text' name='komponist' value='".$noter['komponist']."'></td></tr>
 				<tr><td>Arrangør:</td><td><input type='text' name='arrangor' value='".$noter['arrangor']."'></td></tr>
 				<tr><td>Arkivnr:</td><td><input type='text' name='arkivnr' value='".$noter['arkivnr']."'></td></tr>
-				<tr><td>Filplassering:</td><td><input type='text' name='filpath' value='".$noter['filpath']."' disabled></td></tr>
+				<tr><td>Filplassering:</td><td><input type='text' name='filpath' value='".$noter['filpath']."' readonly></td></tr>
 				<tr><td>Besetningstype:</td><td>
 					<select name='besetningsid'>";
 					foreach($besetningstyper as $besetning){
@@ -88,5 +93,6 @@
 		<li>- Enn så lenge er det ikke mulig å slette notesett</li>
 		</ul>
 		</p>
+		HER KOMMER EN BOKS FOR � VELGE FILER
 	";
 ?>
