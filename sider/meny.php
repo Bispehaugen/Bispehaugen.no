@@ -8,7 +8,7 @@ if(er_logget_inn()){
 	if (!erForside()) {
 ?>
 <ul class="menyliste">
-	<li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /></a></li>
+	<li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /> Hjem</a></li>
     <li><a href="?side=nyheter/liste">Nyheter</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag/vis">Spilleoppdrag</a></li>
