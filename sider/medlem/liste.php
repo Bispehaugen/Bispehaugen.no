@@ -29,15 +29,19 @@
     echo "<h2 class='overskrift-som-er-inline-block'>Medlemmer</h2>";
     
     if (er_logget_inn()) {
-      echo "<h3 class='lenke-som-er-inline-med-overskrift'>";
-      //lager en link til å vise alle
-      if(get('alle')==0){
-        echo" <a href='?side=medlem/liste&alle=1'>Vis også sluttede <i class='fa fa-users'></i></a>";
-      } else {
-        echo" <a href='?side=medlem/liste&alle=0'>Vis kun aktive <i class='fa fa-user'></i></a>";
-      }
+    	echo "<h3 class='lenke-som-er-inline-med-overskrift'>";
+    	//lager en link til å vise alle
       
-      echo "</h3>";
+      	if(session('rettigheter')>1){
+			echo"<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
+		}
+		if(get('alle')==0){
+	    	echo" <a href='?side=medlem/liste&alle=1'><i class='fa fa-users'></i> Vis også sluttede</a>";
+	 	} else {
+	     	echo" <a href='?side=medlem/liste&alle=0'><i class='fa fa-user'></i> Vis kun aktive</a>";
+		}
+      
+		echo "</h3>";
     }
 
     echo "<section class='medlemsliste'>";

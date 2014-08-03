@@ -1,8 +1,7 @@
 <?php 
-	//TODO: mangler fortsatt test på tidsformat, timepicker, og en liste for å koble slagverksbærere til medlemmer
+	//TODO: mangler fortsatt test på tidsformat, og en liste for å koble slagverksbærere til medlemmer
 	
-	
-	//funksjonalitet
+	$feilmeldinger = Array();
 	
 	//sjekker om man er admin
 	if($_SESSION['rettigheter']<2){
@@ -23,8 +22,6 @@
 		$sluttid = post('sluttid');
 		$hjelpere = post('hjelpere');
 		$kakebaker = post('kakebaker');
-
-		$feilmeldinger = Array();
 
 		if (!isset($tittel) || $tittel=="") { 
 		   $feilmeldinger[] =  "Du må fylle inn tittel"; 
