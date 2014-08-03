@@ -119,11 +119,24 @@ li.profilbilde {
 }
 
 .mobil.brukervalg .valg a {
-	border: 1px solid grey;
+	border: 1px solid gray;
 	padding: 1em;
 	margin: 0.5em;
 	width: 10em;
 	display: inline-block;
+}
+
+.nyheter {
+	margin-top: 5em;
+}
+
+.siste-poster-intern .innlegg {
+	background-color: #efefef;
+	border-color: #ccc;
+}
+
+.forum.siste-forum h2 {
+	margin: 0em 0em 1em 0em;
 }
 
 @media screen and (min-width: 800px) {

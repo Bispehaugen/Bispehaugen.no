@@ -13,13 +13,7 @@
 	//Her legges det inn en oversikt over alle forumene
     list_forum();
 	
-	$sql = "SELECT fi . * , ft.tittel as innleggtittel, f.tittel as tematittel
-			FROM forum_innlegg_ny AS fi
-			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
-			LEFT JOIN forum AS f ON fi.forumid = f.forumid
-			WHERE f.rettigheter <= " . session('rettigheter') . "
-			ORDER BY skrevet DESC 
-			LIMIT 5";
+	$sql = siste_forumposter_sql(5);
 
 	echo "<section class='forum'>";
 	echo "<h2>Siste poster</h2>";

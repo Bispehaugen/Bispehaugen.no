@@ -7,9 +7,12 @@
 	
 	?>
 	
-	<h2><a href="?side=nyheter/liste" title="Les flere nyheter">Nyheter</a></h2>
-	
+	<h2 class='overskrift-som-er-inline-block'><a href="?side=nyheter/liste" title="Les flere nyheter">Nyheter</a></h2>
+
 	<?php
+	if(session('rettigheter')>1 && !isset($antall_nyheter)){
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=nyheter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
+	}
 	
 	foreach($nyheter as $nyhet){
 				

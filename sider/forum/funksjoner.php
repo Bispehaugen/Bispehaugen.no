@@ -348,3 +348,15 @@ function sett_sisteinnleggid($temaid){
 	};
 	mysql_query($sql);
 }
+
+function siste_forumposter_sql($antall = 5) {
+	$sql = "SELECT fi . * , ft.tittel as innleggtittel, f.tittel as tematittel
+			FROM forum_innlegg_ny AS fi
+			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
+			LEFT JOIN forum AS f ON fi.forumid = f.forumid
+			WHERE f.rettigheter <= " . session('rettigheter') . "
+			ORDER BY skrevet DESC 
+			LIMIT ".$antall;
+	return $sql;
+}
+
