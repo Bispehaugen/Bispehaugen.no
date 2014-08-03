@@ -547,6 +547,12 @@ migrering(16, "Legger til glemt passord token på medlemmer",
 "ALTER TABLE  `medlemmer` ADD  `bytt_passord_token` VARCHAR( 40 ) NULL DEFAULT NULL ;"
 );
 
+migrering(17, "Melding på weblog", 
+"ALTER TABLE  `weblog` ADD  `melding` TEXT NULL");
+
+migrering(18, "Fjerner begrensning på weblog id",
+"ALTER TABLE  `weblog` CHANGE  `id`  `id` INT NOT NULL AUTO_INCREMENT");
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

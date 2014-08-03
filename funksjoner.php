@@ -125,7 +125,12 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$array = Array();
 
 	if ($query === false) {
-		die("Oppsto en feil i sql: " . $sql);
+		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"].", sql:'".$sql."'}");
+		
+		if ($_SESSION['rettigheter']>1) {
+			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"].", sql: ".$sql);
+		}
+		die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
 	}
 
 	while($row = mysql_fetch_assoc($query)){
@@ -231,9 +236,23 @@ function hent_konserter($antall = "", $type="nestekonsert"){
 function logg_inn($medlemsid, $rettigheter){
 	$_SESSION["medlemsid"]   = $medlemsid;
 	$_SESSION["rettigheter"] = $rettigheter;
+	
+	$bruker = innlogget_bruker();
+	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
+	
+	$melding = $navn . " logget nettopp inn med rettighetene: ".$rettigheter;
+	
+	logg("login", $melding);
 }
 
 function logg_ut() {
+	$bruker = innlogget_bruker();
+	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
+	
+	$melding = $navn . " logget ut";
+	
+	logg("logout", $melding);
+	
 	// Slett sessions
 	$_SESSION["medlemsid"]   = "";
 	$_SESSION["rettigheter"] = "";
@@ -428,4 +447,9 @@ function feilmeldinger($feilmeldinger) {
 
 function generer_passord_hash($passord) {
 	return sha1($passord);
+}
+
+function logg($type, $melding) {
+	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', ".$_SESSION["medlemsid"].", '$melding', '".date("Y-m-d H:i:s")."')";
+	mysql_query($sql);
 }
