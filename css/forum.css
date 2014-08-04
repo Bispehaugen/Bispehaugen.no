@@ -1,22 +1,22 @@
-.forum td{
+.forum td {
 	padding: 0.5em;
-	border-bottom:1px dotted black;
+	border-bottom: 1px dotted black;
 }
 
-.forum textarea{ 
+.forum textarea {
 	width: 90%;
 	min-height: 6em;
 }
 
 .forum .overskrift, .forum .overskrift a {
-	margin: 1em 0em 0em 0em;
+	padding-left: 0.5em;
 }
 
-.liten_tekst{
-	font-size:0.8em;
+.liten_tekst {
+	font-size: 0.8em;
 }
 
-.ulest{
+.ulest {
 	background-color: #FFCCCC;
 }
 
@@ -31,10 +31,9 @@
 	padding: 1em 1em 0em 1em;
 }
 
-.forum-innlegg-liste .innlegg:before,
-.forum-innlegg-liste .innlegg:after {
-    content: " ";
-    display: table;
+.forum-innlegg-liste .innlegg:before, .forum-innlegg-liste .innlegg:after {
+	content: " ";
+	display: table;
 }
 
 .forum-innlegg-liste ul {
@@ -42,59 +41,66 @@
 }
 
 .forum-innlegg-liste .innlegg:after {
-    clear: both;
+	clear: both;
 }
 
-	.forum-innlegg-liste .innlegg header {
+.forum-innlegg-liste .innlegg header {
 
-	}
+}
 
-	.forum-innlegg-liste .innlegg article {
-	}
+.forum-innlegg-liste .innlegg article {
+}
 
-	.forum-innlegg-liste .innlegg header .plassering {
-		padding: 0;
-		display: inline-block;
-	}
+.forum-innlegg-liste .innlegg header .plassering {
+	padding: 0;
+	display: inline-block;
+}
 
-	.forum-innlegg-liste .innlegg header .tools {
-		display: inline-block;
-		float: right;
-	}
+.forum-innlegg-liste .innlegg header .tools {
+	display: inline-block;
+	float: right;
+}
 
-	.forum-innlegg-liste .innlegg header .tools .tool {
-		margin-left: 0.5em;
-	}
+.forum-innlegg-liste .innlegg header .tools .tool {
+	margin-left: 0.5em;
+}
 
-	.forum-innlegg-liste .innlegg .tekst {
-		padding: 0.5em 0em 0.5em 0em;
-		word-wrap: break-word;
-	}
+.forum-innlegg-liste .innlegg .tekst {
+	padding: 0.5em 0em 0.5em 0em;
+	word-wrap: break-word;
+}
 
-	.forum-innlegg-liste .innlegg a {
-		color: inherit;
-	}
+.forum-innlegg-liste .innlegg a {
+	color: inherit;
+}
 
-	.forum .foto {
-		width: 40px;
-		height: 40px;
-		margin-right: 5px;
-	}
+.forum .foto {
+	width: 40px;
+	margin-right: 5px;
+	text-align: center;
+	display: inline-block;
+}
 
-	.forum .navn {
-		margin: 0;
-		font-style: normal;
-	}
+.forum .foto img {
+	max-width: 40px;
+	max-height: 40px;
+}
 
-	.forum .info {
-		display: inline-block;
-		vertical-align: top;
-	}
 
-	.forum .tekst {
-		line-height: 1.3em;
-		font-size: 1em;
-	}
+.forum .navn {
+	margin: 0;
+	font-style: normal;
+}
+
+.forum .info {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.forum .tekst {
+	line-height: 1.3em;
+	font-size: 1em;
+}
 
 .forum .paameldingsliste {
 	padding: 1em;
@@ -126,7 +132,6 @@
 	margin: 0.5em;
 }
 
-
 .forum.temaliste .tema {
 	background: rgba(41, 49, 61, 0.6);
 	padding: 0;
@@ -139,15 +144,14 @@
 
 .forum.temaliste .tema:first-of-type {
 	/*
-	border-top-left-radius: 10px 10px;
-	border-top-right-radius: 10px 10px;
-	*/
+	 border-top-left-radius: 10px 10px;
+	 border-top-right-radius: 10px 10px;
+	 */
 	margin-top: 2em;
 }
 
 .forum.temaliste .overskrift {
 	display: inline-block;
-
 	font-size: 1.2em;
 	font-style: normal;
 	padding: 1em 0em 1em 1em;
@@ -170,7 +174,6 @@
 }
 .forum.pagination li {
 	display: inline-block;
-
 	padding: 0.5em;
 	margin: 0.2em;
 	border: 1px solid #eaeaea;
@@ -183,7 +186,6 @@
 .forum.pagination li.aktiv a {
 	color: rgba(34, 41, 51, 1);
 }
-
 
 .forum.pagination li.dotdotdot {
 	border: 0px none;
@@ -198,7 +200,6 @@
 	display: inline-block;
 	display: -webkit-flex;
 	display: flex;
-	
 	flex-flow: row wrap;
 	justify-content: space-around;
 }

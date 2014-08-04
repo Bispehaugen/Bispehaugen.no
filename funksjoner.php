@@ -87,6 +87,17 @@ function bare_tidspunkt($datetime) {
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
+	if (!er_logget_inn()) {
+		$reservertePlasser = Array("intern/", "forum/", "bilder/", "noter/");
+		
+		foreach($reservertePlasser as $plass) {
+			if ( strpos($sidenavn, $plass) === 0) {
+				$sidenavn = "ikke_funnet";
+				break;
+			}
+		}
+	}
+	
 	$php_fil = $mappenavn."/".$sidenavn.".php";
 	
 	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
@@ -94,7 +105,11 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
-			include $php_fil;
+			try {
+				include $php_fil;
+			} catch (Exception $e) {
+			    include "sider/ikke_funnet.php";
+			}
 		} else {
 			include "sider/ikke_funnet.php";
 		}
@@ -110,7 +125,12 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$array = Array();
 
 	if ($query === false) {
-		die("Oppsto en feil i sql: " . $sql);
+		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"].", sql:'".$sql."'}");
+		
+		if ($_SESSION['rettigheter']>1) {
+			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"].", sql: ".$sql);
+		}
+		die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
 	}
 
 	while($row = mysql_fetch_assoc($query)){
@@ -137,7 +157,7 @@ function hent_brukerdata($medlemid = ""){
 
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra 
+					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset
 				FROM `medlemmer`";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
@@ -216,9 +236,23 @@ function hent_konserter($antall = "", $type="nestekonsert"){
 function logg_inn($medlemsid, $rettigheter){
 	$_SESSION["medlemsid"]   = $medlemsid;
 	$_SESSION["rettigheter"] = $rettigheter;
+	
+	$bruker = innlogget_bruker();
+	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
+	
+	$melding = $navn . " logget nettopp inn med rettighetene: ".$rettigheter;
+	
+	logg("login", $melding);
 }
 
 function logg_ut() {
+	$bruker = innlogget_bruker();
+	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
+	
+	$melding = $navn . " logget ut";
+	
+	logg("logout", $melding);
+	
 	// Slett sessions
 	$_SESSION["medlemsid"]   = "";
 	$_SESSION["rettigheter"] = "";
@@ -381,4 +415,41 @@ function neste_konsert_arrangement() {
 
 function neste_konsert_nyhet() {
 	return hent_konserter(1);
+}
+
+function epost($to,$replyto,$subject,$message,$extra_header = "") {
+	$from = "From: Bispehaugen.no<ikke-svar@bispehaugen.no>";
+	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
+	$realfrom = "Real-From: $realfrom_tmp";
+	
+	$header="$from\r\n"."$replyto\r\n"."$realfrom";
+	if (!empty($extra_header)) {
+		$header .= "\r\n".$extra_header;
+	}
+
+	return mail($to,$subject,$message,$header);
+}
+
+function feilmeldinger($feilmeldinger) {
+	$html = "";
+	
+	if(!empty($feilmeldinger)) {
+		
+		$html = '<ul class="feilmeldinger">';
+		
+		foreach($feilmeldinger as $feilmelding){
+			$html .= "<li class='feil'>$feilmelding</li>";
+		}
+		$html .= "</ul>";
+	}
+	return $html;
+}
+
+function generer_passord_hash($passord) {
+	return sha1($passord);
+}
+
+function logg($type, $melding) {
+	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', ".$_SESSION["medlemsid"].", '$melding', '".date("Y-m-d H:i:s")."')";
+	mysql_query($sql);
 }

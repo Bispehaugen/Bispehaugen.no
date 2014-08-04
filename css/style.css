@@ -120,6 +120,19 @@ ul {
 	background: white;
 }
 
+.login-box .overskrift {
+	display: inline-block;
+}
+
+.login-box .glemt-passord {
+	display: inline-block;
+	float: right;
+}
+
+.login-box .glemt-passord a {
+	color: rgba(34, 41, 51, 1);
+}
+
 .login .feilmelding {
 	display: none;	
 }
@@ -257,6 +270,10 @@ nav {
 
   .meny {
     cursor: pointer;
+  }
+  
+  .meny.mobil {
+  	background-color: white;
   }
 
   @media screen and (min-width: 800px) {
@@ -799,16 +816,6 @@ table .aarskille {
     padding: 0px;
 }
 
-#liten_profil {
-    clear: both;
-    text-align: left;
-}
-
-#liten_profil .handlinger {
-    margin: 1em 0.5em;
-    padding: 0;
-}
-
 .handlinger li {
     margin-bottom: 0.5em;
 }
@@ -820,53 +827,6 @@ table .aarskille {
 
 nav .arkiv {
   cursor: pointer;
-}
-
-.profil_bilde {
-    height: 50px;
-    max-width: 50px;
-    
-    position: relative;
-    bottom: 1.5em;
-    left: 3em;
-}
-
-.liten.profilbilde {
-  height: 25px;
-  vertical-align: middle;
-}
-
-li.profilbilde {
-  position: relative;
-}
-
-.profil-lenke {
-  text-transform: none;
-}
-
-.profilbilde-valg, .arkiv-valg {
-  display: none;
-  position: absolute;
-
-  line-height: 2.5em;
-  text-align: left;
-  background-color: white;
-  padding: 0em;
-  width: 11em;
-
-  border: 1px solid #ccc;
-}
-
-.profilbilde-valg li, .arkiv-valg li {
-    padding: 0em 1em;
-}
-
-.profilbilde-valg a, .arkiv-valg a {
-  cursor: pointer;
-}
-
-.profilbilde-valg li:not(:first-child) {
-  border-top: 1px dotted #ccc;
 }
 
 .hidden {
@@ -1033,7 +993,7 @@ li.profilbilde {
 	left: 6em;
 }
 
-footer.map {
+#map_canvas {
     width: 100%;
     height: 400px;
     background-color: #CCC;
@@ -1093,4 +1053,8 @@ footer.map {
 .lenke-som-er-inline-med-overskrift {
   float: right;
   display: inline-block;
+}
+
+.lenke-som-er-inline-med-overskrift a {
+	margin-left: 1em;	
 }

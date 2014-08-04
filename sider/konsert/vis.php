@@ -1,10 +1,10 @@
 <?php
 
-if(has_get('id')) {
-	$id = get('id');
-} else {
-	include_once("sider/ikke_funnet.php");
+if(!has_get('id')) {
+	throw new Exception();	
 }
+
+$id = get('id');
 
 $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";
 
@@ -63,4 +63,3 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
 		<p><?php echo nl2br($konsert['hoveddel']); ?></p>
 	
 	</article>
-

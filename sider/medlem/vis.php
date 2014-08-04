@@ -2,14 +2,12 @@
 //TODO Bilde og fikse kolonnebredde
 	
 	//funksjonalitet
-
-	
 	$id=get('id');
 	
-	if (empty($id)) {
-		inkluder_side_fra_undermappe("ikke_funnet");	
+	if(!has_get('id') || empty($id)) {
+		throw new Exception();
 	}
-		
+
 	//henter valgte medlem fra databasen
 	$medlem = hent_brukerdata($id);
 	

@@ -10,7 +10,7 @@
 	}
 	
 	$username=post("username");
-	$password=sha1(post("password"));
+	$password=generer_passord_hash(post("password"));
 	$password_md5=md5(post("password"));
 	
 	#Sjekker om passordet finnes i medlemmer-tabellen
@@ -43,7 +43,7 @@
 		$sql="UPDATE medlemmer SET passord='".$password."' WHERE brukernavn='".$username."'";
 		mysql_query($sql);
 		
-	};
+	}
 
 	#Sjekker rettigheter
 	$sql="SELECT rettigheter FROM medlemmer WHERE brukernavn='".$username."'";
@@ -59,8 +59,8 @@
 	
 	logg_inn($medlemsid, $rettigheter);
 	
-	if (has_post("ajax")){
-		header('Location: index.php');
+	if (!has_post("ajax")){
+		header('Location: index.php?side=forside');
 	} else {
 		echo "{} && {login: true}";
 	}

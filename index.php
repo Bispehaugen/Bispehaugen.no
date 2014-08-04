@@ -118,17 +118,6 @@ $innhold = ob_get_clean();
 			<div class="clearfix"></div>
     	</div>
     	
-<?php
-#sjekker om det er satt noen errors og evt. skriver dem ut
-if (isset($_SESSION["Errors"])) {
-	echo "<div class='errors'>
-		" . $_SESSION["Errors"] . "
-		</div>";
-	
-	unset($_SESSION["Errors"]);
-}
-?>
-    	
 	<?php if(!er_logget_inn() && erForside()) { ?>
 		<section class="login">
 			<div class="errors feilmelding">
@@ -136,6 +125,7 @@ if (isset($_SESSION["Errors"])) {
 			</div>
 			<div class="login-box">
 				<h2 class="overskrift">Internsiden</h2>
+				<p class="glemt-passord"><a href="?side=glemt-passord">Glemt passord?</a></p>
 				<form action="login.php" method="POST">
 					<label><input id="username" name="username" type="text" placeholder="Brukernavn" required="required" /><i class="fa fa-2x fa-user"></i></label>
 					<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
@@ -196,7 +186,7 @@ if (isset($_SESSION["Errors"])) {
 <script>
 
     $("nav .meny").click(function(event) {
-        $("nav.top ul").toggle();
+        $("nav .menyliste").toggle();
     });
 
 	<?php if (er_logget_inn()) { ?>
@@ -342,33 +332,18 @@ if (isset($_SESSION["Errors"])) {
     
 </script>
 
-<?php if (visKartNederst()) { ?>
-<footer id="map_canvas" class="map"></footer>
 
-<script>
-function initialize() {
-    var mapCanvas = document.getElementById('map_canvas');
-    var latLong = new google.maps.LatLng(63.431466, 10.414018)
-    var mapOptions = {
-      center: latLong,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    
-    var map = new google.maps.Map(mapCanvas, mapOptions);
-    
-    var marker = new google.maps.Marker({
-        position: latLong,
-        map: map,
-        title: "Bispehaugen Skole"
-     });
-     
-     marker.setMap(map);
-}
+<footer class="footer">
+	<?php
+	if (er_logget_inn()) {
+		inkluder_side_fra_undermappe("intern/bunn");
+	} else if (visKartNederst()) {
+		inkluder_side_fra_undermappe("kart_bunn");
+	}
+	?>
+</footer>
 
-google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-<?php } ?>
+
 
 </body>
 </html>

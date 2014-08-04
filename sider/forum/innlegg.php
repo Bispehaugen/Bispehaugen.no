@@ -99,7 +99,7 @@
 
 	echo "<section class='nytt-innlegg'>";
 		if (!empty($innlogget_bruker['foto'])) {
-			echo "<img class='foto' src='".$innlogget_bruker['foto']."' />";
+			echo "<span class='foto'><img src='".$innlogget_bruker['foto']."' /></span>";
 		}
 		echo "<div class='info'>";
 		echo "<h5 class='navn'>".$innlogget_bruker['fnavn']." ".$innlogget_bruker['enavn']."</h5>";

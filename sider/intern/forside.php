@@ -1,3 +1,7 @@
+<?php
+	include_once "sider/forum/funksjoner.php";
+
+?>
 <section class="internside">
 	<h1>Internsiden</h1>
 
@@ -91,8 +95,28 @@
 		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
 	<h3>Bære slagværk?</h3>
 	<h3>Kjøre med henger?</h3>
-
-	<h3>Siste på forum</h3>
-	<h3>Siste nytt</h3>
 	</section>
 </section>
+</section>
+
+	<section class="side siste-forum forum">
+		
+		<h2 class='overskrift-som-er-inline-block'>Siste på forumet</h2>
+		<h3 class='lenke-som-er-inline-med-overskrift'><?php echo list_forum(); ?></h3>
+		
+		<?php
+		$sql = siste_forumposter_sql(3);
+
+		forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster siste-poster-intern");
+		?>
+
+	</section>
+	
+	<section class="side nyheter">
+		<?php
+		global $antall_nyheter;
+			$antall_nyheter = 3;
+			inkluder_side_fra_undermappe("nyheter/liste");
+		?>
+	<div class="clearfix"></div>
+
