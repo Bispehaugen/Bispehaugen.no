@@ -95,6 +95,27 @@
 		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
 	<h3>Bære slagværk?</h3>
 	<h3>Kjøre med henger?</h3>
+	
+	<?php
+		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();
+		$antallFeil = 0;
+		
+		foreach($sisteFeilmeldinger as $feil) {
+			$antallFeil += $feil['telling'];
+		}
+		
+		if (session("rettigheter") >= 3) {
+	?>
+	<section class="widget neste-konsert<?php if($neste_konsert_markert) echo " markert" ?>">
+		
+		<h3>
+			<a href='?side=feilmeldinger'>
+				<?php echo $antallFeil; ?> Feilmeldinger
+			</a>
+		</h3>
+	</section>
+	<?php } ?>
+	
 	</section>
 </section>
 </section>

@@ -168,3 +168,21 @@ li.profilbilde {
 	}
 }
 
+.feilmeldingsliste .feil {
+	margin: 1em;
+	border: 1px solid white;
+}
+
+.feilmeldingsliste .feil .antall {
+	font-size: 3em;
+	display: inline-block;
+	padding: 0.3em 0.5em;
+}
+
+.feilmeldingsliste .feil .fil,
+.feilmeldingsliste .feil .sql,
+.feilmeldingsliste .feil .query,
+.feilmeldingsliste .feil .tid {
+	display: inline-block;
+	padding: 1em;
+}
