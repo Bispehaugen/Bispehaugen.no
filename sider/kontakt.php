@@ -8,7 +8,7 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 		
 <section class="kontakt-float">
 	<h4>E-post</h4>
-	<p><script type="text/javascript">document.write("<a href=\"mailto:sty" + "ret" + "@" + "bispe" + "haugen" + "." + ".no\">");</script>styre<span class="hidden">EAT THIS ROBOTS</span>@bispehaugen.no</a></p>
+	<p><script type="text/javascript">document.write("<a href=\"mailto:sty" + "ret" + "@" + "bispe" + "haugen" + "." + ".no\">");</script>styret<span class="hidden">EAT THIS ROBOTS</span>@bispehaugen.no</a></p>
 	
 	<h4>Telefon leder</h4>
 	<p><a href="tel:+47<?php echo $leder['tlfmobil']; ?>">+47 <?php echo $leder['tlfmobil']; ?></a></p>

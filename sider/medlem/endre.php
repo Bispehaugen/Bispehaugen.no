@@ -1,8 +1,8 @@
 <?php 
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
 
-	global $opprett_ny_nyhet;
-
+	global $opprett_ny_medlem;
+	
 	//funksjonalitet
 
 	if (has_get('id')) {
@@ -15,7 +15,7 @@
 		}
 	}
 	
-	
+	$bruker = hent_brukerdata($id);
 	//sjekker om man er admin eller prøver å endre seg selv
 	if($_SESSION['medlemsid']==$id){
 		$endre_seg_selv=1;//brukes for å sende mail til sekretær ved endring
@@ -26,9 +26,10 @@
 	};
 	
 	//henter ut alle instrumenter
-		$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
-		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
+	$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
+	$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
+	$feilmeldinger = Array();
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(has_post('id') || has_post('fnavn')){
 		$medlemsid=post('id');
@@ -38,7 +39,7 @@
 		$instnr=post('instnr');		
 		$grleder=post('grleder');
 		$status=post('status');
-		$fdato=post('fdato');
+		$fdato=date("Y-m-d", strtotime(post('fdato')));
 		$adresse=post('adresse');
 		$postnr=post('postnr');
 		$poststed=post('poststed');
@@ -50,81 +51,122 @@
 		$studieyrke=post('studieyrke');
 		$kommerfra=post('kommerfra');
 		$ommegselv=post('ommegselv');
-		$foto=post('foto');
+		$foto = post('foto');
 		$begrenset=post('begrenset');
 		
-		if($grleder==1){
-			$sql="SELECT medlemsid, instrument FROM medlemmer WHERE grleder=1 AND instnr='".$instnr."';";
-			$mysql_result = mysql_query($sql);
-			
-			while ($medl = mysql_fetch_assoc($mysql_result)) {
-				$sql2 = "UPDATE medlemmer SET grleder=0 WHERE medlemsid=".$medl['medlemsid']." AND instrument=".$medl['instrument'].";";
-				mysql_query($sql2);
-			}
+		if(empty($fnavn) || empty($enavn)) {
+			$feilmeldinger[] = "Navn må være fylt ut";
+		} else if (empty($fdato) || strtotime($fdato) == 0) {
+			$feilmeldinger[] = "Fødselsdato må være fylt ut";
+		} else if (empty($adresse) || empty($poststed)) {
+			$feilmeldinger[] = "Adresse og poststed må være fylt ut";
+		} else if (empty($tlfmobil) || empty($email)) {
+			$feilmeldinger[] = "Mobil og epost må være fylt ut";
+		} else if (empty($fdato) && strtotime($fdato) > 0) {
+			$feilmeldinger[] = "Fødselsdato må være fylt ut";
 		}
 		
-		//sjekker om man vil legge til eller endre et medlem
-		if ($medlemsid){
-			$sql="
-			UPDATE 
-				medlemmer 
-			SET 
-				fnavn = '$fnavn',
-				enavn = '$enavn',
-				fdato = '$fdato',
-				status = '$status',
-				instnr = '$instrument',
-				grleder = '$grleder',
-				adresse = '$adresse',
-				postnr = '$postnr',
-				poststed = '$poststed',
-				tlfmobil = '$tlfmobil',
-				email = '$email',
-				bakgrunn = '$bakgrunn',
-				startetibuk_date = '$startetibuk',
-				sluttetibuk_date = '$sluttetibuk',
-				studieyrke = '$studieyrke',
-				kommerfra = '$kommerfra',
-				ommegselv = '$ommegselv',
-				foto = '$foto',
-				begrenset = '$begrenset' 
-			WHERE 
-				medlemsid = '$medlemsid';
-			";
+		if (empty($feilmeldinger)) {
 			
-			mysql_query($sql);
-			//header('Location: ?side=medlem/liste');
-		}else{		
-			$sql="
-			INSERT INTO 
-			medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
-				email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, foto, begrenset)
-			values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
-				'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$foto','$begrenset')";
-			mysql_query($sql);
+			if (empty($foto)) {
+				$foto = $bruker['foto'];
+			}
+		
+			if($grleder==1){
+				$sql="SELECT medlemsid, instrument FROM medlemmer WHERE grleder=1 AND instnr='".$instnr."';";
+				$mysql_result = mysql_query($sql);
+				
+				while ($medl = mysql_fetch_assoc($mysql_result)) {
+					$sql2 = "UPDATE medlemmer SET grleder=0 WHERE medlemsid=".$medl['medlemsid']." AND instrument=".$medl['instrument'].";";
+					mysql_query($sql2);
+				}
+			}
+	
+			//harEndretAdresse
+			if (empty($bruker) || $bruker['adresse'] != $adresse || $bruker['fnavn'] != $fnavn || $bruker['enavn'] != $enavn ) {
+				$message = "
+Adresseendring:
+$fnavn $enavn har endret adressen sin til:
+$adresse
+$postnr $poststed
+
+Den gamle adressen var:
+" . $bruker['adresse'] . "
+" . $bruker['postnr'] . " " . $bruker['poststed'];
+				
+				$to = "webkom@bispehaugen.no";
+				$replyto = $fnavn." ".$enavn." <".$email.">";
+				$subject = "Bispehaugen.no - Adressendring";
+				
+				epost($to,$replyto,$subject,$message);
+	 		}
 			
-			header('Location: ?side=medlem/liste');
+			//sjekker om man vil legge til eller endre et medlem
+			if ($medlemsid){
+				$sql="
+				UPDATE 
+					medlemmer 
+				SET 
+					fnavn = '$fnavn',
+					enavn = '$enavn',
+					fdato = '$fdato',
+					status = '$status',
+					instnr = '$instrument',
+					grleder = '$grleder',
+					adresse = '$adresse',
+					postnr = '$postnr',
+					poststed = '$poststed',
+					tlfmobil = '$tlfmobil',
+					email = '$email',
+					bakgrunn = '$bakgrunn',
+					startetibuk_date = '$startetibuk',
+					sluttetibuk_date = '$sluttetibuk',
+					studieyrke = '$studieyrke',
+					kommerfra = '$kommerfra',
+					ommegselv = '$ommegselv',
+					begrenset = '$begrenset' 
+				WHERE 
+					medlemsid = '$medlemsid';
+				";
+				
+				mysql_query($sql);
+				//header('Location: ?side=medlem/liste');
+			}else{
+				$sql="
+				INSERT INTO 
+				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
+					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset)
+				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
+					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset')";
+				mysql_query($sql);
+				
+				header('Location: ?side=medlem/liste');
+			}
 		}
-		};
+	}
 	//henter valgte medlem fra databasen hvis "endre"
 	if(has_get('id')){	
 		$medlemmer = hent_brukerdata($id);
-	} else if ($opprett_ny_nyhet) {
+	} else if ($opprett_ny_medlem) {
 		$medlemmer = Array();
 	} else {
 		$medlemmer = hent_brukerdata();
 	}
 	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet");
+
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
-		
+	
+?>
+
+
+<?php		
 	echo "
-    <script>
-    $(function() {
-        $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' }).val();;
-    });
-    </script>
-    	<h2>".($opprett_ny_nyhet ? "Nytt medlem" : "Rediger medlem")."</h2>
+    	<h2>".($opprett_ny_medlem ? "Nytt medlem" : "Rediger medlem")."</h2>";
+    	
+    	echo feilmeldinger($feilmeldinger);
+    	
+    	echo "
 		<form method='post' action='?side=medlem/endre'>
 			<table>
 				";
@@ -152,9 +194,9 @@
 						echo"<option value='".$instrument['instrumentid']."'".$selected.">".$instrument['instrument']."</option>";
 					}
 					echo "</select>";
-					
+		
 					echo "<input type='hidden' name='instrument' value='".$instrument['instrument']."'></td></tr>
-				<tr><td>Fødselsdato:</td><td><input type='text' class='datepicker' name='fdato' value='".kanskje($medlemmer, 'fdato')."'></td></tr>
+				<tr><td>Fødselsdato:</td><td><input type='date' name='fdato' value='".kanskje($medlemmer, 'fdato')."'></td></tr>
 				<tr><td>Adresse:</td><td><input type='text' name='adresse' value='".kanskje($medlemmer, 'adresse')."'></td></tr>
 				<tr><td>Postnr:</td><td><input type='text' name='postnr' value='".kanskje($medlemmer, 'postnr')."'></td></tr>
 				<tr><td>Poststed:</td><td><input type='text' name='poststed' value='".kanskje($medlemmer, 'poststed')."'></td></tr>
@@ -168,14 +210,23 @@
 				<tr><td>Litt om meg selv:</td><td><textarea name='ommegselv'>".kanskje($medlemmer, 'ommegselv')."</textarea></td></tr>
 				";
 				$begrensetChecked = (kanskje($medlemmer, 'begrenset') == 1) ? "checked" : "";
+				
+				if (!$opprett_ny_medlem) {
 				echo "
-				<tr>
+				<tr class='dropzone'>
 					<td>Bilde:</td>
 					<td>
-						<input type='text' name='foto' value='".kanskje($medlemmer, 'foto')."' />
+						<div id='bytt-bilde'>
+							<img src='".kanskje($medlemmer, 'foto')."' />
+							<i class='ikon fa fa-edit'></i>
+						</div>
 						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vises kun for innloggede</label></p>
 					</td>
 				</tr>
+				";
+				}
+				
+				echo "
 				<tr>
 				<td></td>
 				<td class='right'>
@@ -188,5 +239,60 @@
 			
 		</form> 
 	";
-?>
 	
+if (!$opprett_ny_medlem) {
+?>
+<script src="vendor/Flow/flow.js"></script>
+
+<script>
+
+var flow = new Flow({
+  target:'upload.php',
+  singleFile: true,
+  query: {
+  	type:'profilbilde',
+  	id: '<?php echo $id; ?>',
+  	name: '<?php echo $bruker['fnavn']." ".$bruker['enavn']; ?>'
+	}
+});
+flow.assignBrowse(document.getElementById('bytt-bilde'));
+flow.assignDrop($('.dropzone'));
+
+var preview = $("#bytt-bilde img");
+
+flow.on('fileAdded', function(file, event){
+	console.log("fileAdded");
+	console.log(file, event);
+	
+	var reader = new FileReader();
+	reader.onload = function (e) {
+		preview.attr('src', e.target.result);
+	}
+	reader.readAsDataURL(file.file);
+	
+});
+
+flow.on('filesSubmitted', function(array, event){
+	flow.upload();
+});
+
+flow.on('fileSuccess', function(file,message){
+	console.log("fileSuccess");
+	console.log(file,message);
+	
+	flow.removeFile(file);
+	console.log(flow.files);
+
+	// update local image
+});
+flow.on('fileError', function(file, message){
+	console.log("fileError");
+	console.log(file, message);
+	
+	var oldPic = '<?php echo kanskje($medlemmer, 'foto'); ?>';
+	preview.attr('src', oldPic);
+	
+	// Vis feilmelding
+});
+</script>
+<?php }

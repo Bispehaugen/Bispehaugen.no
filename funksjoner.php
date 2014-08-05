@@ -123,12 +123,12 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$query = mysql_query($sql);
 	
 	$array = Array();
-
+	
 	if ($query === false) {
-		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"].", sql:'".$sql."'}");
+		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"]."', query:'".$_SERVER['QUERY_STRING']."', sql:'".$sql."'}");
 		
 		if ($_SESSION['rettigheter']>1) {
-			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"].", sql: ".$sql);
+			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"]."?".$_SERVER['QUERY_STRING'].", sql: ".$sql);
 		}
 		die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
 	}
@@ -426,8 +426,16 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 	if (!empty($extra_header)) {
 		$header .= "\r\n".$extra_header;
 	}
-
-	return mail($to,$subject,$message,$header);
+	
+	$epostBleSendt = mail($to,$subject,$message,$header);
+	
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$header;
+	if ($epostBleSendt) {
+		logg("epost", $melding);	
+	} else {
+		logg("error-epost", $melding);
+	}
+	return $epostBleSendt;
 }
 
 function feilmeldinger($feilmeldinger) {
@@ -450,6 +458,12 @@ function generer_passord_hash($passord) {
 }
 
 function logg($type, $melding) {
-	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', ".$_SESSION["medlemsid"].", '$melding', '".date("Y-m-d H:i:s")."')";
+	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', '".mysql_real_escape_string($_SESSION["medlemsid"])."', '".mysql_real_escape_string($melding)."', '".date("Y-m-d H:i:s")."')";
 	mysql_query($sql);
+}
+
+function siste_sql_feil() {
+	$enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
+	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
+	return hent_og_putt_inn_i_array($sql, 'id');
 }

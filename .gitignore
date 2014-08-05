@@ -6,4 +6,7 @@ desktop.ini
 .settings
 .buildpath
 .DS_STORE
+filer/
+bilder/
+noter/
 demo/index.html

@@ -1,7 +1,7 @@
 <?php
 
-global $opprett_ny_nyhet;
+global $opprett_ny_medlem;
 
-$opprett_ny_nyhet = true;
+$opprett_ny_medlem = true;
 
 include_once "endre.php";
