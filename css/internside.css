@@ -168,6 +168,27 @@ li.profilbilde {
 	}
 }
 
+#bytt-bilde {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+}
+
+#bytt-bilde img {
+	max-width: 200px;
+	max-height: 200px;
+}
+
+#bytt-bilde .ikon {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+	background: white;
+	color: black;
+	padding: 5px;
+	border: 1px solid black;
+}
+
 .feilmeldingsliste .feil {
 	margin: 1em;
 	border: 1px solid white;

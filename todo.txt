@@ -1,24 +1,17 @@
-Fikse meny for aleneside / forside
 
 Fikse for mobil:
 Menyen
 Aktiviteter
 
 Fikse skjema:
-Bli medlem
-Kontakt
 ?
 
 Fikse alle lenker til infosider
 Fikse infosider
 
-Endre nyhet
+Ny/Endre nyhet
 
-Endre medlem
-
-Vis ferre aktiviteter
-
-Spilleoppdrag / kontakt
+Vis ferre aktiviteter?
 
 Forum
 

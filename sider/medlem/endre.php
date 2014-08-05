@@ -1,10 +1,8 @@
 <?php 
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
 
-	global $opprett_ny_nyhet;
+	global $opprett_ny_medlem;
 	
-	$harEndretAdresse = false;
-
 	//funksjonalitet
 
 	if (has_get('id')) {
@@ -28,8 +26,8 @@
 	};
 	
 	//henter ut alle instrumenter
-		$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
-		$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
+	$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
+	$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
 
 	$feilmeldinger = Array();
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
@@ -53,7 +51,7 @@
 		$studieyrke=post('studieyrke');
 		$kommerfra=post('kommerfra');
 		$ommegselv=post('ommegselv');
-		$foto=post('foto');
+		$foto = post('foto');
 		$begrenset=post('begrenset');
 		
 		if(empty($fnavn) || empty($enavn)) {
@@ -69,6 +67,10 @@
 		}
 		
 		if (empty($feilmeldinger)) {
+			
+			if (empty($foto)) {
+				$foto = $bruker['foto'];
+			}
 		
 			if($grleder==1){
 				$sql="SELECT medlemsid, instrument FROM medlemmer WHERE grleder=1 AND instnr='".$instnr."';";
@@ -122,7 +124,6 @@ Den gamle adressen var:
 					studieyrke = '$studieyrke',
 					kommerfra = '$kommerfra',
 					ommegselv = '$ommegselv',
-					foto = '$foto',
 					begrenset = '$begrenset' 
 				WHERE 
 					medlemsid = '$medlemsid';
@@ -134,9 +135,9 @@ Den gamle adressen var:
 				$sql="
 				INSERT INTO 
 				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
-					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, foto, begrenset)
+					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset)
 				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
-					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$foto','$begrenset')";
+					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset')";
 				mysql_query($sql);
 				
 				header('Location: ?side=medlem/liste');
@@ -146,7 +147,7 @@ Den gamle adressen var:
 	//henter valgte medlem fra databasen hvis "endre"
 	if(has_get('id')){	
 		$medlemmer = hent_brukerdata($id);
-	} else if ($opprett_ny_nyhet) {
+	} else if ($opprett_ny_medlem) {
 		$medlemmer = Array();
 	} else {
 		$medlemmer = hent_brukerdata();
@@ -155,9 +156,13 @@ Den gamle adressen var:
 
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
-		
+	
+?>
+
+
+<?php		
 	echo "
-    	<h2>".($opprett_ny_nyhet ? "Nytt medlem" : "Rediger medlem")."</h2>";
+    	<h2>".($opprett_ny_medlem ? "Nytt medlem" : "Rediger medlem")."</h2>";
     	
     	echo feilmeldinger($feilmeldinger);
     	
@@ -205,14 +210,23 @@ Den gamle adressen var:
 				<tr><td>Litt om meg selv:</td><td><textarea name='ommegselv'>".kanskje($medlemmer, 'ommegselv')."</textarea></td></tr>
 				";
 				$begrensetChecked = (kanskje($medlemmer, 'begrenset') == 1) ? "checked" : "";
+				
+				if (!$opprett_ny_medlem) {
 				echo "
-				<tr>
+				<tr class='dropzone'>
 					<td>Bilde:</td>
 					<td>
-						<input type='text' name='foto' value='".kanskje($medlemmer, 'foto')."' />
+						<div id='bytt-bilde'>
+							<img src='".kanskje($medlemmer, 'foto')."' />
+							<i class='ikon fa fa-edit'></i>
+						</div>
 						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vises kun for innloggede</label></p>
 					</td>
 				</tr>
+				";
+				}
+				
+				echo "
 				<tr>
 				<td></td>
 				<td class='right'>
@@ -225,5 +239,60 @@ Den gamle adressen var:
 			
 		</form> 
 	";
-?>
 	
+if (!$opprett_ny_medlem) {
+?>
+<script src="vendor/Flow/flow.js"></script>
+
+<script>
+
+var flow = new Flow({
+  target:'upload.php',
+  singleFile: true,
+  query: {
+  	type:'profilbilde',
+  	id: '<?php echo $id; ?>',
+  	name: '<?php echo $bruker['fnavn']." ".$bruker['enavn']; ?>'
+	}
+});
+flow.assignBrowse(document.getElementById('bytt-bilde'));
+flow.assignDrop($('.dropzone'));
+
+var preview = $("#bytt-bilde img");
+
+flow.on('fileAdded', function(file, event){
+	console.log("fileAdded");
+	console.log(file, event);
+	
+	var reader = new FileReader();
+	reader.onload = function (e) {
+		preview.attr('src', e.target.result);
+	}
+	reader.readAsDataURL(file.file);
+	
+});
+
+flow.on('filesSubmitted', function(array, event){
+	flow.upload();
+});
+
+flow.on('fileSuccess', function(file,message){
+	console.log("fileSuccess");
+	console.log(file,message);
+	
+	flow.removeFile(file);
+	console.log(flow.files);
+
+	// update local image
+});
+flow.on('fileError', function(file, message){
+	console.log("fileError");
+	console.log(file, message);
+	
+	var oldPic = '<?php echo kanskje($medlemmer, 'foto'); ?>';
+	preview.attr('src', oldPic);
+	
+	// Vis feilmelding
+});
+</script>
+<?php }
