@@ -93,6 +93,7 @@
 		<li>- Enn så lenge er det ikke mulig å slette notesett</li>
 		</ul>
 		</p>
-		HER KOMMER EN BOKS FOR � VELGE FILER
+		
+		Her kommer boks for å velge filer
 	";
 ?>
