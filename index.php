@@ -98,7 +98,7 @@ $innhold = ob_get_clean();
 	<div class="site<?php if(erForside()) { echo " forside"; } ?>">
 		<?php if (erForside() && !er_logget_inn()) { ?>
 		<section class="forside side coverflow" data-scroll-index='1'>
-	   		<div class="stottemedlem reklame">Korps er ikke billig, bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
+	   		<div class="stottemedlem reklame">Bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
 
 		
 	    	<header class="header">

@@ -1,6 +1,15 @@
 <?php
 include_once 'funksjoner.php';
 
+/*
+require_once(__DIR__ . '/Flow/Autoloader.php');
+Flow\Autoloader::register();
+ */
+ 
+if(!er_logget_inn()) {
+	die("Du må være logget inn");
+}
+
 require("Flow/ConfigInterface.php");
 require("Flow/Config.php");
 require("Flow/File.php");
@@ -49,16 +58,19 @@ $filename = substr($filid . $name, 0, 251);
 if ($type == "profilbilde") {
 	
 	$filepath = "..".$dir.$filename;
-	$sql = "UPDATE medlemmer SET foto = '".$filepath."' WHERE medlemsid = '".$medlemsid."' LIMIT 1";
-	mysql_query($sql);
-	echo "Oppdaterte bilde for " . $medlemsid . " til ". $filepath;
 }
 
 // slett filer som starter på medlemsid: rm 211-*
 
 echo "Prøver å lagre bilde til ".__DIR__ . $dir . $filename;
 if (\Flow\Basic::save( __DIR__ . $dir . $filename, $config, $request)) {
-  echo "Hurray, file was saved in " . $dir . $filename;
+	echo "Hurray, file was saved in " . $dir . $filename;
+	
+	$sql = "UPDATE medlemmer SET foto = '".$filepath."' WHERE medlemsid = '".$medlemsid."' LIMIT 1";
+	mysql_query($sql);
+	echo "Oppdaterte bilde for " . $medlemsid . " til ". $filepath;
+} else {
+	echo "Fail... :(";
 }
 
 // In most cases, do nothing, \Flow\Basic handles all errors

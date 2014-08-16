@@ -21,8 +21,8 @@ include_once "funksjoner.php";
 				<li>Juletrefester og julebord</li>
 				<li>Kundearrangement</li>
 				<li>Fester / selskap</li>
-				<li>Åpningssermonier</li>
-				<li>Eksamenssermonier</li>
+				<li>Åpningsseremonier</li>
+				<li>Eksamensseremonier</li>
 				<li>Bryllyp</li>
 			</ul>
 			
