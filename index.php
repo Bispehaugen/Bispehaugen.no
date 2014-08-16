@@ -53,13 +53,6 @@ $innhold = ob_get_clean();
     <link rel="shortcut icon" href="icon_logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
-    <script type="text/javascript" src='js/jquery-1.10.2.min.js'></script>
-    <script type="text/javascript" src="js/jquery.timeago.js"></script>
-    <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
-    
-    <?php if (visKartNederst()) { ?>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
-    <?php } ?>
     
     <?php if (er_logget_inn()) { ?>
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
@@ -68,14 +61,8 @@ $innhold = ob_get_clean();
 	<link rel="stylesheet" href="vendor/pickadate/themes/default.date.css" type="text/css" />
 	<link rel="stylesheet" href="vendor/pickadate/themes/default.time.css" type="text/css" />
 
-    <script type="text/javascript" src="vendor/pickadate/legacy.js"></script>
-    <script type="text/javascript" src="vendor/pickadate/picker.js"></script>
-    <script type="text/javascript" src="vendor/pickadate/picker.date.js"></script>
-    <script type="text/javascript" src="vendor/pickadate/picker.time.js"></script>
-    <script type="text/javascript" src="vendor/pickadate/translations/no_NO.js"></script>
-
    	<?php } ?>
-    <script src='scrollIt.js' type='text/javascript'></script>
+
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
     
@@ -161,6 +148,24 @@ $innhold = ob_get_clean();
 			 }
 			?>
 		</main>
+<script type="text/javascript" src='js/jquery-1.10.2.min.js'></script>
+<script type="text/javascript" src="js/jquery.timeago.js"></script>
+<script type="text/javascript" src="js/jquery.timeago.no.js"></script>
+
+<?php if (visKartNederst()) { ?>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<?php } ?>
+
+<?php if (er_logget_inn()) { ?>
+<script type="text/javascript" src="vendor/pickadate/legacy.js"></script>
+<script type="text/javascript" src="vendor/pickadate/picker.js"></script>
+<script type="text/javascript" src="vendor/pickadate/picker.date.js"></script>
+<script type="text/javascript" src="vendor/pickadate/picker.time.js"></script>
+<script type="text/javascript" src="vendor/pickadate/translations/no_NO.js"></script>
+
+<?php } ?>
+<script src='scrollIt.js' type='text/javascript'></script>
+	
 		
 <?php if(erForside() && !er_logget_inn()) { ?>
 	<script>

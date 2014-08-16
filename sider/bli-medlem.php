@@ -161,7 +161,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
     <tr>
       <td class="submit" colspan=2>
         <input id="registrering" name="sRegistrering" type="checkbox" value="registrer" <?php if(has_post('sRegistrering') && "registrer" == $sRegistrering) echo "checked"; ?> />
-        <label for="registrering"> Jeg ønsker å opprette bruker på internsiden med en gang</label>
+        <label for="registrering"> Jeg ønsker å opprette bruker på internsiden</label>
       </td>
     </tr>
     <tr>
