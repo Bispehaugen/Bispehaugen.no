@@ -48,38 +48,19 @@ $innhold = ob_get_clean();
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="keywords" content="Bispehaugen Ungdomskorps, Bispehaugen, Ungdomskorps, Korps, Band, Woodwind band, Trondheim, Korps Trondheim, Janitsjar, Janitsjarkorps, Janitsjarkorps Trondheim, 1923, NTNU, studentkorps, student, student korps" />
 	
+	<link rel="shortcut icon" href="icon_logo.png" type="image/png" />
+	
 	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
-    <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
-    <link rel="shortcut icon" href="icon_logo.png" type="image/png">
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
-    
-    <?php if (er_logget_inn()) { ?>
+	
+	<link async href='http://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link async href='http://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
+	
+	<?php if (er_logget_inn()) { ?>
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/internside.css" type="text/css" />
-	<link rel="stylesheet" href="vendor/pickadate/themes/default.css" type="text/css" />
-	<link rel="stylesheet" href="vendor/pickadate/themes/default.date.css" type="text/css" />
-	<link rel="stylesheet" href="vendor/pickadate/themes/default.time.css" type="text/css" />
-
-   	<?php } ?>
-
-    <link href='http://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
-    
-  
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("abbr.timeago").timeago();
-		});
-
-		function confirm_url(url, tekst) {
-			var bekreft = confirm(tekst);
-			if (bekreft) {
-				window.location = url;
-			}
-		}
-	</script>
-</script>
+	<?php } ?>
 </head>
 
 <body>
@@ -148,6 +129,7 @@ $innhold = ob_get_clean();
 			 }
 			?>
 		</main>
+<link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
 <script type="text/javascript" src='js/jquery-1.10.2.min.js'></script>
 <script type="text/javascript" src="js/jquery.timeago.js"></script>
 <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
@@ -157,6 +139,10 @@ $innhold = ob_get_clean();
 <?php } ?>
 
 <?php if (er_logget_inn()) { ?>
+<link rel="stylesheet" href="vendor/pickadate/themes/default.css" type="text/css" />
+<link rel="stylesheet" href="vendor/pickadate/themes/default.date.css" type="text/css" />
+<link rel="stylesheet" href="vendor/pickadate/themes/default.time.css" type="text/css" />
+
 <script type="text/javascript" src="vendor/pickadate/legacy.js"></script>
 <script type="text/javascript" src="vendor/pickadate/picker.js"></script>
 <script type="text/javascript" src="vendor/pickadate/picker.date.js"></script>
@@ -165,8 +151,18 @@ $innhold = ob_get_clean();
 
 <?php } ?>
 <script src='scrollIt.js' type='text/javascript'></script>
-	
-		
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("abbr.timeago").timeago();
+	});
+
+	function confirm_url(url, tekst) {
+		var bekreft = confirm(tekst);
+		if (bekreft) {
+			window.location = url;
+		}
+	}
+</script>
 <?php if(erForside() && !er_logget_inn()) { ?>
 	<script>
 	var onPageChange = function(index) {

@@ -10,7 +10,7 @@ echo '
           <div class="bilde-og-innhold">
 ';
 
-if (isset($konsert['bilde'])) {
+if (isset($konsert['bilde']) && !empty($konsert['bilde'])) {
   echo '
             <div class="bilde">
                 <img src="'.$konsert['bilde'].'" />
