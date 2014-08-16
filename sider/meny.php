@@ -14,7 +14,7 @@ if(er_logget_inn()){
     <li><a href="?side=spilleoppdrag/vis">Spilleoppdrag</a></li>
     <li><a href="?side=bli-medlem" class="bli-medlem">Bli medlem</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
-    <li><a href="?side=annet">Annet</a></li>
+    <li><a href="?side=annet">Om oss</a></li>
 </ul>
 <?php
 	} else {
@@ -36,7 +36,7 @@ if(er_logget_inn()){
         <span data-scroll-nav='6'>Medlemmer</span>
     </li>
     <li>
-        <span data-scroll-nav='7'>Annet</span>
+        <span data-scroll-nav='7'>Om oss</span>
 	</li>
 </ul>
 
