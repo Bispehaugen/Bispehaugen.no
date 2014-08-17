@@ -95,7 +95,7 @@
 	}    
 
 	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-			echo "<a href='?side=medlem/endre'><i class='fa fa-plus'></i> Legg til ny</a>";
+			echo "<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
 		}
 	echo "</section>";
     
