@@ -467,3 +467,9 @@ function siste_sql_feil() {
 	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
+
+function sjekk_om_brukernavn_er_tatt($brukernavn){
+	$sql="SELECT count(medlemsid) FROM medlemmer WHERE brukernavn = '".$brukernavn."';";
+	$count= hent_og_putt_inn_i_array($sql);
+	return $count['count(medlemsid)'];
+}
