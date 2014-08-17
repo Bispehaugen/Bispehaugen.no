@@ -117,7 +117,7 @@ Den gamle adressen var:
 					enavn = '$enavn',
 					fdato = '$fdato',
 					status = '$status',
-					instnr = '$instrument',
+					instnr = '$instnr',
 					grleder = '$grleder',
 					adresse = '$adresse',
 					postnr = '$postnr',
@@ -134,8 +134,6 @@ Den gamle adressen var:
 				WHERE 
 					medlemsid = '$medlemsid';
 				";
-				echo $sql;
-				die();
 				mysql_query($sql);
 				//header('Location: ?side=medlem/liste');
 			}else{
