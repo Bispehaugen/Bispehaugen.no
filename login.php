@@ -52,7 +52,8 @@
 	$rettigheter=mysql_result($mysql_result, 0);
 	if($rettigheter==0){
 		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
-		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det.";
+		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det. Dersom du nylig har 
+		blitt medlem kan det være at brukeren ditt ikke har fått tilgang ennå.";
 		header('Location: index.php');
 		die();
 	}
