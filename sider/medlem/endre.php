@@ -16,6 +16,7 @@
 	}
 	
 	$bruker = hent_brukerdata($id);
+	
 	//sjekker om man er admin eller prøver å endre seg selv
 	if($_SESSION['medlemsid']==$id){
 		$endre_seg_selv=1;//brukes for å sende mail til sekretær ved endring
@@ -28,13 +29,14 @@
 	//henter ut alle instrumenter
 	$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
 	$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
-
+	
 	$feilmeldinger = Array();
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(has_post('id') || has_post('fnavn')){
 		$medlemsid=post('id');
 		$fnavn=post('fnavn');
 		$enavn=post('enavn');
+		$brukernavn=post('brukernavn');
 		$instrument=post('instrument');		
 		$instnr=post('instnr');		
 		$grleder=post('grleder');
@@ -64,6 +66,10 @@
 			$feilmeldinger[] = "Mobil og epost må være fylt ut";
 		} else if (empty($fdato) && strtotime($fdato) > 0) {
 			$feilmeldinger[] = "Fødselsdato må være fylt ut";
+		} else if (empty($brukernavn)) {
+			$feilmeldinger[] = "Brukernavn må være fylt ut.";
+		} else if (sjekk_om_brukernavn_er_tatt($brukernavn)>0 && !(kanskje($bruker, 'brukernavn')==$brukernavn)) {
+			$feilmeldinger[] = "Brukernavnet er allerede tatt, vennligst velg et annet brukernavn.";
 		}
 		
 		if (empty($feilmeldinger)) {
@@ -128,7 +134,8 @@ Den gamle adressen var:
 				WHERE 
 					medlemsid = '$medlemsid';
 				";
-				
+				echo $sql;
+				die();
 				mysql_query($sql);
 				//header('Location: ?side=medlem/liste');
 			}else{
