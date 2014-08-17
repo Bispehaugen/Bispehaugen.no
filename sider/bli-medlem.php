@@ -111,16 +111,10 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 	<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
 	  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
 	  <p>
-	  Vi tilbyr de som støtter oss noen fordeler. Disse er:
-	  </p><ul>
-	    <li>Billetter til student/honnørpris på konserter arrangert av Bispehaugen</li>
-	    <li>Personlig invitasjon til alle korpsets arrangementer, konserter, turer og fester</li>
-	    <li>Personlig pålogging til være egne web-sider som gir adgang til informasjon som
-	      vanligvis bare er tilgjengelig for medlemmer</li>
-	  </ul>
 	  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
-	  legge på 300 eller 600kr.
-	  <br />
+	  legge på 300 eller 600kr. Som støttemedlem får du personlig invitasjon til alle korpsets konserter og jevnlige nyhetsbrev om korpsets aktiviter.
+	  </p>
+	  <p>
 	  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
 	</p>
 </div>
