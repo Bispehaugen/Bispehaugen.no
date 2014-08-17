@@ -152,7 +152,7 @@ Den gamle adressen var:
 	} else {
 		$medlemmer = hent_brukerdata();
 	}
-	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet");
+	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet", "Ubekreftet");
 
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
