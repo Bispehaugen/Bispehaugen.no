@@ -104,10 +104,17 @@
 		if(has_get('slagverksgrupper')){
 	?>
 			<a href='?side=intern/organisasjon'>skjul grupper</a>
-			<ul>
-				<li>Gruppe 1</li>
-				<li>Gruppe ......</li>
-			</ul>
+			<!--lagt inn midlertidig til slagverksbæregrupper kan oppdateres automatisk/med brukergrensesnitt-->
+			<br><br><b>Gruppe 1:</b><br>Silje Aa<br>Ole Håkon (bil)<br>Eirik N<br>Annichen<br>Gina
+			<br>Maren G<br>Laurits<br>Erik(slagverk)<br>Øyvind R.<br><br><b>Gruppe 2:</b><br>Venke
+			<br>Marianne D (bil?)<br>Øyvind D<br>Irene<br>Kristoffer<br>Solveig<br>
+			Maren B(slagverk)<br><br><b>Gruppe 3:</b><br>Bente<br>Katrin<br>Silje J<br>Silje E<br>
+			Kjetil K<br>Mari Andrea (bil?)<br>Susanne<br><br><b>Gruppe 4:</b><br>Martin O<br>Caroline (bil)
+			<br>Marianne V<br>Kristian H<br>Annebjørg<br>Kristian T.S<br>Guro<br><br><b>Gruppe 5:
+			</b><br>Anette<br>Kjetil L (bil)<br>Tom-Erik<br>Roar<br>Sindre<br>Siri E<br>
+			Elise<br>Sigrid <br>Vebjørn<br><br><b>Gruppe 6:</b><br>Mari O<br>Daniel<br>Jørgen (bil)<br>Karianne<br>Maria M<br>Mari L<br>
+			Håkon P.(slagverk)<br><br>
+			
 	<?php } else { ?>
 		<a href='?side=intern/organisasjon&slagverksgrupper=1'>vis grupper</a>	
 	<?php } ?>		
