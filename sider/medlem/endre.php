@@ -175,6 +175,7 @@ Den gamle adressen var:
 				echo "
 				<tr><td>Fornavn:</td><td><input type='text' name='fnavn' value='".kanskje($medlemmer, 'fnavn')."'></td></tr>
 				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value='".kanskje($medlemmer, 'enavn')."'></td></tr>
+				<tr><td>Brukernavn:</td><td><input type='text' name='brukernavn' value='".kanskje($medlemmer, 'brukernavn')."'></td></tr>
 				<tr><td>status:</td><td>
 					<select name='status'>
 					";
