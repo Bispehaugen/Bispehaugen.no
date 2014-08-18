@@ -66,14 +66,6 @@
 			$feilmeldinger[] = "Mobil og epost må være fylt ut";
 		} else if (empty($fdato) && strtotime($fdato) > 0) {
 			$feilmeldinger[] = "Fødselsdato må være fylt ut";
-		} else if (empty($brukernavn)) {
-			$feilmeldinger[] = "Brukernavn må være fylt ut.";
-		} else if (sjekk_om_brukernavn_er_tatt($brukernavn)>0) {
-			if(sjekk_om_brukernavn_er_tatt($brukernavn)==1 && $bruker['brukernavn']==$brukernavn && !$endre_seg_selv){
-				#det er brukeren selv som har brukernavnet
-			} else {
-				$feilmeldinger[] = "Brukernavnet er allerede tatt, vennligst velg et annet brukernavn.";
-			};
 		}
 		
 		if (empty($feilmeldinger)) {
@@ -119,7 +111,6 @@ Den gamle adressen var:
 				SET 
 					fnavn = '$fnavn',
 					enavn = '$enavn',
-					brukernavn = '$brukernavn',
 					fdato = '$fdato',
 					status = '$status',
 					instnr = '$instnr',
