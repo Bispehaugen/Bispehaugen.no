@@ -69,7 +69,6 @@
 		} else if (empty($brukernavn)) {
 			$feilmeldinger[] = "Brukernavn må være fylt ut.";
 		} else if (sjekk_om_brukernavn_er_tatt($brukernavn)>0) {
-			echo sjekk_om_brukernavn_er_tatt($brukernavn), $bruker['brukernavn'], $brukernavn;
 			if(sjekk_om_brukernavn_er_tatt($brukernavn)==1 && $bruker['brukernavn']==$brukernavn && !$endre_seg_selv){
 				#det er brukeren selv som har brukernavnet
 			} else {
@@ -186,7 +185,6 @@ Den gamle adressen var:
 				echo "
 				<tr><td>Fornavn:</td><td><input type='text' name='fnavn' value='".kanskje($medlemmer, 'fnavn')."'></td></tr>
 				<tr><td>Etternavn:</td><td><input type='text' name='enavn' value='".kanskje($medlemmer, 'enavn')."'></td></tr>
-				<tr><td>Brukernavn:</td><td><input type='text' name='brukernavn' value='".kanskje($medlemmer, 'brukernavn')."'></td></tr>
 				<tr><td>status:</td><td>
 					<select name='status'>
 					";
