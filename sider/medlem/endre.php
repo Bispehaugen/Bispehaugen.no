@@ -133,7 +133,8 @@ Den gamle adressen var:
 					studieyrke = '$studieyrke',
 					kommerfra = '$kommerfra',
 					ommegselv = '$ommegselv',
-					begrenset = '$begrenset' 
+					begrenset = '$begrenset', 
+					rettigheter = '$rettigheter'
 				WHERE 
 					medlemsid = '$medlemsid';
 				";
@@ -143,9 +144,9 @@ Den gamle adressen var:
 				$sql="
 				INSERT INTO 
 				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, tlfmobil, 
-					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset)
+					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset, rettigheter)
 				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$tlfmobil',
-					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset')";
+					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset','$rettigheter')";
 				mysql_query($sql);
 				
 				header('Location: ?side=medlem/liste');
