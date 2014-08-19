@@ -157,7 +157,7 @@ function hent_brukerdata($medlemid = ""){
 
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset
+					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter
 				FROM `medlemmer`";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
