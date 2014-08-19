@@ -235,17 +235,17 @@ Den gamle adressen var:
 				</tr>
 				";
 				if(session('rettigheter')>2){
-					echo"<tr><td>Rettigheter:</td><td>
+					echo"<tr><td>Rettigheter*:</td><td>
 					<select name='rettigheter'>";
 					foreach($gyldige_rettigheter as $rettighet){
 						$selected = (kanskje($medlemmer, 'rettigheter')=="$rettighet") ? " selected=selected" : "";						
 						echo"<option value='".$rettighet."'".$selected.">".$navn_gyldige_rettigheter[$rettighet]."</option>";
 					}
-					echo "</select>";
+					echo "</select><br>*admin light kan endre nyheter, endre aktiviteter og legge til dokumenter. Det kreves full admin for å se styre-forum/styre-dokumenter, endre medlemmer og tilganger.";
 					};
 				}
 				
-				echo "
+				echo "</td></tr>
 				<tr>
 				<td></td>
 				<td class='right'>
