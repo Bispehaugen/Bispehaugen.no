@@ -32,7 +32,7 @@
     	echo "<h3 class='lenke-som-er-inline-med-overskrift'>";
     	//lager en link til å vise alle
       
-      	if(session('rettigheter')>1){
+      	if(session('rettigheter')>2){
 			echo"<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
 		}
 		if(get('alle')==0){
@@ -75,7 +75,7 @@
    				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-o' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
 
-      if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+      if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>2){
           echo"<span class='verktoy'><a href='?side=medlem/endre&id=".$medlem['medlemsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a></span>";
       }
 
@@ -94,7 +94,7 @@
 		echo "</section>";
 	}    
 
-	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>2){
 			echo "<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
 		}
 	echo "</section>";
