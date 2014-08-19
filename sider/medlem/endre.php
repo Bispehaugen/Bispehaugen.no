@@ -57,10 +57,12 @@
 		$begrenset=post('begrenset');
 		if(has_post('rettigheter')){
 			$rettigheter=post('rettigheter');
-		}else{
+		}else if(isset($bruker['rettigheter'])){
 			$rettigheter=$bruker['rettigheter'];
+		}else{
+			$rettigheter='0';
 		};
-		
+
 		if(empty($fnavn) || empty($enavn)) {
 			$feilmeldinger[] = "Navn må være fylt ut";
 		} else if (empty($fdato) || strtotime($fdato) == 0) {
