@@ -154,7 +154,8 @@ Den gamle adressen var:
 		$medlemmer = hent_brukerdata();
 	}
 	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet", "Ubekreftet");
-
+	$gyldige_rettigheter = Array("0", "1", "2", "3");
+	$navn_gyldige_rettigheter = Array("Ikke tilgang", "Internsider", "Admin light", "Full admin");
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
 	
@@ -225,6 +226,15 @@ Den gamle adressen var:
 					</td>
 				</tr>
 				";
+				if(session('rettigheter')>2){
+					echo"<tr><td>Rettigheter:</td><td>
+					<select name='rettigheter'>";
+					foreach($gyldige_rettigheter as $rettighet){
+						$selected = (kanskje($medlemmer, 'rettigheter')=="$rettighet") ? " selected=selected" : "";						
+						echo"<option value='".$rettighet."'".$selected.">".$navn_gyldige_rettigheter[$rettighet]."</option>";
+					}
+					echo "</select>";
+					};
 				}
 				
 				echo "
