@@ -105,7 +105,7 @@ $innhold = ob_get_clean();
 				<h2 class="overskrift">Internsiden</h2>
 				<p class="glemt-passord"><a href="?side=glemt-passord">Glemt passord?</a></p>
 				<form action="login.php" method="POST">
-					<label><input id="username" name="username" type="text" placeholder="Brukernavn" required="required" /><i class="fa fa-2x fa-user"></i></label>
+					<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
 					<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
 					<button class="login-button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
 				</form>
