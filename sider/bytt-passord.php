@@ -36,22 +36,21 @@ if (has_get("token")) {
 	$token = get("token");
 	
 	$sql = sprintf("SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE bytt_passord_token = '%s' LIMIT 1", $token);
-	
 	$query = mysql_query($sql);
 	
 	$token_allerede_brukt = true;
-	
-	while($b = mysql_fetch_assoc($query)) {
+
+	while($b=mysql_fetch_assoc($query)) {
 		$fornavn = $b['fnavn'];
 		$token_allerede_brukt = false;
-	}
+	};
 }
 
 ?>
 
 <h2>Skift passord</h2>
 <?php if ($token_allerede_brukt) {
-	echo "<p>Denne lenken er allerede blitt brukt til å endre passordet, prøv å bruke glemt passord på nytt.</p>";
+	echo "<p>Denne lenken er brukt før eller ikke gyldig, prøv å bruke glemt passord på nytt eller ta kontakt med <a href='mailto:webkom@bispehaugen.no'>webkom</a>.</p>";
 } else {
 ?>
 
