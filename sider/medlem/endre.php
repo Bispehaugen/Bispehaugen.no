@@ -21,7 +21,7 @@
 	if($_SESSION['medlemsid']==$id){
 		$endre_seg_selv=1;//brukes for å sende mail til sekretær ved endring
 	}
-	elseif($_SESSION['rettigheter']<2){
+	elseif($_SESSION['rettigheter']<3){
 		header('Location: ?side=medlem/liste');
 		die();
 	};
@@ -55,6 +55,11 @@
 		$ommegselv=post('ommegselv');
 		$foto = post('foto');
 		$begrenset=post('begrenset');
+		if(has_post('rettigheter')){
+			$rettigheter=post('rettigheter');
+		}else{
+			$rettigheter=$bruker['rettigheter'];
+		};
 		
 		if(empty($fnavn) || empty($enavn)) {
 			$feilmeldinger[] = "Navn må være fylt ut";
