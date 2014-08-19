@@ -468,8 +468,3 @@ function siste_sql_feil() {
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
 
-function sjekk_om_brukernavn_er_tatt($brukernavn){
-	$sql="SELECT count(medlemsid) FROM medlemmer WHERE brukernavn = '".$brukernavn."';";
-	$count= hent_og_putt_inn_i_array($sql);
-	return $count['count(medlemsid)'];
-}
