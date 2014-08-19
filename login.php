@@ -12,22 +12,18 @@
 	$epost=post("epost");
 	$password=generer_passord_hash(post("password"));
 	
-	#Sjekker om passordet finnes i medlemmer-tabellen
+	##Sjekker om passordet finnes i medlemmer-tabellen
 	$sql="SELECT COUNT(email) FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
 	$mysql_result=mysql_query($sql);
 	
 	$row=mysql_fetch_assoc($mysql_result);
-
-	#Henter ut medlemsid (uavhengig av om passord er riktig)
-	$sql="SELECT medlemsid FROM medlemmer WHERE email='".$epost."'";
+	
+	##Henter ut medlemsid og rettigheter
+	$sql="SELECT medlemsid, rettigheter FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
 	$mysql_result=mysql_query($sql);
-	$medlemsid=mysql_result($mysql_result, 0);
-
-	#Sjekker rettigheter
-	$sql="SELECT rettigheter FROM medlemmer WHERE email='".$epost."'";
-	$mysql_result=mysql_query($sql);
-
-	$rettigheter=mysql_result($mysql_result, 0);
+	$medlemsid=mysql_result($mysql_result, 0,'medlemsid');
+	$rettigheter=mysql_result($mysql_result, 0,'rettigheter');
+	
 	if($rettigheter==0){
 		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
 		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det. Dersom du nylig har 
