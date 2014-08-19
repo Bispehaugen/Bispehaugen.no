@@ -9,22 +9,22 @@
     	exit("tilkoblingsfeil");
 	}
 	
-	$username=post("username");
+	$epost=post("epost");
 	$password=generer_passord_hash(post("password"));
 	
 	#Sjekker om passordet finnes i medlemmer-tabellen
-	$sql="SELECT COUNT(brukernavn) FROM medlemmer WHERE brukernavn='".$username."' AND passord='".$password."'";
+	$sql="SELECT COUNT(epost) FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
 	$mysql_result=mysql_query($sql);
 	
 	$row=mysql_fetch_assoc($mysql_result);
 
 	#Henter ut medlemsid (uavhengig av om passord er riktig)
-	$sql="SELECT medlemsid FROM medlemmer WHERE brukernavn='".$username."'";
+	$sql="SELECT medlemsid FROM medlemmer WHERE email='".$epost."'";
 	$mysql_result=mysql_query($sql);
 	$medlemsid=mysql_result($mysql_result, 0);
 
 	#Sjekker rettigheter
-	$sql="SELECT rettigheter FROM medlemmer WHERE brukernavn='".$username."'";
+	$sql="SELECT rettigheter FROM medlemmer WHERE email='".$epost."'";
 	$mysql_result=mysql_query($sql);
 
 	$rettigheter=mysql_result($mysql_result, 0);
