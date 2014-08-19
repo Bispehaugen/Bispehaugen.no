@@ -295,13 +295,13 @@ $innhold = ob_get_clean();
 		
 		$(this).attr("disabled", "disabled");
 		
-		var username = $(".login-box #username");
+		var epost = $(".login-box #epost");
 		var password = $(".login-box #password");
 		
 		var has_error = false;
 		
-		if (username.val().length == 0) {
-			username.addClass("error");
+		if (epost.val().length == 0) {
+			epost.addClass("error");
 			has_error = true;
 		}
 		
@@ -320,7 +320,7 @@ $innhold = ob_get_clean();
 		
 		$(".login .spinner").show();
 		
-		var data = {username: username.val(), password: password.val()};
+		var data = {epost: epost.val(), password: password.val()};
 		
 		$.post("login.php?ajax=true", data)
 			.done(function(data){
