@@ -13,7 +13,7 @@
 	$password=generer_passord_hash(post("password"));
 	
 	#Sjekker om passordet finnes i medlemmer-tabellen
-	$sql="SELECT COUNT(epost) FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
+	$sql="SELECT COUNT(email) FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
 	$mysql_result=mysql_query($sql);
 	
 	$row=mysql_fetch_assoc($mysql_result);
