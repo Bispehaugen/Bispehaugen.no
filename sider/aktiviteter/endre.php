@@ -175,6 +175,7 @@ $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsda
 					</select></td></tr>
 				<tr><td>Ingress:</td><td><input type='text' name='ingress' value='".kanskje($aktiviteter, 'ingress')."'></td></tr>
 				<tr><td>Sted:</td><td><input type='text' class='sted' name='sted' value='".kanskje($aktiviteter, 'sted')."'></td></tr>
+				<tr><td></td><td>* dato oppgis på formen yyyy-mm-dd og tidpunkter oppgis på formen tt:mm.</td></tr>
 				";
 				$i = 0;
 				foreach($datoer as $d) {
