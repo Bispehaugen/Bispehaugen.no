@@ -14,6 +14,7 @@
 		$id = post('id');
 		$tittel = post('tittel');
 		$public = post('public');
+		$type = post('type');
 		$ingress = post('ingress');
 		$sted = post('sted');
 		$dato = has_post('dato') ? array_unique(post('dato')) : Array();
@@ -38,7 +39,6 @@
 		elseif (strtotime($starttid) > strtotime($sluttid)) { 
 		   $feilmeldinger[] =  "Starttid må være før sluttiden"; 
 		}
-		
 		if (empty($feilmeldinger)) {
 
 			//sjekker om man vil legge til eller endre en aktivitet
@@ -46,7 +46,7 @@
 				$dato = $dato[0];
 
 				$sql="UPDATE arrangement SET tittel='".$tittel."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
-				,start='".$dato." ".$starttid."',slutt='".$dato." ".$sluttid."',ingress='".$ingress."',public='".$public."',hjelpere='".$hjelpere."'
+				,start='".$dato." ".$starttid."',slutt='".$dato." ".$sluttid."',ingress='".$ingress."',public='".$public."',type='".$type."',hjelpere='".$hjelpere."'
 				,kakebaker='".$kakebaker."' WHERE arrid='".$id."';";
 				mysql_query($sql);
 				header('Location: ?side=aktiviteter/liste');
@@ -55,7 +55,7 @@
 
 				foreach($dato as $d) {
 					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
-	values ('$tittel','','$sted','$d','$oppmote','$d $starttid','$d $sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
+	values ('$tittel','$type','$sted','$d','$oppmote','$d $starttid','$d $sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
 					mysql_query($sql);
 				}
 				
@@ -143,6 +143,8 @@
 <?php 
 echo feilmeldinger($feilmeldinger);
 
+$gyldige_typer = Array("Øvelse", "Konsert", "Seminar", "Dugnad", "Sosialt", "Spilleoppdrag", "Møte", "Tur", "Annet");
+
 $aktivitetsdato = kanskje($aktiviteter, 'dato');
 $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsdato);
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
@@ -159,6 +161,17 @@ $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsda
   							echo "<option value='2'>Admin</option>";
   						}
   				echo "
+					</select></td></tr>
+				<tr><td>Type:</td><td>
+					<select name='type'>
+					";
+					
+					foreach($gyldige_typer as $type) {
+						$selected = (kanskje($aktiviteter, 'type')=="$type") ? " selected=selected" : "";
+						
+						echo "<option value='".$type."'".$selected.">".$type."</option>";
+					}
+					echo "
 					</select></td></tr>
 				<tr><td>Ingress:</td><td><input type='text' name='ingress' value='".kanskje($aktiviteter, 'ingress')."'></td></tr>
 				<tr><td>Sted:</td><td><input type='text' class='sted' name='sted' value='".kanskje($aktiviteter, 'sted')."'></td></tr>
