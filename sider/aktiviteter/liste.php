@@ -107,7 +107,7 @@
 				}
 
 				if (!empty($aktivitet['hjelpere'])) {
-					echo "<p>Kakebaker: ".$aktivitet['hjelpere'] . "</p>";
+					echo "<p>Slagverksbærere: ".$aktivitet['hjelpere'] . "</p>";
 				}
 				echo "</td></tr>";
 			}
