@@ -107,7 +107,7 @@
 				}
 
 				if (!empty($aktivitet['hjelpere'])) {
-					echo "<p>Slagverksbærere: ".$aktivitet['hjelpere'] . "</p>";
+					echo "<p>Slagverksbærere: ".$aktivitet['hjelpere'] . " <a href='?side=intern/organisasjon&slagverksgrupper=1'>(trykk her for å se slagverksbæregruppene)</a></p>";
 				}
 				echo "</td></tr>";
 			}
