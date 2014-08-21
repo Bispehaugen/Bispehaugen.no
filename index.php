@@ -99,7 +99,7 @@ $innhold = ob_get_clean();
 	<?php if(!er_logget_inn() && erForside()) { ?>
 		<section class="login">
 			<div class="errors feilmelding">
-				Kunne ikke logge inn, brukernavn eller passord er feil. Kontakt webkom hvis dette fortsetter :)
+				Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)
 			</div>
 			<div class="login-box">
 				<h2 class="overskrift">Internsiden</h2>
