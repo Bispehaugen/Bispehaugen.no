@@ -34,8 +34,8 @@ if (has_post("epost")) {
 			$message = 
 "Hei ".$b["fnavn"]."!
 
-Klikk på lenken under for å skifte passordet ditt på Bispehaugen.no.
-<a href='http://ny.bispehaugen.no/?side=bytt-passord&token=".$token."'>http://ny.bispehaugen.no/?side=bytt-passord&token=".$token."'</a>
+Bruk lenken under for å skifte passordet ditt på Bispehaugen.no.<br>
+http://ny.bispehaugen.no/?side=bytt-passord&token=".$token."
 
 Har du ikke brukt glemt passord funksjonen? Ta kontakt med webkom@bispehaugen.no!
 
