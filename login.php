@@ -17,6 +17,13 @@
 	$mysql_result=mysql_query($sql);
 	
 	$row=mysql_fetch_assoc($mysql_result);
+	if($row['COUNT(email)']==0){
+		$_SESSION["Errors"]="Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt 
+		å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)";
+		header('Location: index.php');
+		die();
+	}
+	
 	
 	##Henter ut medlemsid og rettigheter
 	$sql="SELECT medlemsid, rettigheter FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
