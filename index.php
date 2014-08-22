@@ -100,7 +100,8 @@ $innhold = ob_get_clean();
 		<section class="login">
 			<div class="errors feilmelding">
 				<?php
-					echo feilmeldinger($_SESSION["Errors"]);
+					$feilmeldinger=$_SESSION["Errors"];
+					echo feilmeldinger($feilmeldinger);
 				?>
 			</div>
 			<div class="login-box">
