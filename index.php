@@ -98,12 +98,14 @@ $innhold = ob_get_clean();
     	
 	<?php if(!er_logget_inn() && erForside()) { ?>
 		<section class="login">
-			<div class="errors feilmelding">
 				<?php
+					
 					$feilmeldinger=$_SESSION["Errors"];
-					echo feilmeldinger($feilmeldinger);
-				?>
-			</div>
+					if($feilmeldinger!=""){
+						echo feilmeldinger(Array($feilmeldinger));
+						$_SESSION["Errors"]  = "";
+					};
+									?>
 			<div class="login-box">
 				<h2 class="overskrift">Internsiden</h2>
 				<p class="glemt-passord"><a href="?side=glemt-passord">Glemt passord?</a></p>
