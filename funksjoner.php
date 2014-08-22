@@ -446,7 +446,7 @@ function feilmeldinger($feilmeldinger) {
 		$html = '<ul class="feilmeldinger">';
 		
 		foreach($feilmeldinger as $feilmelding){
-			$html .= "<li class='feil'>$feilmelding</li>";
+			$html .= "<li class='feil'>".$feilmelding."</li>";
 		}
 		$html .= "</ul>";
 	}
