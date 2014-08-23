@@ -160,7 +160,10 @@
 				echo "<ul>";
 				foreach($valgtekomiteer as $valgtekomite){
 					if ($valgtekomite["komiteid"] == $komite["komiteid"]) {
-						echo"<li>".brukerlenke($valgtekomite, Navnlengde::FulltNavn)."</li>";
+						echo"<li>".brukerlenke($valgtekomite, Navnlengde::FulltNavn);
+						if ($valgtekomite['tittel']!='Medlem'){
+							echo" (".$valgtekomite['tittel'].")</li>";
+						}
 					}
 				}
 				echo "</ul>";
