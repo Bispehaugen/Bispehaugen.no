@@ -211,8 +211,12 @@ function er_logget_inn(){
  * Hent $antall siste nyheter av typen Public (default)
  */
 function hent_siste_nyheter($antall, $type="Public"){
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type='".$type."' ORDER BY tid DESC LIMIT ".$antall;
-
+	#For å kunne hente ut interne og public nyheter samtidig
+	if ($type="Intern"){
+		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT ".$antall;		
+	} else{
+		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type='".$type."' ORDER BY tid DESC LIMIT ".$antall;
+	};
 	return hent_og_putt_inn_i_array($sql, "nyhetsid");
 }
 
