@@ -3,8 +3,11 @@
 
 	$antallNyheter = isset($antall_nyheter) ? $antall_nyheter : 30;
 	// Vis nyhetsoversikt
-	$nyheter = hent_siste_nyheter($antallNyheter, "Public");
-	
+	if (er_logget_inn()){
+		$nyheter = hent_siste_nyheter($antallNyheter, "Intern+Public");
+	} else {
+		$nyheter = hent_siste_nyheter($antallNyheter, "Public");
+	};
 	?>
 	
 	<h2 class='overskrift-som-er-inline-block'><a href="?side=nyheter/liste" title="Les flere nyheter">Nyheter</a></h2>
