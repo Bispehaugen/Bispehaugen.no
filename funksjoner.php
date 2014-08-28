@@ -212,7 +212,7 @@ function er_logget_inn(){
  */
 function hent_siste_nyheter($antall, $type="Public"){
 	#For å kunne hente ut interne og public nyheter samtidig
-	if ($type="Intern"){
+	if ($type=="Intern"){
 		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT ".$antall;		
 	} else{
 		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type='".$type."' ORDER BY tid DESC LIMIT ".$antall;
