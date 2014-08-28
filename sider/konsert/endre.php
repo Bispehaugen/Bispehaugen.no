@@ -10,7 +10,8 @@
 
 	//hvis en nyhet er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(has_post()) {
-		$id = post('id');
+		$arridid = post('id');
+		$nyhetsid = post('nyhetsid');
 		$overskrift = post('overskrift');
 		$ingress = post('ingress');
 		$hoveddel = post('hoveddel');
@@ -50,12 +51,20 @@
 		
 		if (empty($feilmeldinger)) {
 			
-			//sjekker om man vil legge til eller endre en aktivitet
+			//sjekker om man vil legge til eller endre en konsert
 			if ($id){
+				#denne oppdatererer nyhetsoversikten
 				$sql="UPDATE nyheter SET overskrift='".$overskrift."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
-				,type='".$type."',aktiv='".$aktiv.",bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konserttid."'
-				,normal_pris='".$normal_pris."',student_pris='".$student_pris."' WHERE nyhetsid='".$id."';";
-				mysql_query($sql);
+				,type='nestekonsert',aktiv='".$aktiv.",bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konsertstart."'
+				,normal_pris='".$normal_pris."',student_pris='".$student_pris."' WHERE nyhetsid='".$nyhetsid."';";
+				#mysql_query($sql);
+				
+				#her kommer en ny sql som oppdaterer arrangementstabellen								
+				$sql="UPDATE arrangement SET tittel='".$overskrift."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
+				,start='".$dato." ".$konsertstart."',slutt='".$dato." ".$konsertslutt."',ingress='".$ingress."',public='1',type='Konsert',hjelpere='".$hjelpere."'
+				,kakebaker='".$kakebaker."' WHERE arrid='".$id."';";
+				#mysql_query($sql);
+				
 				#header('Location: ?side=aktiviteter/liste');
 				echo $sql;
 			} else {
@@ -65,7 +74,16 @@
 				,normal_pris,student_pris,skrevetavid,tid)
 				values ('$overskrift','$ingress','$hoveddel','$bilde','$type','$aktiv','$bildebredde','$bilderamme','$dato $konserttid'
 				,'$normal_pris','$student_pris','$skrevetavid','$skerevet_tid');";
+				
+				#her kommer en ny sql som setter inn ny i arrangementstabellen
+				$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
+	values ('$overskrift','nestekonsert','$sted','$dato','$oppmote','$dato $konsertstart','$dato $konsertslutt','$ingress','','1','$hjelpere','$kakebaker')";
 				mysql_query($sql);
+				#mysql_query($sql);
+				
+				$sql="INSERT INTO konserter (arrid_konsert, nyhetsid_konsert) values ('$xxx','$yyyy')";
+				mysql_query($sql);
+				
 				echo ($sql);
 				#header('Location: ?side=aktiviteter/liste');
 			}
@@ -78,62 +96,67 @@
 	//henter valgte nyhet fra databasen
 	if(has_get('id')){	
 		#Hente ut valgte nyhet hvis "endre"
-		$nyhetsid=get('id');
-		$sql="SELECT * FROM `nyheter` WHERE `nyhetsid`=".$nyhetsid;
+		$arrid=get('id');
+		$sql="SELECT * FROM nyheter, konserter, arrangement WHERE arrangement.arrid=".$arrid." AND arrangement.arrid=konserter.arrid_konsert
+		AND nyheter.nyhetsid=konserter.nyhetsid_konsert;";
 		$mysql_result=mysql_query($sql);
-		$nyheter=mysql_fetch_array($mysql_result);
+		$konserter=mysql_fetch_array($mysql_result);
 		$handling = "Endre";		
 	}
 
-$gyldige_nyhetstyper = Array("Public", "Intern", "Beskjed", "nestekonsert");
+	//henter ut alle medlemmer som kakebaker
+	$sql="SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
+	$mysql_result=mysql_query($sql);
+	while($row=mysql_fetch_array($mysql_result)){
+		$medlemmer[$row['medlemsid']] = $row;
+	}
 
 $aktivChecked = (isset($nyheter['aktiv']) && $nyheter['aktiv'] == 0) ? "" : "checked";
 
-echo "<h2>".$handling." nyhet</h2>";
+$nyheter['normal_pris']=="" ? $normal_pris="Gratis!" : $normal_pris=$nyheter['normal_pris'];
+$nyheter['student_pris']=="" ? $student_pris="Gratis!" : $student_pris=$nyheter['student_pris'];
+		
+$konsert_dato=dato("Y-m-d", $konserter["dato"]);
+
+echo "<h2>".$handling." konsert</h2>";
 		
 echo feilmeldinger($feilmeldinger);
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
 	
 	echo "
-		<form method='post' action='?side=nyheter/endre'>
+		<form method='post' action='?side=forside'>
 			<table>
-				<tr><td>Overskrift:</td><td><input type='text' class='overskrift' name='overskrift' value='".kanskje($nyheter, 'overskrift')."'></td></tr>
-				<tr><td>Type:</td><td>
-					<select name='type'>
-					";
-					
-					foreach($gyldige_nyhetstyper as $type) {
-						$selected = (kanskje($nyheter, 'type')=="$type") ? " selected=selected" : "";
-						
-						echo "<option value='".$type."'".$type.">".$type."</option>";
+				<tr><td>Overskrift:</td><td><input type='text' class='overskrift' name='overskrift' value='".kanskje($konserter, 'overskrift')."'></td></tr>
+				<tr><td>Ingress:</td><td><textarea class='ingress' name='ingress'>".kanskje($konserter, 'ingress')."</textarea></td></tr>
+				<tr><td>Hoveddel:</td><td><textarea class='hoveddel' name='hoveddel'>".kanskje($konserter, 'hoveddel')."</textarea></td></tr>
+				<tr><td>Dato for konsert:</td><td><input type='text' class='datepicker' name='dato' value='".$konsert_dato."'></td></tr>
+				<tr><td>Oppmøtetid:</td><td><input type='text' class='timepicker oppmote' name='oppmote' value='".bare_tidspunkt(kanskje($konserter, 'oppmote'))."'></td></tr>
+				<tr><td>Konsertstart:</td><td><input type='text' class='timepicker konsertstart' name='konsertstart' value='".bare_tidspunkt(kanskje($konserter, 'start'))."'></td></tr>
+				<tr><td>Konsertslutt:</td><td><input type='text' class='timepicker konsertslutt' name='konsertslutt' value='".bare_tidspunkt(kanskje($konserter, 'start'))."'></td></tr>
+				<tr><td>Sted:</td><td><input type='text' name='sted' value='".kanskje($konserter, 'sted')."'></td></tr>
+				<tr><td></td><td>* dato oppgis på formen yyyy-mm-dd og tidpunkter oppgis på formen tt:mm.</td></tr>
+				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
+				<tr><td>Kakebaker:</td><td>
+					<select name='kakebaker'>
+					<option value=''</option>";
+					foreach($medlemmer as $medlem){
+						echo"<option value='".$medlem['medlemsid']."'";
+
+						if ($medlem['medlemsid'] == kanskje($konserter, 'kakebaker')) {
+							echo " selected=selected";
+						}
+						echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
 					}
-					echo "
-					</select></td></tr>
-				<tr><td>Ingress:</td><td><textarea class='ingress' name='ingress'>".kanskje($nyheter, 'ingress')."</textarea></td></tr>
-				<tr><td>Hoveddel:</td><td><textarea class='hoveddel' name='hoveddel'>".kanskje($nyheter, 'hoveddel')."</textarea></td></tr>";
-				
-				if($endre_konsert){
-					if(isset($nyheter['konsert_tid'])){
-						$konsert_dato=dato("Y-m-d",$nyheter['konsert_tid']);
-						$konsert_tid=dato("H:i",$nyheter['konsert_tid']);
-					};
-					$nyheter['normal_pris']=="" ? $normal_pris="Gratis!" : $normal_pris=$nyheter['normal_pris'];
-					$nyheter['student_pris']=="" ? $student_pris="Gratis!" : $student_pris=$nyheter['student_pris'];
-					echo "<tr><td>Dato for konsert:</td><td><input type='text' class='datepicker' name='dato' value='".$konsert_dato."'></td></tr>
-						<tr><td>Tidspunkt for konsert:</td><td><input type='text' class='timepicker konserttid' name='konserttid' value='".$konsert_tid."'></td></tr>
-						<tr><td>Sted for konsert:</td><td><input type='text' name='sted' value='".kanskje($nyheter, 'sted')."'></td></tr>
-						<tr><td>Billettpris vanlig:</td><td><input type='text' name='normal_pris' value='".$normal_pris."'></td></tr>
-						<tr><td>Billettpris student/honnør:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
-						<tr><td></td><td>* dato oppgis på formen yyyy-mm-dd og tidpunkter oppgis på formen tt:mm.</td></tr>";
-				}
-				
-				echo "<tr><td>Bilde:</td><td>Kommer!!</td></tr>
-					<tr><td></td><td><input type='checkbox' name='aktiv' value='1' ".$aktivChecked."/> Aktiv og vises på nett (fjern haken for å slette)</td></tr>
-											
+					echo "</select></td></tr>
+				<tr><td>Billettpris vanlig:</td><td><input type='text' name='normal_pris' value='".$normal_pris."'></td></tr>
+				<tr><td>Billettpris student/honnør:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
+				<tr><td>Bilde:</td><td>Kommer!!</td></tr>
+				<tr><td></td><td><input type='checkbox' name='aktiv' value='1' ".$aktivChecked."/> Aktiv og vises på nett (fjern haken for å slette. Da slettes både aktiviteten i aktivitetslista og nestekonsert på hovedsida.)</td></tr>
+				<input type='hidden' name='nyhetsid' value='".$konserter['nyhetsid']."'>							
 					<tr>
 						<td colspan=2>
 							<p class='right'>
-							<a href='?side=nyheter/liste'>Avbryt</a>
+							<a href='?side=forside'>Avbryt</a>
 							<input type='submit' name='endreNyhet' value='Lagre'>
 							</p>
 						</td>
