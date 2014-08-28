@@ -44,6 +44,11 @@ if(!has_get('id') ){
 		<p><?php echo nl2br($nyhet['hoveddel']); ?></p>
 	
 	</article>
+	<?php 
+		if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
+        	echo"<p><h3><span class='verktoy'><a href='?side=nyheter/endre&id=".$id."'><i class='fa fa-edit' title='Klikk for å endre'> Endre</i></a></span></h3></p>";
+      	}
+	?>
 	<div class="clearfix"></div>
 	<?php
 	}
