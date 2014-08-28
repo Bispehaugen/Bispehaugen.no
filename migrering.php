@@ -553,6 +553,15 @@ migrering(17, "Melding på weblog",
 migrering(18, "Fjerner begrensning på weblog id",
 "ALTER TABLE  `weblog` CHANGE  `id`  `id` INT NOT NULL AUTO_INCREMENT");
 
+migrering(19, "opprett tabell med kobling mellom arrid og nyhetsid (KUN FOR KONSERTER)",
+"CREATE TABLE IF NOT EXISTS `konserter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `arrid_konsert` int(11) NOT NULL,
+  `nyhetsid_konsert` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
