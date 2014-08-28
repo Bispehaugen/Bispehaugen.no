@@ -19,7 +19,8 @@
 	echo "<h2 class='overskrift-som-er-inline-block'>Aktiviteter</h2>";
 
 	if(session('rettigheter')>1){
-		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny aktivitet</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=konsert/endre'><i class='fa fa-plus'></i> Legg til ny konsert</a></h3>";
 	}
 
 	?>
@@ -81,8 +82,13 @@
 
 			#Viser endre/slettkapper hvis man er admin
 			if(session('rettigheter')>1){
-				echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
-				title='Klikk for å endre'></i></a> / <a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a></td></tr>";
+				if($aktivitet['type']=="Konsert"){
+					echo"<td><a href='?side=konsert/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
+					title='Klikk for å endre'></i></a> </td></tr>";
+				}else{
+					echo"<td><a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' 
+					title='Klikk for å endre'></i></a> / <a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a></td></tr>";
+				}
 			}else{
 				echo "<td></td></tr>";
 			};
