@@ -7,6 +7,8 @@
 
 	if (has_get('id')) {
 		$id = get('id');
+	} elseif(has_post('id')){
+		$id = post('id');
 	} else {
 		if(isset($_SESSION['medlemsid'])) {
 			$id = $_SESSION['medlemsid'];
@@ -154,7 +156,7 @@ Den gamle adressen var:
 		}
 	}
 	//henter valgte medlem fra databasen hvis "endre"
-	if(has_get('id')){	
+	if(has_get('id')||has_post('id')){	
 		$medlemmer = hent_brukerdata($id);
 	} else if ($opprett_ny_medlem) {
 		$medlemmer = Array();
@@ -177,9 +179,7 @@ Den gamle adressen var:
     	echo feilmeldinger($feilmeldinger);
     	
     	echo "
-		<form method='post' action='?side=medlem/endre";
-			if(has_get('id')){echo "&id=".$id;};
-		echo "'>
+		<form method='post' action='?side=medlem/endre'>
 			<table>
 				";
 				$gruppelederCheck = (kanskje($medlemmer, "grleder") == 1) ? "checked" : "";
