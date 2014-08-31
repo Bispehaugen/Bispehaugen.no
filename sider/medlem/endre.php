@@ -177,7 +177,9 @@ Den gamle adressen var:
     	echo feilmeldinger($feilmeldinger);
     	
     	echo "
-		<form method='post' action='?side=medlem/endre'>
+		<form method='post' action='?side=medlem/endre";
+			if(has_get('id')){echo "&id=".$id;};
+		echo "'>
 			<table>
 				";
 				$gruppelederCheck = (kanskje($medlemmer, "grleder") == 1) ? "checked" : "";
