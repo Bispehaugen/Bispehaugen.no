@@ -39,7 +39,6 @@
 		$fnavn=post('fnavn');
 		$enavn=post('enavn');
 		$brukernavn=post('brukernavn');
-		$instrument=post('instrument');		
 		$instnr=post('instnr');		
 		$grleder=post('grleder');
 		$status=post('status');
@@ -207,7 +206,7 @@ Den gamle adressen var:
 					}
 					echo "</select>";
 		
-					echo "<input type='hidden' name='instrument' value='".$instrument['instrument']."'></td></tr>
+					echo "
 				<tr><td>Fødselsdato:</td><td><input type='date' name='fdato' value='".kanskje($medlemmer, 'fdato')."'></td></tr>
 				<tr><td>Adresse:</td><td><input type='text' name='adresse' value='".kanskje($medlemmer, 'adresse')."'></td></tr>
 				<tr><td>Postnr:</td><td><input type='text' name='postnr' value='".kanskje($medlemmer, 'postnr')."'></td></tr>
