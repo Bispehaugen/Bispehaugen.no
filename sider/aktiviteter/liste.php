@@ -108,8 +108,6 @@
 					echo "</p>";
 				}
 				
-				echo"<p>Type: ".$aktivitet['type']."</p>";
-				
 				if (!empty($kakebaker)) {
 					echo "<p>Kakebaker: " . brukerlenke($kakebaker) . "</p>";
 				}
