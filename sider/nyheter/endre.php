@@ -66,7 +66,7 @@
 		$handling = "Endre";		
 	}
 
-$gyldige_nyhetstyper = Array("Public", "Intern", "Beskjed");
+$gyldige_nyhetstyper = Array("Public", "Intern"); #legges til når beskjeder er implementert på forsida:wq, "Beskjed");
 
 $aktivChecked = (isset($nyheter['aktiv']) && $nyheter['aktiv'] == 0) ? "" : "checked";
 
