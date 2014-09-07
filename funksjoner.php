@@ -156,12 +156,12 @@ function hent_brukerdata($medlemid = ""){
 	}
 
 	if(er_logget_inn()){
-		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, instrument, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
+		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, instrument.instrument, instrumentid, instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
 					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter
-				FROM `medlemmer`";
+				FROM medlemmer, instrument WHERE instnr=instrumentid";
 	} else {
-		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument, grleder, foto, bakgrunn, kommerfra 
-				FROM `medlemmer`";
+		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument.instrument, instrumentid, instnr, grleder, foto, bakgrunn, kommerfra 
+				FROM medlemmer, instrument WHERE instnr=instrumentid";
 	}
 
 	if (is_array($medlemid)) {
@@ -172,9 +172,9 @@ function hent_brukerdata($medlemid = ""){
 			return Array();
 		}
 
-		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
+		$sql .= " AND `medlemsid` IN (".implode(',',$medlemid).")";
 	} else {
-		$sql .= " WHERE `medlemsid`=".$medlemid;
+		$sql .= " AND `medlemsid`=".$medlemid;
 	}
 	$query = mysql_query($sql);
 
