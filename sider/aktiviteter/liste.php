@@ -16,6 +16,12 @@
 		$kakebaker=hent_og_putt_inn_i_array($sql);
 	};
 	
+	//henter konserter
+	if($valgt_id){
+		$sql="SELECT * FROM konserter";
+		$konserter=hent_og_putt_inn_i_array($sql, "arrid_konsert");
+	};
+	
 	echo "<h2 class='overskrift-som-er-inline-block'>Aktiviteter</h2>";
 
 	if(session('rettigheter')>1){
@@ -115,6 +121,11 @@
 				if (!empty($aktivitet['hjelpere'])) {
 					echo "<p>Slagverksbærere: ".$aktivitet['hjelpere'] . " <a href='?side=intern/organisasjon&slagverksgrupper=1'>(trykk her for å se slagverksbæregruppene)</a></p>";
 				}
+				
+				if ($aktivitet['type']=="Konsert") {
+					echo "<p>".$aktivitet['ingress']." - <a href='?side=konsert/vis&id=".$konserter[$aktivitet['arrid']]['nyhetsid_konsert']."'>les mer om konserten...</a></p>";
+				}
+				
 				echo "</td></tr>";
 			}
 		}
