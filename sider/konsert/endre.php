@@ -55,7 +55,7 @@
 			//sjekker om det finnes en oppføring i hhv. arrangement, nyhet, konserter og oppdaterer eller oppretter oppføringene
 			if ($nyhetsid){
 				#denne oppdatererer nyhetsoversikten
-				$sql1="UPDATE nyheter SET overskrift='".$overskrift."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
+				$sql1="UPDATE nyheter SET overskrift='".$overskrift."',sted='".$sted."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
 				,type='nestekonsert',aktiv='".$aktiv.",bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konsertstart."'
 				,normal_pris='".$normal_pris."',student_pris='".$student_pris."' WHERE nyhetsid='".$nyhetsid."';";
 				mysql_query($sql1);
@@ -92,6 +92,7 @@
 				mysql_query($sql5);
 				$sql5="insert konsert sql";
 			}
+
 			header('Location: ?side=aktiviteter/liste');
 		}
 	}
