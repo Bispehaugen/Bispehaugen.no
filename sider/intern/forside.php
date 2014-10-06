@@ -120,6 +120,14 @@
 </section>
 </section>
 
+	<section class="side nyheter">
+		<?php
+		global $antall_nyheter;
+			$antall_nyheter = 3;
+			inkluder_side_fra_undermappe("nyheter/liste");
+		?>
+	</section>
+
 	<section class="side siste-forum forum">
 		
 		<h2 class='overskrift-som-er-inline-block'>Siste på forumet</h2>
@@ -133,11 +141,5 @@
 
 	</section>
 	
-	<section class="side nyheter">
-		<?php
-		global $antall_nyheter;
-			$antall_nyheter = 3;
-			inkluder_side_fra_undermappe("nyheter/liste");
-		?>
 	<div class="clearfix"></div>
 
