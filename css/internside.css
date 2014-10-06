@@ -63,6 +63,10 @@
 	color: white;
 }
 
+.siste-nyheter .box:nth-child(odd) {
+	background: #efefef;
+}
+
 
 .profilbilde {
 	display: none; /* bare på desktop, ikke mobil */
