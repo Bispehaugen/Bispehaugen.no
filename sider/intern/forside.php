@@ -120,7 +120,7 @@
 </section>
 </section>
 
-	<section class="side nyheter">
+	<section class="side nyheter siste-nyheter">
 		<?php
 		global $antall_nyheter;
 			$antall_nyheter = 3;
