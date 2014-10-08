@@ -5,6 +5,8 @@ if (session("rettigheter") < 3) {
 
 $sisteSqlFeil = siste_sql_feil(); 
 
+epost("tkthekiller@gmail.com","webkom@bispehaugen.no", "Tester epost!","Fikk du denne?");
+
 ?>
 
 <h2>Feilmeldinger</h2>
