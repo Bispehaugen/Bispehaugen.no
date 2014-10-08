@@ -428,7 +428,7 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 	$headers .= "Real-From: ".$realfrom_tmp.$eol;
-	$headers .= "From: \"Bispehaugen.no\" <ikke-svar@bispehaugen.no>".$eol;
+	$headers .= "From: ikke-svar@bispehaugen.no".$eol;
 	$headers .= "Reply-To: ".$replyto.$eol;
 	$headers .= "Return-Path: ".$replyto.$eol;    // these two to set reply address
 	$headers .= "Message-ID: <".time()." ikke-svar@bispehaugen.no>".$eol;
