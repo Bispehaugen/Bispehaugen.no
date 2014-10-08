@@ -426,25 +426,26 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 
 	$headers = "";
 
-	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
-	$headers .= "Real-From: ".$realfrom_tmp.$eol;
-	$headers .= "From: ikke-svar@bispehaugen.no".$eol;
-	$headers .= "Reply-To: ".$replyto.$eol;
-	$headers .= "Return-Path: ".$replyto.$eol;    // these two to set reply address
 	$headers .= "Message-ID: <".time()." ikke-svar@bispehaugen.no>".$eol;
 	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
 	# Boundry for marking the split & Multitype Headers
 	$mime_boundary=md5(time());
 	$headers .= 'MIME-Version: 1.0'.$eol;
 	$headers .= "Content-Type: multipart/related; boundary=\"".$mime_boundary."\"".$eol;
-	
+
+	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
+	$headers .= "Real-From: ".$realfrom_tmp.$eol;
+	$headers .= "From: ikke-svar@bispehaugen.no".$eol;
+	$headers .= "Reply-To: ".$replyto.$eol;
+	$headers .= "Return-Path: ".$replyto.$eol;    // these two to set reply address
+
 	if (!empty($extra_header)) {
-		$headers .= "\r\n".$extra_header;
+		$headers .= $eol.$extra_header;
 	}
 
-	$epostBleSendt = mail($to,$subject,$melding,$headers);
+	$epostBleSendt = mail($to,$subject,$message,$headers);
 
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$headers;
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$headers;
 
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
