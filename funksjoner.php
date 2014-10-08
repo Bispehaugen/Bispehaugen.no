@@ -422,7 +422,7 @@ function neste_konsert_nyhet() {
 }
 
 function epost($to,$replyto,$subject,$message,$extra_header = "") {
-	$eol = "\r\n";
+	$eol = PHP_EOL;
 
 	$headers = "";
 
