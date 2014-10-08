@@ -67,6 +67,9 @@
 	background: #efefef;
 }
 
+.siste-nyheter .fancy-date {
+	color: rgba(0, 0, 0, 0.8);
+}
 
 .profilbilde {
 	display: none; /* bare på desktop, ikke mobil */

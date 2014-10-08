@@ -29,7 +29,7 @@
 		
 		$header="$from\r\n"."$replyto\r\n"."$realfrom";
 		
-		if(!mail($to, $subject, $message, $header)) {
+		if(!epost($to, $subject, $message, $header)) {
 			$feil_under_sending_av_mail = true;
 		}
 		
