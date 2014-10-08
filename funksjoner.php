@@ -422,18 +422,37 @@ function neste_konsert_nyhet() {
 }
 
 function epost($to,$replyto,$subject,$message,$extra_header = "") {
-	$from = "From: Bispehaugen.no<ikke-svar@bispehaugen.no>";
+	$eol = "\r\n";
+
+	$headers = "";
+
+	$headers .= "From: Bispehaugen.no<ikke-svar@bispehaugen.no>".$eol;
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
-	$realfrom = "Real-From: $realfrom_tmp";
+	$headers .= "Real-From: ".$realfrom_tmp.$eol;
+	$headers .= "Reply-To: ".$replyto.$eol;
+
+	$headers .= 'Return-Path: '.$replyto.' <'.$replyto.'>'.$eol;    // these two to set reply address
+	$headers .= "Message-ID: <".time()." no-reply@bispehaugen.no>".$eol;
+	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
+	# Boundry for marking the split & Multitype Headers
+	$mime_boundary=md5(time());
+	$headers .= 'MIME-Version: 1.0'.$eol;
+	$headers .= "Content-Type: multipart/related; boundary=\"".$mime_boundary."\"".$eol;
+	$melding = "";
+
+	# HTML Version
+	$melding .= "--".$mime_boundary.$eol;
+	$melding .= "Content-Type: text/html; charset=utf-8".$eol;
+	$melding .= "Content-Transfer-Encoding: 8bit".$eol;
+	$melding .= $message.$eol.$eol;
 	
-	$header="$from\r\n"."$replyto\r\n"."$realfrom";
 	if (!empty($extra_header)) {
 		$header .= "\r\n".$extra_header;
 	}
-	
-	$epostBleSendt = mail($to,$subject,$message,$header);
-	
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$header;
+
+	$epostBleSendt = mail($to,$subject,$melding,$header);
+
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$header;
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
 	} else {
