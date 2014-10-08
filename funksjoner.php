@@ -428,10 +428,10 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 	$headers .= "Real-From: ".$realfrom_tmp.$eol;
-	$headers .= "From: Bispehaugen.no<ikke-svar@bispehaugen.no>".$eol;
+	$headers .= "From: \"Bispehaugen.no\" <ikke-svar@bispehaugen.no>".$eol;
 	$headers .= "Reply-To: ".$replyto.$eol;
 	$headers .= "Return-Path: ".$replyto." <".$replyto.">".$eol;    // these two to set reply address
-	$headers .= "Message-ID: <".time()." no-reply@bispehaugen.no>".$eol;
+	$headers .= "Message-ID: <".time()." ikke-svar@bispehaugen.no>".$eol;
 	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
 	# Boundry for marking the split & Multitype Headers
 	$mime_boundary=md5(time());
