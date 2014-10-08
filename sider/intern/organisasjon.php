@@ -28,8 +28,7 @@
 		$subject = "Fraværsmelding - $navn";
 		
 		$header="$from\r\n"."$replyto\r\n"."$realfrom";
-		
-		if(!epost($to, $subject, $message, $header)) {
+		if(!epost($to, $replyto, $subject, $grunn, $header)) {
 			$feil_under_sending_av_mail = true;
 		}
 		
