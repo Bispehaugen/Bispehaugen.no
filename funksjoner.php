@@ -426,25 +426,17 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 
 	$headers = "";
 
-	$headers .= "From: Bispehaugen.no<ikke-svar@bispehaugen.no>".$eol;
 	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 	$headers .= "Real-From: ".$realfrom_tmp.$eol;
+	$headers .= "From: Bispehaugen.no<ikke-svar@bispehaugen.no>".$eol;
 	$headers .= "Reply-To: ".$replyto.$eol;
-
-	$headers .= 'Return-Path: '.$replyto.' <'.$replyto.'>'.$eol;    // these two to set reply address
+	$headers .= "Return-Path: ".$replyto." <".$replyto.">".$eol;    // these two to set reply address
 	$headers .= "Message-ID: <".time()." no-reply@bispehaugen.no>".$eol;
 	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
 	# Boundry for marking the split & Multitype Headers
 	$mime_boundary=md5(time());
 	$headers .= 'MIME-Version: 1.0'.$eol;
 	$headers .= "Content-Type: multipart/related; boundary=\"".$mime_boundary."\"".$eol;
-	$melding = "";
-
-	# HTML Version
-	$melding .= "--".$mime_boundary.$eol;
-	$melding .= "Content-Type: text/html; charset=utf-8".$eol;
-	$melding .= "Content-Transfer-Encoding: 8bit".$eol;
-	$melding .= $message.$eol.$eol;
 	
 	if (!empty($extra_header)) {
 		$headers .= "\r\n".$extra_header;
@@ -453,6 +445,7 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 	$epostBleSendt = mail($to,$subject,$melding,$headers);
 
 	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$headers;
+
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
 	} else {
