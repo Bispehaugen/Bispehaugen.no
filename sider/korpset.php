@@ -1,6 +1,6 @@
 <h2>Korpset</h2>
     <p>
-	    <img width="250" src="../bilder/nm2000scene.jpg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
+	    <img width="100%" src="images/korpset.jpeg" style="float:right;margin-left:8px" alt="Fra NM for janitsjar">
 	    Bispehaugen Ungdomskorps ble startet i 1923, og er således et av Trondheims eldste amatørkorps. Korpset har helt siden starten vært
 	    kjent for å ha dyktige musikere og dirigenter, og mang en senere profesjonell musiker har vært medlem av Bispehaugen. Vi liker å spille
 	    allsidig musikk med kvalitet, fra underholdningsmusikk til større originalskrevne og klassiske verk. I dag teller vi drøyt 66 medlemmer, 
