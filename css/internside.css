@@ -63,6 +63,13 @@
 	color: white;
 }
 
+.siste-nyheter .box:nth-child(odd) {
+	background: #efefef;
+}
+
+.siste-nyheter .fancy-date {
+	color: rgba(0, 0, 0, 0.8);
+}
 
 .profilbilde {
 	display: none; /* bare på desktop, ikke mobil */
@@ -124,11 +131,6 @@ li.profilbilde {
 	margin: 0.5em;
 	width: 10em;
 	display: inline-block;
-}
-
-.siste-poster-intern .innlegg {
-	background-color: #efefef;
-	border-color: #ccc;
 }
 
 .forum.siste-forum h2 {

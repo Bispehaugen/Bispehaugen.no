@@ -26,10 +26,11 @@
 		$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
 		$realfrom = "Real-From: $realfrom_tmp";
 		$subject = "Fraværsmelding - $navn";
+
+		$message = "Fraværsmelding fra $navn\r\nØvelse: $ovelse\r\nGrunn:$grunn";
 		
 		$header="$from\r\n"."$replyto\r\n"."$realfrom";
-		
-		if(!mail($to, $subject, $message, $header)) {
+		if(!epost($to, $replyto, $subject, $message, $header)) {
 			$feil_under_sending_av_mail = true;
 		}
 		

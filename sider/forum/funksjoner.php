@@ -116,7 +116,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 			
 			if($oppfort_paa_liste){
 				echo "<tr><td colspan='2'><b>Du er allerede skrevet på lista</b></td></tr> ";						
-			}elseif(strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeoppforing['expires'],0,10))/(60*60*24) || $listeoppforing['expires']==NULL){
+			}elseif(isset($listeinnlegg['expires']) && strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeinnlegg['expires'],0,10))/(60*60*24)){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
 				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
 				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
