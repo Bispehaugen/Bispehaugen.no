@@ -105,15 +105,15 @@
 	?>
 			<a href='?side=intern/organisasjon'>skjul grupper</a>
 			<!--lagt inn midlertidig til slagverksbæregrupper kan oppdateres automatisk/med brukergrensesnitt-->
-			<br><br><b>Gruppe 1:</b><br>Silje Aa<br>Ole Håkon (bil)<br>Eirik N<br>Annichen<br>Gina
-			<br>Maren G<br>Laurits<br>Erik(slagverk)<br>Øyvind R.<br><br><b>Gruppe 2:</b><br>Venke
-			<br>Marianne D (bil?)<br>Øyvind D<br>Irene<br>Kristoffer<br>Solveig<br>
-			Maren B(slagverk)<br><br><b>Gruppe 3:</b><br>Bente<br>Katrin<br>Silje J<br>Silje E<br>
-			Kjetil K<br>Mari Andrea (bil?)<br>Susanne<br><br><b>Gruppe 4:</b><br>Martin O<br>Caroline (bil)
-			<br>Marianne V<br>Kristian H<br>Annebjørg<br>Kristian T.S<br>Guro<br><br><b>Gruppe 5:
-			</b><br>Anette<br>Kjetil L (bil)<br>Tom-Erik<br>Roar<br>Sindre<br>Siri E<br>
-			Elise<br>Sigrid <br>Vebjørn<br><br><b>Gruppe 6:</b><br>Mari O<br>Daniel<br>Jørgen (bil)<br>Karianne<br>Maria M<br>Mari L<br>
-			Håkon P.(slagverk)<br><br>
+			<br><br><b>Gruppe 1:</b><br>Silje Aa (styret)<br>Ole Håkon (bil)<br>Erik (slagverk)<br>Magnus<br>Eirik N
+			<br>Maren G<br>Gina<br>Øyvind R<br>Ane B. M.<br><br><b>Gruppe 2:</b><br>Venke (styret)
+			<br>Katrin (bil)<br>Maren B(slagverk)<br>Øyvind D<br>Laurits<br>Irene<br>Mats<br>Marianne D<br>Ane A.
+			<br>Torstein<br><br><b>Gruppe 3:</b><br>Bente(styret)<br>Annichen (bil)<br>Erik (slagverk)<br>Silje J<br>Sindre M. P<br>
+			Kjetil K<br>Morten<br>Caroline<br>Morten<br>Marianne<br><br><b>Gruppe 4:</b><br>Martin O (styret)<br>Mari Andrea (bil)
+			<br>Tom Sander (slagverk)<br>Kjersti<br>Kristian H<br>Roar<br>Mari R.<br>Silje E<br>Solveig<br>Guro<br><br><b>Gruppe 5:
+			</b><br>Anette (styret)<br>Kjetil L (bil)<br>Maren B (slagverk)<br>Tom-Erik<br>Annebjørg<br>Sindre H. K<br>Siri E<br>
+			Elise<br>Vebjørn<br><br><b>Gruppe 6:</b><br>Mari O (styret)<br>Jørgen (bil)<br>Tom Sander (slagverk)<br>Karianne<br>Maria M<br>Mari L<br>
+			Daniel<br>Kristoffer<br>Susanne<br>Kristian T. S<br><br>
 			
 	<?php } else { ?>
 		<a href='?side=intern/organisasjon&slagverksgrupper=1'>vis grupper</a>	
