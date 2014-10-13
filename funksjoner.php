@@ -447,12 +447,12 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 	$melding .= $message.$eol.$eol;
 	
 	if (!empty($extra_header)) {
-		$header .= "\r\n".$extra_header;
+		$headers .= "\r\n".$extra_header;
 	}
 
-	$epostBleSendt = mail($to,$subject,$melding,$header);
+	$epostBleSendt = mail($to,$subject,$melding,$headers);
 
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$header;
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$headers;
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
 	} else {
