@@ -101,10 +101,11 @@
 	if(has_get('id')||has_post('arrid')){	
 		#Hente ut valgte nyhet hvis "endre"
 		has_get('id') ? $arrid=get('id') : "";
- 		$sql="SELECT * FROM nyheter, konserter, arrangement WHERE arrangement.arrid=".$arrid." AND arrangement.arrid=konserter.arrid_konsert
+ 		$sql="SELECT * FROM arrangement WHERE arrangement.arrid=".$arrid.";";
+		$konsert_arrangement=hent_og_putt_inn_i_array($sql);
+		$sql="SELECT * FROM nyheter, konserter, arrangement WHERE arrangement.arrid=".$arrid." AND arrangement.arrid=konserter.arrid_konsert
 		AND nyheter.nyhetsid=konserter.nyhetsid_konsert;";
-		$mysql_result=mysql_query($sql);
-		$konserter=mysql_fetch_array($mysql_result);
+		$konserter=hent_og_putt_inn_i_array($sql);
 		$handling = "Endre";
 	}
 
@@ -120,25 +121,24 @@ $aktivChecked = (isset($nyheter['aktiv']) && $nyheter['aktiv'] == 0) ? "" : "che
 $nyheter['normal_pris']=="" ? $normal_pris="0" : $normal_pris=$nyheter['normal_pris'];
 $nyheter['student_pris']=="" ? $student_pris="0" : $student_pris=$nyheter['student_pris'];
 		
-$konsert_dato=dato("Y-m-d", $konserter["dato"]);
+$konsert_dato=dato("Y-m-d", $konsert_arrangement["dato"]);
 
 echo "<h2>".$handling." konsert</h2>";
 		
 echo feilmeldinger($feilmeldinger);
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
-	
 	echo "
 		<p>Legg merke til at siden dette er ny funksjonalitet er det ikke er en kobling for konserter før høsten 2014.</p>
 		<form method='post' action='?side=konsert/endre'>
 			<table>
-				<tr><td>Overskrift:</td><td><input type='text' class='overskrift' name='overskrift' value='".kanskje($konserter, 'overskrift')."'></td></tr>
-				<tr><td>Ingress:</td><td><textarea class='ingress' name='ingress'>".kanskje($konserter, 'ingress')."</textarea></td></tr>
+				<tr><td>Overskrift:</td><td><input type='text' class='overskrift' name='overskrift' value='".kanskje($konsert_arrangement, 'tittel')."'></td></tr>
+				<tr><td>Ingress:</td><td><textarea class='ingress' name='ingress'>".kanskje($konsert_arrangement, 'ingress')."</textarea></td></tr>
 				<tr><td>Hoveddel:</td><td><textarea class='hoveddel' name='hoveddel'>".kanskje($konserter, 'hoveddel')."</textarea></td></tr>
 				<tr><td>Dato for konsert:</td><td><input type='text' class='datepicker' name='dato' value='".$konsert_dato."'></td></tr>
-				<tr><td>Oppmøtetid:</td><td><input type='text' class='timepicker' name='oppmote' value='".bare_tidspunkt(kanskje($konserter, 'oppmoetetid'))."'></td></tr>
-				<tr><td>Konsertstart:</td><td><input type='text' class='timepicker' name='konsertstart' value='".bare_tidspunkt(kanskje($konserter, 'start'))."'></td></tr>
-				<tr><td>Konsertslutt:</td><td><input type='text' class='timepicker' name='konsertslutt' value='".bare_tidspunkt(kanskje($konserter, 'slutt'))."'></td></tr>
-				<tr><td>Sted:</td><td><input type='text' name='sted' value='".kanskje($konserter, 'sted')."'></td></tr>
+				<tr><td>Oppmøtetid:</td><td><input type='text' class='timepicker' name='oppmote' value='".bare_tidspunkt(kanskje($konsert_arrangement, 'oppmoetetid'))."'></td></tr>
+				<tr><td>Konsertstart:</td><td><input type='text' class='timepicker' name='konsertstart' value='".bare_tidspunkt(kanskje($konsert_arrangement, 'start'))."'></td></tr>
+				<tr><td>Konsertslutt:</td><td><input type='text' class='timepicker' name='konsertslutt' value='".bare_tidspunkt(kanskje($konsert_arrangement, 'slutt'))."'></td></tr>
+				<tr><td>Sted:</td><td><input type='text' name='sted' value='".kanskje($konsert_arrangement, 'sted')."'></td></tr>
 				<tr><td></td><td>* dato oppgis på formen yyyy-mm-dd og tidpunkter oppgis på formen tt:mm.</td></tr>
 				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
 				<tr><td>Kakebaker:</td><td>
@@ -157,7 +157,7 @@ echo feilmeldinger($feilmeldinger);
 				<tr><td>Billettpris student/honnør:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
 				<tr><td>Bilde:</td><td>Kommer!!</td></tr>
 				<tr><td></td><td><input type='checkbox' name='aktiv' value='1' ".$aktivChecked."/> Aktiv og vises på nett (fjern haken for å slette. Da slettes både aktiviteten i aktivitetslista og nestekonsert på hovedsida.)</td></tr>
-				<input type='hidden' name='arrid' value='".$konserter['arrid']."'>
+				<input type='hidden' name='arrid' value='".$arrid."'>
 				<input type='hidden' name='nyhetsid' value='".$konserter['nyhetsid']."'>							
 				<input type='hidden' name='konserttabellid' value='".$konserter['id']."'>							
 					<tr>
