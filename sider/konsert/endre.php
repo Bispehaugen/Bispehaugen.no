@@ -56,9 +56,10 @@
 			if ($nyhetsid){
 				#denne oppdatererer nyhetsoversikten
 				$sql1="UPDATE nyheter SET overskrift='".$overskrift."',sted='".$sted."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
-				,type='nestekonsert',aktiv='".$aktiv.",bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konsertstart."'
+				,type='nestekonsert',aktiv='".$aktiv."',bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konsertstart."'
 				,normal_pris='".$normal_pris."',student_pris='".$student_pris."' WHERE nyhetsid='".$nyhetsid."';";
 				mysql_query($sql1);
+				echo $sql1;
 			} else {
 				$skrevetavid=$_SESSION["medlemsid"];
 				$skerevet_tid=date("Y-m-d H:i:s");
@@ -66,7 +67,6 @@
 				,normal_pris,student_pris,skrevetavid,tid, sted)
 				values ('$overskrift','$ingress','$hoveddel','$bilde','nestekonsert','$aktiv','$bildebredde','$bilderamme','$dato $konsertstart'
 				,'$normal_pris','$student_pris','$skrevetavid','$skerevet_tid','$sted');";
-				#echo $sql2;
 				mysql_query($sql2);
 				$nyhetsid=mysql_insert_id();
 			};
@@ -81,8 +81,6 @@
 				
 				$sql4="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
 	values ('$overskrift','Konsert','$sted','$dato','$oppmote','$dato $konsertstart','$dato $konsertslutt','$ingress','','1','$hjelpere','$kakebaker')";
-				#echo $sql4;
-				#die();
 				mysql_query($sql4);
 				$arrid=mysql_insert_id();
 			};	
@@ -90,9 +88,7 @@
 			if(empty($konserttabellid)){
 				$sql5="INSERT INTO konserter (arrid_konsert, nyhetsid_konsert) values ('$arrid','$nyhetsid')";
 				mysql_query($sql5);
-				$sql5="insert konsert sql";
 			}
-
 			header('Location: ?side=aktiviteter/liste');
 		}
 	}
@@ -118,8 +114,8 @@
 
 $aktivChecked = (isset($nyheter['aktiv']) && $nyheter['aktiv'] == 0) ? "" : "checked";
 
-$nyheter['normal_pris']=="" ? $normal_pris="0" : $normal_pris=$nyheter['normal_pris'];
-$nyheter['student_pris']=="" ? $student_pris="0" : $student_pris=$nyheter['student_pris'];
+$konserter['normal_pris']=="" ? $normal_pris="0" : $normal_pris=$konserter['normal_pris'];
+$konserter['student_pris']=="" ? $student_pris="0" : $student_pris=$konserter['student_pris'];
 		
 $konsert_dato=dato("Y-m-d", $konsert_arrangement["dato"]);
 
@@ -140,14 +136,14 @@ echo feilmeldinger($feilmeldinger);
 				<tr><td>Konsertslutt:</td><td><input type='text' class='timepicker' name='konsertslutt' value='".bare_tidspunkt(kanskje($konsert_arrangement, 'slutt'))."'></td></tr>
 				<tr><td>Sted:</td><td><input type='text' name='sted' value='".kanskje($konsert_arrangement, 'sted')."'></td></tr>
 				<tr><td></td><td>* dato oppgis på formen yyyy-mm-dd og tidpunkter oppgis på formen tt:mm.</td></tr>
-				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
+				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($konsert_arrangement, 'hjelpere')."'></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
 					<option value=''</option>";
 					foreach($medlemmer as $medlem){
 						echo"<option value='".$medlem['medlemsid']."'";
 
-						if ($medlem['medlemsid'] == kanskje($konserter, 'kakebaker')) {
+						if ($medlem['medlemsid'] == kanskje($konsert_arrangement, 'kakebaker')) {
 							echo " selected=selected";
 						}
 						echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
