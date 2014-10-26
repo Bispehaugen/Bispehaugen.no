@@ -221,7 +221,7 @@ function hent_siste_nyheter($antall, $type="Public"){
 }
 
 function hent_konserter($antall = "", $type="nestekonsert"){
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='".$type."' ORDER BY konsert_tid DESC";
+	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='".$type."' AND konsert_tid>now() ORDER BY konsert_tid";
 
 	if (!empty($antall)) {
 		$sql .= " LIMIT ".$antall;
