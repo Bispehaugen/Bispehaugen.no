@@ -18,7 +18,12 @@
     //Her legges det inn en oversikt over alle forumene
     list_forum($forumid);
 
-    echo "<section class='forum'>";
+    ?>
+    <section class='forum'>
+    	<section class='tools topplinje'>
+			<a class="tool" href="?side=forum/nytt-tema&forumid=<?php echo $forumid; ?>"><i class='fa fa-plus' title='Klikk for å endre'></i> Nytt tema</a>
+		</section>
+	<?php
     
     forum_list_tema($forumid, $skip);
 

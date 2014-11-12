@@ -1,5 +1,7 @@
 <?php
 
+global $connection;
+
 // Felles funksjoner som skal brukes mange plasser
 // Ellers legg ting på samme side
 
@@ -8,6 +10,8 @@ session_start();
 define("SPAMFILTER","/kukk|informative|\<\/a\>|site|seite|Beach|Hera|Estate|lugo|migliore|informativo|significo1|casino|poker|viagra|mortgage|porno|porn|\[URL=|discount|rental|Oprah|Obama|lhxtfozb|itrpgkf/i");
 
 function koble_til_database($database_host, $database_user, $database_string, $database_database){
+
+	global $connection;
 	
     $connection = mysql_connect($database_host, $database_user, $database_string);
 	
