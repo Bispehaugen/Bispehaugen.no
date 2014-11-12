@@ -140,6 +140,7 @@ Den gamle adressen var:
 					medlemsid = '$medlemsid';
 				";
 				mysql_query($sql);
+				unset($_SESSION["innlogget_bruker"]);
 				header('Location: ?side=medlem/liste');
 			}else{
 				$sql="
