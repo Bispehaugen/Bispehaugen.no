@@ -179,7 +179,6 @@ function hent_brukerdata($medlemid = ""){
 	} else {
 		$sql .= " WHERE `medlemsid`=".$medlemid;
 	}
-	echo $sql;
 	$query = mysql_query($sql);
 
 	if ($query === false) {
