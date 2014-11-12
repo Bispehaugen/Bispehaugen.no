@@ -158,7 +158,7 @@ $innhold = ob_get_clean();
 <script src='scrollIt.js' type='text/javascript'></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("abbr.timeago").timeago();
+		//$("abbr.timeago").timeago();
 	});
 
 	function confirm_url(url, tekst) {
