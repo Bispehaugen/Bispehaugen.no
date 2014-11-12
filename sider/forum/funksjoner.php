@@ -1,5 +1,4 @@
 <?php
-
 define("antall_tema_per_side", 25);
 
 function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {

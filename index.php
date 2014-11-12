@@ -1,5 +1,4 @@
 <?php
-
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 include_once "db_config.php";
 include_once "funksjoner.php";
@@ -61,6 +60,8 @@ $innhold = ob_get_clean();
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/internside.css" type="text/css" />
 	<?php } ?>
+
+	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
 </head>
 
 <body>
@@ -100,7 +101,7 @@ $innhold = ob_get_clean();
 		<section class="login">
 				<?php
 					
-					$feilmeldinger=$_SESSION["Errors"];
+					$feilmeldinger = session("Errors");
 					if($feilmeldinger!=""){
 						echo feilmeldinger(Array($feilmeldinger));
 						$_SESSION["Errors"]  = "";
@@ -135,7 +136,6 @@ $innhold = ob_get_clean();
 			?>
 		</main>
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
-<script type="text/javascript" src='js/jquery-1.10.2.min.js'></script>
 <script type="text/javascript" src="js/jquery.timeago.js"></script>
 <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
 
