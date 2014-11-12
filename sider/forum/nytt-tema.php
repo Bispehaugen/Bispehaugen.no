@@ -42,7 +42,7 @@ if(has_post("tittel")) {
 		$temaid = mysql_insert_id($connection);
 		
 		// INSERT INNLEGG
-		$innlegg_sql = "INSERT INTO forum_innlegg_ny (temaid, tekst, skrevetav, skrevetavid, forumid) VALUES ('$temaid', '$innlegg', '$skrevetav', '$skrevetavid', '$forumid');";
+		$innlegg_sql = "INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetav, skrevetavid, forumid) VALUES ('$temaid', '$innlegg', NOW(), '$skrevetav', '$skrevetavid', '$forumid');";
 		mysql_query($innlegg_sql, $connection);
 		$innleggid = mysql_insert_id($connection);
 
