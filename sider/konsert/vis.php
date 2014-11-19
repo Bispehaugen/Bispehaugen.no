@@ -44,7 +44,7 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
 						}
 
 						if (isset($konsert['student_pris'])) {
-							echo '<p><b>Barn/student/honør:</b> ' . $konsert['student_pris'] . ',-</p>';
+							echo '<p><b>Barn/student:</b> ' . $konsert['student_pris'] . ',-</p>';
 						}
 					?>
 					<p><b>Skolekorpsmusikanter:</b> gratis (ved framvisning av gyldig NMF-bevis)</p>

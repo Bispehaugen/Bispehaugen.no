@@ -150,7 +150,7 @@ echo feilmeldinger($feilmeldinger);
 					}
 					echo "</select></td></tr>
 				<tr><td>Billettpris vanlig:</td><td><input type='text' name='normal_pris' value='".$normal_pris."'></td></tr>
-				<tr><td>Billettpris student/honnør:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
+				<tr><td>Billettpris student:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
 				<tr><td>Bilde:</td><td>Kommer!!</td></tr>
 				<tr><td></td><td><input type='checkbox' name='aktiv' value='1' ".$aktivChecked."/> Aktiv og vises på nett (fjern haken for å slette. Da slettes både aktiviteten i aktivitetslista og nestekonsert på hovedsida.)</td></tr>
 				<input type='hidden' name='arrid' value='".$arrid."'>
