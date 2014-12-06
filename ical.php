@@ -41,6 +41,12 @@ $xprops = array( "X-LIC-LOCATION" => $tz );
   // create timezone component(-s) opt. 1
   // based on present date
 
+$bruker = hent_brukerdata();
+$brukerid = "";
+if (array_key_exists('medlemsid', $bruker)) {
+	$brukerid = $bruker['medlemsid'];
+}
+
 foreach($aktiviteter as $id => $aktivitet) {
 	$uid = "Bispehaugen.no/arr/".$id;
 	$address = utf8_encode($aktivitet["sted"]);
@@ -97,6 +103,8 @@ foreach($aktiviteter as $id => $aktivitet) {
 }
 
 iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+
+logg("ical", "{bruker:'"+$brukerid+"', antall_arrangement: '"+count($aktiviteter)+"'}");
 
 $v->returnCalendar();
 
