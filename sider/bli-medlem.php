@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 include_once "funksjoner.php";
 
@@ -102,7 +102,10 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 	
 	<p>
 	<span class="viktig">Interessert i å være med i Bispehaugen?
-	Fyll ut skjemaet så tar vi kontakt med deg!</span>
+	<!--Fyll ut skjemaet så tar vi kontakt med deg!</span>-->
+	</p>
+	<p>
+	  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Bli medlem i Bispehaugen ungdomskorps">styret@bispehaugen.no</a>.
 	</p>
 </div>
 
@@ -122,7 +125,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 
 <?php echo feilmeldinger($feilmeldinger); ?>
 
-<form method="POST" action="?side=bli-medlem">
+<!--<form method="POST" action="?side=bli-medlem">
   <table>
     <tr>
       <td class="label">Navn</td>
@@ -164,7 +167,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
       </td>
     </tr>
   </table>
-</form>
+</form>-->
 
 <div class="clearfix"></div>
 </div>
