@@ -50,11 +50,11 @@
 	?>
 		<section class="halv">
 		<p>
-			Fravær meldes til nestleder på e-post eller sms. <br />
-			Du kan også fylle ut skjemaet
+			Fravær meldes til nestleder på e-post til <a href="mailto:nestleder@bispehaugen.no?subject=Fravær">nestleder@bispehaugen.no</a> eller sms. <br />
+			<!--Du kan også fylle ut skjemaet-->
 		</p>
 		</section>
-		<section class="halv">
+		<!--<section class="halv">
 			<form method='post' action='?side=intern/organisasjon'>
 				<input type='hidden' name='medlemsid' value='<?php echo $_SESSION['medlemsid']; ?>'>
 				<p>
@@ -65,7 +65,7 @@
 					<input class='submit right' type='submit' value='Send' />
 				</p>
 			</form>
-		</section>
+		</section>-->
 		
 		<?php
 	} else {
