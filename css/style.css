@@ -1058,3 +1058,7 @@ nav .arkiv {
 .lenke-som-er-inline-med-overskrift a {
 	margin-left: 1em;	
 }
+
+.xdebug-error th, .xdebug-error td {
+  color: black;
+}

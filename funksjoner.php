@@ -1,5 +1,7 @@
 <?php
 
+global $connection;
+
 // Felles funksjoner som skal brukes mange plasser
 // Ellers legg ting på samme side
 
@@ -8,6 +10,8 @@ session_start();
 define("SPAMFILTER","/kukk|informative|\<\/a\>|site|seite|Beach|Hera|Estate|lugo|migliore|informativo|significo1|casino|poker|viagra|mortgage|porno|porn|\[URL=|discount|rental|Oprah|Obama|lhxtfozb|itrpgkf/i");
 
 function koble_til_database($database_host, $database_user, $database_string, $database_database){
+
+	global $connection;
 	
     $connection = mysql_connect($database_host, $database_user, $database_string);
 	
@@ -65,6 +69,9 @@ function has_post($attributt = "") {
 }
 
 function has_session($attributt) {
+	if (empty($attributt)) {
+		return isset($_SESSION) && !empty($_SESSION);
+	}
 	return isset($_SESSION[$attributt]);
 }
 
@@ -148,20 +155,20 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 
 function hent_brukerdata($medlemid = ""){
 	if(empty($medlemid)){
-		if (isset($_SESSION['medlemsid'])) {
-			$medlemid = $_SESSION['medlemsid'];
+		if (has_session('medlemsid')) {
+			$medlemid = session("medlemsid");
 		} else {
 			return Array();
 		}
 	}
 
 	if(er_logget_inn()){
-		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, instrument.instrument, instrumentid, instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
+		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, I.instrument, I.instrumentid, I.instrumentid as instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
 					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter
-				FROM medlemmer, instrument WHERE instnr=instrumentid";
+				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	} else {
-		$sql = "SELECT medlemsid, fnavn, enavn, status, instrument.instrument, instrumentid, instnr, grleder, foto, bakgrunn, kommerfra 
-				FROM medlemmer, instrument WHERE instnr=instrumentid";
+		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, bakgrunn, kommerfra 
+				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	}
 
 	if (is_array($medlemid)) {
@@ -172,9 +179,9 @@ function hent_brukerdata($medlemid = ""){
 			return Array();
 		}
 
-		$sql .= " AND `medlemsid` IN (".implode(',',$medlemid).")";
+		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
 	} else {
-		$sql .= " AND `medlemsid`=".$medlemid;
+		$sql .= " WHERE `medlemsid`=".$medlemid;
 	}
 	$query = mysql_query($sql);
 
@@ -316,7 +323,7 @@ function hent_aktiviteter($skip = "", $take = "") {
 }
 
 function innlogget_bruker() {
-	if (isset($_SESSION['innlogget_bruker'])){
+	if (has_session('innlogget_bruker') && !empty($_SESSION['innlogget_bruker'])){
 		$bruker = $_SESSION['innlogget_bruker'];
 	} else {
 		$bruker = hent_brukerdata();
@@ -422,37 +429,31 @@ function neste_konsert_nyhet() {
 }
 
 function epost($to,$replyto,$subject,$message,$extra_header = "") {
-	$eol = "\r\n";
+	$eol = PHP_EOL;
 
 	$headers = "";
 
-	$headers .= "From: Bispehaugen.no<ikke-svar@bispehaugen.no>".$eol;
-	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
-	$headers .= "Real-From: ".$realfrom_tmp.$eol;
-	$headers .= "Reply-To: ".$replyto.$eol;
-
-	$headers .= 'Return-Path: '.$replyto.' <'.$replyto.'>'.$eol;    // these two to set reply address
-	$headers .= "Message-ID: <".time()." no-reply@bispehaugen.no>".$eol;
+	$headers .= "Message-ID: <".time()." ikke-svar@bispehaugen.no>".$eol;
 	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
 	# Boundry for marking the split & Multitype Headers
 	$mime_boundary=md5(time());
 	$headers .= 'MIME-Version: 1.0'.$eol;
 	$headers .= "Content-Type: multipart/related; boundary=\"".$mime_boundary."\"".$eol;
-	$melding = "";
 
-	# HTML Version
-	$melding .= "--".$mime_boundary.$eol;
-	$melding .= "Content-Type: text/html; charset=utf-8".$eol;
-	$melding .= "Content-Transfer-Encoding: 8bit".$eol;
-	$melding .= $message.$eol.$eol;
-	
+	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
+	$headers .= "Real-From: ".$realfrom_tmp.$eol;
+	$headers .= "From: Bispehaugen.no <ikke-svar@bispehaugen.no>".$eol;
+	$headers .= "Reply-To: ".$replyto.$eol;
+	$headers .= "Return-Path: ".$replyto.$eol;    // these two to set reply address
+
 	if (!empty($extra_header)) {
-		$headers .= "\r\n".$extra_header;
+		$headers .= $eol.$extra_header;
 	}
 
-	$epostBleSendt = mail($to,$subject,$melding,$headers);
+	$epostBleSendt = mail($to,$subject,$message,$headers);
 
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$melding." | Headers: ".$headers;
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$headers;
+
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
 	} else {
@@ -481,7 +482,7 @@ function generer_passord_hash($passord) {
 }
 
 function logg($type, $melding) {
-	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', '".mysql_real_escape_string($_SESSION["medlemsid"])."', '".mysql_real_escape_string($melding)."', '".date("Y-m-d H:i:s")."')";
+	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', '".mysql_real_escape_string(session("medlemsid"))."', '".mysql_real_escape_string($melding)."', '".date("Y-m-d H:i:s")."')";
 	mysql_query($sql);
 }
 

@@ -1,5 +1,4 @@
 <?php
-
 define("antall_tema_per_side", 25);
 
 function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
@@ -12,7 +11,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 	$listeinnlegg = Array();
 	if ($temaid != 0) {
 		//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
-		$sql="SELECT forum_liste.listeid, forum_liste.tittel FROM forum_liste, forum_innlegg_ny
+		$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_liste.expires FROM forum_liste, forum_innlegg_ny
 			WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_innlegg_ny.temaid=".$temaid.";";
 		$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
 		
@@ -113,12 +112,11 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 				};	
 			};
 			//Legger til tekstfelt for å melde seg på hvis ikke lista har expired
-			
 			if($oppfort_paa_liste){
 				echo "<tr><td colspan='2'><b>Du er allerede skrevet på lista</b></td></tr> ";						
-			}elseif(isset($listeinnlegg['expires']) && strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeinnlegg['expires'],0,10))/(60*60*24)){
+			}elseif(isset($listeinnlegg[$id]['expires']) && strtotime(date('Y-m-d'))/(60*60*24) <= strtotime(substr($listeinnlegg[$id]['expires'],0,10))/(60*60*24)){
 			echo "<form class='forum' method='post' action='?side=forum/innlegg&id=".$temaid."'>
-				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' autofocus><br><input type='checkbox' name='flagg' value='1'> Stryk navnet</td>
+				<tr><td>Kommentar (frivillig):<br><input type='text' name='kommentar' class='kommentar' autofocus><br><label><input type='checkbox' name='flagg' value='1'> Stryk navnet</label></td>
 				<td><input type='hidden' name='medlemsid' value='".$_SESSION['medlemsid']."'>
 				<input type='hidden' name='listeinnlegg' value='".$listeinnlegg[$innlegg['innleggid']]['listeid']."'>
 				<input type='submit' name='nyttListeInnlegg' value='Skriv meg på lista'></td></tr>";

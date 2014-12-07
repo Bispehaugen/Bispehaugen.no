@@ -1,5 +1,6 @@
 <?php
 $epost_sendt = false;
+$feilmeldinger = Array();
 
 if (has_post("epost")) {
 	

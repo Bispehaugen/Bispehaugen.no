@@ -108,6 +108,10 @@
 	background: #eaeaea;
 }
 
+.forum .paameldingsliste .kommentar {
+	width: 100%;
+}
+
 .forum .nytt-innlegg {
 	text-align: left;
 	margin-top: 3em;
@@ -147,7 +151,7 @@
 	 border-top-left-radius: 10px 10px;
 	 border-top-right-radius: 10px 10px;
 	 */
-	margin-top: 2em;
+	/*margin-top: 2em;*/
 }
 
 .forum.temaliste .overskrift {
@@ -164,6 +168,17 @@
 	width: 40%;
 	position: relative;
 	top: 1em;
+}
+
+.forum .topplinje.tools {
+	margin: 2em 0em 1em 0em;
+	text-align: right;
+}
+
+.forum .topplinje.tools .tool {
+	background: white;
+	padding: 0.5em 1em;
+	color: rgba(34, 41, 51, 1);
 }
 
 .forum.pagination {
@@ -213,4 +228,31 @@
 .forum-liste li.aktiv a {
 	padding-bottom: 0.25em;
 	border-bottom: 1px solid white;
+}
+
+.forum.nytt-tema .liste-alternativer {
+	display: none;
+}
+
+.forum.nytt-tema td:first-child {
+	width: 30%;
+}
+
+.forum.nytt-tema textarea {
+	width: 100%;
+}
+
+.forum.nytt-tema ul {
+	list-style: none;
+	margin: 1em 0em;
+	padding: 0;
+}
+
+.forum.nytt-tema .flere-alternativer,
+.forum.nytt-tema .fjern-alternativ {
+	cursor: pointer;
+}
+
+.forum.nytt-tema .liste-alternativer input {
+	max-width: 500px;
 }
