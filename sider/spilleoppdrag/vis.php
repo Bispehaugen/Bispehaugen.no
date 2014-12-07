@@ -109,7 +109,7 @@ if(has_post("sEpost")){
 if($har_alle_feltene_utfylt_og_sendt_mail == false){
 ?>
 
-	<form action="?side=spilleoppdrag/vis" method="post">
+	<!--<form action="?side=spilleoppdrag/vis" method="post">
 		<h2>Kontaktskjema</h2>
 
 		<?php echo feilmeldinger($feilmeldinger); ?>
@@ -137,7 +137,7 @@ if($har_alle_feltene_utfylt_og_sendt_mail == false){
 		<p>
 			<input class="right" type="submit" value="Send inn" />
 		</p>
-	</form>
+	</form>-->
 	<div class="clearfix"></div>
 </div>
 
