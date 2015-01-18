@@ -292,9 +292,13 @@ function ant_dager_siden($dato){
 	return "<i>".$dagersiden_som_tekst."</i>";
 };
 
-function hent_aktiviteter($skip = "", $take = "") {
+function hent_aktiviteter($skip = "", $take = "", $alle = "") {
 
-	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ";
+	if ($alle==1){
+		$sql = "SELECT * FROM `arrangement` WHERE slettet=false ";
+	}else{
+		$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ";
+	}
 
 	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
 		$sql .= "";
