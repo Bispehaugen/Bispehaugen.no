@@ -6,7 +6,9 @@
 
     
     //spørring som henter ut alle aktiviteter
-	$aktiviteter=hent_aktiviteter();
+    $alle=0;
+    $alle=get('alle');
+	$aktiviteter=hent_aktiviteter("","",$alle);
 	
 	$valgt_id = get('id');
 
@@ -28,7 +30,11 @@
 		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny aktivitet</a></h3>";
 		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=konsert/endre'><i class='fa fa-plus'></i> Legg til ny konsert</a></h3>";
 	}
-
+	if(get('alle')==0){
+	    	echo" <h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/liste&alle=1'><i class='fa fa-calendar'></i> Vis tidligere</a></h3>";
+	 	} else {
+	     	echo"<h3 class='lenke-som-er-inline-med-overskrift'> <a href='?side=aktiviteter/liste&alle=0'><i class='fa fa-calendar'></i> Vis bare kommende</a></h3>";
+		}
 	?>
 	<script type='text/javascript'>
 		function slett_aktivitet(){
@@ -72,7 +78,9 @@
  			echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
 			
 			#hvis tildato er satt eller lik
- 			if(dato("d", $aktivitet['slutt']) !== dato("d", $aktivitet['start'])){
+ 			if((dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start']))||($aktivitet['slutt']=="0000-00-00 00:00:00")){
+				echo "";
+			}else{
  				echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
 			}
 			echo "</td>";
@@ -81,7 +89,7 @@
    				echo "<td></td><td>
    				<a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>".$aktivitet['tittel']."</a></td><td>".$aktivitet['sted']."</td>";
 			}else{
-				echo "<td>".strftime("%H:%M", strtotime($aktivitet['start']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."'>
+				echo "<td>".strftime("%H:%M", strtotime($aktivitet['start']))."</td><td><a href='?side=aktiviteter/liste&id=".$aktivitet['arrid']."&alle=".$alle."'>
    				".$aktivitet['tittel']."</a>
    				</td><td>".$aktivitet['sted']."</td>";
 			}
