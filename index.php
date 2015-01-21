@@ -46,6 +46,8 @@ $innhold = ob_get_clean();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="keywords" content="Bispehaugen Ungdomskorps, Bispehaugen, Ungdomskorps, Korps, Band, Woodwind band, Trondheim, Korps Trondheim, Janitsjar, Janitsjarkorps, Janitsjarkorps Trondheim, 1923, NTNU, studentkorps, student, student korps" />
+    <meta property="og:image" content="http://bispehaugen.no/icon_logo.png"/>
+
 	
 	<link rel="shortcut icon" href="icon_logo.png" type="image/png" />
 	
