@@ -99,29 +99,11 @@ $innhold = ob_get_clean();
 			<div class="clearfix"></div>
     	</div>
     	
-	<?php if(!er_logget_inn() && erForside()) { ?>
-		<section class="login">
-				<?php
-					
-					$feilmeldinger = session("Errors");
-					if($feilmeldinger!=""){
-						echo feilmeldinger(Array($feilmeldinger));
-						$_SESSION["Errors"]  = "";
-					};
-									?>
-			<div class="login-box">
-				<h2 class="overskrift">Internsiden</h2>
-				<p class="glemt-passord"><a href="?side=glemt-passord">Glemt passord?</a></p>
-				<form action="login.php" method="POST">
-					<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
-					<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
-					<button class="login-button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
-				</form>
-			</div>
-			<div class="clearfix"></div>
-		</section>
-	<?php } ?>
-    	
+	<?php 
+	if(!er_logget_inn() && erForside()) {
+		inkluder_side_fra_undermappe("loginboks");
+	}
+	?>
 		<main class="main">
 			<a name="main"></a>
 			<?php
@@ -291,61 +273,6 @@ $innhold = ob_get_clean();
             }
         }
     });
-    	    	
-	var clearErrors = function() {
-		$(".login-button").prop("disabled", false);
-		$(this).removeClass("error");
-	};
-	
-	var login = function(event) {
-		event.preventDefault();
-		
-		$(this).attr("disabled", "disabled");
-		
-		var epost = $(".login-box #epost");
-		var password = $(".login-box #password");
-		
-		var has_error = false;
-		
-		if (epost.val().length == 0) {
-			epost.addClass("error");
-			has_error = true;
-		}
-		
-		if (password.val().length == 0) {
-			password.addClass("error");
-			has_error = true;
-		}
-		
-		if (has_error) {
-			$(this).prop("disabled", false);
-			
-			return;
-		}
-		
-		clearErrors();
-		
-		$(".login .spinner").show();
-		
-		var data = {epost: epost.val(), password: password.val()};
-		
-		$.post("login.php?ajax=true", data)
-			.done(function(data){
-				location.reload(true);
-			})
-			.fail(function(data){
-				debugger;
-				$(".login .feilmelding").show();
-				
-				// Videresendes på done, så trenger ikke å fjerne spinner der, ser bare rart ut
-				clearErrors();
-				$(".login .spinner").hide();
-			});
-    	};
-    	
-    	$(".login-button").click(login);
-    	
-    	$(".login input").focus(clearErrors);
     <?php } ?>
     
 </script>
