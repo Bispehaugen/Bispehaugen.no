@@ -21,7 +21,7 @@ echo '
       '.fancyDato($konsert['konsert_tid']).'
       <div class="bilde-og-innhold">
         <div class="bilde">
-            <img src="'.$bilde.'" />
+            <img src="'.thumb($bilde 125).'" />
         </div>
         <div class="innhold">
             <h4>'.$konsert['overskrift'].'</h4>

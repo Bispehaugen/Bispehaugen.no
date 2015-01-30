@@ -39,7 +39,7 @@ if(!has_get('id') ){
 		</aside>
 		
 		<?php if (!empty($bilde)) { ?>
-		<div class="ingressbilde"><img src='<?php echo $bilde; ?>' /></div>
+		<div class="ingressbilde"><img src='<?php echo thumb($bilde, 400, 400); ?>' /></div>
 		<?php } ?>
 		
 		<h1><?php echo $nyhet['overskrift']; ?></h1>

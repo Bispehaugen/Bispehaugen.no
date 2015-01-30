@@ -229,7 +229,7 @@ Den gamle adressen var:
 					<td>Bilde:</td>
 					<td>
 						<div id='bytt-bilde'>
-							<img src='".kanskje($medlemmer, 'foto')."' />
+							<img src='".thumb(kanskje($medlemmer, 'foto'), 200)."' />
 							<i class='ikon fa fa-edit'></i>
 						</div>
 						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vises kun for innloggede</label></p>

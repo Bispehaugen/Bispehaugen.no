@@ -346,6 +346,11 @@ abstract class Navnlengde
     const Ingen = 2;
 }
 
+function thumb($bildePath, $width = "", $height = "") {
+	$bildePath = str_replace("../", "", $bildePath);
+	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
+}
+
 function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false) {
 	if (empty($bruker)) {
 		return "";
@@ -355,7 +360,7 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 
 	$html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
 	if($visBilde && !empty($bilde)) {
-		$html .= "<img src='".$bilde."' />";
+		$html .= "<img src='".thumb($bilde, 250)."' />";
 	}
 	
 	switch ($fulltNavn) {
