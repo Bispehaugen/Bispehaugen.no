@@ -1,6 +1,6 @@
 <?php
 
-if(!has_get('id')) {
+if(!has_get('id') || empty(get('id'))) {
 	throw new Exception();	
 }
 

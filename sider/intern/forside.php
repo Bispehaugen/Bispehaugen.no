@@ -120,7 +120,8 @@
 </section>
 </section>
 
-	<section class="side nyheter siste-nyheter">
+<section class="side">
+	<section class="nyheter siste-nyheter halv-side-ved-stor-skjerm">
 		<?php
 		global $antall_nyheter;
 			$antall_nyheter = 3;
@@ -128,11 +129,11 @@
 		?>
 	</section>
 
-	<section class="side siste-forum forum">
+	<section class="siste-forum forum halv-side-ved-stor-skjerm">
 		
-		<h2 class='overskrift-som-er-inline-block'>Siste på forumet</h2>
-		<h3 class='lenke-som-er-inline-med-overskrift'><?php echo list_forum(); ?></h3>
-		
+		<h2>Siste på forumet</h2>
+		<h3><?php echo list_forum(); ?></h3>
+		<div class="clearfix"></div>
 		<?php
 		$sql = siste_forumposter_sql(3);
 
@@ -142,4 +143,4 @@
 	</section>
 	
 	<div class="clearfix"></div>
-
+</section>
