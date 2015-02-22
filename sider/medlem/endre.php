@@ -236,6 +236,8 @@ Den gamle adressen var:
 					</td>
 				</tr>
 				";
+				
+				}
 				if(session('rettigheter')>2){
 					echo"<tr><td>Rettigheter*:</td><td>
 					<select name='rettigheter'>";
@@ -244,8 +246,7 @@ Den gamle adressen var:
 						echo"<option value='".$rettighet."'".$selected.">".$navn_gyldige_rettigheter[$rettighet]."</option>";
 					}
 					echo "</select><br>*admin light kan endre nyheter, endre aktiviteter og legge til dokumenter. Det kreves full admin for å se styre-forum/styre-dokumenter, endre medlemmer og tilganger.";
-					};
-				}
+				};
 				
 				echo "</td></tr>
 				<tr>
