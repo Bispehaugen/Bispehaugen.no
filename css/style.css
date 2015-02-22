@@ -118,6 +118,7 @@ ul {
 	max-width: 30em;
 	width: 100%;
 	background: white;
+  color: rgba(34, 41, 51, 1);
 }
 
 .login-box .overskrift {
@@ -130,7 +131,7 @@ ul {
 }
 
 .login-box .glemt-passord a {
-	color: rgba(34, 41, 51, 1);
+	color: rgba(34, 41, 51, 1) !important;
 }
 
 .login .feilmelding {

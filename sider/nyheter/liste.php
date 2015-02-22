@@ -29,7 +29,7 @@
           '.fancyDato($nyhet['tid']).'
           <div class="bilde-og-innhold">
             <div class="bilde">
-                <img src="'.$bilde.'" />
+                <img src="'.thumb($bilde, 125).'" />
             </div>
             <div class="innhold">
                 <h4><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'">'.$nyhet['overskrift'].'</a></h4>

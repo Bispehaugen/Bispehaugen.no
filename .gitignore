@@ -1,4 +1,5 @@
 lokal_config.php
+cache/*.txt
 *.sublime*
 .settings
 .project
@@ -8,5 +9,6 @@ desktop.ini
 .DS_STORE
 filer/
 bilder/
+bilder
 noter/
 demo/index.html

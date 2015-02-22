@@ -51,21 +51,11 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		echo "<header>";
 		
 		if (!empty($b['foto'])) {
-			echo "<span class='foto'><img src='".$b['foto']."' /></span>";
+			echo "<span class='foto'><img src='".thumb($b['foto'], 40)."' /></span>";
 		}
 		echo "<section class='info'>";
 		echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
 		echo "<abbr class='tid timeago' title='".date("c", $tid)."''>kl. ".date("H:i", $tid)." den ".date("d. F Y", $tid)."</abbr>";
-
-		if (!$har_temaid) {
-			echo " i ";
-			echo "<span class='plassering'>";
-			echo "<span class='forum-tittel'><a href='?side=forum/tema&id=".$innlegg['forumid']."'>".$innlegg['tematittel']."</a></span>";
-			echo " <i class='fa fa-caret-right'></i> ";
-			echo "<span class='tema-tittel'><a href='?side=forum/innlegg&id=".$innlegg['temaid']."'>".$innlegg['innleggtittel']."</a></span>";
-			echo "</span>";
-		}
-
 /*
 		//legger til liker-ikon med antall likes (vises ikke for lister)
 		if(!$innlegg['liste']){
@@ -78,6 +68,13 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 */
 		echo "</section>";
 
+		if (!$har_temaid) {
+			echo "<span class='plassering'>";
+			echo "<span class='forum-tittel'><a href='?side=forum/tema&id=".$innlegg['forumid']."'>".$innlegg['tematittel']."</a></span>";
+			echo " <i class='fa fa-caret-right'></i> ";
+			echo "<span class='tema-tittel'><a href='?side=forum/innlegg&id=".$innlegg['temaid']."'>".$innlegg['innleggtittel']."</a></span>";
+			echo "</span>";
+		}
 
 		//viser endre/slett-knapper på egne innlegg og for admin (så de har mulighet til å overstyre)
 		if(($innlegg['skrevetavid']==$medlemsid || $_SESSION['rettigheter']>1) && $har_temaid){
@@ -186,7 +183,7 @@ function forum_list_tema($forumid, $skip) {
 			} else {
 				$foto = "icon_logo_hvit.png";
 			}
-			echo "<span class='foto'><img src='".$foto."' /></span>";
+			echo "<span class='foto'><img src='".thumb($foto, 40)."' /></span>";
 			echo "<section class='info'>";
 			echo "<h5 class='navn'>".$b['fnavn']." ".$b['enavn']."</h5>";
 			if ($tid != 0) {

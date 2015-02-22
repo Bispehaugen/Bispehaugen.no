@@ -33,7 +33,7 @@ echo '
 <article class="medlem">
 	
 <?php if (!empty($bilde)) { ?>
-<div class="profilbilde"><img src='<?php echo $bilde; ?>' /></div>
+<div class="profilbilde"><img src='<?php echo thumb($bilde, 300); ?>' /></div>
 <?php } ?>
 
 <h1><?php echo $medlem['fnavn']." ".$medlem['enavn']; ?></h1>

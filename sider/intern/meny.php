@@ -19,7 +19,7 @@
     <li><a href="?side=intern/organisasjon">Praktisk</a></li>
     <li class="no-border profilbilde">
         <span class="profil-lenke">
-            <img class="liten profilbilde" src="<?php echo $profilbilde; ?>" /> <?php echo $bruker['fnavn']; ?> 
+            <img class="liten profilbilde" src="<?php echo thumb($profilbilde, '', 25); ?>" /> <?php echo $bruker['fnavn']; ?> 
             <i class="fa fa-caret-down"></i>
         </span>
         <ul class="profilbilde-valg">

@@ -71,6 +71,23 @@
 	color: rgba(0, 0, 0, 0.8);
 }
 
+@media screen and (min-width: 1435px) {
+	.halv-side-ved-stor-skjerm {
+		padding: 1em;
+		width: 50%;
+		float: left;
+	}
+
+	.forum-liste ul {
+		padding: 0;
+	}
+}
+
+.halv-side-ved-stor-skjerm .innlegg {
+	background: #efefef;
+	border: 0 none;
+}
+
 .profilbilde {
 	display: none; /* bare på desktop, ikke mobil */
 }
@@ -135,6 +152,12 @@ li.profilbilde {
 
 .forum.siste-forum h2 {
 	margin: 0em 0em 1em 0em;
+}
+
+@media screen and (max-width: 1436px) {
+	.halv-side-ved-stor-skjerm.forum.siste-forum h2 {
+		margin-top: 2em;
+	}
 }
 
 @media screen and (min-width: 800px) {

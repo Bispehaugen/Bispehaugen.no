@@ -115,6 +115,8 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 			try {
 				include $php_fil;
 			} catch (Exception $e) {
+				logg("exception", $e);
+				die($e);
 			    include "sider/ikke_funnet.php";
 			}
 		} else {
@@ -344,6 +346,11 @@ abstract class Navnlengde
     const Ingen = 2;
 }
 
+function thumb($bildePath, $width = "", $height = "") {
+	$bildePath = str_replace("../", "", $bildePath);
+	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
+}
+
 function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false) {
 	if (empty($bruker)) {
 		return "";
@@ -353,7 +360,7 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 
 	$html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
 	if($visBilde && !empty($bilde)) {
-		$html .= "<img src='".$bilde."' />";
+		$html .= "<img src='".thumb($bilde, 250)."' />";
 	}
 	
 	switch ($fulltNavn) {
@@ -457,6 +464,37 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 	$epostBleSendt = mail($to,$subject,$message,$headers);
 
 	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$headers;
+
+	if ($epostBleSendt) {
+		logg("epost", $melding);	
+	} else {
+		logg("error-epost", $melding);
+	}
+	return $epostBleSendt;
+}
+
+function epost_ny($to,$replyto,$subject,$message,$extra_header = "")  {
+
+	require_once 'mail/swift_required.php';
+
+	$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
+	  ->setUsername(GMAIL_USERNAME)
+	  ->setPassword(GMAIL_PASSWORD);
+
+	$mailer = Swift_Mailer::newInstance($transport);
+
+
+	$email = Swift_Message::newInstance('SendEpost')
+	  ->setFrom(array('ikke-svar@bispehaugen.no' => 'Bispehaugen.no'))
+	  ->setTo(array($to))
+	  ->setSubject($subject)
+	  ->setBody($message);
+
+	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message;
+
+	$epostBleSendt = $mailer->send($email);
+
+	die($epostBleSendt);
 
 	if ($epostBleSendt) {
 		logg("epost", $melding);	

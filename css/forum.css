@@ -54,6 +54,7 @@
 .forum-innlegg-liste .innlegg header .plassering {
 	padding: 0;
 	display: inline-block;
+	float: right;
 }
 
 .forum-innlegg-liste .innlegg header .tools {
