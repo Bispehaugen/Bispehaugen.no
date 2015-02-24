@@ -454,7 +454,7 @@ input.error {
   }
 
   .side.kontakt .content {
-    width: 420px;
+    width: 630px;
     max-width: 100%;
   }
 
@@ -846,6 +846,13 @@ nav .arkiv {
 	.kontakt-float {
 		float: left;
 		width: 50%;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	.kontakt-styret-float {
+		float: left;
+		width: 33%;
 	}
 }
 
