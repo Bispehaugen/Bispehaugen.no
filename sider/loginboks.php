@@ -40,7 +40,7 @@
 		$.post("login.php?ajax=true", data)
 			.done(function(data){
 				window.scrollTo(0, 0);
-				location.reload(true);
+				window.location = window.location.pathname;
 			})
 			.fail(function(data){
 				$(".login .feilmelding").show();
