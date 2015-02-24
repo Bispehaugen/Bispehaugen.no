@@ -1,16 +1,38 @@
 <?php
 //Henter ut mobilnummeret til leder
-$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
+//Denne skal det egentlig være
+//$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 
+//fiks akkurat når leder er utenlands
+$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.vervid='38'");
+	
+//henter ut info om medlemmer++ om styret
+	$sql="SELECT verv.komiteid, vervid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
+    $styremedlemmer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 ?>
 
 <h2>Kontakt oss</h2>
-		
+	<h4>Styret</h4>
+	<p>
+		<?php
+				foreach($styremedlemmer as $styremedlem){
+						if ($styremedlem['tittel']!='Medlem'){
+							echo "<section class='kontakt-styret-float'>";?>
+							<img class="liten profilbilde" src="<?php echo thumb($profilbilde, '', 25); ?>" /> <?php echo $bruker['fnavn'];
+							echo $styremedlem['tittel'];
+							echo "<a href='mailto:".$komite['mail_alias']."'><i class='fa fa-envelope-o'></i></a>";
+							//echo brukerlenke($styremedlem, Navnlengde::FulltNavn);
+							echo "</section>";
+						}
+				}
+		?>	
+	</p>		
+
 <section class="kontakt-float">
 	<h4>E-post</h4>
 	<p><script type="text/javascript">document.write("<a href=\"mailto:sty" + "ret" + "@" + "bispe" + "haugen" + "." + ".no\">");</script>styret<span class="hidden">EAT THIS ROBOTS</span>@bispehaugen.no</a></p>
 	
-	<h4>Telefon leder</h4>
+	<h4>Telefon styret</h4>
 	<p><a href="tel:+47<?php echo $leder['tlfmobil']; ?>">+47 <?php echo $leder['tlfmobil']; ?></a></p>
 
 	<a href="https://www.facebook.com/BispehaugenUngdomskorps" title="Besøk BUK på Facebook">
@@ -50,6 +72,7 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 		Kontonummer: <span class="tall">4200 07 51280</span>
 	</p>
 </section>
+
 
 <div class="clearfix"></div>
 
