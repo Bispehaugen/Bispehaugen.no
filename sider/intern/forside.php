@@ -144,3 +144,10 @@
 	
 	<div class="clearfix"></div>
 </section>
+<section class="side kontakt" data-scroll-index='8' data-scroll-url="?side=annet">
+	<div class="content">
+	<?php
+		inkluder_side_fra_undermappe("kontakt");
+	?>
+	</div>
+</section>
