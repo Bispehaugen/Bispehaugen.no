@@ -68,7 +68,7 @@
 				<i class="fa fa-chevron-right"></i> Neste Konsert?
 			</a>
 		</h3>
-		<p><i class="fa fa-quote-right"></i> <b><?php echo $neste_konsert['tittel']; ?></b></p>
+		<p><i class="fa fa-bookmark"></i> <b>&nbsp;&nbsp;<?php echo $neste_konsert['tittel']; ?></b></p>
 		<p><i class="fa fa-calendar-o fa-fw"></i>
 			<?php echo strftime("%A", $neste_konsert_tid); ?>
 			<?php echo date("d.", $neste_konsert_tid); ?>
