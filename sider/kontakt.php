@@ -7,7 +7,7 @@
 $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.vervid='38'");
 	
 //henter ut info om medlemmer++ om styret
-	$sql="SELECT verv.komiteid, vervid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
+	$sql="SELECT foto, verv.komiteid, vervid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
     $styremedlemmer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
 ?>
 
@@ -17,12 +17,10 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 		<?php
 				foreach($styremedlemmer as $styremedlem){
 						if ($styremedlem['tittel']!='Medlem'){
-							echo "<section class='kontakt-styret-float'>";?>
-							<img class="liten profilbilde" src="<?php echo thumb($profilbilde, '', 25); ?>" /> <?php echo $bruker['fnavn'];
-							echo $styremedlem['tittel'];
-							echo "<a href='mailto:".$komite['mail_alias']."'><i class='fa fa-envelope-o'></i></a>";
-							//echo brukerlenke($styremedlem, Navnlengde::FulltNavn);
-							echo "</section>";
+							echo "<section class='kontakt-styret-float'>";
+							echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::Ingen, true);
+							echo "<a href='mailto:".$styremedlem['epost']."'>".$styremedlem['tittel']."</a>
+							</section>";
 						}
 				}
 		?>	
