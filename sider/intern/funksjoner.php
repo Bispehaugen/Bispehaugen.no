@@ -15,7 +15,7 @@ function hent_noter($konsertid, $bareAntall = false) {
 	}
 
 	if ($bareAntall) {
-		return hent_og_putt_inn_i_array($sql)["COUNT(noter_notesett.noteid)"];
+		return hent_og_putt_inn_i_array($sql);
 	}
 
 	return hent_og_putt_inn_i_array($sql, "noteid");
