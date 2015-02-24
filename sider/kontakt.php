@@ -16,12 +16,10 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 	<p>
 		<?php
 				foreach($styremedlemmer as $styremedlem){
-						if ($styremedlem['tittel']!='Medlem'){
-							echo "<section class='kontakt-styret-float'>";
+							echo "<section class='kontakt-float'>";
 							echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::Ingen, true);
 							echo "<a href='mailto:".$styremedlem['epost']."'>".$styremedlem['tittel']."</a>
 							</section>";
-						}
 				}
 		?>	
 	</p>		
