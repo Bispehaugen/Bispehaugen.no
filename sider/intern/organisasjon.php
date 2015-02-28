@@ -106,15 +106,15 @@
 	?>
 			<a href='?side=intern/organisasjon'>skjul grupper</a>
 			<!--lagt inn midlertidig til slagverksbæregrupper kan oppdateres automatisk/med brukergrensesnitt-->
-			<br><br><b>Gruppe 1:</b><br>Silje Aa (styret)<br>Ole Håkon (bil)<br>Erik (slagverk)<br>Magnus<br>Eirik N
-			<br>Maren G<br>Gina<br>Øyvind R<br>Ane B. M.<br><br><b>Gruppe 2:</b><br>Venke (styret)
-			<br>Katrin (bil)<br>Maren B(slagverk)<br>Øyvind D<br>Laurits<br>Irene<br>Mats<br>Marianne D<br>Ane A.
-			<br>Torstein<br><br><b>Gruppe 3:</b><br>Bente(styret)<br>Annichen (bil)<br>Erik (slagverk)<br>Silje J<br>Sindre M. P<br>
-			Kjetil K<br>Morten<br>Caroline<br>Morten<br>Marianne<br><br><b>Gruppe 4:</b><br>Martin O (styret)<br>Mari Andrea (bil)
-			<br>Tom Sander (slagverk)<br>Kjersti<br>Kristian H<br>Roar<br>Mari R.<br>Silje E<br>Solveig<br>Guro<br><br><b>Gruppe 5:
-			</b><br>Anette (styret)<br>Kjetil L (bil)<br>Maren B (slagverk)<br>Tom-Erik<br>Annebjørg<br>Sindre H. K<br>Siri E<br>
-			Elise<br>Vebjørn<br><br><b>Gruppe 6:</b><br>Mari O (styret)<br>Jørgen (bil)<br>Tom Sander (slagverk)<br>Karianne<br>Maria M<br>Mari L<br>
-			Daniel<br>Kristoffer<br>Susanne<br>Kristian T. S<br><br>
+			<br><br><b>Gruppe 1:</b><br>Bente (styret)<br>Annichen (bil)<br>Maren (slagverk)<br>Caroline<br>Kristoffer
+			<br>Torstein<br>Øyvind D<br>Marianne A<br>Ane<br>Maria<br><br><b>Gruppe 2:</b><br>Maren (styret)
+			<br>Katrin (styret)(bil u/hengerfeste)<br>Eirik (slagverk)<br>Øyvind R<br>Solveig<br>Roar<br>Daniel<br>Silje Margrethe<br>Irene 
+			<br>Siri E<br><br><b>Gruppe 3:</b><br>Kristian (styret)<br>Mari Andrea (bil u/hengefeste)<br>Tom Sander (slagverk)<br>Magnus<br>Johanna<br>
+			Vebjørn<br>Eirik<br>Elise<br>Arnhild<br>Silje Aa<br><br><b>Gruppe 4:</b><br>Mats (styret)<br>Ole Håkon (bil)
+			<br>Maren (slagverk)<br>Marianne D<br>Rasmus<br>Susanne<br>Mari<br>Karen<br>Charlotte<br>Martin<br><br><b>Gruppe 5:
+			</b><br>Anette (styret)<br>Kjetil L (bil)<br>Erik (slagverk)<br>Annebjørg<br>Sindre K<br>Mari L<br>Marte<br>
+			Ida<br>Sveinung<br>Gina<br><br><b>Gruppe 6:</b><br>Venke (styret)<br>Mari (styret)<br>Jørgen (bil)<br>Tom Sander (slagverk)<br>Karianne<br>Tom-Erik<br>Guro<br>
+			Morten H<br>Kjersti<br>Vilde<br>Sindre P<br><br>
 			
 	<?php } else { ?>
 		<a href='?side=intern/organisasjon&slagverksgrupper=1'>vis grupper</a>	
