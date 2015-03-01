@@ -65,7 +65,7 @@
 		
 		<h3>
 			<a href='?side=aktiviteter/liste&id=<?php echo $neste_konsert["arrid"]; ?>'>
-				<i class="fa fa-chevron-right"></i> Neste Konsert?
+				<i class="fa fa-chevron-right"></i> <?php echo $neste_konsert['tittel']; ?>
 			</a>
 		</h3>
 		<p><i class="fa fa-calendar-o fa-fw"></i>

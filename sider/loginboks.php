@@ -40,7 +40,11 @@
 		$.post("login.php?ajax=true", data)
 			.done(function(data){
 				window.scrollTo(0, 0);
-				location.reload(true);
+				if ($(".login #erForside").val() == "1") {
+					window.location = window.location.pathname;
+				} else {
+					location.reload(true);
+				}
 			})
 			.fail(function(data){
 				$(".login .feilmelding").show();
@@ -69,6 +73,7 @@
 		<h2 class="overskrift">Internsiden</h2>
 		<p class="glemt-passord"><a href="?side=glemt-passord">Glemt passord?</a></p>
 		<form action="login.php" method="POST">
+			<input type="hidden" name="erForside" id="erForside" value="<?php echo erForside(); ?>" />
 			<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
 			<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
 			<button class="login-button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
