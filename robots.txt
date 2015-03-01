@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /dokumenter/
+Disallow: /dokumenter2/
