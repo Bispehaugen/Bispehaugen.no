@@ -348,7 +348,7 @@ abstract class Navnlengde
 }
 
 function thumb($bildePath, $width = "", $height = "") {
-	$bildePath = str_replace("./", "", $bildePath);
+	$bildePath = str_replace("../", "", $bildePath);
 	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
 }
 
