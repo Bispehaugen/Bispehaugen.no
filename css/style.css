@@ -846,13 +846,8 @@ nav .arkiv {
 	.kontakt-float {
 		float: left;
 		width: 50%;
-	}
-}
-
-@media screen and (min-width: 600px) {
-	.kontakt-styret-float {
-		float: left;
-		width: 33%;
+		vertical-align: middle;
+		padding-bottom: 0.5em;
 	}
 }
 
@@ -865,7 +860,8 @@ nav .arkiv {
 
 .brukerlenke img {
 	height: 3.5em;
-	margin-right: 0.5em
+	margin-right: 0.5em;
+	float: left;
 }
 
 .informasjonslinje {
