@@ -344,14 +344,15 @@ abstract class Navnlengde
     const FulltNavn = 0;
     const Fornavn = 1;
     const Ingen = 2;
+    const FullInfo = 3;
 }
 
 function thumb($bildePath, $width = "", $height = "") {
-	$bildePath = str_replace("../", "", $bildePath);
+	$bildePath = str_replace("./", "", $bildePath);
 	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
 }
 
-function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false) {
+function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $stilling) {
 	if (empty($bruker)) {
 		return "";
 	}
@@ -365,7 +366,10 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 	
 	switch ($fulltNavn) {
 		case Navnlengde::FulltNavn:
-			$html .= "<span>". $bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
+			$html .= "<span>".$bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
+			break;
+		case Navnlengde::FullInfo:
+			$html .= "<span>".$stilling." <br> ". $bruker['fnavn'] ." ". $bruker['enavn'] ." <br> ". $bruker['tlfmobil'] ."</span>";
 			break;
 		case Navnlengde::Ingen:
 			break;
