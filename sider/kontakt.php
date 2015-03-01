@@ -19,11 +19,10 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 							//hadde tenkt til å ha en egen klasse	
 							//echo "<section class='kontakt-float'>";
 							echo "<section class='kontakt-float'>";
+							
 							//formatteringa ble helt korka så utelater bilde inntil videre
-							//echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::Ingen, true);
-							echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::Fornavn, false);
-							echo "- <a href='mailto:".$styremedlem['epost']."'>".$styremedlem['tittel']."</a>
-							</section>";
+							echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::FullInfo, true, $styremedlem['tittel']);
+							echo "</section>";
 				}
 		?>	
 	</p>		
