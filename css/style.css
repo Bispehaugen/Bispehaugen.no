@@ -851,6 +851,13 @@ nav .arkiv {
 	}
 }
 
+.styremedlem {
+   width: 50%;
+   float: left;
+   vertical-align: middle;
+   padding: 0.5em;
+}
+
 .side.kontakt {
 	padding-bottom: 2em;
 	

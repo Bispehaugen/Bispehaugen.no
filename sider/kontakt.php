@@ -13,19 +13,20 @@ $leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer,
 
 <h2>Kontakt oss</h2>
 	<h4>Styret</h4>
-	<p>
+	<section class="kontakt-styret">
 		<?php
 				foreach($styremedlemmer as $styremedlem){
 							//hadde tenkt til å ha en egen klasse	
 							//echo "<section class='kontakt-float'>";
-							echo "<section class='kontakt-float'>";
+							echo "<section class='styremedlem'>";
 							
 							//formatteringa ble helt korka så utelater bilde inntil videre
 							echo brukerlenke(hent_brukerdata($styremedlem['medlemsid']), Navnlengde::FullInfo, true, $styremedlem['tittel']);
 							echo "</section>";
 				}
 		?>	
-	</p>		
+		<div class="clearfix"></div>
+	</section>		
 
 <section class="kontakt-float">
 	<h4>E-post</h4>
