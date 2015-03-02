@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /dokumenter/
+Disallow: /bilder/
 Disallow: /dokumenter2/
