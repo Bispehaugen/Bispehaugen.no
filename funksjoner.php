@@ -481,12 +481,11 @@ function epost($to,$replyto,$subject,$message,$extra_header = "")  {
 
 	require_once 'mail/swift_required.php';
 
-	$transport = Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, "ssl")
-	  ->setUsername(GMAIL_USERNAME)
-	  ->setPassword(GMAIL_PASSWORD);
+	$transport = Swift_SmtpTransport::newInstance('smtp.mandrillapp.com', 587)
+	  ->setUsername(MAIL_USERNAME)
+	  ->setPassword(MAIL_PASSWORD);
 
 	$mailer = Swift_Mailer::newInstance($transport);
-
 
 	$email = Swift_Message::newInstance('SendEpost')
 	  ->setFrom(array('ikke-svar@bispehaugen.no' => 'Bispehaugen.no'))
