@@ -443,7 +443,7 @@ function neste_konsert_nyhet() {
 	return hent_konserter(1);
 }
 
-function epost($to,$replyto,$subject,$message,$extra_header = "") {
+function epost_gammel($to,$replyto,$subject,$message,$extra_header = "") {
 	$eol = PHP_EOL;
 
 	$headers = "";
@@ -477,7 +477,7 @@ function epost($to,$replyto,$subject,$message,$extra_header = "") {
 	return $epostBleSendt;
 }
 
-function epost_ny($to,$replyto,$subject,$message,$extra_header = "")  {
+function epost($to,$replyto,$subject,$message,$extra_header = "")  {
 
 	require_once 'mail/swift_required.php';
 
