@@ -497,8 +497,6 @@ function epost($to,$replyto,$subject,$message,$extra_header = "")  {
 
 	$epostBleSendt = $mailer->send($email);
 
-	die($epostBleSendt);
-
 	if ($epostBleSendt) {
 		logg("epost", $melding);	
 	} else {
