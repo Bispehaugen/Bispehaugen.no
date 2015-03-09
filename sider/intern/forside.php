@@ -93,7 +93,7 @@
 	<section>
 	<h3>Bake kake?</h3>
 		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
-	<h3>Bære slagværk?</h3>
+	<h3>Bære slagverk?</h3>
 	<h3>Kjøre med henger?</h3>
 	
 	<?php
