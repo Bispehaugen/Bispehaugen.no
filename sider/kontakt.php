@@ -4,7 +4,7 @@
 //$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 
 //fiks akkurat når leder er utenlands
-$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.vervid='38'");
+$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel = 'Leder'");
 	
 //henter ut info om medlemmer++ om styret
 	$sql="SELECT foto, verv.komiteid, vervid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
