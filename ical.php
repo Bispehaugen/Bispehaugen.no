@@ -67,7 +67,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\r\n" . $description;
 	}
 
-	if (!empty($aktivitet["oppmoetetid"])) {
+	if (!empty($aktivitet["oppmoetetid"]) && !$aktivitet["oppmoetetid"] == "00:00:00") {
 		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
 	}
 	$description = str_replace("\r\n", "\\n", $description);
@@ -88,7 +88,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 }
 
-iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
+//iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
 logg("ical", "{bruker:'"+$brukerid+"', antall_arrangement: '"+count($aktiviteter)+"'}");
 
