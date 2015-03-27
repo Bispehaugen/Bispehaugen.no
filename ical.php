@@ -90,6 +90,6 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 //iCalUtilityFunctions::createTimezone( $v, $tz, $xprops);
 
-logg("ical", "{bruker:'"+$brukerid+"', antall_arrangement: '"+count($aktiviteter)+"'}");
+logg("ical", "{bruker:'".$brukerid."', antall_arrangement: '".count($aktiviteter)."'}");
 
 $v->returnCalendar();
