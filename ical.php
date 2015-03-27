@@ -49,9 +49,9 @@ if (array_key_exists('medlemsid', $bruker)) {
 
 foreach($aktiviteter as $id => $aktivitet) {
 	$uid = "?side=aktiviteter/liste&id=".$id;
-	$address = utf8_encode($aktivitet["sted"]);
+	$address = $aktivitet["sted"];
 	$uri = "http://bispehaugen.no";
-	$title = utf8_encode($aktivitet["tittel"]);
+	$title = $aktivitet["tittel"];
 	$versjon = $aktivitet["versjon"];
 
 	$startstreng = $aktivitet["dato"];
@@ -72,7 +72,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	}
 	$dateend = date_parse(str_replace(" 24:", " 00:", $sluttstreng));
 
-	$description =  utf8_encode($aktivitet["ingress"]);
+	$description = $aktivitet["ingress"];
 
 	if (!empty($aktivitet["kakebaker"])) {
 		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\r\n" . $description;
