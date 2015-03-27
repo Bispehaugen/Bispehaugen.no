@@ -48,7 +48,7 @@ if (array_key_exists('medlemsid', $bruker)) {
 }
 
 foreach($aktiviteter as $id => $aktivitet) {
-	$uid = "Bispehaugen.no/arr/".$id;
+	$uid = "?side=aktiviteter/liste&id=".$id;
 	$address = utf8_encode($aktivitet["sted"]);
 	$uri = "http://bispehaugen.no";
 	$title = utf8_encode($aktivitet["tittel"]);
