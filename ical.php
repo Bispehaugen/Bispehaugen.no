@@ -48,29 +48,14 @@ if (array_key_exists('medlemsid', $bruker)) {
 }
 
 foreach($aktiviteter as $id => $aktivitet) {
-	$uid = "?side=aktiviteter/liste&id=".$id;
+	$uid = "Bispehaugen.no/Arrangement/".$id;
 	$address = $aktivitet["sted"];
-	$uri = "http://bispehaugen.no";
+	$uri = "http://bispehaugen.no/?side=aktiviteter/liste&id=".$id;
 	$title = $aktivitet["tittel"];
 	$versjon = $aktivitet["versjon"];
 
-	$startstreng = $aktivitet["dato"];
-	if (!empty($aktivitet["starttid"])) {
-		$startstreng .= " ".$aktivitet["starttid"];
-	}
-	$datestart = date_parse(str_replace(" 24:", " 00:", $startstreng));
-
-    // Heldagseventer starter 00:00 og slutter 00:00 neste dag, legg på en dag
-	if ($aktivitet["sluttid"]=="00:00:00") {
-		$sluttstreng = date("Y-m-d H:i:s", strtotime($aktivitet["dato"]." 00:00:00") + 24*60*60);
-	} else {
-		$sluttstreng = $aktivitet["dato"];
-	}
-
-	if (!empty($aktivitet["sluttid"])) {
-		$sluttstreng .= " ".$aktivitet["sluttid"];
-	}
-	$dateend = date_parse(str_replace(" 24:", " 00:", $sluttstreng));
+	$datestart = date_parse($aktivitet["start"]);
+	$dateend = date_parse($aktivitet["slutt"]);
 
 	$description = $aktivitet["ingress"];
 
@@ -91,7 +76,7 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$vevent = & $v->newComponent( "vevent" );
 	  // create an event calendar component
 	$vevent->setProperty( "uid", $uid);
-	$vevent->setProperty( "uri", $uri + "/" + $uid);
+	$vevent->setProperty( "uri", $uri);
 
 	$vevent->setProperty( "dtstart", $datestart );
 
