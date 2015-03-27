@@ -36,8 +36,8 @@
 	     	echo"<h3 class='lenke-som-er-inline-med-overskrift'> <a href='?side=aktiviteter/liste&alle=0'><i class='fa fa-calendar'></i> Vis bare kommende</a></h3>";
 		}
 	?>
-	<h3 class='lenke-som-er-inline-med-overskrift'><a href='http://www.google.com/calendar/render?cid=http://bispehaugen.no/ical.php'><i class='fa fa-cloud-download '></i> Legg til i google calendar</a></h3>
-
+	<h3 class='lenke-som-er-inline-med-overskrift'><a href='http://www.google.com/calendar/render?cid=http://bispehaugen.no/ical.php<?php if(er_logget_inn()) { echo "?p=bukaros"; } ?>'><i class='fa fa-cloud-download '></i> Legg til i google calendar</a></h3>
+	
 	<script type='text/javascript'>
 		function slett_aktivitet(){
 			var id = $(this).data("id");
