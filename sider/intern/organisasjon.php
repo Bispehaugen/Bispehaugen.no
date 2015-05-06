@@ -50,7 +50,7 @@
 	?>
 		<section class="halv">
 		<p>
-			Fravær meldes til nestleder på e-post til <a href="mailto:nestleder@bispehaugen.no?subject=Fravær">nestleder@bispehaugen.no</a> eller sms. <br />
+			Fravær meldes til besetningsansvarlig på e-post til <a href="mailto:maren.grinden@gmail.com?subject=Fravær">maren.grinden@gmail.com</a> eller sms. <br />
 			<!--Du kan også fylle ut skjemaet-->
 		</p>
 		</section>
