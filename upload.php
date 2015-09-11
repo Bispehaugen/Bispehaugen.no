@@ -1,31 +1,27 @@
 <?php
+setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
+include_once "db_config.php";
 include_once 'funksjoner.php';
 
-/*
-require_once(__DIR__ . '/Flow/Autoloader.php');
-Flow\Autoloader::register();
- */
- 
+$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
+
+if ($tilkobling === false) {
+	exit ;
+}
+
+require_once './vendor/autoload.php';
+
 if(!er_logget_inn()) {
 	die("Du må være logget inn");
 }
-
-require("Flow/ConfigInterface.php");
-require("Flow/Config.php");
-require("Flow/File.php");
-require("Flow/RequestInterface.php");
-require("Flow/Request.php");
-require("Flow/Basic.php");
 
 $config = new \Flow\Config(array(
    'tempDir' => './temp'
 ));
 $request = new \Flow\Request();
 
-print_r($_REQUEST);
-
 $type = $_REQUEST['type'];
-$id = $_REQUEST['id'];
+$id = intval($_REQUEST['id']);
 
 // Mangler extension
 
@@ -57,18 +53,16 @@ $filename = substr($filid . $name, 0, 251);
 
 if ($type == "profilbilde") {
 	
+	$filename = $medlemsid.$fileExt;
+
 	$filepath = "..".$dir.$filename;
 }
 
 // slett filer som starter på medlemsid: rm 211-*
 
-echo "Prøver å lagre bilde til ".__DIR__ . $dir . $filename;
-if (\Flow\Basic::save( __DIR__ . $dir . $filename, $config, $request)) {
-	echo "Hurray, file was saved in " . $dir . $filename;
-	
-	$sql = "UPDATE medlemmer SET foto = '".$filepath."' WHERE medlemsid = '".$medlemsid."' LIMIT 1";
+if (\Flow\Basic::save( "." . $dir . $filename, $config, $request)) {
+	$sql = "UPDATE medlemmer SET foto = '".addslashes($filepath)."' WHERE medlemsid = ".$medlemsid." LIMIT 1";
 	mysql_query($sql);
-	echo "Oppdaterte bilde for " . $medlemsid . " til ". $filepath;
 } else {
 	echo "Fail... :(";
 }
