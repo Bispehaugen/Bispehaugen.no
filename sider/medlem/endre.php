@@ -2,6 +2,7 @@
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
 
 	global $opprett_ny_medlem;
+	$endre_seg_selv = false;
 	
 	//funksjonalitet
 
@@ -21,7 +22,7 @@
 	
 	//sjekker om man er admin eller prøver å endre seg selv
 	if($_SESSION['medlemsid']==$id){
-		$endre_seg_selv=1;//brukes for å sende mail til sekretær ved endring
+		$endre_seg_selv=true;//brukes for å sende mail til sekretær ved endring
 	}
 	elseif($_SESSION['rettigheter']<3){
 		header('Location: ?side=medlem/liste');
@@ -93,7 +94,7 @@
 			}
 	
 			//harEndretAdresse
-			if (empty($bruker) || $bruker['adresse'] != $adresse || $bruker['fnavn'] != $fnavn || $bruker['enavn'] != $enavn ) {
+			if ($endre_seg_selv && !empty($bruker) && ($bruker['adresse'] != $adresse || $bruker['fnavn'] != $fnavn || $bruker['enavn'] != $enavn )) {
 				$message = "
 Adresseendring:
 $fnavn $enavn har endret adressen sin til:
@@ -140,7 +141,7 @@ Den gamle adressen var:
 					medlemsid = '$medlemsid';
 				";
 				mysql_query($sql);
-				unset($_SESSION["innlogget_bruker"]);
+				innlogget_bruker_oppdatert();
 				header('Location: ?side=medlem/liste');
 			}else{
 				$sql="
@@ -269,29 +270,30 @@ if (!$opprett_ny_medlem) {
 <script>
 
 var flow = new Flow({
-  target:'upload.php',
+  target:'sider/medlem/upload.php',
   singleFile: true,
   query: {
-  	type:'profilbilde',
-  	id: '<?php echo $id; ?>',
-  	name: '<?php echo $bruker['fnavn']." ".$bruker['enavn']; ?>'
-	}
+  	medlemsid: '<?php echo $id; ?>'
+  }
 });
 flow.assignBrowse(document.getElementById('bytt-bilde'));
 flow.assignDrop($('.dropzone'));
 
-var preview = $("#bytt-bilde img");
+var preview = $("#bytt-bilde img, .liten.profilbilde");
 
-flow.on('fileAdded', function(file, event){
-	console.log("fileAdded");
-	console.log(file, event);
-	
+flow.on('fileAdded', function(fileinfo, event){
+
+	// Legg til upload greie
+
 	var reader = new FileReader();
 	reader.onload = function (e) {
-		preview.attr('src', e.target.result);
+		if(e.srcElement.result.indexOf('data:image/') == 0) {
+			preview.attr('src', e.target.result);
+		} else {
+			alert("Filen du lastet opp så ikke ut som ett bilde");
+		}
 	}
-	reader.readAsDataURL(file.file);
-	
+	reader.readAsDataURL(fileinfo.file);
 });
 
 flow.on('filesSubmitted', function(array, event){
@@ -299,22 +301,19 @@ flow.on('filesSubmitted', function(array, event){
 });
 
 flow.on('fileSuccess', function(file,message){
-	console.log("fileSuccess");
-	console.log(file,message);
 	
 	flow.removeFile(file);
-	console.log(flow.files);
 
-	// update local image
+	// fjern spinner?
 });
-flow.on('fileError', function(file, message){
-	console.log("fileError");
-	console.log(file, message);
+flow.on('fileError', function(file){
+	console.log("Filopplastingen feilet med fil: ", file);
 	
 	var oldPic = '<?php echo kanskje($medlemmer, 'foto'); ?>';
 	preview.attr('src', oldPic);
 	
 	// Vis feilmelding
+	alert("Oppdateringen av profilbilde feilet dessverre. Webkom er varslet og vil se på saken.");
 });
 </script>
 <?php }

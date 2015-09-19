@@ -1,4 +1,5 @@
 lokal_config.php
+temp/
 cache/*.txt
 *.sublime*
 .settings

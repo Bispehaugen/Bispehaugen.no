@@ -128,6 +128,18 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	}
 }
 
+function tilgang_full() {
+	return $_SESSION['rettigheter'] == 3;
+}
+
+function tilgang_intern() {
+	return $_SESSION['rettigheter'] > 0;
+}
+
+function tilgang_endre() {
+	return $_SESSION['rettigheter'] > 1;
+}
+
 function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$query = mysql_query($sql);
 	
@@ -339,6 +351,10 @@ function innlogget_bruker() {
 	return $bruker;
 }
 
+function innlogget_bruker_oppdatert() {
+	unset($_SESSION['innlogget_bruker']);
+}
+
 abstract class Navnlengde
 {
     const FulltNavn = 0;
@@ -534,4 +550,3 @@ function siste_sql_feil() {
 	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
-

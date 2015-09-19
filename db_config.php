@@ -2,12 +2,18 @@
 
 $er_produksjon = false;
 
-if(file_exists("lokal_config.php")){
-	include("lokal_config.php");
-}
 
-if(file_exists("../lokal_config.php")){
-	include("../lokal_config.php");
+
+$lokal_config_funnet = false;
+$lokal_config_plassering = "lokal_config.php";
+
+for($dypde = 0; $dypde < 5; $dypde++) {
+	if(file_exists($lokal_config_plassering)){
+		include($lokal_config_plassering);
+		break;
+	} else {
+		$lokal_config_plassering = "../".$lokal_config_plassering;
+	}
 }
 
 /*
@@ -20,6 +26,6 @@ Lagrer alle passord i lokal fil på alle pcer, slik at man kan endre for seg sel
 	$database_string="passord her";
 	$database_database = "solfrih_bukdb";
 
-	DEFINE("GMAIL_USERNAME", "");
-	DEFINE("GMAIL_PASSWORD", "");
+	DEFINE("MAIL_USERNAME", "");
+	DEFINE("MAIL_PASSWORD", "");
 */
