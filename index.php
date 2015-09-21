@@ -61,6 +61,7 @@ $innhold = ob_get_clean();
 	<?php if (er_logget_inn()) { ?>
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/internside.css" type="text/css" />
+	<link rel="stylesheet" href="css/dokumenter.css" type="text/css" />
 	<?php } ?>
 
 	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>

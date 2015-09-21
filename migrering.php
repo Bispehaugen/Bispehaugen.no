@@ -562,6 +562,61 @@ migrering(19, "opprett tabell med kobling mellom arrid og nyhetsid (KUN FOR KONS
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
 );
 
+migrering(20, "Legger til filer tabell for bilder, dokumenter og etterhvert noter", 
+	"CREATE TABLE IF NOT EXISTS `filer` (
+`id` int(11) NOT NULL,
+  `filnavn` varchar(255) NOT NULL,
+  `tittel` varchar(255) NOT NULL,
+  `beskrivelse` text NOT NULL,
+  `filtype` varchar(15) NOT NULL,
+  `medlemsid` int(11) NOT NULL,
+  `mappeid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;",
+"ALTER TABLE `filer`
+ ADD PRIMARY KEY (`id`);",
+"ALTER TABLE `filer`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
+);
+
+migrering(21, "Legger til mapper tabell for bilder, dokumenter og etterhvert noter", 
+	"CREATE TABLE IF NOT EXISTS `mapper` (
+`id` int(11) NOT NULL,
+  `mappenavn` varchar(255) NOT NULL,
+  `tittel` varchar(255) NOT NULL,
+  `beskrivelse` text NOT NULL,
+  `mappetype` smallint(6) NOT NULL,
+  `foreldreid` int(11) NOT NULL,
+  `filid` int(11) DEFAULT NULL COMMENT 'FilId for bilde',
+  `komiteid` int(11) DEFAULT NULL COMMENT 'Tilhørighet'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;",
+"ALTER TABLE `mapper`
+ ADD PRIMARY KEY (`id`);",
+"ALTER TABLE `mapper`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
+);
+
+migrering(22, "Legger til mappetyper tabellen (f.eks. album, dokumenter, notemappe)", 
+	"CREATE TABLE IF NOT EXISTS `mappetyper` (
+`id` int(11) NOT NULL,
+  `navn` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;",
+"ALTER TABLE `mappetyper`
+ ADD PRIMARY KEY (`id`);",
+"ALTER TABLE `mappetyper`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
+);
+
+migrering(23, "Legger til mappetyper (f.eks. album, dokumenter, notemappe)", 
+	"INSERT INTO `buk`.`mappetyper` (`id`, `navn`) VALUES (NULL, 'album'), (NULL, 'dokumenter');"
+);
+
+migrering(24, "Legger til idpath i mapper-tabellen", 
+	"ALTER TABLE `mapper` ADD `idpath` VARCHAR(255) NOT NULL AFTER `mappenavn`;"
+);
+
+migrering(25, "Legger til idpath i filer-tabellen", 
+	"ALTER TABLE `filer` ADD `idpath` VARCHAR(255) NOT NULL AFTER `filnavn`;"
+);
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
