@@ -617,6 +617,16 @@ migrering(24, "Legger til idpath i mapper-tabellen",
 migrering(25, "Legger til idpath i filer-tabellen", 
 	"ALTER TABLE `filer` ADD `idpath` VARCHAR(255) NOT NULL AFTER `filnavn`;"
 );
+
+migrering(26, "Legger til tid på filer", 
+	"ALTER TABLE `filer` ADD `tid` TIMESTAMP NOT NULL AFTER `mappeid`;"
+);
+
+migrering(27, "Fjern idpath på filer", 
+	"ALTER TABLE `filer` DROP `idpath`;"
+);
+
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
