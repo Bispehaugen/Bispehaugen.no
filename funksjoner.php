@@ -550,3 +550,52 @@ function siste_sql_feil() {
 	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
+
+function fil_ikon($filtype) {
+	$filtypeIkon = 'fa-file-o';
+	switch($filtype) {
+		case 'pdf':
+			$filtypeIkon = 'fa-file-pdf-o';
+			break;
+		case 'jpg':
+		case 'jpeg':
+		case 'tif':
+		case 'bmp':
+		case 'png':
+		case 'gif':
+			$filtypeIkon = 'fa-file-image-o';
+			break;
+		case 'ppt':
+		case 'pptx':
+			$filtypeIkon = 'fa-file-powerpoint-o';
+			break;
+		case 'doc':
+		case 'docx':
+			$filtypeIkon = 'fa-file-word-o';
+			break;
+		case 'xls':
+		case 'xlsx':
+			$filtypeIkon = 'fa-file-excel-o';
+			break;
+		case 'zip':
+		case 'tar':
+		case 'gz':
+		case '7z':
+			$filtypeIkon = 'fa-file-zip-o';
+			break;
+		case 'mp3':
+		case 'midi':
+		case 'wav':
+		case 'm4a':
+			$filtypeIkon = 'fa-file-audio-o';
+			break;
+		case 'avi':
+		case 'mp4':
+		case 'wmv':
+		case 'mov':
+			$filtypeIkon = 'fa-file-video-o';
+			break;
+	}
+	return $filtypeIkon;
+}
+
