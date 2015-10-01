@@ -1,21 +1,79 @@
 
-.dokumenter .mappe,
-.dokumenter .fil {
+.dokumenter {
+	margin: 2em auto;
+	font-size: 1.1em;
+}
+
+.dokumenter .mapper {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: baseline;
+	align-content: space-around;
+
+	margin-top: 2em;
+}
+
+.dokumenter .header {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	align-items: baseline;
+}
+
+.dokumenter .header .overskrift {
+
+}
+
+.dokumenter .dokument {
 	font-size: 1.2em;
 	margin-left: 2em;
-	margin-bottom: 0.2em;
+	margin-bottom: 1em;
+	position: relative;
+	text-align: center;
+	word-break: break-all;
+	width: 9em;
+	padding-bottom: 1.5em;
 }
 
-.dokumenter .tilbake {
-	color: gray;
-	margin-bottom: 0.5em;
+.dokumenter:last-child {
+	display: inline-block;
+	float: left;
 }
 
-.dokumenter .mappe i,
-.dokumenter .fil i {
-	margin-right: 0.3em;
+.dokumenter .overskrift i,
+.dokumenter .dokument i {
+	display: block;
+	text-align: center;
+	font-size: 2.5em;
+	margin-right: 0.5em;
+	margin-bottom: 0.15em;
 }
 
-.dokumenter .mappe.tilbake {
-	padding-left: 0.3em;
+.dokumenter .slett {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	font-size: 0.5em;
+}
+
+.dokumenter .button {
+	font-size: 1.2em;
+	padding: 0em;
+	margin-top: 2em;
+	margin-left: 2em;
+}
+
+.dokumenter .legg-til-knapp {
+	font-size: 0.5em;
 }

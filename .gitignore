@@ -8,10 +8,10 @@ desktop.ini
 .settings
 .buildpath
 .DS_STORE
-filer/
-bilder/
-bilder
-noter/
-dokumenter/
-dokumenter2/
+/filer/
+/bilder/
+/bilder
+/noter/
+/dokumenter/
+/dokumenter2/
 demo/index.html

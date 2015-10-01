@@ -76,7 +76,7 @@
 			<input type="hidden" name="erForside" id="erForside" value="<?php echo erForside(); ?>" />
 			<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
 			<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
-			<button class="login-button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
+			<button class="login-button button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
 		</form>
 	</div>
 	<div class="clearfix"></div>

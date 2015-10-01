@@ -156,13 +156,13 @@ ul {
 	padding-right: 2em;	
 }
 
-.login input, .login button {
+.login input, .login-button {
 	width: 100%;
 	font-size: 1.5em;
 	margin-bottom: 0.5em;
 }
 
-.login button {
+.button {
 	background-color: rgba(34, 41, 51, 1);
 	color: white;
 	padding: 1em;
@@ -170,11 +170,11 @@ ul {
 	margin-top: 0.5em;
 }
 
-.login button:disabled {
+.button:disabled {
 	background-color: #555;
 }
 
-.login button:active {
+.button:active {
 	background-color: #29313D;
 }
 
@@ -183,7 +183,7 @@ ul {
 	display: none;
 }
 
-.header {
+.front.header {
   margin: 0 auto;
   font-size: 6em;
   width: 4.3em; /*3.8*/
@@ -301,7 +301,7 @@ nav {
         width: 30%;
     }
 
-    .header {
+    .front.header {
       font-size: 58%;
       width: 40em;
       padding: 2em 0em;

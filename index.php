@@ -67,7 +67,7 @@ $innhold = ob_get_clean();
 	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
 </head>
 
-<body>
+<body class="no-touch">
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -83,7 +83,7 @@ $innhold = ob_get_clean();
 	   		<div class="stottemedlem reklame">Bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
 
 		
-	    	<header class="header">
+	    	<header class="front header">
 				<img class="logo" src="icon_logo.png" />
 		    	<h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
 	      	</header>
@@ -144,6 +144,9 @@ $innhold = ob_get_clean();
 <script type="text/javascript">
 	$(document).ready(function() {
 		//$("abbr.timeago").timeago();
+		if ('ontouchstart' in document) {
+		    $('body').removeClass('no-touch');
+		}
 	});
 
 	function confirm_url(url, tekst) {
