@@ -10,7 +10,7 @@
         <span>Arkiv</span>
         <ul class="arkiv-valg">
             <li><a href="?side=bilder/bilder">Bilder</a></li>
-            <li><a href="?side=dokumenter">Dokumenter</a></li>
+            <li><a href="?side=dokumenter/liste">Dokumenter</a></li>
             <li><a href="?side=noter/noter_oversikt">Noter</a></li>
         </ul>
     </li>

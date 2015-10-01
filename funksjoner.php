@@ -140,6 +140,12 @@ function tilgang_endre() {
 	return $_SESSION['rettigheter'] > 1;
 }
 
+function hent_komiteer_for_bruker() {
+	$bruker = hent_brukerdata();
+	$sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ".$bruker['medlemsid'];
+	return hent_og_putt_inn_i_array($sql);
+}
+
 function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$query = mysql_query($sql);
 	
@@ -597,5 +603,16 @@ function fil_ikon($filtype) {
 			break;
 	}
 	return $filtypeIkon;
+}
+
+function fornorske($navn) {
+	$navnUtenNorskeTegn = preg_replace("/[^A-ZÆØÅa-zæøå0-9\-.]/", '_', $navn);	
+	$navnUtenNorskeTegn = str_replace("Æ", 'AE', $navnUtenNorskeTegn);	
+	$navnUtenNorskeTegn = str_replace("æ", 'ae', $navnUtenNorskeTegn);	
+	$navnUtenNorskeTegn = str_replace("Ø", 'O', $navnUtenNorskeTegn);	
+	$navnUtenNorskeTegn = str_replace("ø", 'o', $navnUtenNorskeTegn);	
+	$navnUtenNorskeTegn = str_replace("Å", 'AA', $navnUtenNorskeTegn);	
+	$navnUtenNorskeTegn = str_replace("å", 'aa', $navnUtenNorskeTegn);	
+	return $navnUtenNorskeTegn;
 }
 

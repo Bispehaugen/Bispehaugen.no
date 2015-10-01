@@ -87,17 +87,6 @@ function fjern_filtype($file) {
 	return substr($file, 0, -1*(strlen($filtype)+1));
 }
 
-function fornorske($navn) {
-	$navnUtenNorskeTegn = preg_replace("/[^A-ZÆØÅa-zæøå0-9\-.]/", '_', $navn);	
-	$navnUtenNorskeTegn = str_replace("Æ", 'AE', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("æ", 'ae', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("Ø", 'O', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("ø", 'o', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("Å", 'AA', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("å", 'aa', $navnUtenNorskeTegn);	
-	return $navnUtenNorskeTegn;
-}
-
 function finn_alt_i_dir($dir) {
 	$all_in_dir = scandir($dir);
 	$dirs = Array();
