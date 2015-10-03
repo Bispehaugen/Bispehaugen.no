@@ -7,6 +7,7 @@ $root = "../../";
 
 include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
+include_once "funksjoner.php";
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -38,6 +39,7 @@ if(!tilgang_endre()) {
 if (has_get('mappe')) {
 	// Sletter mappe
 	$mappeid = get('mappe');
+	$mappe = hent_mappe($mappeid);
 
 	$sql_antall_filer_og_undermapper_i_mappe = "SELECT SUM(antall) AS antall FROM
 (
@@ -52,6 +54,10 @@ UNION
 		$sql = "DELETE FROM mapper WHERE id = " . $mappeid . " LIMIT 1";
 
 		if(mysql_query($sql)) {
+			$path = $root . "dokumenter/" . $mappe['mappenavn'] . "/";
+			if(is_dir($path)) {
+				rmdir($path);
+			}
 			die(response(Status::SUCCESS, "Mappe $mappeid slettet"));
 		} else {
 			die(response(Status::ERROR, "Feil under sletting av mappe. Prøv på nytt"));
@@ -64,9 +70,16 @@ UNION
 	// Sletter fil
 	$filid = get('fil');
 
+	$fil = hent_fil($filid);
+	$mappe = hent_mappe($fil['mappeid']);
+
 	$sql = "DELETE FROM filer WHERE id = " . $filid . " LIMIT 1";
 
 	if(mysql_query($sql)) {
+		$path = $root . "dokumenter/" . $mappe['mappenavn'] . "/" . $fil['filnavn'];
+		if(file_exists($path)) {
+			unlink($path);
+		}
 		die(response(Status::SUCCESS, "Fil $filid slettet"));
 	} else {
 		die(response(Status::ERROR, "Feil under sletting av fil. Prøv på nytt"));

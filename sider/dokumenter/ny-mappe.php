@@ -14,7 +14,7 @@ $sql = "INSERT INTO mapper (mappenavn, idpath, tittel, mappetype, foreldreid) VA
 mysql_query($sql) or die(mysql_error());
 
 // hent ID
-$ny_id = 74;//mysql_insert_id();
+$ny_id = mysql_insert_id();
 
 // Hent foreldremappe for å få idpath
 $foreldremappe = hent_mappe($foreldreid);
@@ -33,4 +33,7 @@ $ny_id_path = $foreldreid == 0 ? "/" : $foreldremappe['idpath'].$foreldreid."/";
 $update_sql = "UPDATE mapper SET mappenavn = '".$mappenavn."', idpath = '".$ny_id_path."' WHERE id = '".$ny_id."' LIMIT 1";
 mysql_query($update_sql) or die(mysql_error());
 
-header('Location: ?side=dokumenter/liste&mappe=' + $foreldreid);
+echo "
+<script type='text/javascript'>
+	window.location = '?side=dokumenter/liste&mappe=" . $ny_id . "';
+</script>";

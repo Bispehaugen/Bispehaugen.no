@@ -7,57 +7,6 @@ if(!er_logget_inn()) {
 	die();
 }
 
-
-function formater_mappe($mappe) {
-	$mappenavn = $mappe['tittel'];
-	echo "<section class='mappe dokument'>";
-	echo "  <a href='?side=dokumenter/liste&amp;mappe=" . $mappe['id'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>";
-	echo "  <i class='fa fa-folder-o'></i><p>" . $mappenavn . "</p></a>";
-	if (tilgang_endre()) {
-		echo "  <a class='slett' a href='javascript:slett_mappe(".$mappe['id'].", \"".$mappenavn."\")' title='Slett mappen: ".$mappenavn."'><i class='fa fa-remove'></i></a>";
-	}
-	echo "</section>";
-}
-
-function formater_fil($fil) {
-	$filtypeIkon = fil_ikon($fil['filtype']);
-	$filnavn = $fil['tittel'].'.'.$fil['filtype'];
-
-	echo "<section class='fil dokument'>";
-	echo "	<a href='fil.php?fil=" . $fil['id'] . "' title='Klikk for å laste ned filen ".$filnavn."'>";
-	echo "	<i class='fa ".$filtypeIkon."'></i>";
-	echo "	<p>".$filnavn."</p>";
-	echo "  </a>";
-	if (tilgang_endre()) {
-		echo "<a class='slett' a href='javascript:slett_fil(".$fil['id'].", \"".$filnavn."\")' title='Slett filen: ".$filnavn."'><i class='fa fa-remove'></i></a>";
-	}
-	echo "</section>";
-}
-
-function formater_tilbakeknapp($mappe) {
-echo "<section class='tilbake legg-til-knapp'>
-		<a class='button' href='?side=dokumenter/liste&amp;mappe=" . $mappe['foreldreid'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>
-		<section class='fa-stack fa-lg'>
-		  <i class='fa fa-level-up fa-stack-2x'></i>
-		</section>
-		<p>Tilbake opp<br />en mappe</p>
-		</a>
-	</section>";
-}
-
-function formater_ny_knapp($id, $type, $javascriptknapp) {
-	$ikon = ($type == "mappe") ? "folder" : "file"; 
-echo "<section class='legg-til-".$type." legg-til-knapp'>
-		<button class='button' onClick='".$javascriptknapp."()'>
-		<section class='fa-stack fa-lg'>
-		  <i class='fa fa-".$ikon."-o fa-stack-2x'></i>
-		  <i class='fa fa-plus fa-stack-1x'></i>
-		</section>
-		<p>Legg til ".$type."</p>
-		</button>
-	</section>";
-}
-
 $foreldreId = intval(has_get('mappe')) ? get('mappe') : 0;
 if(empty($foreldreId)) {
 	$foreldreId = 0;
@@ -69,7 +18,7 @@ function slett_fil(id, navn) {
 	var skalSlette = confirm("Er du sikker du vil slette filen: "+navn);
 	if (skalSlette) {
 		$.post( "sider/dokumenter/slett.php?fil="+id, function() {
-			//location.reload();
+			location.reload();
 		})
 		.fail(function(data) {
 		    alert(data.responseJSON.message);
@@ -80,7 +29,7 @@ function slett_mappe(id, navn) {
 	var skalSlette = confirm("Er du sikker du vil slette mappen: "+navn);
 	if (skalSlette) {
 		$.post( "sider/dokumenter/slett.php?mappe="+id, function() {
-			//location.reload();
+			location.reload();
 		})
 		.fail(function(data) {
 		    alert(data.responseJSON.message);
@@ -89,6 +38,7 @@ function slett_mappe(id, navn) {
 }
 function open_new_folder() {
 	$(".add-folder").toggle();
+	$(".add-folder .navn").focus();
 }
 function open_new_files() {
 	$(".add-files").toggle();
@@ -111,24 +61,17 @@ if ($foreldreId > 0) {
 
 echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "</h2>";
 
-if ($foreldreId > 0) {
-	formater_tilbakeknapp($foreldremappe);
-}
+formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
 
 formater_ny_knapp($foreldreId, "mappe", "open_new_folder");
 formater_ny_knapp($foreldreId, "filer", "open_new_files");
 
 echo "</header>";
 
-echo "<section class='add-files-and-folder add-folder'>
-	<form action='?side=dokumenter/ny-mappe' method='POST'>
-		<h2>Legg til ny mappe</h2>
-		<input type='text' class='text-input' name='navn' placeholder='Navn' />
-		<input type='hidden' name='foreldreid' value='".$foreldreId."' />
-		<input type='submit' value='Opprett' />
-	</form>
-	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
-</section>";
+if (tilgang_endre()) {
+	formater_legg_til_ny_mappe($foreldreId);
+	formater_legg_til_nye_filer($foreldreId);
+}
 
 echo "<section class='mapper'>";
 
@@ -138,10 +81,13 @@ $filer = hent_filer($foreldreId);
 
 $dine_komiteer = hent_komiteer_for_bruker();
 
+$antall_mapper_og_filer = 0;
+
 foreach($mapper as $mappe ) {
 	$komiteid = $mappe['komiteid'];
 	if (is_null($komiteid) || tilgang_full() || in_array($komiteid, $dine_komiteer)) {
 		formater_mappe($mappe);
+		$antall_mapper_og_filer++;
 	}
 }
 
@@ -149,8 +95,114 @@ foreach($filer as $fil) {
 	$komiteid = $mappe['komiteid'];
 	if (is_null($komiteid) || tilgang_full() || in_array($komiteid, $dine_komiteer)) {
 		formater_fil($fil);
+		$antall_mapper_og_filer++;
+	}
+}
+echo "</section>";
+
+if ($antall_mapper_og_filer == 0) {
+	echo "<h3>Denne mappen er tom.</h3>";
+}
+echo "</section>";
+
+
+if (tilgang_endre()) {
+?>
+<script src="vendor/Flow/flow.js"></script>
+
+<script>
+
+var dropzone = $('.dropzone');
+var lastOppKnapp = $(".last-opp");
+var filliste = $(".filelist");
+var statusElement = $(".status");
+var intervalId;
+
+function dropHover() {
+	dropzone.addClass("file-hover");
+}
+
+function dropDropped() {
+	dropzone.removeClass("file-hover");
+}
+
+function showStatusbar(flow, statusElement) {
+
+	intervalId = window.setInterval(updateStatusbar, 250, flow, statusElement)
+}
+
+function updateStatusbar(flow, statusElement) {
+	var progress = Math.round(flow.progress() * 10000)/100;
+
+	statusElement.show();
+	statusElement.find('.bar').css('width', progress + '%');
+
+	if (progress == 100) {
+		statusElement.hide();
+		filliste.html("");
+		window.clearInterval(intervalId);
+		location.reload();
 	}
 }
 
-echo "</section>";
-echo "</section>";
+function disableUploadButton() {
+	lastOppKnapp.prop("disabled", "disabled");
+}
+
+var flow = new Flow({
+  target:'sider/dokumenter/nye-filer.php',
+  singleFile: false,
+  query: {
+  	foreldreId: '<?php echo $foreldreId; ?>'
+  }
+});
+Flow.prototype.assignDrop = function (domNodes) {
+	domNode = domNodes[0];
+	domNode.addEventListener('dragover', this.preventEvent, false);
+	domNode.addEventListener('dragenter', dropHover, false);
+	domNode.addEventListener('dragleave', dropDropped, false);
+	domNode.addEventListener('drop', dropDropped, false);
+	domNode.addEventListener('drop', this.onDrop, false);
+};
+
+
+flow.assignBrowse($('.velg-filer'));
+flow.assignDrop(dropzone);
+
+flow.on('fileAdded', function(fileinfo, message){
+	disableUploadButton();
+
+	var name = fileinfo.name;
+	if (name.indexOf(".") == 0) {
+		console.log("Ikke legg til filer som starter med .");
+		return false;
+	}
+
+	filliste.append("<li data-id='" + fileinfo.uniqueIdentifier + "'>" + name + "</li>");
+});
+
+flow.on('filesSubmitted', function(array, message){
+	lastOppKnapp.removeAttr("disabled");
+});
+
+flow.on('fileSuccess', function(file,message){
+	var item = filliste.find("[data-id='"+file.uniqueIdentifier+"']");
+	item.append(" <i class='fa fa-check suksess'></i>");
+});
+flow.on('fileError', function(file, message){
+	if (intervalId) {
+		window.clearInterval(intervalId);
+	}
+	// Vis feilmelding
+	alert("Oppdateringen av filer feilet dessverre. Webkom er varslet og vil se på saken.");
+});
+
+lastOppKnapp.click(function() {
+	flow.upload();
+
+	showStatusbar(flow, statusElement);
+});
+</script>
+
+<?php
+}

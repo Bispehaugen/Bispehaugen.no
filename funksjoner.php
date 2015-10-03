@@ -557,6 +557,14 @@ function siste_sql_feil() {
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
 
+function finn_filtype($filnavn) {
+	$fileNameArray = preg_split("/\./", $filnavn);
+	if (count($fileNameArray) > 1) {
+		return $fileNameArray[count($fileNameArray)-1];
+	}
+	return false;
+}
+
 function fil_ikon($filtype) {
 	$filtypeIkon = 'fa-file-o';
 	switch($filtype) {
