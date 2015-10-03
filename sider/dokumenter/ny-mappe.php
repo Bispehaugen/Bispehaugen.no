@@ -6,6 +6,13 @@ if(!has_post('navn') || !has_post('foreldreid')) {
 	die("Kan ikke opprette ny mappe uten innsendt navn eller foreldreid");
 }
 
+if(!er_logget_inn()) {
+	die("Du må være logget inn");
+}
+if (!tilgang_endre()) {
+	die("Du har ikke lov til å laste opp filer!");
+}
+
 $navn = post('navn');
 $foreldreid = post('foreldreid');
 
