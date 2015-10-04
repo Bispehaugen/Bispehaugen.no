@@ -20,7 +20,7 @@ if(!er_logget_inn() || !tilgang_full()) {
 
 $antall_mapper = 0;
 $antall_filer = 0;
-$dir = "/home/webkom/filer/file/dokumenter/";//str_replace("skript", "dokumenter", getcwd())."/";
+$dir = "/home/webkom/filer/filer/dokumenter/";//str_replace("skript", "dokumenter", getcwd())."/";
 
 function legg_inn_directory_i_database($dir, $idpath, $path, $foreldreid) {
 	$navnUtenNorskeTegn = fornorske($dir);
