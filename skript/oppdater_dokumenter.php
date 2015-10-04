@@ -98,7 +98,7 @@ function finn_alt_i_dir($dir) {
 
 	foreach($all_in_dir as $file) {
 		$er_dir = is_dir($dir.$file);
-		$er_denne_eller_over_dir = ($file == "." || $file == ".." || $file == ".DS_Store");
+		$er_denne_eller_over_dir = ($file == "." || $file == ".." || $file == ".DS_Store" || $file == ".htaccess");
 
 		if($er_dir && !$er_denne_eller_over_dir) {
 			array_push($dirs, $file);
