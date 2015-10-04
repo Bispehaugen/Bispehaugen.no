@@ -72,15 +72,15 @@ function flytt_dir_hvis_gammelt_navn($id, $dir, $path) {
 	if (strpos($dir, $id."-") == false) {
 		// bare rename hvis den ikke inneholder id
 		if(!rename($path.$dir, $GLOBALS['dir'].$id."-".fornorske($dir))) {
-			echo "<p>kunne ikke flytte mappe til: ".$GLOBALS['dir'].$id."-".fornorske($dir))."</p>";
+			echo "<p>kunne ikke flytte mappe til: ".$GLOBALS['dir'].$id."-".fornorske($dir)."</p>";
 		}
 	}
 }
 function flytt_fil_hvis_gammelt_navn($id, $file, $path) {
 	if (strpos($file, $id."-") == false) {
 		// bare rename hvis den ikke inneholder id
-		f(!rename($path.$file, $path.$id."-".fornorske($file))) {
-			echo "<p>kunne ikke flytte fil til: ".$path.$id."-".fornorske($file))."</p>";
+		if(!rename($path.$file, $path.$id."-".fornorske($file))) {
+			echo "<p>kunne ikke flytte fil til: ".$path.$id."-".fornorske($file)."</p>";
 		}
 	}
 }
