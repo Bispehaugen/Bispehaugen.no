@@ -136,8 +136,8 @@ function slett_filer() {
 	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
 }
 
-slett_mapper(1);
-slett_filer();
+//slett_mapper(1);
+//slett_filer();
 
 ob_start();
 parse_dir($dir, '/', $dir, 0);
