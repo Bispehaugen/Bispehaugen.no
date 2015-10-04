@@ -14,6 +14,10 @@ if ($tilkobling === false) {
 	die("Ingen tilkobling");
 }
 
+if(!er_logget_inn() || !tilgang_full()) {
+	die("Må være admin!");
+}
+
 $antall_mapper = 0;
 $antall_filer = 0;
 $dir = str_replace("skript", "dokumenter", getcwd())."/";
