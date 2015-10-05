@@ -36,6 +36,19 @@ function hent_fil($filid) {
 	return hent_og_putt_inn_i_array($sql);
 }
 
+function hent_fil_med_mappeinfo($filid) {
+	$mysql = "SELECT m.mappenavn, f.filnavn, f.filtype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
+	$result = mysql_query($mysql);
+
+	while ($file = mysql_fetch_assoc($result)) {
+		return $file;
+	}
+	die("Fant ingen fil med ".$filid);
+}
+
+function hent_filpath($filMedMappeinfo) {
+	return "dokumenter/" . $filMedMappeinfo['mappenavn'] . "/" . $filMedMappeinfo['filnavn'];
+}
 
 ///////////// Liste funksjoner
 
@@ -51,12 +64,18 @@ function formater_mappe($mappe) {
 }
 
 function formater_fil($fil) {
-	$filtypeIkon = fil_ikon($fil['filtype']);
-	$filnavn = $fil['tittel'].'.'.$fil['filtype'];
+	$filtype = $fil['filtype'];
+	$filtypeIkon = fil_ikon($filtype);
+	$filnavn = $fil['tittel'].'.'.$filtype;
+	$filUrl = "fil.php?fil=" . $fil['id'];
 
 	echo "<section class='fil dokument'>";
-	echo "	<a href='fil.php?fil=" . $fil['id'] . "' title='Klikk for å laste ned filen ".$filnavn."'>";
-	echo "	<i class='fa ".$filtypeIkon."'></i>";
+	echo "	<a href='".$filUrl."' title='Klikk for å laste ned filen ".$filnavn."'>";
+	if(fil_er_bilde($filtype)) {
+		echo "  <img class='bilde thumb' src='" . thumbFilid($fil['id'], "", 45) . "' />";
+	} else {
+		echo "	<i class='fa ".$filtypeIkon."'></i>";
+	}
 	echo "	<p>".$filnavn."</p>";
 	echo "  </a>";
 	if (tilgang_endre()) {

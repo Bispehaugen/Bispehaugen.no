@@ -374,6 +374,10 @@ function thumb($bildePath, $width = "", $height = "") {
 	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
 }
 
+function thumbFilid($filid, $width = "", $height = "") {
+	return "thumb.php?size=".$width."x".$height."&filid=".$filid;
+}
+
 function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $stilling) {
 	if (empty($bruker)) {
 		return "";
@@ -611,6 +615,19 @@ function fil_ikon($filtype) {
 			break;
 	}
 	return $filtypeIkon;
+}
+
+function fil_er_bilde($filtype) {
+	switch(strtolower($filtype)) {
+		case 'jpg':
+		case 'jpeg':
+		case 'tif':
+		case 'bmp':
+		case 'png':
+		case 'gif':
+			return true;
+		}
+	return false;
 }
 
 function fornorske($navn) {

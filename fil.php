@@ -6,6 +6,7 @@ $root = "./";
 
 include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
+include_once $root.'/sider/dokumenter/funksjoner.php';
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
@@ -25,27 +26,38 @@ if (!is_int($filid)) {
 	die("Fil id må sendes inn via GET parameteret fil");
 }
 
-$mysql = "SELECT m.mappenavn, f.filnavn, f.filtype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
-$result = mysql_query($mysql);
+$file = hent_fil_med_mappeinfo($filid);
+$filepath = hent_filpath($file);
 
-while ($file = mysql_fetch_assoc($result)) {
-	$dir = "dokumenter/".$file['mappenavn']."/";
+$filtittel = $file['tittel'];
+$filtype = $file['filtype'];
 
-	$filename = $file['filnavn'];
-	$filepath = $dir.$filename;
+$file_time = filemtime($filepath);
+$file_date = gmdate('D, d M Y H:i:s T', $file_time);
+$file_hash = md5("v1.0.0-" . $filepath . $file_time);
 
-	if (file_exists($filepath)) {
-	    header('Content-Description: File Transfer');
-	    header('Content-Type: application/octet-stream');
-	    header('Content-Disposition: attachment; filename="'.$filename.'"');
+if (file_exists($filepath)) {
+    if (fil_er_bilde($filtype)) {
+		header('Content-Type: image/' . $filtype);
+		header('Content-Length: ' . filesize($filepath));
+		header('Content-Disposition: inline; filename="' . $filtittel . '"');
+		header('Last-Modified: ' . $file_date);
+		header('ETag: ' . $file_hash);
+		header('Accept-Ranges: none');
+	    header('Cache-Control: max-age=604800, must-revalidate');
+	    header('Expires: ' . gmdate('D, d M Y H:i:s T', strtotime('+7 days')));
+	} else {
+		header('Content-Description: File Transfer');
+    	header('Content-Type: application/octet-stream');
+	    header('Content-Disposition: attachment; filename="'.$filtittel.'"');
 	    header('Expires: 0');
 	    header('Cache-Control: must-revalidate');
 	    header('Pragma: public');
 	    header('Content-Length: ' . filesize($filepath));
-	    readfile($filepath);
-	    exit;
-	} else {
-		die("Fant ikke filen ".$filename);
 	}
+    
+    readfile($filepath);
+    exit;
+} else {
+	die("Fant ikke filen ".$filtittel);
 }
-
