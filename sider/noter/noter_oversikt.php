@@ -22,24 +22,23 @@
 	echo "<h2>Noter</h2>";
 
 	//printer ut det som skal vises på sida
-	echo"<table>";
 	
 	//form med muligheter for å velge ut noter til en konsert
 	echo" <form class='forum' method='get' action='?side=noter/noter_oversikt'>
 			<input type='hidden' name='side' value='noter/noter_oversikt' />
-				<tr><td>Konsert:</td><td>
-					<select name='arrid'>
-							<option value='alle'>alle noter</option>";
+				<p>Vis noter for en bestemt konsert:
+					<select name='arrid' onchange='this.form.submit()'>
+							<option value='alle'>Vis alle noter</option>";
 					foreach($konserter as $konsert){
 						echo"<option value=".$konsert['arrid'];
 							//sjekk for om det er valgte konsert
 							if($konsertid==$konsert['arrid']){echo " selected ";}
 						echo">".$konsert['tittel']." ".date('Y', strtotime($konsert['dato']))."</option>";};
 	echo "												  							
-  					</select></td>
-  				<td><input type='submit' value='finn noter!'></td></tr>
-			</form> 
-				<tr><td></td><td></td></tr>
+  					</select></p>
+			</form> ";
+
+	echo"<table>
 				<tr><th>Tittel</th><th>Komponist:</th><th>Arrangør:</th><th>Besetning:</th><th>Arkivnr.</th><th></th></tr>";
 	//liste med notesettene
 	foreach($notesett as $sett){

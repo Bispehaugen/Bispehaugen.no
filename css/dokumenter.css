@@ -19,18 +19,49 @@
 	margin-top: 3.5em;
 }
 
+@media screen and (min-width: 530px) {
+	.dokumenter .header {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+
+		flex-flow: row nowrap;
+		justify-content: flex-start;
+		align-items: baseline;
+	}
+}
+
 .dokumenter .header {
-	display: -webkit-box;
-	display: -moz-box;
-	display: -ms-flexbox;
-	display: -webkit-flex;
-	display: flex;
-
-	flex-flow: row nowrap;
-	justify-content: flex-start;
-	align-items: baseline;
-
 	border-bottom: 3px solid white;
+}
+
+.dokumenter .overskrift {
+	width: 8em;
+	text-align: center;
+	word-break: break-all;
+}
+
+.dokumenter .skjul {
+	visibility: hidden;
+}
+
+@media screen and (max-width: 530px) {
+	.dokumenter .header {
+		margin: 0em auto;
+		text-align: center;
+		padding-bottom: 1em;
+	}
+
+	.dokumenter .overskrift {
+		width: 100%;
+	}
+	
+	.dokumenter .skjul {
+		visibility: visible;
+		display: none;
+	}
 }
 
 .dokumenter .add-files-and-folder {
@@ -72,12 +103,6 @@
 	padding-top: 0.5em;
 }
 
-.dokumenter .overskrift {
-	width: 8em;
-	text-align: center;
-	word-break: break-all;
-}
-
 .dokumenter .overskrift i,
 .dokumenter .dokument i {
 	display: block;
@@ -112,6 +137,32 @@
 	visibility: hidden;
 }
 
+.dokumenter .sokeboks {
+	position: relative;
+	display: none;
+	margin: 0 auto;
+	padding: 2em;
+	text-align: center;
+	border-bottom: 3px solid white;
+}
+
+.dokumenter .sokeboks.har-sokestreng {
+	display: block;
+}
+
+.dokumenter .sokeboks .avbryt {
+	position: absolute;
+	right: 1em;
+	top: 2.3em;
+}
+
+.dokumenter .sokeboks .sokeinput {
+	font-size: 1.3em;
+	margin-bottom: 0.21em;
+	width: 13em;
+	max-width: 100%;
+}
+
 .dokumenter .last-opp {
 	border: 1px solid white;
 	padding: 0.5em 1em;
@@ -126,10 +177,6 @@
 .dokumenter .legg-til-knapp {
 	font-size: 0.5em;
 	margin-left: 3em;
-}
-
-.dokumenter .skjul {
-	visibility: hidden;
 }
 
 .filelist .suksess {

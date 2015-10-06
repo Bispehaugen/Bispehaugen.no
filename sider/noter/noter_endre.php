@@ -12,7 +12,6 @@
 		  $komponist=post('komponist');
 		  $arrangor=post('arrangor');
 		 $arkivnr=post('arkivnr');
-		 $filpath=post('filpath');
 		 if(empty($filpath)){$filpath=clean($tittel);}
 		 $besetningsid=post('besetningsid');
 	     //sjekker om man vil legge til eller endre et notesett
@@ -65,7 +64,6 @@
 				<tr><td>Komponist:</td><td><input type='text' name='komponist' value='".$noter['komponist']."'></td></tr>
 				<tr><td>Arrangør:</td><td><input type='text' name='arrangor' value='".$noter['arrangor']."'></td></tr>
 				<tr><td>Arkivnr:</td><td><input type='text' name='arkivnr' value='".$noter['arkivnr']."'></td></tr>
-				<tr><td>Filplassering:</td><td><input type='text' name='filpath' value='".$noter['filpath']."' readonly></td></tr>
 				<tr><td>Besetningstype:</td><td>
 					<select name='besetningsid'>";
 					foreach($besetningstyper as $besetning){

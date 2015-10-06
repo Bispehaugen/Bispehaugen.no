@@ -29,8 +29,8 @@ if (!is_int($filid)) {
 $file = hent_fil_med_mappeinfo($filid);
 $filepath = hent_filpath($file);
 
-$filtittel = $file['tittel'];
 $filtype = $file['filtype'];
+$filtittel = $file['tittel'] . "." . $filtype;
 
 $file_time = filemtime($filepath);
 $file_date = gmdate('D, d M Y H:i:s T', $file_time);
@@ -50,6 +50,7 @@ if (file_exists($filepath)) {
 		header('Content-Description: File Transfer');
     	header('Content-Type: application/octet-stream');
 	    header('Content-Disposition: attachment; filename="'.$filtittel.'"');
+		header('Last-Modified: ' . $file_date);
 	    header('Expires: 0');
 	    header('Cache-Control: must-revalidate');
 	    header('Pragma: public');

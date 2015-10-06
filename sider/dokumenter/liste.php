@@ -12,6 +12,10 @@ if(empty($foreldreId)) {
 	$foreldreId = 0;
 }
 
+$sokestreng = get('sok');
+
+$sokemodus = has_get('sok');
+
 ?>
 <script type="text/javascript">
 function slett_fil(id, navn) {
@@ -37,14 +41,21 @@ function slett_mappe(id, navn) {
 	}
 }
 function open_new_folder() {
-	$(".add-folder").toggle();
+	$(".handlinger").hide();
+	$(".add-folder").show();
 	$(".add-folder .navn").focus();
 }
 function open_new_files() {
-	$(".add-files").toggle();
+	$(".handlinger").hide();
+	$(".add-files").show();
 }
 function close_add() {
 	$(".add-files-and-folder").hide();
+}
+function vis_sokeknapp() {
+	$(".handlinger").hide();
+	$(".sokeboks").show();
+	$(".sokeboks .sokeinput").focus();
 }
 </script>
 <?php
@@ -63,21 +74,30 @@ echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "
 
 formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
 
-formater_ny_knapp($foreldreId, "mappe", "open_new_folder");
-formater_ny_knapp($foreldreId, "filer", "open_new_files");
+if (!$sokemodus) {
+	formater_ny_knapp($foreldreId, "mappe", "open_new_folder");
+	formater_ny_knapp($foreldreId, "filer", "open_new_files");	
+}
+
+formater_soke_knapp();
 
 echo "</header>";
 
-if (tilgang_endre()) {
+if (!$sokemodus && tilgang_endre()) {
 	formater_legg_til_ny_mappe($foreldreId);
 	formater_legg_til_nye_filer($foreldreId);
 }
+formater_sokeboks();
 
 echo "<section class='mapper'>";
 
-$mapper = hent_undermapper($foreldreId);
-
-$filer = hent_filer($foreldreId);
+if ($sokemodus) {
+	$mapper = sok_mapper($sokestreng);
+	$filer = sok_filer($sokestreng);
+} else {
+	$mapper = hent_undermapper($foreldreId);
+	$filer = hent_filer($foreldreId);
+}
 
 $dine_komiteer = hent_komiteer_for_bruker();
 
@@ -101,7 +121,11 @@ foreach($filer as $fil) {
 echo "</section>";
 
 if ($antall_mapper_og_filer == 0) {
-	echo "<h3>Denne mappen er tom.</h3>";
+	if ($sokemodus) {
+		echo "<h3>Søket etter \"" . $sokestreng . "\" ga ingen resultat.</h3>";
+	} else {
+		echo "<h3>Mappen er tom.</h3>";
+	}
 }
 echo "</section>";
 

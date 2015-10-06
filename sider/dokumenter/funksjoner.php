@@ -30,24 +30,28 @@ function hent_undermapper($id) {
 	return hent_mapper($id, true);
 }
 
-
 function hent_fil($filid) {
 	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, tid FROM filer WHERE id = ".intval(mysql_real_escape_string($filid));
 	return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_fil_med_mappeinfo($filid) {
-	$mysql = "SELECT m.mappenavn, f.filnavn, f.filtype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
-	$result = mysql_query($mysql);
-
-	while ($file = mysql_fetch_assoc($result)) {
-		return $file;
-	}
-	die("Fant ingen fil med ".$filid);
+	$sql = "SELECT m.mappenavn, f.filnavn, f.filtype, f.tittel FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
+	return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_filpath($filMedMappeinfo) {
 	return "dokumenter/" . $filMedMappeinfo['mappenavn'] . "/" . $filMedMappeinfo['filnavn'];
+}
+
+function sok_mapper($sokestreng) {
+	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE tittel LIKE '%" . mysql_real_escape_string($sokestreng) . "%'";
+	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+}
+
+function sok_filer($sokestreng) {
+	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE tittel LIKE '%" . mysql_real_escape_string($sokestreng) . "%'";
+	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
 ///////////// Liste funksjoner
@@ -108,8 +112,19 @@ echo "<section class='legg-til-".$type." legg-til-knapp'>
 	</section>";
 }
 
+function formater_soke_knapp() {
+echo "<section class='soke-knapp legg-til-knapp'>
+		<button class='button' onClick='vis_sokeknapp()'>
+		<section class='fa-stack fa-lg'>
+		  <i class='fa fa-search fa-stack-2x'></i>
+		</section>
+		<p>Søk i dokumenter</p>
+		</button>
+	</section>";
+}
+
 function formater_legg_til_ny_mappe($foreldreId) {
-echo "<section class='add-files-and-folder add-folder'>
+echo "<section class='add-files-and-folder add-folder handlinger'>
 	<form action='?side=dokumenter/ny-mappe' method='POST'>
 		<h2>Legg til ny mappe</h2>
 		<input type='text' class='text-input navn' name='navn' placeholder='Navn' />
@@ -122,7 +137,7 @@ echo "<section class='add-files-and-folder add-folder'>
 
 
 function formater_legg_til_nye_filer($foreldreId) {
-echo "<section class='add-files-and-folder add-files dropzone'>
+echo "<section class='add-files-and-folder add-files dropzone handlinger'>
 		<h2>Legg til nye filer</h2>
 		<p>Dra nye filer til denne firkanten eller klikk på \"Velg filer\" lengre ned.</p>
 		<ul class='filelist'></ul>
@@ -133,4 +148,17 @@ echo "<section class='add-files-and-folder add-files dropzone'>
 		<button class='button last-opp' disabled='disabled'>Last opp</button>
 	<a class='close' href='javascript:close_add()' title='Avbryt'><i class='fa fa-remove'></i> Avbryt</a>
 </section>";
+}
+
+function formater_sokeboks() {
+	$sokestreng = get('sok');
+	$harSokestrengCss = !empty($sokestreng) ? "har-sokestreng" : "";
+echo "<section class='sokeboks handlinger " . $harSokestrengCss . "'>
+		<form method='get' action='?'>
+			<input type='hidden' name='side' value='dokumenter/liste' />
+			<input class='sokeinput' type='text' name='sok' value='" . $sokestreng . "' placeholder='Søk...' />
+			<button class='button sok' type='submit'>Søk</button>
+			<a href='?side=dokumenter/liste' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
+		</form>
+	</section>";	
 }
