@@ -114,7 +114,7 @@ echo "<section class='add-files-and-folder add-folder'>
 		<h2>Legg til ny mappe</h2>
 		<input type='text' class='text-input navn' name='navn' placeholder='Navn' />
 		<input type='hidden' name='foreldreid' value='".$foreldreId."' />
-		<input type='submit' value='Opprett' />
+		<input class='button' type='submit' value='Opprett' />
 	</form>
 	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
 </section>";
@@ -129,7 +129,7 @@ echo "<section class='add-files-and-folder add-files dropzone'>
 		<div class='status'>
 		  <span class='bar' style='width: 0%'></span>
 		</div>
-		<button class='velg-filer'>Velg filer</button>
+		<button class='button velg-filer'>Velg filer</button>
 		<button class='button last-opp' disabled='disabled'>Last opp</button>
 	<a class='close' href='javascript:close_add()' title='Avbryt'><i class='fa fa-remove'></i> Avbryt</a>
 </section>";

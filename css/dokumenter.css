@@ -95,8 +95,17 @@
 .dokumenter .button {
 	font-size: 1.2em;
 	padding: 0em;
+	border: 1px solid white;
+	padding: 0.5em 1em;
+	margin-top: 0em;
+	cursor: pointer;
+}
+
+.dokumenter .header .button {
+	border: none;
 	margin-top: 2em;
 	margin-left: 2em;
+	padding-bottom: 0px;
 }
 
 .dokumenter .button:disabled {
