@@ -7,11 +7,12 @@ function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
 	if(!is_null($mappetype)) {
 		$sql .= " AND mappetype = ".$mappetype;
 	}
+	$sql .=" ORDER BY tittel DESC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi=$id_verdi);
 }
 
 function hent_filer($mappeid) {
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval(mysql_real_escape_string($mappeid));
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval(mysql_real_escape_string($mappeid)) . " ORDER BY tittel DESC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
@@ -54,6 +55,7 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	foreach($delstrenger as $delstreng) {
 		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
 	}
+	$sql .=" ORDER BY tittel DESC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
@@ -63,6 +65,7 @@ function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	foreach($delstrenger as $delstreng) {
 		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
 	}
+	$sql .=" ORDER BY tittel DESC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
