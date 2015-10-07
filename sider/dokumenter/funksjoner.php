@@ -1,9 +1,12 @@
 <?php
 
-function hent_mapper($ider, $hentUndermapper=false, $mappetype = Mappetype::Dokumenter) {
+function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
 	$id_type = $hentUndermapper ? "foreldreid" : "id";
 	$id_verdi = $hentUndermapper ? "id" : "";
-	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE mappetype = ".$mappetype." AND ".$id_type." IN (".mysql_real_escape_string($ider).")";
+	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".mysql_real_escape_string($ider).")";
+	if(!is_null($mappetype)) {
+		$sql .= " AND mappetype = ".$mappetype;
+	}
 	return hent_og_putt_inn_i_array($sql, $id_verdi=$id_verdi);
 }
 
@@ -12,7 +15,7 @@ function hent_filer($mappeid) {
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
-function hent_mappe($id, $mappetype = Mappetype::Dokumenter) {
+function hent_mappe($id, $mappetype = null) {
 	if($id == 0) {
 		return Array("id" => 0, "mappenavn" => "/", "tittel" => "Dokumenter");
 	}
@@ -20,7 +23,7 @@ function hent_mappe($id, $mappetype = Mappetype::Dokumenter) {
 
 	if(empty($mappe)) {
 		echo "<h1>Fant ikke mappe med id: ".$id."</h1>";
-		echo "<a href='?side=dokumenter/liste&amp;type=".$mappetype."'>Tilbake til dokumenter</a><br />";
+		echo "<a href='?side=dokumenter/liste'>Tilbake til dokumenter</a><br />";
 		die();
 	}
 	return $mappe;

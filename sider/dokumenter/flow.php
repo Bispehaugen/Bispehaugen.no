@@ -32,6 +32,7 @@ function updateStatusbar(flow, statusElement) {
 		filliste.html("");
 		window.clearInterval(intervalId);
 		location.reload();
+		disableUploadButton();
 	}
 }
 
@@ -43,8 +44,7 @@ var flow = new Flow({
   target:'sider/dokumenter/nye-filer.php',
   singleFile: false,
   query: {
-  	foreldreId: '<?php echo $foreldreId; ?>',
-  	mappetype: '<?php echo $mappetype; ?>'
+  	foreldreId: '<?php echo $foreldreId; ?>'
   }
 });
 Flow.prototype.assignDrop = function (domNodes) {
