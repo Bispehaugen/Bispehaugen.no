@@ -69,6 +69,14 @@ function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
+function hent_noteinfo($mappeid) {
+	$sql = "SELECT noteid, tittel, komponist, arrangor, besetningstype, arkivnr, b.besetningsid
+			FROM noter_notesett AS n
+			JOIN noter_besetning b ON n.besetningsid = b.besetningsid
+			WHERE mappeid = ".$mappeid;
+	return hent_og_putt_inn_i_array($sql);
+}
+
 ///////////// Liste funksjoner
 
 function formater_mappe($mappe) {
@@ -150,9 +158,11 @@ function formater_endre_mappe_knapp($mappeid, $javascriptknapp, $mappetype) {
 		case Mappetype::Bilder:
 			$navn = "album";
 			break;
+		case Mappetype::Noter:
+			$navn = "notemappe";
+			break;
 		default:
 		case Mappetype::Dokumenter:
-		case Mappetype::Noter:
 			$navn = "mappe";
 			break;
 	}
@@ -201,13 +211,30 @@ echo "<section class='add-files-and-folder add-folder handlinger'>
 </section>";
 }
 
-function formater_endre_mappe($mappe) {
+function formater_endre_mappe($mappe, $noteinfo=Array()) {
 	echo "<section class='add-files-and-folder edit-folder handlinger'>
 	<form action='?side=dokumenter/endre-mappe' method='POST'>
 		<h2>Endre mappe</h2>
-		<input type='text' class='text-input navn' name='navn' placeholder='Navn' value='".$mappe['tittel']."' />
 		<input type='hidden' name='mappeid' value='".$mappe['id']."' />
 		<input type='hidden' name='mappetype' value='".$mappe['mappetype']."' />
+		<input type='text' class='text-input navn' name='navn' placeholder='Navn' value='".$mappe['tittel']."' />";
+
+	if(!empty($noteinfo)) {
+		echo "<h3>Noteinfo:</h3>";
+		echo "<input type='hidden' name='noteid' value='".$noteinfo['noteid']."' />";
+		echo "<input type='text' class='text-input arrangor' name='arrangor' placeholder='Arrangør' value='".$noteinfo['arrangor']."' />";
+		echo "<br /><input type='text' class='text-input komponist' name='komponist' placeholder='Komponist' value='".$noteinfo['komponist']."' />";
+		echo "<br /><input type='text' class='text-input arkivnr' name='arkivnr' placeholder='Arkivnr' value='".$noteinfo['arkivnr']."' />";
+		echo "<br /><label>Besetningstype: <select name='besetningsid'>";
+		$besetninger = hent_besetning();
+		foreach($besetninger as $besetningsid => $besetning) {
+			$selected_html = ($besetningsid == $noteinfo['besetningsid']) ? " selected='selected'" : "";
+			echo "<option value='".$besetningsid."'".$selected_html.">".ucfirst($besetning['besetningstype'])."</option>";
+		}
+		echo "</select></label><br /><br />";
+	}
+	
+	echo "	
 		<input class='button' type='submit' value='Endre' />
 	</form>
 	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
@@ -253,4 +280,23 @@ echo "<section class='sokeboks handlinger " . $harSokestrengCss . "'>
 			<a href='?side=dokumenter/liste&amp;type=".$mappetype."' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
 		</form>
 	</section>";	
+}
+
+function formater_noteinfo($info) {
+if(empty($info)) return;
+echo "<section class='noteinfo'>";
+formater_noteinfo_hvis_ikke_tom("tittel", $info);
+formater_noteinfo_hvis_ikke_tom("besetningstype", $info);
+formater_noteinfo_hvis_ikke_tom("arragnor", $info);
+formater_noteinfo_hvis_ikke_tom("komponist", $info);
+formater_noteinfo_hvis_ikke_tom("arkivnr", $info);
+echo "</section>";
+}
+
+function formater_noteinfo_hvis_ikke_tom($type, $infoArray) {
+	$info = $infoArray[$type];
+	if(!empty($info)) {
+		if ($type == "arrangor") $type = "Arrangør";
+		echo "<span><b>".ucfirst($type).":</b> ".$info."</span>";
+	}
 }

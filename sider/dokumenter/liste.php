@@ -68,15 +68,21 @@ function vis_sokeknapp() {
 </script>
 <?php
 
-echo "<section class='dokumenter'>";
-
-echo "<header class='header'>";
 $tittel = $mappetypeNavn;
+$noteinfo = Array();
 
 if ($foreldreId > 0) {
 	$foreldremappe = hent_mappe($foreldreId, $mappetype);
 	$tittel = $foreldremappe['tittel'];
 }
+
+if (!empty($foreldremappe) && $foreldremappe['mappetype'] == Mappetype::Noter) {
+	$noteinfo = hent_noteinfo($foreldremappe['id']);
+}
+
+echo "<section class='dokumenter'>";
+
+echo "<header class='header'>";
 
 echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "</h2>";
 
@@ -95,11 +101,13 @@ if (!$sokemodus && tilgang_endre()) {
 	formater_ny_knapp($foreldreId, "filer", "open_new_files", $mappetype);
 	echo "</section>";
 
-	formater_endre_mappe($foreldremappe);
+	formater_endre_mappe($foreldremappe, $noteinfo);
 	formater_legg_til_ny_mappe($foreldreId, $mappetype);
 	formater_legg_til_nye_filer($foreldreId, $mappetype);
 }
 formater_sokeboks($mappetype);
+
+formater_noteinfo($noteinfo);
 
 echo "<section class='mapper'>";
 

@@ -639,6 +639,10 @@ migrering(30, "Legger til mappetype på filer, skal speile mappetype til mappeid
 	"UPDATE filer SET mappetype = 1"
 );
 
+migrering(31, "Arkivnr 0 er ubrukelig, ha null istede",
+	"UPDATE noter_notesett SET arkivnr = NULL WHERE arkivnr = 0"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

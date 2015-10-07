@@ -21,6 +21,18 @@ $mappetype = intval(post('mappetype'));
 $sql = "UPDATE mapper SET tittel = '$navn' WHERE id = " . $mappeid . " LIMIT 1";
 mysql_query($sql) or die(mysql_error());
 
+
+if (has_post('noteid')) {
+	$noteid = post('noteid');
+	$arrangor = post('arrangor');
+	$komponist = post('komponist');
+	$arkivnr = post('arkivnr');
+	$besetningsid = post('besetningsid');
+
+	$sql_update_notesett = "UPDATE noter_notesett SET komponist = '".$komponist."', arrangor = '".$arrangor."', arkivnr = '".$arkivnr."', besetningsid = '".$besetningsid."' WHERE noteid = ".$noteid." AND mappeid = ".$mappeid;
+	mysql_query($sql_update_notesett) or die(mysql_error());
+}
+
 echo "
 <script type='text/javascript'>
 	window.location = '?side=dokumenter/liste&mappe=" . $mappeid . "&type=" . $mappetype . "';

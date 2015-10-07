@@ -99,6 +99,21 @@
 
 .dokumenter .add-files-and-folder .text-input {
 	width: 18em;
+	margin: 0 1em 1em 0em;
+}
+
+.dokumenter .edit-folder {
+    text-align: center;
+}
+
+.dokumenter .edit-folder .button {
+    vertical-align: top;
+}
+
+.dokumenter .edit-folder form {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
 }
 
 .dokumenter .add-files-and-folder .close {
@@ -106,6 +121,11 @@
 	position: absolute;
 	top: 1em;
 	right: 1em;
+}
+
+.dokumenter .noteinfo span {
+	display: inline-block;
+	margin: 1em;
 }
 
 .dokumenter .dokument {

@@ -580,6 +580,11 @@ function siste_sql_feil() {
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
 
+function hent_besetning() {
+	$sql = "SELECT besetningsid, besetningstype FROM noter_besetning";
+	return hent_og_putt_inn_i_array($sql, 'besetningsid');
+}
+
 function finn_filtype($filnavn) {
 	$fileNameArray = preg_split("/\./", $filnavn);
 	if (count($fileNameArray) > 1) {
