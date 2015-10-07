@@ -5,6 +5,7 @@ setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = "../";
 $dir = $root . "noter/";
+$dir = "/home/webkom/filer/filer/noter/";//str_replace("skript", "dokumenter", getcwd())."/";
 
 include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
