@@ -1,13 +1,20 @@
 <?php
 
-function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
-	$id_type = $hentUndermapper ? "foreldreid" : "id";
-	$id_verdi = $hentUndermapper ? "id" : "";
+function hent_mapper_sql($ider, $id_type, $mappetype) {
 	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".mysql_real_escape_string($ider).")";
 	if(!is_null($mappetype)) {
 		$sql .= " AND mappetype = ".$mappetype;
 	}
 	$sql .=" ORDER BY tittel ASC";
+	return $sql;
+}
+
+function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
+	$id_type = $hentUndermapper ? "foreldreid" : "id";
+	$id_verdi = $hentUndermapper ? "id" : "";
+
+	$sql = hent_mapper_sql($ider, $id_type, $mappetype);
+
 	return hent_og_putt_inn_i_array($sql, $id_verdi=$id_verdi);
 }
 
@@ -49,14 +56,46 @@ function hent_filpath($filMedMappeinfo) {
 	return $rootDir . "/" . $filMedMappeinfo['mappenavn'] . "/" . $filMedMappeinfo['filnavn'];
 }
 
+function sok_i_notesett($sokestreng) {
+	$sql = "SELECT mappeid 
+			FROM noter_notesett 
+			WHERE arrangor LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
+			   OR komponist LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
+			   OR arkivnr = '" . mysql_real_escape_string($sokestreng) . "'
+			ORDER BY tittel ASC";
+	$notesett = hent_og_putt_inn_i_array($sql, $id_verdi="mappeid");
+
+	$mappeider = "";
+	foreach($notesett as $mappeid => $ignore) {
+		$mappeider .= $mappeid.",";
+	}
+	if (empty($mappeider)) return Array();
+	$mapper = $sql = hent_mapper_sql(substr($mappeider, 0, -1), "id", Mappetype::Noter);
+	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+}
+
 function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE  mappetype = ".$mappetype." ";
 	$delstrenger = explode(" ", $sokestreng);
+
 	foreach($delstrenger as $delstreng) {
 		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
 	}
 	$sql .=" ORDER BY tittel ASC";
-	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+
+	$mapperesultat = hent_og_putt_inn_i_array($sql, "id");
+
+	// Søk etter arkivid, arrangører og komponister i noter_notesett
+	$notesettresultat = sok_i_notesett($sokestreng);
+
+	if (empty($notesettresultat)) return $mapperesultat;
+	if (empty($mapperesultat)) return $notesettresultat;
+
+	$mergedArray = array_merge($notesettresultat, $mapperesultat);
+	usort($mergedArray, function($a, $b) {
+	    return $b['tittel'] - $a['tittel'];
+	});
+	return $mergedArray;
 }
 
 function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
@@ -275,7 +314,7 @@ echo "<section class='sokeboks handlinger " . $harSokestrengCss . "'>
 		<form method='get' action='?'>
 			<input type='hidden' name='side' value='dokumenter/liste' />
 			<input type='hidden' name='type' value='".$mappetype."' />
-			<input class='sokeinput' type='text' name='sok' value='" . $sokestreng . "' placeholder='Søk...' />
+			<input class='sokeinput' type='text' name='sok' value='" . $sokestreng . "' placeholder='Søk i tittel, arkivnr, arr/komp...' />
 			<button class='button sok' type='submit'>Søk</button>
 			<a href='?side=dokumenter/liste&amp;type=".$mappetype."' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
 		</form>
@@ -287,7 +326,7 @@ if(empty($info)) return;
 echo "<section class='noteinfo'>";
 formater_noteinfo_hvis_ikke_tom("tittel", $info);
 formater_noteinfo_hvis_ikke_tom("besetningstype", $info);
-formater_noteinfo_hvis_ikke_tom("arragnor", $info);
+formater_noteinfo_hvis_ikke_tom("arrangor", $info);
 formater_noteinfo_hvis_ikke_tom("komponist", $info);
 formater_noteinfo_hvis_ikke_tom("arkivnr", $info);
 echo "</section>";
