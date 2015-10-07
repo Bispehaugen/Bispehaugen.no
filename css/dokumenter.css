@@ -31,16 +31,38 @@
 		justify-content: flex-start;
 		align-items: baseline;
 	}
+
+	.dokumenter .admin-knapper {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+
+		flex-flow: row nowrap;
+		justify-content: center; 
+		align-items: baseline;
+	}
 }
 
 .dokumenter .header {
 	border-bottom: 3px solid white;
+	position: relative;
 }
 
 .dokumenter .overskrift {
 	width: 8em;
 	text-align: center;
 	word-break: break-all;
+}
+
+.dokumenter .admin-knapper {
+	border-bottom: 3px solid white;
+}
+
+.dokumenter .admin-knapper.skjul {
+	display: none;
+	visibility: visible;
 }
 
 .dokumenter .skjul {
@@ -126,10 +148,12 @@
 	cursor: pointer;
 }
 
-.dokumenter .header .button {
+.dokumenter .header .button,
+.dokumenter .admin-knapper .button {
 	border: none;
 	margin-top: 2em;
 	margin-left: 2em;
+    margin-bottom: 1em;
 	padding-bottom: 0px;
 }
 

@@ -54,6 +54,9 @@ function open_edit_folder() {
 	$(".handlinger").hide();
 	$(".edit-folder").show();
 }
+function show_admin_buttons() {
+	$(".admin-knapper").toggleClass("skjul");
+}
 function close_add() {
 	$(".add-files-and-folder").hide();
 }
@@ -78,18 +81,20 @@ if ($foreldreId > 0) {
 echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "</h2>";
 
 formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
-
-if (!$sokemodus) {
-	formater_endre_mappe_knapp($foreldreId, "open_edit_folder", $mappetype);
-	formater_ny_knapp($foreldreId, "mappe", "open_new_folder", $mappetype);
-	formater_ny_knapp($foreldreId, "filer", "open_new_files", $mappetype);	
-}
-
 formater_soke_knapp();
 
+if (!$sokemodus && tilgang_endre()) {
+	formater_vis_admin_knapp();
+}
 echo "</header>";
 
 if (!$sokemodus && tilgang_endre()) {
+	echo "<section class='handlinger admin-knapper skjul'>";
+	formater_endre_mappe_knapp($foreldreId, "open_edit_folder", $mappetype);
+	formater_ny_knapp($foreldreId, "mappe", "open_new_folder", $mappetype);
+	formater_ny_knapp($foreldreId, "filer", "open_new_files", $mappetype);
+	echo "</section>";
+
 	formater_endre_mappe($foreldremappe);
 	formater_legg_til_ny_mappe($foreldreId, $mappetype);
 	formater_legg_til_nye_filer($foreldreId, $mappetype);

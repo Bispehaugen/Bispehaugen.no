@@ -177,6 +177,17 @@ echo "<section class='soke-knapp legg-til-knapp'>
 	</section>";
 }
 
+function formater_vis_admin_knapp() {
+echo "<section class='vis-admin-knapper legg-til-knapp'>
+		<button class='button' onClick='show_admin_buttons()'>
+		<section class='fa-stack fa-lg'>
+		  <i class='fa fa-edit fa-stack-2x'></i>
+		</section>
+		<p>Admin-verktøy</p>
+		</button>
+	</section>";
+}
+
 function formater_legg_til_ny_mappe($foreldreId, $mappetype) {
 echo "<section class='add-files-and-folder add-folder handlinger'>
 	<form action='?side=dokumenter/ny-mappe' method='POST'>
