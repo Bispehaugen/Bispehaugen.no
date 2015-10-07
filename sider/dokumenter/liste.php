@@ -50,6 +50,10 @@ function open_new_files() {
 	$(".handlinger").hide();
 	$(".add-files").show();
 }
+function open_edit_folder() {
+	$(".handlinger").hide();
+	$(".edit-folder").show();
+}
 function close_add() {
 	$(".add-files-and-folder").hide();
 }
@@ -76,6 +80,7 @@ echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "
 formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
 
 if (!$sokemodus) {
+	formater_endre_mappe_knapp($foreldreId, "open_edit_folder", $mappetype);
 	formater_ny_knapp($foreldreId, "mappe", "open_new_folder", $mappetype);
 	formater_ny_knapp($foreldreId, "filer", "open_new_files", $mappetype);	
 }
@@ -85,6 +90,7 @@ formater_soke_knapp();
 echo "</header>";
 
 if (!$sokemodus && tilgang_endre()) {
+	formater_endre_mappe($foreldremappe);
 	formater_legg_til_ny_mappe($foreldreId, $mappetype);
 	formater_legg_til_nye_filer($foreldreId, $mappetype);
 }

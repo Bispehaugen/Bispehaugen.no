@@ -142,6 +142,27 @@ echo "<section class='legg-til-".$type." legg-til-knapp'>
 	</section>";
 }
 
+function formater_endre_mappe_knapp($mappeid, $javascriptknapp, $mappetype) {
+		switch($mappetype) {
+		case Mappetype::Bilder:
+			$navn = "album";
+			break;
+		default:
+		case Mappetype::Dokumenter:
+		case Mappetype::Noter:
+			$navn = "mappe";
+			break;
+	}
+echo "<section class='legg-til-mappe legg-til-knapp'>
+		<button class='button' onClick='".$javascriptknapp."()'>
+		<section class='fa-stack fa-lg'>
+		  <i class='fa fa-edit fa-stack-2x'></i>
+		</section>
+		<p>Endre ".$navn."</p>
+		</button>
+	</section>";
+}
+
 function formater_soke_knapp() {
 echo "<section class='soke-knapp legg-til-knapp'>
 		<button class='button' onClick='vis_sokeknapp()'>
@@ -161,6 +182,19 @@ echo "<section class='add-files-and-folder add-folder handlinger'>
 		<input type='hidden' name='foreldreid' value='".$foreldreId."' />
 		<input type='hidden' name='mappetype' value='".$mappetype."' />
 		<input class='button' type='submit' value='Opprett' />
+	</form>
+	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
+</section>";
+}
+
+function formater_endre_mappe($mappe) {
+	echo "<section class='add-files-and-folder edit-folder handlinger'>
+	<form action='?side=dokumenter/endre-mappe' method='POST'>
+		<h2>Endre mappe</h2>
+		<input type='text' class='text-input navn' name='navn' placeholder='Navn' value='".$mappe['tittel']."' />
+		<input type='hidden' name='mappeid' value='".$mappe['id']."' />
+		<input type='hidden' name='mappetype' value='".$mappe['mappetype']."' />
+		<input class='button' type='submit' value='Endre' />
 	</form>
 	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
 </section>";

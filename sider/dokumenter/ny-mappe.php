@@ -10,7 +10,7 @@ if(!er_logget_inn()) {
 	die("Du må være logget inn");
 }
 if (!tilgang_endre()) {
-	die("Du har ikke lov til å laste opp filer!");
+	die("Du har ikke lov til å opprette mapper!");
 }
 
 $navn = post('navn');
