@@ -43,16 +43,19 @@ var flow = new Flow({
   target:'sider/dokumenter/nye-filer.php',
   singleFile: false,
   query: {
-  	foreldreId: '<?php echo $foreldreId; ?>'
+  	foreldreId: '<?php echo $foreldreId; ?>',
+  	mappetype: '<?php echo $mappetype; ?>'
   }
 });
 Flow.prototype.assignDrop = function (domNodes) {
-	domNode = domNodes[0];
-	domNode.addEventListener('dragover', this.preventEvent, false);
-	domNode.addEventListener('dragenter', dropHover, false);
-	domNode.addEventListener('dragleave', dropDropped, false);
-	domNode.addEventListener('drop', dropDropped, false);
-	domNode.addEventListener('drop', this.onDrop, false);
+	if (domNodes && domNodes.length > 0) {
+		domNode = domNodes[0];
+		domNode.addEventListener('dragover', this.preventEvent, false);
+		domNode.addEventListener('dragenter', dropHover, false);
+		domNode.addEventListener('dragleave', dropDropped, false);
+		domNode.addEventListener('drop', dropDropped, false);
+		domNode.addEventListener('drop', this.onDrop, false);
+	}
 };
 
 

@@ -369,6 +369,25 @@ abstract class Navnlengde
     const FullInfo = 3;
 }
 
+abstract class Mappetype
+{
+    const Dokumenter = 1;
+    const Bilder = 2;
+    const Noter = 3;
+}
+
+function hent_mappetype_navn($mappetype) {
+	switch($mappetype) {
+		case Mappetype::Dokumenter:
+			return "Dokumenter";
+		case Mappetype::Noter:
+			return "Noter";
+		case Mappetype::Bilder:
+			return "Bilder";
+	}
+	die("Fant ikke mappetype: " . $mappetype);
+}
+
 function thumb($bildePath, $width = "", $height = "") {
 	$bildePath = str_replace("../", "", $bildePath);
 	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;

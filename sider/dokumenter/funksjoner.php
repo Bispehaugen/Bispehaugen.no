@@ -1,56 +1,65 @@
 <?php
 
-function hent_mapper($ider, $hentUndermapper=false) {
+function hent_mapper($ider, $hentUndermapper=false, $mappetype = Mappetype::Dokumenter) {
 	$id_type = $hentUndermapper ? "foreldreid" : "id";
 	$id_verdi = $hentUndermapper ? "id" : "";
-	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".mysql_real_escape_string($ider).")";
+	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE mappetype = ".$mappetype." AND ".$id_type." IN (".mysql_real_escape_string($ider).")";
 	return hent_og_putt_inn_i_array($sql, $id_verdi=$id_verdi);
 }
 
 function hent_filer($mappeid) {
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappeid = ".intval(mysql_real_escape_string($mappeid));
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval(mysql_real_escape_string($mappeid));
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
-function hent_mappe($id) {
+function hent_mappe($id, $mappetype = Mappetype::Dokumenter) {
 	if($id == 0) {
-		return Array("id" => 0, "mappenavn" => "/", "tittel" => "Dokumenter", "idpath" => "/");
+		return Array("id" => 0, "mappenavn" => "/", "tittel" => "Dokumenter");
 	}
-	$mappe = hent_mapper($id, false);
+	$mappe = hent_mapper($id, false, $mappetype);
 
 	if(empty($mappe)) {
 		echo "<h1>Fant ikke mappe med id: ".$id."</h1>";
-		echo "<a href='?side=dokumenter/liste'>Tilbake til dokumenter</a><br />";
+		echo "<a href='?side=dokumenter/liste&amp;type=".$mappetype."'>Tilbake til dokumenter</a><br />";
 		die();
 	}
 	return $mappe;
 }
 
-function hent_undermapper($id) {
-	return hent_mapper($id, true);
+function hent_undermapper($id, $mappetype = Mappetype::Dokumenter) {
+	return hent_mapper($id, true, $mappetype);
 }
 
 function hent_fil($filid) {
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, tid FROM filer WHERE id = ".intval(mysql_real_escape_string($filid));
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, mappetype, tid FROM filer WHERE id = ".intval(mysql_real_escape_string($filid));
 	return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_fil_med_mappeinfo($filid) {
-	$sql = "SELECT m.mappenavn, f.filnavn, f.filtype, f.tittel FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
+	$sql = "SELECT m.mappenavn, f.filnavn, f.filtype, f.tittel, f.mappetype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
 	return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_filpath($filMedMappeinfo) {
-	return "dokumenter/" . $filMedMappeinfo['mappenavn'] . "/" . $filMedMappeinfo['filnavn'];
+	$rootDir = strtolower(hent_mappetype_navn($filMedMappeinfo['mappetype']));
+	return $rootDir . "/" . $filMedMappeinfo['mappenavn'] . "/" . $filMedMappeinfo['filnavn'];
 }
 
-function sok_mapper($sokestreng) {
-	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE tittel LIKE '%" . mysql_real_escape_string($sokestreng) . "%'";
+function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
+	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE  mappetype = ".$mappetype." ";
+	$delstrenger = explode(" ", $sokestreng);
+	foreach($delstrenger as $delstreng) {
+		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
+	}
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
-function sok_filer($sokestreng) {
-	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE tittel LIKE '%" . mysql_real_escape_string($sokestreng) . "%'";
+function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
+	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = ".$mappetype." ";
+	$delstrenger = explode(" ", $sokestreng);
+	foreach($delstrenger as $delstreng) {
+		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
+	}
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
@@ -58,8 +67,9 @@ function sok_filer($sokestreng) {
 
 function formater_mappe($mappe) {
 	$mappenavn = $mappe['tittel'];
+	$mappetype = $mappe['mappetype'];
 	echo "<section class='mappe dokument'>";
-	echo "  <a href='?side=dokumenter/liste&amp;mappe=" . $mappe['id'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>";
+	echo "  <a href='?side=dokumenter/liste&amp;type=".$mappetype."&amp;mappe=" . $mappe['id'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>";
 	echo "  <i class='fa fa-folder-o'></i><p>" . $mappenavn . "</p></a>";
 	if (tilgang_endre()) {
 		echo "  <a class='slett' a href='javascript:slett_mappe(".$mappe['id'].", \"".$mappenavn."\")' title='Slett mappen: ".$mappenavn."'><i class='fa fa-remove'></i></a>";
@@ -90,7 +100,7 @@ function formater_fil($fil) {
 
 function formater_tilbakeknapp($mappe, $vis) {
 echo "<section class='tilbake legg-til-knapp" . ($vis ? "" : " skjul") . "'>
-		<a class='button' href='?side=dokumenter/liste&amp;mappe=" . $mappe['foreldreid'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>
+		<a class='button' href='?side=dokumenter/liste&amp;type=".$mappe['mappetype']."&amp;mappe=" . $mappe['foreldreid'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>
 		<section class='fa-stack fa-lg'>
 		  <i class='fa fa-level-up fa-stack-2x'></i>
 		</section>
@@ -99,15 +109,32 @@ echo "<section class='tilbake legg-til-knapp" . ($vis ? "" : " skjul") . "'>
 	</section>";
 }
 
-function formater_ny_knapp($id, $type, $javascriptknapp) {
-	$ikon = ($type == "mappe") ? "folder" : "file"; 
+function formater_ny_knapp($id, $type, $javascriptknapp, $mappetype) {
+	switch($mappetype) {
+		case Mappetype::Bilder:
+			$navn = ($type == "mappe") ? "album" : "bilder";
+			$hovedIkon = ($type == "mappe") ? "fa-folder-o" : "fa-image";
+			$plussIkon = ($type == "mappe") ? "fa-image" : "";
+			break;
+		case Mappetype::Noter:
+			$navn = ($type == "mappe") ? "mappe" : "noter";
+			$hovedIkon = ($type == "mappe") ? "fa-folder-o" : "fa-music";
+			$plussIkon = ($type == "mappe") ? "fa-music" : "";
+			break;
+		default:
+		case Mappetype::Dokumenter:
+			$navn = ($type == "mappe") ? "mappe" : "filer";
+			$hovedIkon = ($type == "mappe") ? "fa-folder-o" : "fa-file-o";
+			$plussIkon = "fa-plus";
+			break;
+	}
 echo "<section class='legg-til-".$type." legg-til-knapp'>
 		<button class='button' onClick='".$javascriptknapp."()'>
 		<section class='fa-stack fa-lg'>
-		  <i class='fa fa-".$ikon."-o fa-stack-2x'></i>
-		  <i class='fa fa-plus fa-stack-1x'></i>
+		  <i class='fa ".$hovedIkon." fa-stack-2x'></i>
+		  <i class='fa ".$plussIkon." fa-stack-1x'></i>
 		</section>
-		<p>Legg til ".$type."</p>
+		<p>Legg til ".$navn."</p>
 		</button>
 	</section>";
 }
@@ -123,12 +150,13 @@ echo "<section class='soke-knapp legg-til-knapp'>
 	</section>";
 }
 
-function formater_legg_til_ny_mappe($foreldreId) {
+function formater_legg_til_ny_mappe($foreldreId, $mappetype) {
 echo "<section class='add-files-and-folder add-folder handlinger'>
 	<form action='?side=dokumenter/ny-mappe' method='POST'>
 		<h2>Legg til ny mappe</h2>
 		<input type='text' class='text-input navn' name='navn' placeholder='Navn' />
 		<input type='hidden' name='foreldreid' value='".$foreldreId."' />
+		<input type='hidden' name='mappetype' value='".$mappetype."' />
 		<input class='button' type='submit' value='Opprett' />
 	</form>
 	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
@@ -136,9 +164,21 @@ echo "<section class='add-files-and-folder add-folder handlinger'>
 }
 
 
-function formater_legg_til_nye_filer($foreldreId) {
+function formater_legg_til_nye_filer($foreldreId, $mappetype) {
+	switch($mappetype) {
+		case Mappetype::Bilder:
+			$filtype = "bilder";
+			break;
+		case Mappetype::Noter:
+			$filtype = "noter";
+			break;
+		default:
+		case Mappetype::Dokumenter:
+			$filtype = "filer";
+			break;
+	}
 echo "<section class='add-files-and-folder add-files dropzone handlinger'>
-		<h2>Legg til nye filer</h2>
+		<h2>Legg til nye ".$filtype."</h2>
 		<p>Dra nye filer til denne firkanten eller klikk på \"Velg filer\" lengre ned.</p>
 		<ul class='filelist'></ul>
 		<div class='status'>
@@ -150,15 +190,16 @@ echo "<section class='add-files-and-folder add-files dropzone handlinger'>
 </section>";
 }
 
-function formater_sokeboks() {
+function formater_sokeboks($mappetype) {
 	$sokestreng = get('sok');
 	$harSokestrengCss = !empty($sokestreng) ? "har-sokestreng" : "";
 echo "<section class='sokeboks handlinger " . $harSokestrengCss . "'>
 		<form method='get' action='?'>
 			<input type='hidden' name='side' value='dokumenter/liste' />
+			<input type='hidden' name='type' value='".$mappetype."' />
 			<input class='sokeinput' type='text' name='sok' value='" . $sokestreng . "' placeholder='Søk...' />
 			<button class='button sok' type='submit'>Søk</button>
-			<a href='?side=dokumenter/liste' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
+			<a href='?side=dokumenter/liste&amp;type=".$mappetype."' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
 		</form>
 	</section>";	
 }

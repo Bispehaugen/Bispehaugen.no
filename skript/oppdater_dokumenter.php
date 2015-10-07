@@ -3,6 +3,8 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
+die("ALLEREDE KJØRT");
+
 $root = "../";
 
 include_once $root."db_config.php";

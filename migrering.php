@@ -626,6 +626,18 @@ migrering(27, "Fjern idpath på filer",
 	"ALTER TABLE `filer` DROP `idpath`;"
 );
 
+migrering(28, "Legg til mappeid på notesett",
+	"ALTER TABLE `noter_notesett` ADD `mappeid` INT NULL AFTER `filpath`;"
+);
+
+migrering(29, "Fjern idpath på mapper", 
+	"ALTER TABLE `mapper` DROP `idpath`;"
+);
+
+migrering(30, "Legger til mappetype på filer, skal speile mappetype til mappeid, for å lette søk",
+	"ALTER TABLE `filer` ADD `mappetype` SMALLINT(6) NOT NULL AFTER `mappeid`;",
+	"UPDATE filer SET mappetype = 1"
+);
 
 	/*
 migrering(17, "Neste kommer her", 

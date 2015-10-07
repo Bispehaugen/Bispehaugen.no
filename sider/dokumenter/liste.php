@@ -13,9 +13,10 @@ if(empty($foreldreId)) {
 }
 
 $sokestreng = get('sok');
-
 $sokemodus = has_get('sok');
 
+$mappetype = has_get('type') ? get('type') : Mappetype::Dokumenter;
+$mappetypeNavn = hent_mappetype_navn($mappetype);
 ?>
 <script type="text/javascript">
 function slett_fil(id, navn) {
@@ -63,10 +64,10 @@ function vis_sokeknapp() {
 echo "<section class='dokumenter'>";
 
 echo "<header class='header'>";
-$tittel = "Dokumenter";
+$tittel = $mappetypeNavn;
 
 if ($foreldreId > 0) {
-	$foreldremappe = hent_mappe($foreldreId);
+	$foreldremappe = hent_mappe($foreldreId, $mappetype);
 	$tittel = $foreldremappe['tittel'];
 }
 
@@ -75,8 +76,8 @@ echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "
 formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
 
 if (!$sokemodus) {
-	formater_ny_knapp($foreldreId, "mappe", "open_new_folder");
-	formater_ny_knapp($foreldreId, "filer", "open_new_files");	
+	formater_ny_knapp($foreldreId, "mappe", "open_new_folder", $mappetype);
+	formater_ny_knapp($foreldreId, "filer", "open_new_files", $mappetype);	
 }
 
 formater_soke_knapp();
@@ -84,18 +85,18 @@ formater_soke_knapp();
 echo "</header>";
 
 if (!$sokemodus && tilgang_endre()) {
-	formater_legg_til_ny_mappe($foreldreId);
-	formater_legg_til_nye_filer($foreldreId);
+	formater_legg_til_ny_mappe($foreldreId, $mappetype);
+	formater_legg_til_nye_filer($foreldreId, $mappetype);
 }
-formater_sokeboks();
+formater_sokeboks($mappetype);
 
 echo "<section class='mapper'>";
 
 if ($sokemodus) {
-	$mapper = sok_mapper($sokestreng);
-	$filer = sok_filer($sokestreng);
+	$mapper = sok_mapper($sokestreng, $mappetype);
+	$filer = sok_filer($sokestreng, $mappetype);
 } else {
-	$mapper = hent_undermapper($foreldreId);
+	$mapper = hent_undermapper($foreldreId, $mappetype);
 	$filer = hent_filer($foreldreId);
 }
 
