@@ -77,13 +77,15 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 			}
 		}
 
-		if(!empty($arrangement['hjelpere']) || !empty($kakebaker)) {
-			echo "<h2>Hjelpere</h2>";
-			if (isset($arrangement['hjelpere']) && !empty($arrangement['hjelpere'])) {
-				echo "<p><b>Slagværkbæring:</b> " . $arrangement['hjelpere'] . "</p>";
-			}
-			if (isset($kakebaker)) {
-				echo '<p><b>Kakebaker:</b> ' . brukerlenke($kakebaker, Navnlengde::FulltNavn, true) . '</p>';
+		if(er_logget_inn()) {
+			if(!empty($arrangement['hjelpere']) || !empty($kakebaker)) {
+				echo "<h2>Hjelpere</h2>";
+				if (isset($arrangement['hjelpere']) && !empty($arrangement['hjelpere'])) {
+					echo "<p><b>Slagværkbæring:</b> " . $arrangement['hjelpere'] . "</p>";
+				}
+				if (isset($kakebaker)) {
+					echo '<p><b>Kakebaker:</b> ' . brukerlenke($kakebaker, Navnlengde::FulltNavn, true) . '</p>';
+				}
 			}
 		}
 		?>
