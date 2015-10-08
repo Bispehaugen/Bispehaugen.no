@@ -112,6 +112,11 @@ ul {
   border-bottom-left-radius: 10px;
 }
 
+.white-line {
+  height: 1em;
+  background: white;
+}
+
 .login-box {
 	margin: 2em auto;
 	padding: 2em;
@@ -344,11 +349,15 @@ nav {
     nav > ul > li {
       margin-left: 2em;
     }
-    nav > ul > li > span:hover, .meny:hover, nav > ul > li > a:hover, .meny > a:hover {
+    .no-touch nav > ul > li > span:hover,
+    .no-touch .meny:hover,
+    .no-touch nav > ul > li > a:hover,
+    .no-touch .meny > a:hover {
       color: rgba(34, 41, 51, 0.5);
       border-bottom: 2px solid;
     }
-    nav > ul > li.no-border > span:hover, nav > ul > li.no-border > a:hover {
+    .no-touch nav > ul > li.no-border > span:hover,
+    .no-touch nav > ul > li.no-border > a:hover {
 		border-bottom: 0px;    	
     }
   }
@@ -363,9 +372,17 @@ nav {
       text-decoration: none;
     }
 
-    nav > ul > li > span.active, .meny.active, nav > ul > li > a.active, .meny > a.active {
+    nav > ul > li > span.active,
+    .meny.active,
+    nav > ul > li > a.active,
+    .meny > a.active {
       color: rgba(34, 41, 51, 1);
       border-bottom: 2px solid;
+    }
+
+    nav > ul > li.no-border > span.active,
+    nav > ul > li.no-border > a.active {
+      border: none;
     }
 
 .side {
@@ -377,9 +394,15 @@ nav {
   background-position: 50% 0%;
 }
 
+@media screen and (max-height: 600px) {
+  .side {
+    min-height: auto;
+  }
+}
+
 .coverflow {
   background-repeat:no-repeat;
-  background-position: 50% 0%;
+  background-position: 50% 16%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -427,9 +450,15 @@ input.error {
     background-image:url("../images/front_large.jpg");
   }
 }
+@media screen and (min-width: 1600px) {
+  .side.forside {
+    height: 40em;
+  }
+}
 @media screen and (min-width: 2048px) {
   .side.forside {
     background-image:url("../images/front_full.jpg");
+    height: 50em;
   }
 }
 

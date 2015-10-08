@@ -77,9 +77,19 @@ $innhold = ob_get_clean();
 	  ga('create', 'UA-50487161-1', 'auto');
 	  ga('send', 'pageview');
 	</script>
+	<header class='nav-container'>
+        <nav>
+            <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
+            <?php
+				inkluder_side_fra_undermappe("meny");
+			?>
+        </nav>
+		<div class="clearfix"></div>
+	</header>
+
 	<div class="site<?php if(erForside()) { echo " forside"; } ?>">
 		<?php if (erForside() && !er_logget_inn()) { ?>
-		<section class="forside side coverflow" data-scroll-index='1'>
+		<section class="forside side coverflow" data-scroll-index='1' data-scroll-url="?side=forside">
 	   		<div class="stottemedlem reklame">Bli <em><a class="bli-medlem" data-scroll-nav='5'>støttemedlem</a></em> i dag!</div>
 
 		
@@ -89,16 +99,8 @@ $innhold = ob_get_clean();
 	      	</header>
 	    </section>
 	    <?php } ?>
-	    
-		<div class='nav-container'>
-	        <nav>
-	            <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
-	            <?php
-					inkluder_side_fra_undermappe("meny");
-				?>
-	        </nav>
-			<div class="clearfix"></div>
-    	</div>
+
+	<div class="white-line"></div>
     	
 	<?php 
 	if(!er_logget_inn() && erForside()) {
@@ -210,74 +212,6 @@ $innhold = ob_get_clean();
 				$(".arkiv-valg").hide();
 			});
 	<?php } ?>
-    
-    <?php if (!er_logget_inn()) { ?>
-
-
-    var navElements = $("nav > ul > li");
-    var nav = $("nav").first();
-
-    function resizeHeight() {
-        var height = getHeight();
-
-        var forsideHeight = height - nav.height();
-
-        $(".coverflow").css("height", height+"px");
-        $(".forside.coverflow").css("height", forsideHeight+"px");
-    }
-
-    function getHeight() {
-        var height = window.innerHeight;
-        if (!window.innerHeight) {
-            height = documentElement.clientHeight;
-        }
-        return height;
-    }
-
-    resizeHeight();
-    $( window ).resize(function() {
-        resizeHeight();
-    });
-
-    $( window ).scroll(function() {
-
-        var top = $(window).scrollTop();
-        var navContainer = $(".nav-container");
-        var navContainerTop = navContainer.position().top;
-        var normalNavHeight = false;
-
-        nav.toggleClass("top", (top >= navContainerTop));
-
-        if ($(window).width() > 700) {
-
-            if (nav.hasClass("top")) {
-                var windowHeight = getHeight();
-                var navHeight = navContainer.height();
-
-                normalNavHeight = true;
-
-                if ((top >= (navContainerTop))) {
-                    var newNavHeight = navHeight-(top - navContainerTop);
-
-                    if (newNavHeight <= 113 && newNavHeight >= 49) {
-                        navElements.css("line-height", newNavHeight+"px");
-                        normalNavHeight = false;
-                    }
-                }
-            }
-
-            if (normalNavHeight) {
-                nav.css("height", "49px");
-                navElements.css("line-height", "49px");
-            }
-
-            if (!nav.hasClass("top")) {
-                nav.css("height", "113px");
-                navElements.css("line-height", "113px");
-            }
-        }
-    });
-    <?php } ?>
     
 </script>
 

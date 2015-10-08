@@ -20,6 +20,9 @@ if(er_logget_inn()){
 	} else {
 ?>
 <ul class="menyliste">
+    <li class="small-logo no-border">
+        <span data-scroll-nav='1'><img src="icon_logo.svg" /></span>
+    </li>
     <li>
         <span data-scroll-nav='2'>Nyheter</span>
     </li>
