@@ -41,7 +41,7 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 				<?php
 				if (isset($arrangement['sted']) && !empty($arrangement['sted'])) {
 					echo '<section class="sted">
-							<p><b>Sted:</b> <a href="http://maps.google.com/maps?q='.$arrangement['sted'].'">'.$arrangement['sted'].'</a></p>
+							<p><b>Sted:</b> <a href="http://maps.google.com/maps?q='.$arrangement['sted'].'">'.$arrangement['sted'].' <i class="fa fa-map-marker"></i></a></p>
 						</section>';
 				}
 				?>
