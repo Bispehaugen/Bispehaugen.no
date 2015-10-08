@@ -472,7 +472,9 @@ input.error {
     border-radius: 5px;
   }
   
-  	.nyhet, .nyhet p, .konsert, .konsert p {
+  	.nyhet, .nyhet p,
+    .konsert, .konsert p,
+    .aktivitet, .aktivitet p {
   		line-height: 1.5em;
 		  font-size: 1em;
   	}
@@ -889,7 +891,9 @@ nav .arkiv {
 	margin-right: 0.2em;
 }
 
-.nyhet .sidebar-info, .konsert .sidebar-info {
+.nyhet .sidebar-info,
+.konsert .sidebar-info,
+.aktivitet .sidebar-info {
   float: right;
   margin: 0em 0em 1.5em 1.5em;
   max-width: 14em;

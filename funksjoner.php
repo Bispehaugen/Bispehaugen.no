@@ -92,6 +92,10 @@ function bare_tidspunkt($datetime) {
 	return null;
 }
 
+function formater_dato_tidspunkt($date) {
+	return "kl. ".date("H:i m.d.Y", strtotime($date));
+}
+
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
 	
 	if (!er_logget_inn()) {
@@ -321,8 +325,10 @@ function hent_aktiviteter($skip = "", $take = "", $alle = "") {
 	}
 
 	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
-		$sql .= "";
-	} elseif ( er_logget_inn() && $_SESSION['rettigheter']==1){
+		$sql .= " AND public < 2";
+	} elseif ( er_logget_inn() && tilgang_full()){
+		$sql .= " ";
+	} elseif ( er_logget_inn() && tilgang_intern()){
 		$sql .= " AND public < 2";
 	} else {
 		$sql .= " AND public = 1";

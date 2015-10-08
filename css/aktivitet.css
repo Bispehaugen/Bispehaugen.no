@@ -9,3 +9,21 @@
 .dato .fjern-dato {
 	cursor: pointer;
 }
+
+.aktivitet .ingress {
+	padding: 2em;
+}
+
+.aktivitet .info {
+	padding: 0em 1em;
+}
+
+.aktivitet .info h2 {
+	margin-top: 2em;
+}
+
+.aktivitet .notevelger {
+	margin-top: 3em;
+	border-top: 3px solid white;
+	padding: 2em;
+}

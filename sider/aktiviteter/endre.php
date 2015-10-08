@@ -4,7 +4,7 @@
 	$feilmeldinger = Array();
 	
 	//sjekker om man er admin
-	if($_SESSION['rettigheter']<2){
+	if(!tilgang_endre()){
 		header('Location: ?side=aktiviteter/liste');
 	}
 	$aktiviteter = Array();
@@ -87,7 +87,9 @@
 		$sql="SELECT * FROM `arrangement` WHERE `arrid`=".$arrid;
 		$mysql_result=mysql_query($sql);
 		$aktiviteter=mysql_fetch_array($mysql_result);
-		$handling = "Endre";		
+		$handling = "Endre";
+
+		$public = kanskje($aktiviteter, 'public');
 	}
 	
 	//henter ut alle medlemmer som kakebaker
@@ -102,7 +104,7 @@
 	  	<h2><?php echo $handling; ?> aktivitet</h2>
 
 	  	<?php if(!has_get('id') && session('rettigheter')>1){ ?>
-	  	<span class='verktoy standard-oving'><i class='fa fa-check'></i> Vanlig øving</span>
+	  	<span class='verktoy standard-oving'><i class='fa fa-check'></i> Fyll ut standard øving</span>
 		<span class='verktoy flere-dato'><i class='fa fa-calendar-o'></i> Ekstra dato</span>
 		<?php } ?>
 	</section>
@@ -155,10 +157,10 @@ $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsda
 				<tr><td>Tittel:</td><td><input type='text' class='tittel' name='tittel' value='".kanskje($aktiviteter, 'tittel')."'></td></tr>
 				<tr><td>Hvem kan se den:</td><td>
 					<select name='public'>
-  						<option value='1'>Alle (Åpen på internett)</option>
-  						<option value='0'>Intern (Bare korpsmedlemmer)</option>";
-  						if (session("rettigheter")>2){
-  							echo "<option value='2'>Admin</option>";
+  						<option value='1' ".($public==1?"selected='selected'":"").">Alle (Åpen på internett)</option>
+  						<option value='0' ".(($public==0 || !isset($public))?"selected='selected'":"").">Intern (Bare korpsmedlemmer)</option>";
+  						if (tilgang_full()){
+  							echo "<option value='2' ".($public==2?"selected='selected'":"").">Admin</option>";
   						}
   				echo "
 					</select></td></tr>

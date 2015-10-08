@@ -1,4 +1,5 @@
 <?php
+
 setlocale(LC_TIME, "nb_NO.utf8");
 // Vis konsertoversikt
 $konserter = hent_konserter();
@@ -21,7 +22,7 @@ echo '
       '.fancyDato($konsert['konsert_tid']).'
       <div class="bilde-og-innhold">
         <div class="bilde">
-            <img src="'.thumb($bilde 125).'" />
+            <img src="'.thumb($bilde, 125).'" />
         </div>
         <div class="innhold">
             <h4>'.$konsert['overskrift'].'</h4>

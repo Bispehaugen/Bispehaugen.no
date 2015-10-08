@@ -1,10 +1,13 @@
 <?php
 
-if(!has_get('id') || empty(get('id'))) {
-	throw new Exception();	
-}
-
 $id = get('id');
+
+if(has_get('arrid')) {
+	$arrid = get('arrid');
+	$nyhetsidSql = "SELECT nyhetsid_konsert FROM `konserter` WHERE arrid_konsert = ".$arrid." LIMIT 1";
+
+	$id = hent_og_putt_inn_i_array($nyhetsidSql)['nyhetsid_konsert'];
+}
 
 $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";
 
@@ -18,7 +21,7 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
 
 
 <section class="informasjonslinje">
-		<h2 class="back-link"><a href="?side=konsert/liste" title="Flere konserter"><i class="fa fa-chevron-left"></i> Konserter</a></h2>
+		<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i> Aktiviteter</a></h2>
 		<?php echo brukerlenke($skrevet_av, Navnlengde::Fornavn, true); ?>
 	</section>
 	
