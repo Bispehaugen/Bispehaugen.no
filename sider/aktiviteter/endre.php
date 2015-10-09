@@ -104,8 +104,8 @@
 	  	<h2><?php echo $handling; ?> aktivitet</h2>
 
 	  	<?php if(!has_get('id') && session('rettigheter')>1){ ?>
-	  	<span class='verktoy standard-oving'><i class='fa fa-check'></i> Fyll ut standard øving</span>
-		<span class='verktoy flere-dato'><i class='fa fa-calendar-o'></i> Ekstra dato</span>
+	  	<span class='verktoy standard-oving'><i class='fa fa-check'></i>Fyll ut standard øving</span>
+		<span class='verktoy flere-dato'><i class='fa fa-calendar-o'></i>Ekstra dato</span>
 		<?php } ?>
 	</section>
 
@@ -196,7 +196,7 @@ echo "
 				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
-					<option value=''</option>";
+					<option value='NULL'>Ingen</option>";
 					foreach($medlemmer as $medlem){
 						echo"<option value='".$medlem['medlemsid']."'";
 

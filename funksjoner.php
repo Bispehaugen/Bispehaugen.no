@@ -403,7 +403,7 @@ function thumbFilid($filid, $width = "", $height = "") {
 	return "thumb.php?size=".$width."x".$height."&filid=".$filid;
 }
 
-function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $stilling) {
+function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $ekstra_info) {
 	if (empty($bruker)) {
 		return "";
 	}
@@ -414,13 +414,15 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 	if($visBilde && !empty($bilde)) {
 		$html .= "<img src='".thumb($bilde, 250)."' />";
 	}
+
+	$html .= $ekstra_info;
 	
 	switch ($fulltNavn) {
 		case Navnlengde::FulltNavn:
 			$html .= "<span>".$bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
 			break;
 		case Navnlengde::FullInfo:
-			$html .= "<span>".$stilling." <br> ". $bruker['fnavn'] ." ". $bruker['enavn'] ." <br> ". $bruker['tlfmobil'] ."</span>";
+			$html .= "<span>". $bruker['fnavn'] ." ". $bruker['enavn'] ." <br> ". $bruker['tlfmobil'] ."</span>";
 			break;
 		case Navnlengde::Ingen:
 			break;

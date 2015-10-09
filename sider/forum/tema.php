@@ -21,7 +21,7 @@
     ?>
     <section class='forum'>
     	<section class='tools topplinje'>
-			<a class="tool" href="?side=forum/nytt-tema&forumid=<?php echo $forumid; ?>"><i class='fa fa-plus' title='Klikk for å endre'></i> Nytt tema</a>
+			<a class="tool" href="?side=forum/nytt-tema&amp;forumid=<?php echo $forumid; ?>"><i class='fa fa-plus' title='Klikk for å endre'></i>Nytt tema</a>
 		</section>
 	<?php
     

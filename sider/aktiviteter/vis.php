@@ -4,7 +4,7 @@ include_once "sider/dokumenter/funksjoner.php";
 include_once "sider/aktiviteter/funksjoner.php";
 
 if(!has_get('arrid')){	
-	header('Location: ?side=aktiviteter/liste');
+	header('Location: ?side=ikke_funnet');
 }
 
 $arrid=get('arrid');
@@ -14,7 +14,7 @@ if(
 	($arrangement['public'] != 1 && !er_logget_inn()) ||
 	($arrangement['public'] == 2 && !tilgang_full())
 	){	
-	header('Location: ?side=aktiviteter/liste');
+	header('Location: ?side=ikke_funnet');
 }
 
 if (!empty($arrangement['kakebaker'])) {
@@ -30,7 +30,7 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 
 
 <section class="informasjonslinje">
-		<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i> Aktiviteter</a></h2>
+		<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i>Aktiviteter</a></h2>
 	</section>
 	
 
@@ -84,7 +84,7 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 					echo "<p><b>Slagværkbæring:</b> " . $arrangement['hjelpere'] . "</p>";
 				}
 				if (isset($kakebaker)) {
-					echo '<p><b>Kakebaker:</b> ' . brukerlenke($kakebaker, Navnlengde::FulltNavn, true) . '</p>';
+					echo '<p><b>Kakebaker:</b> ' . brukerlenke($kakebaker, Navnlengde::FulltNavn, false) . '</p>';
 				}
 			}
 		}

@@ -14,13 +14,13 @@
 	echo '
 		<section class="informasjonslinje">
 			<h2 class="back-link"><a href="?side=medlem/liste" title="Vis medlemsliste">
-				<i class="fa fa-chevron-left"></i> Medlemmer</a>
+				<i class="fa fa-chevron-left"></i>Medlemmer</a>
 			</h2>
 			
 			';
 			
 			if(session('medlemsid')==$id || session('rettigheter') >2){
-				echo"<div class='verktoy'><a href='?side=medlem/endre&id=".$id."'><i class='fa fa-edit'></i> Endre</a></div>";
+				echo"<div class='verktoy'><a href='?side=medlem/endre&id=".$id."'><i class='fa fa-edit'></i>Endre</a></div>";
 			}
 echo '
 		</section>';

@@ -79,7 +79,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		//viser endre/slett-knapper på egne innlegg og for admin (så de har mulighet til å overstyre)
 		if(($innlegg['skrevetavid']==$medlemsid || $_SESSION['rettigheter']>1) && $har_temaid){
 			echo "<section class='tools'>";
-				//echo "<i class='fa fa-edit tool' title='Klikk for å endre'></i> ";
+				//echo "<i class='fa fa-edit tool' title='Klikk for å endre'></i>";
 				echo "<a class='tool' href='javascript:void(0)' 
 						onclick='confirm_url(\"?side=forum/innlegg&id=".$temaid."&sletteinnlegg=".$id."\", 
 											 \"Er du sikker på at du vil slette kommentaren?\")'>";
@@ -171,9 +171,9 @@ function forum_list_tema($forumid, $skip) {
    		echo"<h1 class='overskrift'>";
 
    		if(array_key_exists($temaid, $uleste_innlegg) && $uleste_innlegg[$temaid]){
-   			echo "<i class='fa fa-envelope'></i> ";
+   			echo "<i class='fa fa-envelope'></i>";
    		} else {
-   			echo "<i class='fa fa-envelope-o'></i> ";
+   			echo "<i class='fa fa-envelope-o'></i>";
    		}
 
    		echo "<a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></h1>
@@ -221,7 +221,7 @@ function forum_paginering($id, $skip, $type) {
 	echo "<ul class='forum pagination'>";
 
 	if ($skip > 0) {
-		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip-antall_tema_per_side)."'><i class='icon-chevron-left'></i> Forrige</a></li>";
+		echo "<li><a href='?side=forum/tema&id=".$id."&skip=".($skip-antall_tema_per_side)."'><i class='icon-chevron-left'></i>Forrige</a></li>";
 	}
 
 	if ($antall > 12 * antall_tema_per_side) {

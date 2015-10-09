@@ -24,3 +24,10 @@ function hent_noter($konsertid, $bareAntall = false) {
 function antall_noter($konsertid) {
 	return hent_noter($konsertid, true);
 }
+
+function neste_kakebaking() {
+	$bruker = hent_brukerdata();
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = '".$bruker['medlemsid']."' AND slettet = 0 ORDER BY `start` DESC LIMIT 1";
+	return hent_og_putt_inn_i_array($sql);
+}
+

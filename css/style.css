@@ -32,9 +32,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.1em;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-	text-decoration: none;
-}
 
 p.right {
 	text-align: right;
@@ -51,6 +48,10 @@ p.right {
 
 nav > ul > li > span, .meny, nav > ul > li > a, .meny > a {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+nav .profilbilde a {
+  text-decoration: none;
 }
 
 nav .small-logo img {
@@ -85,8 +86,8 @@ h4 {
   margin-bottom: 10px; }
 
 a {
-  text-decoration: none;
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .clearfix {
   clear: both;
@@ -272,6 +273,10 @@ nav {
 
   nav > ul > li.no-border > a {
     padding-right: 0;
+  }
+
+  i.fa {
+    margin-right: 0.3em;
   }
 
   .meny {

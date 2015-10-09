@@ -14,7 +14,7 @@
 
 	<?php
 	if(session('rettigheter')>1){
-		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=nyheter/endre'><i class='fa fa-plus'></i> Legg til ny</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=nyheter/endre'><i class='fa fa-plus'></i>Legg til ny</a></h3>";
 	}
 	
 	foreach($nyheter as $nyhet){

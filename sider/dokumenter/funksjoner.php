@@ -246,7 +246,7 @@ echo "<section class='add-files-and-folder add-folder handlinger'>
 		<input type='hidden' name='mappetype' value='".$mappetype."' />
 		<input class='button' type='submit' value='Opprett' />
 	</form>
-	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
+	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i>Avbryt</a>
 </section>";
 }
 
@@ -276,7 +276,7 @@ function formater_endre_mappe($mappe, $noteinfo=Array()) {
 	echo "	
 		<input class='button' type='submit' value='Endre' />
 	</form>
-	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i> Avbryt</a>
+	<a class='close' href='javascript:close_add()' title='Avbryt opprettingen av ny mappe'><i class='fa fa-remove'></i>Avbryt</a>
 </section>";
 }
 
@@ -303,7 +303,7 @@ echo "<section class='add-files-and-folder add-files dropzone handlinger'>
 		</div>
 		<button class='button velg-filer'>Velg filer</button>
 		<button class='button last-opp' disabled='disabled'>Last opp</button>
-	<a class='close' href='javascript:close_add()' title='Avbryt'><i class='fa fa-remove'></i> Avbryt</a>
+	<a class='close' href='javascript:close_add()' title='Avbryt'><i class='fa fa-remove'></i>Avbryt</a>
 </section>";
 }
 

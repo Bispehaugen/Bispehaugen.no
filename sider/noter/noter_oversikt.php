@@ -66,7 +66,7 @@
 			echo"
 			<tr><td colspan='5'></td></tr>
 			<tr><td colspan='5'></td></tr>
-			<tr><td colspan='5'><a href='?side=noter/noter_endre'><i class='fa fa-plus'></i> Legg til nytt notesett</a></td></tr>";
+			<tr><td colspan='5'><a href='?side=noter/noter_endre'><i class='fa fa-plus'></i>Legg til nytt notesett</a></td></tr>";
 	}
 		
 	echo"</table>";

@@ -13,16 +13,16 @@
 	echo "<h2 class='overskrift-som-er-inline-block'>Aktiviteter</h2>";
 
 	if(tilgang_endre()){
-		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i> Legg til ny aktivitet</a></h3>";
-		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=konsert/endre'><i class='fa fa-plus'></i> Legg til ny konsert</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/endre'><i class='fa fa-plus'></i>Legg til ny aktivitet</a></h3>";
+		echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=konsert/endre'><i class='fa fa-plus'></i>Legg til ny konsert</a></h3>";
 	}
 	if(get('alle')==0){
-	    	echo" <h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/liste&alle=1'><i class='fa fa-calendar'></i> Vis tidligere</a></h3>";
+	    	echo" <h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/liste&alle=1'><i class='fa fa-calendar'></i>Vis tidligere</a></h3>";
 	 	} else {
-	     	echo"<h3 class='lenke-som-er-inline-med-overskrift'> <a href='?side=aktiviteter/liste&alle=0'><i class='fa fa-calendar'></i> Vis bare kommende</a></h3>";
+	     	echo"<h3 class='lenke-som-er-inline-med-overskrift'><a href='?side=aktiviteter/liste&alle=0'><i class='fa fa-calendar'></i>Vis bare kommende</a></h3>";
 		}
 	?>
-	<h3 class='lenke-som-er-inline-med-overskrift'><a href='http://www.google.com/calendar/render?cid=http://bispehaugen.no/ical.php<?php if(er_logget_inn()) { echo "?p=bukaros"; } ?>'><i class='fa fa-cloud-download '></i> Legg til i google calendar</a></h3>
+	<h3 class='lenke-som-er-inline-med-overskrift'><a href='http://www.google.com/calendar/render?cid=http://bispehaugen.no/ical.php<?php if(er_logget_inn()) { echo "?p=bukaros"; } ?>'><i class='fa fa-cloud-download '></i>Legg til i google calendar</a></h3>
 	
 	<script type='text/javascript'>
 		function slett_aktivitet(){
@@ -75,7 +75,7 @@
 			}
 
 			$aktivitetstype = ($aktivitet['type']=="Konsert") ? "konsert" : "aktiviteter";
-			echo "<td><a href='?side=".$aktivitetstype."/vis&arrid=".$aktivitet['arrid']."'><i class='fa fa-link'></i> ".$aktivitet['tittel']."</a></td>";
+			echo "<td><a href='?side=".$aktivitetstype."/vis&arrid=".$aktivitet['arrid']."'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
    			echo "<td>".$aktivitet['sted']."</td>";
 
 

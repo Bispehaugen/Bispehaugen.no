@@ -79,7 +79,7 @@ $innhold = ob_get_clean();
 	</script>
 	<header class='nav-container'>
         <nav>
-            <div class="meny mobil"><i class="fa fa-bars"></i> Meny</div>
+            <div class="meny mobil"><i class="fa fa-bars"></i>Meny</div>
             <?php
 				inkluder_side_fra_undermappe("meny");
 			?>

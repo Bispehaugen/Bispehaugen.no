@@ -84,7 +84,7 @@ echo "<section class='dokumenter'>";
 
 echo "<header class='header'>";
 
-echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i> " . $tittel . "</h2>";
+echo "<h2 class='overskrift'><i class='fa fa-folder-open-o'></i>" . $tittel . "</h2>";
 
 formater_tilbakeknapp($foreldremappe, $foreldreId > 0);
 formater_soke_knapp();

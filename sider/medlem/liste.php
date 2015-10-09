@@ -33,12 +33,12 @@
     	//lager en link til å vise alle
       
       	if(session('rettigheter')>2){
-			echo"<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
+			echo"<a href='?side=medlem/ny'><i class='fa fa-plus'></i>Legg til ny</a>";
 		}
 		if(get('alle')==0){
-	    	echo" <a href='?side=medlem/liste&alle=1'><i class='fa fa-users'></i> Vis også sluttede</a>";
+	    	echo" <a href='?side=medlem/liste&alle=1'><i class='fa fa-users'></i>Vis også sluttede</a>";
 	 	} else {
-	     	echo" <a href='?side=medlem/liste&alle=0'><i class='fa fa-user'></i> Vis kun aktive</a>";
+	     	echo" <a href='?side=medlem/liste&alle=0'><i class='fa fa-user'></i>Vis kun aktive</a>";
 		}
       
 		echo "</h3>";
@@ -72,7 +72,7 @@
 			//sjekker om medlemmet er i styret, hvis ja kommer en "send mail" link bak navnet
 			$medlemsid = $medlem['medlemsid'];
    			if(!empty($medlemsid) && !empty($styreverv) && !empty($styreverv[$medlemsid])){
-   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-o' title='Send e-post'></i> ".$styreverv[$medlemsid]['tittel']."</a></span>";
+   				echo "<span class='epost-lenke'><a href='mailto:".$styreverv[$medlemsid]['epost']."'><i class='fa fa-envelope-o' title='Send e-post'></i>".$styreverv[$medlemsid]['tittel']."</a></span>";
 			}
 
       if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>2){
@@ -84,7 +84,7 @@
 				
 				foreach($flere_telefonnummer as $telefonnummer) {
 					//hvis man er logget inn vises mobilnummeret til alle medlemmer
-					echo "<span class='telefon'><a href='tel:".$telefonnummer."'><i class='fa fa-phone'></i> ".$telefonnummer."</a></span>";
+					echo "<span class='telefon'><a href='tel:".$telefonnummer."'><i class='fa fa-phone'></i>".$telefonnummer."</a></span>";
 				}
 			}
 		}
@@ -95,7 +95,7 @@
 	}    
 
 	if(isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>2){
-			echo "<a href='?side=medlem/ny'><i class='fa fa-plus'></i> Legg til ny</a>";
+			echo "<a href='?side=medlem/ny'><i class='fa fa-plus'></i>Legg til ny</a>";
 		}
 	echo "</section>";
     

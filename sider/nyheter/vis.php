@@ -25,11 +25,15 @@ if(!has_get('id') ){
 	?>
 	
 	<section class="informasjonslinje">
-		<h2 class="back-link"><a href="?side=nyheter/liste" title="Les flere nyheter"><i class="fa fa-chevron-left"></i> Nyheter</a></h2>
-		<?php echo brukerlenke($skrevet_av, Navnlengde::Fornavn, true, "<time>".$nyhet['tid']."</time>");  
-		if(er_logget_inn() && isset($_SESSION['rettigheter']) && $_SESSION['rettigheter']>1){
-        	echo"<p><div class='verktoy'><a href='?side=nyheter/endre&id=".$id."'><i class='fa fa-edit' title='Klikk for å endre'> Endre</i></a></div></p>";
-      	};
+		<h2 class="back-link"><a href="?side=nyheter/liste" title="Les flere nyheter"><i class="fa fa-chevron-left"></i>Nyheter</a></h2>
+		
+		<?php
+
+		if(er_logget_inn() && tilgang_endre()){
+        	echo"<p><div class='verktoy'><a href='?side=nyheter/endre&id=".$id."'><i class='fa fa-edit' title='Klikk for å endre'></i>Endre</a></div></p>";
+      	}
+		echo brukerlenke($skrevet_av, Navnlengde::Fornavn, false, "<span>Sist oppdatert <time datetime='".$nyhet['tid']."'>kl. ".date("H:i d.m.Y", strtotime($nyhet['tid']))."</time> av ");  
+	
       	?>
 	</section>
 	
