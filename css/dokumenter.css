@@ -4,6 +4,10 @@
 	font-size: 1.1em;
 }
 
+.dokumenter a {
+	text-decoration: none;
+}
+
 .dokumenter .mapper {
 	display: -webkit-box;
 	display: -moz-box;
