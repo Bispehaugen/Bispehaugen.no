@@ -50,7 +50,7 @@ nav > ul > li > span, .meny, nav > ul > li > a, .meny > a {
   font-family: Nunito, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-nav .profilbilde a {
+nav a {
   text-decoration: none;
 }
 
