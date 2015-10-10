@@ -643,6 +643,16 @@ migrering(31, "Arkivnr 0 er ubrukelig, ha null istede",
 	"UPDATE noter_notesett SET arkivnr = NULL WHERE arkivnr = 0"
 );
 
+migrering(32, "Opprett varling tabell for å sjekke om epostvarsling er sendt ut",
+"CREATE TABLE IF NOT EXISTS `varsling` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `arrid` int(11) NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  `tid` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

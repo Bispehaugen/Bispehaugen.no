@@ -382,6 +382,12 @@ abstract class Mappetype
     const Noter = 3;
 }
 
+abstract class Varslingstype
+{
+	const Kakebaker = 1;
+	const Slagverkhjelper = 2;
+}
+
 function hent_mappetype_navn($mappetype) {
 	switch($mappetype) {
 		case Mappetype::Dokumenter:

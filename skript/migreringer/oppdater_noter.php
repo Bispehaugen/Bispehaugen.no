@@ -1,4 +1,5 @@
 <?php
+die("allerede kjørt");
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
