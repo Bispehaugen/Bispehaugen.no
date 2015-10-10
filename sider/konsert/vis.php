@@ -5,8 +5,12 @@ $id = get('id');
 if(has_get('arrid')) {
 	$arrid = get('arrid');
 	$nyhetsidSql = "SELECT nyhetsid_konsert FROM `konserter` WHERE arrid_konsert = ".$arrid." LIMIT 1";
-
 	$id = hent_og_putt_inn_i_array($nyhetsidSql)['nyhetsid_konsert'];
+
+	if (empty($id)) {
+		header('Location: ?side=aktiviteter/vis&arrid='.$arrid);
+		die();
+	}
 }
 
 $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";

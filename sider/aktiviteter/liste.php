@@ -3,6 +3,7 @@
     //TODO legge inn googlecal og ical eksport
         
     #fuksjonalitet
+    include_once 'sider/aktiviteter/funksjoner.php';
 
     
     //spørring som henter ut alle aktiviteter
@@ -74,8 +75,14 @@
 				echo "<td>".strftime("%H:%M", strtotime($aktivitet['start']))."</td>";
 			}
 
-			$aktivitetstype = ($aktivitet['type']=="Konsert") ? "konsert" : "aktiviteter";
-			echo "<td><a href='?side=".$aktivitetstype."/vis&arrid=".$aktivitet['arrid']."'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
+			$aktivitetstype = "aktiviteter";
+			$id_url = "arrid=".$aktivitet['arrid'];
+
+			if ($aktivitet['type']=="Konsert") {
+				$aktivitetstype = "konsert";
+				$id_url = "id=".hent_konsert_nyhetsid($aktivitet['arrid']);
+			}
+			echo "<td><a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
    			echo "<td>".$aktivitet['sted']."</td>";
 
 
