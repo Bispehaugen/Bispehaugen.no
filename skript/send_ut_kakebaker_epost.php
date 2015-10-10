@@ -4,14 +4,13 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 date_default_timezone_set('Europe/Oslo');
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
-session_start();
-$_SESSION["medlemsid"] = -1; // Logget inn som bot
-
 $root = str_replace("skript", "", dirname(__FILE__));
 
 include_once $root."db_config.php";
 include_once $root."lokal_config.php";
 include_once $root.'funksjoner.php';
+
+$_SESSION["medlemsid"] = -1; // Logget inn som bot
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
 
