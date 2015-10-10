@@ -18,12 +18,15 @@
 		<?php echo strftime("%B", $neste_ovelse_tid); ?>
 		, kl. <?php echo date("H:i", $neste_ovelse_tid); ?>
 	</p>
+	<?php if (!empty($neste_ovelse["sted"])) { ?>
 	<p>
 		<a href="https://maps.google.com/maps?q=<?php echo $neste_ovelse["sted"]; ?>">
 			<i class="fa fa-location-arrow fa-fw"></i><?php echo $neste_ovelse["sted"]; ?>
 		</a>
 	</p>
-	<?php if ($neste_ovelse_har_noter) { ?>
+	<?php 
+	}
+	if ($neste_ovelse_har_noter) { ?>
 	<p>
 		<a href="?side=noter/noter_oversikt&arrid=<?php echo $neste_ovelse["arrid"]; ?>">
 			<i class="fa fa-files-o fa-fw"></i>Noter
