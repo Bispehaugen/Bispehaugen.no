@@ -231,6 +231,10 @@
 	border-bottom: 1px solid white;
 }
 
+.forum-liste a {
+	text-decoration: none;
+}
+
 .forum.nytt-tema .liste-alternativer {
 	display: none;
 }
