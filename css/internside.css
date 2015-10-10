@@ -14,10 +14,6 @@
 	color: rgba(34, 41, 51, 1);
 }
 
-.widget.neste-ovelse p, .widget.neste-konsert p {
-	text-transform: capitalize;
-}
-
 .komite ul {
 	padding-left: 1em;
 }

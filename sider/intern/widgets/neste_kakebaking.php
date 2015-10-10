@@ -20,8 +20,8 @@
 	<p><i class="fa fa-calendar-o fa-fw"></i>
 		<?php echo strftime("%A", $neste_kakebaking_tid); ?>
 		<?php echo date("d.", $neste_kakebaking_tid); ?>
-		<?php echo strftime("%B", $neste_kakebaking_tid); ?>
-		, kl. <?php echo date("H:i", $neste_kakebaking_tid); ?>
+		<?php echo strftime("%B", $neste_kakebaking_tid); ?>,
+		kl. <?php echo date("H:i", $neste_kakebaking_tid); ?>
 	</p>
 	<?php if (!empty($neste_kakebaking_tid["sted"])) { ?>
 	<p>
