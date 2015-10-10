@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
+date_default_timezone_set('Europe/Oslo');
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = str_replace("skript", "", dirname(__FILE__));
