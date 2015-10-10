@@ -8,7 +8,7 @@
 ?>
 <section class="widget neste-ovelse<?php if($neste_ovelse_markert) echo " markert" ?>">
 	<h3>
-		<a href='?side=aktiviteter/vis&amp;arrid=<?php echo $neste_ovelse["arrid"]; ?>'>
+		<a href='?side=aktiviteter/vis&arrid=<?php echo $neste_ovelse["arrid"]; ?>'>
 			<i class="fa fa-chevron-right"></i>Neste øvelse?
 		</a>
 	</h3>
@@ -25,7 +25,7 @@
 	</p>
 	<?php if ($neste_ovelse_har_noter) { ?>
 	<p>
-		<a href="?side=noter/noter_oversikt&amp;arrid=<?php echo $neste_ovelse["arrid"]; ?>">
+		<a href="?side=noter/noter_oversikt&arrid=<?php echo $neste_ovelse["arrid"]; ?>">
 			<i class="fa fa-files-o fa-fw"></i>Noter
 		</a>
 	</p>

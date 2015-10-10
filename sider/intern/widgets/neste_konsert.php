@@ -9,7 +9,7 @@
 <section class="widget neste-konsert<?php if($neste_konsert_markert) echo " markert" ?>">
 	
 	<h3>
-		<a href='?side=aktiviteter/vis&amp;arrid=<?php echo $neste_konsert["arrid"]; ?>'>
+		<a href='?side=aktiviteter/vis&arrid=<?php echo $neste_konsert["arrid"]; ?>'>
 			<i class="fa fa-chevron-right"></i><?php echo $neste_konsert['tittel']; ?>
 		</a>
 	</h3>
@@ -26,7 +26,7 @@
 	
 	<?php if ($neste_konsert_har_noter) { ?>
 	<p>
-		<a href="?side=noter/noter_oversikt&amp;arrid=<?php echo $neste_konsert["arrid"]; ?>">
+		<a href="?side=noter/noter_oversikt&arrid=<?php echo $neste_konsert["arrid"]; ?>">
 			<i class="fa fa-files-o fa-fw"></i>Noter
 		</a>
 	</p>

@@ -7,5 +7,5 @@
 	<p><?php echo $b["adresse"]; ?></p>
 	<p><?php echo $b["email"]; ?></p>
 	<p><?php echo $b["tlfmobil"]; ?></p>
-	<p class="endre right"><a href="?side=medlem/endre&amp;id=<?php echo $b['medlemsid']; ?>"><i class="fa fa-edit"></i>Endre</a></p>
+	<p class="endre right"><a href="?side=medlem/endre&id=<?php echo $b['medlemsid']; ?>"><i class="fa fa-edit"></i>Endre</a></p>
 </section>

@@ -12,7 +12,7 @@
             <li><a href="?side=bilder/bilder">Bilder</a></li>
             <li><a href="?side=dokumenter/liste">Dokumenter</a></li>
             <li><a href="?side=noter/noter_oversikt">Noter</a></li>
-            <li><a href="?side=dokumenter/liste&amp;type=3">Noter (ny)</a></li>
+            <li><a href="?side=dokumenter/liste&type=3">Noter (ny)</a></li>
         </ul>
     </li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>

@@ -8,7 +8,7 @@
 ?>
 <section class="widget neste-kakebaking">
 	
-	<a href='?side=aktiviteter/vis&amp;arrid=<?php echo $neste_kakebaking["arrid"]; ?>'>
+	<a href='?side=aktiviteter/vis&arrid=<?php echo $neste_kakebaking["arrid"]; ?>'>
 		<h3>
 				<i class="fa fa-chevron-right"></i>Din neste kakebaking
 		</h3>

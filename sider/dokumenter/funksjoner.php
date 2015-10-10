@@ -122,7 +122,7 @@ function formater_mappe($mappe) {
 	$mappenavn = $mappe['tittel'];
 	$mappetype = $mappe['mappetype'];
 	echo "<section class='mappe dokument'>";
-	echo "  <a href='?side=dokumenter/liste&amp;type=".$mappetype."&amp;mappe=" . $mappe['id'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>";
+	echo "  <a href='?side=dokumenter/liste&type=".$mappetype."&mappe=" . $mappe['id'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>";
 	echo "  <i class='fa fa-folder-o'></i><p>" . $mappenavn . "</p></a>";
 	if (tilgang_endre()) {
 		echo "  <a class='slett' a href='javascript:slett_mappe(".$mappe['id'].", \"".$mappenavn."\")' title='Slett mappen: ".$mappenavn."'><i class='fa fa-remove'></i></a>";
@@ -153,7 +153,7 @@ function formater_fil($fil) {
 
 function formater_tilbakeknapp($mappe, $vis) {
 echo "<section class='tilbake legg-til-knapp" . ($vis ? "" : " skjul") . "'>
-		<a class='button' href='?side=dokumenter/liste&amp;type=".$mappe['mappetype']."&amp;mappe=" . $mappe['foreldreid'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>
+		<a class='button' href='?side=dokumenter/liste&type=".$mappe['mappetype']."&mappe=" . $mappe['foreldreid'] . "' title='Klikk for å åpne mappen ".$mappenavn."'>
 		<section class='fa-stack fa-lg'>
 		  <i class='fa fa-level-up fa-stack-2x'></i>
 		</section>
@@ -316,7 +316,7 @@ echo "<section class='sokeboks handlinger " . $harSokestrengCss . "'>
 			<input type='hidden' name='type' value='".$mappetype."' />
 			<input class='sokeinput' type='text' name='sok' value='" . $sokestreng . "' placeholder='Søk i tittel, arkivnr, arr/komp...' />
 			<button class='button sok' type='submit'>Søk</button>
-			<a href='?side=dokumenter/liste&amp;type=".$mappetype."' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
+			<a href='?side=dokumenter/liste&type=".$mappetype."' class='avbryt' title='Avbry søk'><i class='fa fa-remove fa-2x'></i></a>
 		</form>
 	</section>";	
 }

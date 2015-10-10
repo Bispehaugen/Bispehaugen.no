@@ -5,6 +5,7 @@ include_once "sider/aktiviteter/funksjoner.php";
 
 if(!has_get('arrid')){	
 	header('Location: ?side=ikke_funnet');
+	die();
 }
 
 $arrid=get('arrid');
@@ -15,6 +16,7 @@ if(
 	($arrangement['public'] == 2 && !tilgang_full())
 	){	
 	header('Location: ?side=ikke_funnet');
+	die();
 }
 
 if (!empty($arrangement['kakebaker'])) {
