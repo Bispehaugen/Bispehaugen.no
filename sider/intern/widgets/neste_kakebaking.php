@@ -23,8 +23,8 @@
 		<?php echo strftime("%B", $neste_kakebaking_tid); ?>
 		, kl. <?php echo date("H:i", $neste_kakebaking_tid); ?></p>
 	<p>
-		<a href="https://maps.google.com/maps?q=<?php echo $neste_konsert["sted"]; ?>">
-			<i class="fa fa-location-arrow fa-fw"></i><?php echo $neste_konsert["sted"]; ?>
+		<a href="https://maps.google.com/maps?q=<?php echo $neste_kakebaking_tid["sted"]; ?>">
+			<i class="fa fa-location-arrow fa-fw"></i><?php echo $neste_kakebaking_tid["sted"]; ?>
 		</a>
 	</p>
 </section>
