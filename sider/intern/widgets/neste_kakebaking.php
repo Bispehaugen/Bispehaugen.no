@@ -21,12 +21,15 @@
 		<?php echo strftime("%A", $neste_kakebaking_tid); ?>
 		<?php echo date("d.", $neste_kakebaking_tid); ?>
 		<?php echo strftime("%B", $neste_kakebaking_tid); ?>
-		, kl. <?php echo date("H:i", $neste_kakebaking_tid); ?></p>
+		, kl. <?php echo date("H:i", $neste_kakebaking_tid); ?>
+	</p>
+	<?php if (!empty($neste_kakebaking_tid["sted"])) {
 	<p>
 		<a href="https://maps.google.com/maps?q=<?php echo $neste_kakebaking_tid["sted"]; ?>">
 			<i class="fa fa-location-arrow fa-fw"></i><?php echo $neste_kakebaking_tid["sted"]; ?>
 		</a>
 	</p>
+	<?php } ?>
 </section>
 
 <?php
