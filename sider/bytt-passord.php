@@ -27,6 +27,7 @@ if (has_post("token")) {
 		mysql_query($sql_update);
 		
 		header("Location: index.php?side=forside");
+		die();
 	}
 	$fornavn = post("fornavn");
 }

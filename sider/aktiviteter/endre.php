@@ -6,6 +6,7 @@
 	//sjekker om man er admin
 	if(!tilgang_endre()){
 		header('Location: ?side=aktiviteter/liste');
+		die();
 	}
 	$aktiviteter = Array();
 

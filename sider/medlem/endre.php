@@ -143,6 +143,7 @@ Den gamle adressen var:
 				mysql_query($sql);
 				innlogget_bruker_oppdatert();
 				header('Location: ?side=medlem/liste');
+				die();
 			}else{
 				$sql="
 				INSERT INTO 
@@ -153,6 +154,7 @@ Den gamle adressen var:
 				mysql_query($sql);
 				
 				header('Location: ?side=medlem/liste');
+				die();
 			}
 		}
 	}

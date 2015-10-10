@@ -6,7 +6,8 @@
 	//sjekker om man er logget inn
 	if(!er_logget_inn()){
 		header('Location: ../index.php');
-	};
+		die();
+	}
 	
 	$forumid=get('id');
 	$skip=get('skip');

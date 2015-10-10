@@ -8,6 +8,11 @@ if(!has_get("forumid") && !has_post("forumid")) {
 	die("En feil oppstod. Si hva du gjorde til webkom så kan vi løse det :)");
 }
 
+if (!er_logget_inn()) {
+	header('Location: index.php');
+	die("Logg inn");
+}
+
 if(has_post("tittel")) {
 	
 	$innlogget_bruker = hent_brukerdata();

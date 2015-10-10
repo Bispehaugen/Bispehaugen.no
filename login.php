@@ -43,6 +43,7 @@
 	
 	if (!has_get("ajax")){
 		header('Location: index.php?side=forside');
+		die();
 	} else {
 		echo "{} && {login: true}";
 	}

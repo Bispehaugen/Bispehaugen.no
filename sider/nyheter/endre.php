@@ -3,8 +3,9 @@
 	
 	$feilmeldinger = Array();
 	//sjekker om man er admin
-	if($_SESSION['rettigheter']<2){
+	if(!tilgang_endre()){
 		header('Location: ?side=nyheter/liste');
+		die();
 	}
 	$nyheter = Array();
 
@@ -40,6 +41,7 @@
 				 WHERE nyhetsid='".$id."';";
 				mysql_query($sql);
 				header('Location: ?side=nyheter/liste');
+				die();
 			} else {
 				$skrevetavid=$_SESSION["medlemsid"];
 				$skerevet_tid=date("Y-m-d H:i:s");
@@ -49,6 +51,7 @@
 				,'$skrevetavid','$skerevet_tid');";
 				mysql_query($sql);
 				header('Location: ?side=nyheter/liste');
+				die();
 			}
 		}
 	}

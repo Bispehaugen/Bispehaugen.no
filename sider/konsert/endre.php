@@ -3,8 +3,9 @@
 	
 	$feilmeldinger = Array();
 	//sjekker om man er admin
-	if($_SESSION['rettigheter']<2){
+	if(!tilgang_endre()){
 		header('Location: ?side=nyheter/liste');
+		die();
 	}
 	$nyheter = Array();
 
@@ -90,6 +91,7 @@
 				mysql_query($sql5);
 			}
 			header('Location: ?side=aktiviteter/liste');
+			die();
 		}
 	}
 	$handling = "Ny";
