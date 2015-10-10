@@ -3,7 +3,7 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
-$root = "../";
+$root = str_replace("skript", "", dirname(__FILE__));
 
 include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
