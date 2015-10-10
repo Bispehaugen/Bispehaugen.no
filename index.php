@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set('Europe/Oslo');
-setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
+setlocale(LC_TIME, "nb_NO.utf8");
 include_once "db_config.php";
 include_once "funksjoner.php";
 
