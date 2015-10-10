@@ -6,8 +6,7 @@ setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 $root = str_replace("skript", "", dirname(__FILE__));
 
 include_once $root."db_config.php";
-
-inkluder_lokal_config($root."lokal_config.php");
+include_once $root."lokal_config.php";
 include_once $root.'funksjoner.php';
 
 $tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);

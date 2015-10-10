@@ -2,19 +2,19 @@
 
 $er_produksjon = false;
 
+$lokal_config_plassering = "lokal_config.php";
 
-function inkluder_lokal_config($lokal_config_plassering = "lokal_config.php") {
-	for($dypde = 0; $dypde < 5; $dypde++) {
-		if(file_exists($lokal_config_plassering)){
-			include($lokal_config_plassering);
-			break;
-		} else {
-			$lokal_config_plassering = "../".$lokal_config_plassering;
-		}
+for($dypde = 0; $dypde < 5; $dypde++) {
+	if(file_exists($lokal_config_plassering)){
+		include($lokal_config_plassering);
+		break;
+	} else {
+		$lokal_config_plassering = "../".$lokal_config_plassering;
 	}
 }
 
-inkluder_lokal_config();
+
+
 /*
 
 Slik ser lokal_config.php ut
