@@ -26,11 +26,24 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
 
 <section class="informasjonslinje">
 		<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i> Aktiviteter</a></h2>
-		<?php echo brukerlenke($skrevet_av, Navnlengde::Fornavn, true); ?>
+
+		<?php
+
+		if(er_logget_inn() && tilgang_endre()){
+        	echo"<p><div class='verktoy'><a href='?side=konsert/endre&id=".$konsert['nyhetsid']."'><i class='fa fa-edit' title='Klikk for å endre'></i>Endre</a></div></p>";
+      	}
+		echo brukerlenke($skrevet_av, Navnlengde::Fornavn, false, "<span><time datetime='".$$konsert['tid']."'>kl. ".date("H:i d.m.Y", strtotime($konsert['tid']))."</time> av ");  
+	
+      	?>
 	</section>
 	
 
 		<article class="konsert vis-konsert">
+		<?php
+			if ($konsert['aktiv'] == 0) {
+				echo "<div class='slettet'>NB! Denne aktiviteten har blitt slettet!</div>";
+			}
+		?>
 			<aside class="sidebar-info">
 				<?php echo fancyDato($konsert['konsert_tid'], true); ?>
 

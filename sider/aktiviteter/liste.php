@@ -90,14 +90,11 @@
 			if(tilgang_endre()){
 				echo "<td>";
 				echo"<a href='?side=aktiviteter/vis&arrid=".$aktivitet['arrid']."'><i class='fa fa-music' title='Klikk for å legge til noter'></i></a> / ";
-				if($aktivitet['type']=="Konsert"){
-					echo"<a href='?side=konsert/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a>";
-				}else{
-					echo"
-					<a href='?side=aktiviteter/endre&id=".$aktivitet['arrid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a>
-					 / 
-					<a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a>";
-				}
+				$endre_url = ($aktivitet['type']=="Konsert") ? "konsert/endre" : "aktiviteter/endre";
+				echo"<a href='?side=".$endre_url."&id=".$aktivitet['arrid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a>";
+				echo " / ";
+				echo "<a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a>";
+
 				echo "</td></tr>";
 			}else{
 				echo "<td></td></tr>";

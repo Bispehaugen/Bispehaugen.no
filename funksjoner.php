@@ -444,7 +444,8 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 }
 
 function dato($format, $tid) {
-	return date($format, strtotime($tid));
+	$tid = empty($tid) ? time() : strtotime($tid);
+	return date($format, $tid);
 }
 
 function clean($string) {

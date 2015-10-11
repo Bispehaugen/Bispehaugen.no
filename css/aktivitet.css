@@ -27,3 +27,12 @@
 	border-top: 3px solid white;
 	padding: 2em;
 }
+
+.aktivitet .slettet,
+.konsert .slettet {
+	background: white;
+	font-size: 200%;
+	padding: 2em;
+	margin: 1em;
+	color: rgba(34, 41, 51, 1);
+}

@@ -32,11 +32,21 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 
 
 <section class="informasjonslinje">
-		<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i>Aktiviteter</a></h2>
-	</section>
-	
+	<h2 class="back-link"><a href="?side=aktiviteter/liste" title="Flere aktiviteter"><i class="fa fa-chevron-left"></i>Aktiviteter</a></h2>
 
+	<?php
+
+	if(er_logget_inn() && tilgang_endre()){
+    	echo"<p><div class='verktoy'><a href='?side=aktiviteter/endre&id=".$arrid."'><i class='fa fa-edit' title='Klikk for å endre'></i>Endre</a></div></p>";
+  	}
+  	?>
+</section>
 		<article class="aktivitet vis-aktivitet">
+		<?php
+			if ($arrangement['slettet'] == 1) {
+				echo "<div class='slettet'>NB! Denne aktiviteten har blitt slettet!</div>";
+			}
+		?>
 			<aside class="sidebar-info">
 				<?php echo fancyDato($oppmøteDatoTid, true); ?>
 
