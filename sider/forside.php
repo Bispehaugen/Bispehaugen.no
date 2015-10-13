@@ -1,7 +1,7 @@
 <?php
 
 global $antall_nyheter;
-$antall_nyheter = 4;
+$antall_nyheter = 2;
 
 if (!er_logget_inn()) {
 ?>
