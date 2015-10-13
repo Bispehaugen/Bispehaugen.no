@@ -57,12 +57,20 @@ function hent_filpath($filMedMappeinfo) {
 }
 
 function sok_i_notesett($sokestreng) {
-	$sql = "SELECT mappeid 
+
+	if (is_numeric($sokestreng)) {
+		$sql = "SELECT mappeid 
 			FROM noter_notesett 
-			WHERE arrangor LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
-			   OR komponist LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
-			   OR arkivnr = '" . mysql_real_escape_string($sokestreng) . "'
+			WHERE arkivnr = " . intval(mysql_real_escape_string($sokestreng)) . "
 			ORDER BY tittel ASC";
+	} else {
+		$sql = "SELECT mappeid 
+				FROM noter_notesett 
+				WHERE arrangor LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
+				   OR komponist LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
+				ORDER BY tittel ASC";
+	}
+	
 	$notesett = hent_og_putt_inn_i_array($sql, $id_verdi="mappeid");
 
 	$mappeider = "";
