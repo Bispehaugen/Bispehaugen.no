@@ -653,6 +653,17 @@ migrering(32, "Opprett varling tabell for å sjekke om epostvarsling er sendt ut
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"
 );
 
+migrering(33, "Legg til slagverkhjelp",
+"CREATE TABLE IF NOT EXISTS `slagverkhjelp` (
+  `medlemsid` int(11) NOT NULL,
+  `gruppeid` int(11) NOT NULL
+) DEFAULT CHARSET=latin1;
+");
+
+migrering(34, "Slagverkhjelp burde ha en id",
+	"ALTER TABLE `slagverkhjelp` ADD PRIMARY KEY(`medlemsid`);"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

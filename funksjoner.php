@@ -680,3 +680,17 @@ function fornorske($navn) {
 	return $navnUtenNorskeTegn;
 }
 
+
+abstract class HttpStatus {
+	const SUCCESS = "success";
+	const ERROR = "error";
+}
+
+function json_response($status, $message, $errorStatusCode = 500) {
+	if ($status == HttpStatus::ERROR) {
+		http_response_code($errorStatusCode);
+	}
+	header('Content-type: application/json');
+	echo json_encode(Array("status" => $status, "message" => $message));
+}
+

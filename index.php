@@ -66,6 +66,7 @@ $innhold = ob_get_clean();
 	<?php } ?>
 
 	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
+	<script type="text/javascript" src='js/underscore-min-1.8.3.js'></script>
 </head>
 
 <body class="no-touch">

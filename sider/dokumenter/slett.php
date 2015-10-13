@@ -15,25 +15,10 @@ if ($tilkobling === false) {
 	die("Ingen tilkobling");
 }
 
-abstract class Status {
-	const SUCCESS = "success";
-	const ERROR = "error";
-}
-
-function response($status, $message, $errorStatusCode = 500) {
-	if ($status == Status::ERROR) {
-		http_response_code($errorStatusCode);
-	}
-	echo json_encode(Array("status" => $status, "message" => $message));
-}
-
-
 // Skriving starter
 
-header('Content-type: application/json');
-
 if(!tilgang_endre()) {
-	die(response(Status::ERROR, "Ingen tilgang til å slette filer", 401));
+	die(json_response(HttpStatus::ERROR, "Ingen tilgang til å slette filer", 401));
 }
 
 if (has_get('mappe')) {
@@ -58,12 +43,12 @@ UNION
 			if(is_dir($path)) {
 				rmdir($path);
 			}
-			die(response(Status::SUCCESS, "Mappe $mappeid slettet"));
+			die(json_response(HttpStatus::SUCCESS, "Mappe $mappeid slettet"));
 		} else {
-			die(response(Status::ERROR, "Feil under sletting av mappe. Prøv på nytt"));
+			die(json_response(HttpStatus::ERROR, "Feil under sletting av mappe. Prøv på nytt"));
 		}
 	} else {
-		die(response(Status::ERROR, "Du kan bare slette tomme mapper", 403));
+		die(json_response(HttpStatus::ERROR, "Du kan bare slette tomme mapper", 403));
 	}
 
 } else if (has_get('fil')) {
@@ -80,12 +65,12 @@ UNION
 		if(file_exists($path)) {
 			unlink($path);
 		}
-		die(response(Status::SUCCESS, "Fil $filid slettet"));
+		die(json_response(HttpStatus::SUCCESS, "Fil $filid slettet"));
 	} else {
-		die(response(Status::ERROR, "Feil under sletting av fil. Prøv på nytt"));
+		die(json_response(HttpStatus::ERROR, "Feil under sletting av fil. Prøv på nytt"));
 	}
 
 } else {
 	// Finner ikke id
-	die(response(Status::ERROR, "Id ikke sendt med. Må enten sende med mappe='id' eller fil='id'", 403));
+	die(json_response(HttpStatus::ERROR, "Id ikke sendt med. Må enten sende med mappe='id' eller fil='id'", 403));
 }
