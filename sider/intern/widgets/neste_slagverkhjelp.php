@@ -31,7 +31,7 @@
 	</p>
 	<?php } ?>
 
-	<p><a href="?side=intern/slagverkhjelp/liste">Vis slagverkbærehjelplisten</a></p>
+	<p><i class="fa fa-users fa-fw"></i><a href="?side=intern/slagverkhjelp/liste">Vis slagverkbærehjelplisten</a></p>
 </section>
 
 <?php

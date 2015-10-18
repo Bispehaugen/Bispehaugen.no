@@ -28,3 +28,8 @@ function hent_slagverkgruppe_for_medlem($medlemsid) {
 	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp WHERE medlemsid = " . mysql_real_escape_string($medlemsid) . " LIMIT 1";
 	return hent_og_putt_inn_i_array($sql);
 }
+
+function hent_slagverksgrupper() {
+	$sql = "SELECT gruppeid FROM slagverkhjelp GROUP BY gruppeid";
+	return array_keys(hent_og_putt_inn_i_array($sql, 'gruppeid'));
+}

@@ -8,6 +8,8 @@
 		header('Location: ?side=aktiviteter/liste');
 		die();
 	}
+	include_once "sider/intern/slagverkhjelp/funksjoner.php";
+
 	$aktiviteter = Array();
 
 	//hvis en aktivitet er lagt inn og noen har trykket på lagre hentes verdiene ut
@@ -23,6 +25,7 @@
 		$starttid = post('starttid');
 		$sluttid = post('sluttid');
 		$hjelpere = post('hjelpere');
+		$slagverk = post('slagverk');
 		$kakebaker = post('kakebaker');
 
 		if (!isset($tittel) || $tittel=="") { 
@@ -48,19 +51,19 @@
 
 				$sql="UPDATE arrangement SET tittel='".$tittel."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
 				,start='".$dato." ".$starttid."',slutt='".$dato." ".$sluttid."',ingress='".$ingress."',public='".$public."',type='".$type."',hjelpere='".$hjelpere."'
-				,kakebaker='".$kakebaker."' WHERE arrid='".$id."';";
+				,kakebaker='".$kakebaker."', slagverk='".$slagverk."' WHERE arrid='".$id."';";
 				mysql_query($sql);
-				header('Location: ?side=aktiviteter/liste');
+				header('Location: ?side=aktiviteter/vis&arrid='.$id);
+				die();
 			} else {
-				print_r($dato);
-
 				foreach($dato as $d) {
-					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
-	values ('$tittel','$type','$sted','$d','$oppmote','$d $starttid','$d $sluttid','$ingress','','$public','$hjelpere','$kakebaker')";
+					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker,slagverk)
+	values ('$tittel','$type','$sted','$d','$oppmote','$d $starttid','$d $sluttid','$ingress','','$public','$hjelpere','$kakebaker','$slagverk')";
 					mysql_query($sql);
 				}
 				
 				header('Location: ?side=aktiviteter/liste');
+				die();
 			}
 		}
 
@@ -92,6 +95,8 @@
 
 		$public = kanskje($aktiviteter, 'public');
 	}
+
+	$slagverkgrupper = hent_slagverksgrupper();
 	
 	//henter ut alle medlemmer som kakebaker
 	$sql="SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
@@ -194,7 +199,21 @@ echo "
 				<tr><td>Oppmøte kl:</td><td><input type='text' class='timepicker oppmoetetid' name='oppmoetetid' value='".bare_tidspunkt(kanskje($aktiviteter, 'oppmoetetid'))."'></td></tr>
 				<tr><td>Start kl:</td><td><input type='text' class='timepicker starttid' name='starttid' value='".bare_tidspunkt(kanskje($aktiviteter, 'start'))."'></td></tr>
 				<tr><td>Slutt kl:</td><td><input type='text' class='timepicker sluttid' name='sluttid' value='".bare_tidspunkt(kanskje($aktiviteter, 'slutt'))."'></td></tr>
-				<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
+				<tr><td>Slagverksbærere:</td><td>
+					<select name='slagverk'>
+						<option value='0'>Ingen gruppe valgt</option>
+					";
+					
+					foreach($slagverkgrupper as $gruppeid) {
+						$selected = (kanskje($aktiviteter, 'slagverk')==$gruppeid) ? " selected=selected" : "";
+						
+						echo "<option value='".$gruppeid."'".$selected.">Gruppe ".$gruppeid."</option>";
+					}
+					echo "
+					</select>
+					<a href='?side=intern/slagverkhjelp/liste' target='_blank'>Se liste over slagverkbæregrupper</a>
+				</td></tr>
+				<tr><td>Andre hjelpere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
 				<tr><td>Kakebaker:</td><td>
 					<select name='kakebaker'>
 					<option value='NULL'>Ingen</option>";

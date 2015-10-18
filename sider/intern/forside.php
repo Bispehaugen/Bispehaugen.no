@@ -21,7 +21,6 @@
 	<h2>Mer som kommer:</h2>
 	<section>
 		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
-	<h3>Bære slagverk?</h3>
 	<h3>Kjøre med henger?</h3>
 	
 	<?php
