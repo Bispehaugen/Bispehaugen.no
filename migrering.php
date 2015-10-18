@@ -675,6 +675,10 @@ migrering(36, "Weblog type trenger ikke å bare være 8 tegn...",
 migrering(37, "Legger til hengerfeste på medlemmer",
 	"ALTER TABLE `medlemmer` ADD `hengerfeste` BOOLEAN NOT NULL DEFAULT FALSE ;"
 );
+
+migrering(38, "Legger til slagverk gruppeid på arranngement",
+	"ALTER TABLE `arrangement` ADD `slagverk` INT NOT NULL COMMENT 'gruppeid for slagverk' AFTER `hjelpere`;"
+);
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

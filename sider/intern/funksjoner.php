@@ -1,5 +1,7 @@
 <?php
 
+include_once "sider/intern/slagverkhjelp/funksjoner.php";
+
 function hent_noter($konsertid, $bareAntall = false) {
 
 	$felter = "*";
@@ -31,3 +33,12 @@ function neste_kakebaking() {
 	return hent_og_putt_inn_i_array($sql);
 }
 
+function neste_slagverkhjelp() {
+	$bruker = hent_brukerdata();
+	$gruppe = hent_slagverkgruppe_for_medlem($bruker['medlemsid']);
+	if(empty($gruppe)) {
+		return Array();
+	}
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid, slagverk FROM `arrangement` WHERE slagverk = '".$gruppe['gruppeid']."' AND slettet = 0 ORDER BY `start` DESC LIMIT 1";
+	return hent_og_putt_inn_i_array($sql);
+}

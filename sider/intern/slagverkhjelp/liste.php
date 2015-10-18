@@ -38,11 +38,22 @@ $grupper = hent_slagverkhjelp();
 $redigeringsmodus = tilgang_endre();
 
 if ($redigeringsmodus) {
+	function hent_ut_medlemsid_for_medlemmer_i_grupper($carry, $gruppe)
+	{
+		foreach($gruppe as $medlemid => $ignore) {
+	    	$carry[$medlemid] = $medlemid;
+		}
+	    return $carry;
+	}
+
 	$gruppeIder = range(1, max(1, max(array_keys($grupper)))); // Lag gruppeIder for alle grupper mellom 1 og høyeste id
-	$plasserteMedlemsIder = array_values($grupper);
-	$uplasserteMedlemmer = array_filter(hent_medlemmer(), function($medlemsid) {
-	    return !in_array($medlemsid, $plasserteMedlemsIder);
-	}, ARRAY_FILTER_USE_KEY);
+	$plasserteMedlemsIder = array_reduce($grupper, "hent_ut_medlemsid_for_medlemmer_i_grupper", Array());
+
+	$filtrer_bort_plasserte_medlemmer = function($medlem) use ($plasserteMedlemsIder) {
+		return !array_key_exists($medlem['medlemsid'], $plasserteMedlemsIder);
+    };
+
+	$uplasserteMedlemmer = array_filter(hent_medlemmer(), $filtrer_bort_plasserte_medlemmer);
 
 ?>
 <script type='text/javascript'>

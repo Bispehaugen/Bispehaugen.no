@@ -14,6 +14,8 @@
 		include_once "widgets/neste_konsert.php";
 
 		include_once "widgets/neste_kakebaking.php";
+
+		include_once "widgets/neste_slagverkhjelp.php";
 	?>
 
 	<h2>Mer som kommer:</h2>
