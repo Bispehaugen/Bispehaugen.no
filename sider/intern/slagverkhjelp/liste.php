@@ -35,7 +35,7 @@ function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus) {
 }
 
 $grupper = hent_slagverkhjelp();
-$redigeringsmodus = false; //tilgang_endre();
+$redigeringsmodus = tilgang_endre();
 
 if ($redigeringsmodus) {
 	$gruppeIder = range(1, max(array_keys($grupper))); // Lag gruppeIder for alle grupper mellom 1 og høyeste id
@@ -53,11 +53,14 @@ if ($redigeringsmodus) {
 
 <?php } // $redigeringsmodus ?>
 <link rel="stylesheet" href="css/slagverkhjelp.css" type="text/css" />
-<article class='slagverkhjelp<?php echo $redigeringsmodus?"rediger":""; ?>'>
+<article class='slagverkhjelp<?php echo $redigeringsmodus ? " rediger":""; ?>'>
 
 <h1>Slagverkbæregrupper</h1>
 <p>Se <a href='?side=forside'>hovedsiden</a> for å se neste gang du skal bære og hvilken gruppe du hører til</p>
-
+<p>
+	<span class='gruppeleder'>GL = Gruppeleder</span>
+	<span class='hengerfeste'>H = Har tilgang til bil med hengefeste</span>
+</p>
 <?php 
 if ($redigeringsmodus) {
 ?>
@@ -67,10 +70,6 @@ if ($redigeringsmodus) {
 <?php 
 } // $redigeringsmodus
 ?>
-<p>
-	<span class='gruppeleder'>GL = Gruppeleder</span>
-	<span class='hengerfeste'>H = Har tilgang til bil med hengefeste</span>
-</p>
 <div class='clearfix'></div>
 
 <section class='slagverkgrupper'>
