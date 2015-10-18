@@ -155,7 +155,7 @@ var lagreknappStatus = function(isDisabled) {
 
 var leggTilNyGruppe = function() {
 	var gruppeId = _.max(eksisterendeGrupper) + 1;
-	var template = <?php echo "\"".formater_gruppe("{{gruppeId}}", Array())."\""; ?>;
+	var template = <?php echo "\"".formater_gruppe("{{gruppeId}}", Array(), $redigeringsmodus)."\""; ?>;
 
 	var nyGruppeHtml = template.replace(/{{gruppeId}}/g, gruppeId);
 
