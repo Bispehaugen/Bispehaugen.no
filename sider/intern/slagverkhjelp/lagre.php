@@ -20,20 +20,31 @@ if(!er_logget_inn()) {
 if(!tilgang_endre()) {
 	die(json_response(HttpStatus::ERROR, "Ingen tilgang til å slette filer", 401));
 }
-if(!has_post('endredeBrukereErIGruppe')) {
-	die(json_response(HttpStatus::ERROR, "Request inneholdt ikke endredeBrukereErIGruppe array", 400));
-}
 
 $endredeBrukereErIGruppe = post('endredeBrukereErIGruppe');
-
+$endredeBrukerSomErLeder = post('endredeBrukerSomErLeder');
 
 foreach($endredeBrukereErIGruppe as $brukerId => $gruppeId) {
 	$sql = "INSERT INTO slagverkhjelp (gruppeid, medlemsid) 
 			VALUES ($gruppeId, $brukerId)
 			ON DUPLICATE KEY UPDATE gruppeid=$gruppeId";
 	if(!mysql_query($sql)) {
-		logg("update-slagverkhjelpere", mysql_error());
+		logg("update-slagverkhjelpere", $sql." | ".mysql_error());
 		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
+	}
+}
+
+foreach($endredeBrukerSomErLeder as $gruppeId => $brukerId) {
+	$sql_fjern_gammel_leder = "UPDATE slagverkhjelp SET gruppeleder = 0 WHERE gruppeid = ".$gruppeId. " AND gruppeleder = 1";
+	if(!mysql_query($sql_fjern_gammel_leder)) {
+		logg("update-slagverkhjelpere", $sql_fjern_gammel_leder." | ".mysql_error());
+		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for fjern gammel leder medlemsid: ".$brukerId, 500));
+	}
+	$sql_update_ny_leder = "UPDATE slagverkhjelp SET gruppeleder = 1 WHERE medlemsid = ".$brukerId;
+
+	if(!mysql_query($sql_update_ny_leder)) {
+		logg("update-slagverkhjelpere", $sql_update_ny_leder." | ".mysql_error());
+		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for oppdater ny leder medlemsid: ".$brukerId, 500));
 	}
 }
 

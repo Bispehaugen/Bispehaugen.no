@@ -1,11 +1,11 @@
 <?php
 
 function hent_slagverkhjelp($gruppeid = 0) {
-	$sql = "SELECT gruppeid, medlemsid FROM slagverkhjelp";
+	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp";
 	if (!empty($gruppeid)) {
 		$sql .= " WHERE gruppeid = ".$gruppeid;
 	}
-	$sql .=" ORDER BY gruppeid, medlemsid";
+	$sql .=" ORDER BY gruppeid, gruppeleder DESC, medlemsid";
 	$hjelpere = hent_og_putt_inn_i_array($sql, "medlemsid");
 
 	$brukere = hent_brukerdata(array_keys($hjelpere));

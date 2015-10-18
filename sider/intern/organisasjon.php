@@ -2,14 +2,10 @@
 	//funksjonalitet
 	
 	//henter ut alle komiteer
-	$sql="SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
-	$komiteer=hent_og_putt_inn_i_array($sql,$id_verdi="komiteid");
+	$komiteer = hent_komiteer();
 	
 	//henter ut info om medlemmer++ om valgte komité
-	$sql="SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon, tittel, medlemmer.medlemsid, 
-	verv.medlemsid, epost, fnavn, enavn, foto  FROM komite, verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND 
-	komite.komiteid=verv.komiteid ORDER BY komite.posisjon, verv.posisjon";
-    $valgtekomiteer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
+    $valgtekomiteer = hent_styret();
 	
 	$ovelse_utfylt = false;
 	// Sjekker om du har sendt inn fraværsmelding
@@ -101,24 +97,7 @@
 		</p>
 	
 		<p>
-	<?php
-		if(has_get('slagverksgrupper')){
-	?>
-			<a href='?side=intern/organisasjon'>skjul grupper</a>
-			<!--lagt inn midlertidig til slagverksbæregrupper kan oppdateres automatisk/med brukergrensesnitt-->
-			<br><br><b>Gruppe 1:</b><br>Bente (styret)<br>Annichen (bil)<br>Maren (slagverk)<br>Caroline<br>Kristoffer
-			<br>Torstein<br>Øyvind D<br>Marianne A<br>Ane<br>Maria<br><br><b>Gruppe 2:</b><br>Maren (styret)
-			<br>Katrin (styret)(bil u/hengerfeste)<br>Eirik (slagverk)<br>Øyvind R<br>Solveig<br>Roar<br>Daniel<br>Silje Margrethe<br>Irene 
-			<br>Siri E<br><br><b>Gruppe 3:</b><br>Kristian (styret)<br>Mari Andrea (bil u/hengefeste)<br>Tom Sander (slagverk)<br>Magnus<br>Johanna<br>
-			Vebjørn<br>Eirik<br>Elise<br>Arnhild<br>Silje Aa<br><br><b>Gruppe 4:</b><br>Mats (styret)<br>Ole Håkon (bil)
-			<br>Maren (slagverk)<br>Marianne D<br>Rasmus<br>Susanne<br>Mari<br>Karen<br>Charlotte<br>Martin<br><br><b>Gruppe 5:
-			</b><br>Anette (styret)<br>Kjetil L (bil)<br>Erik (slagverk)<br>Annebjørg<br>Sindre K<br>Mari L<br>Marte<br>
-			Ida<br>Sveinung<br>Gina<br><br><b>Gruppe 6:</b><br>Venke (styret)<br>Mari (styret)<br>Jørgen (bil)<br>Tom Sander (slagverk)<br>Karianne<br>Tom-Erik<br>Guro<br>
-			Morten H<br>Kjersti<br>Vilde<br>Sindre P<br><br>
-			
-	<?php } else { ?>
-		<a href='?side=intern/organisasjon&slagverksgrupper=1'>vis grupper</a>	
-	<?php } ?>		
+		<a href='?side=intern/slagverkhjelp/liste'>Vis slagverkbæregrupper</a>	
 		</p>
 	</section>
 	

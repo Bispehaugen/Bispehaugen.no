@@ -79,6 +79,12 @@ echo '
 	</p>
 	<?php } ?>
 
+<?php if(isset($medlem['hengerfeste']) && $medlem['hengerfeste'] && tilgang_endre()){ ?>
+	<p>
+		<strong>Hengefeste:</strong> Har tilgang på bil med hengerfeste
+	</p>
+	<?php } ?>
+
 <?php if(er_logget_inn()) { ?>
 	<h4>Kontaktinfo</h4>
 

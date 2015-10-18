@@ -664,6 +664,17 @@ migrering(34, "Slagverkhjelp burde ha en id",
 	"ALTER TABLE `slagverkhjelp` ADD PRIMARY KEY(`medlemsid`);"
 );
 
+migrering(35, "Slagverkhjelp skal kunne ha en leder",
+	"ALTER TABLE `slagverkhjelp` ADD `gruppeleder` BOOLEAN NOT NULL DEFAULT FALSE ;"
+);
+
+migrering(36, "Weblog type trenger ikke å bare være 8 tegn...",
+	"ALTER TABLE `weblog` CHANGE `type` `type` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;"
+);
+
+migrering(37, "Legger til hengerfeste på medlemmer",
+	"ALTER TABLE `medlemmer` ADD `hengerfeste` BOOLEAN NOT NULL DEFAULT FALSE ;"
+);
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

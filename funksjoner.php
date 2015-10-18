@@ -150,6 +150,26 @@ function hent_komiteer_for_bruker() {
 	return hent_og_putt_inn_i_array($sql);
 }
 
+function hent_medlemmer($alleMedlemmer = false) {
+	//SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
+	//sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
+	if(er_logget_inn() && $alleMedlemmer){
+		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
+		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE instrumentid LIKE instnr ORDER BY posisjon, 
+		grleder  desc, status, fnavn";
+	} elseif(er_logget_inn()){
+		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
+		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid LIKE instnr 
+		ORDER BY posisjon, grleder desc, status, fnavn";
+	} else {
+		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
+		medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND begrenset=0 AND 
+		instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
+	}
+
+	return hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
+}
+
 function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$query = mysql_query($sql);
 	
@@ -188,7 +208,7 @@ function hent_brukerdata($medlemid = ""){
 
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, I.instrument, I.instrumentid, I.instrumentid as instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter
+					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste
 				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, bakgrunn, kommerfra 
@@ -503,6 +523,25 @@ function neste_konsert_nyhet() {
 	return hent_konserter(1);
 }
 
+function hent_styret() {
+	$sql = "SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon,
+				   tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn, foto
+		    FROM komite, verv, medlemmer
+		    WHERE medlemmer.medlemsid=verv.medlemsid 
+		      AND komite.komiteid=verv.komiteid
+		    ORDER BY komite.posisjon, verv.posisjon";
+    return hent_og_putt_inn_i_array($sql, $id_verdi = "vervid");
+}
+
+function hent_komiteer() {
+	$sql = "SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
+	$komiteer = hent_og_putt_inn_i_array($sql,$id_verdi = "komiteid");
+
+	return array_filter($komiteer, function($komite, $komiteid) {
+	    return !empty($komite['navn']);
+	}, ARRAY_FILTER_USE_BOTH);
+}
+
 function epost_gammel($to,$replyto,$subject,$message,$extra_header = "") {
 	$eol = PHP_EOL;
 
@@ -694,3 +733,8 @@ function json_response($status, $message, $errorStatusCode = 500) {
 	echo json_encode(Array("status" => $status, "message" => $message));
 }
 
+function debug($array) {
+	echo "<pre>";
+	print_r($array);
+	echo "</pre>";
+}

@@ -8,11 +8,14 @@ if (!er_logget_inn()) {
 }
 
 function formater_gruppe($gruppeid, $medlemmer) {
-	$html .= "<section class='gruppe' data-gruppe-id='".$gruppeid."' data-drop-effect='all'>";
+	$html .= "<section class='gruppe med-leder' data-gruppe-id='".$gruppeid."' data-drop-effect='all'>";
 	$html .=  "<h2>Gruppe " . $gruppeid . "</h2>";
 	$html .=  "<ul class='hjelpere'>";
 	foreach($medlemmer as $hjelper) {
-		$html .=  "<li class='hjelper' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>" . $hjelper['fnavn'] . " " . $hjelper['enavn'] . "</li>";
+		$html .=  "<li class='hjelper' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>"
+		. $hjelper['fnavn'] . " " . $hjelper['enavn']
+		. (($hjelper['hengerfeste']==1 && tilgang_endre()) ? " <span class='hengerfeste' title='Har tilgang på bil med hengerfeste'>(H)</span>":"")
+		. "</li>";
 	}
 	$html .=  "</ul>";
 	$html .=  "</section>";
@@ -20,48 +23,71 @@ function formater_gruppe($gruppeid, $medlemmer) {
 }
 
 $grupper = hent_slagverkhjelp();
+$gruppeIder = range(1, max(array_keys($grupper))); // Lag gruppeIder for alle grupper mellom 1 og høyeste id
+$plasserteMedlemsIder = array_values($grupper);
+$uplasserteMedlemmer = array_filter(hent_medlemmer(), function($medlemsid) {
+    return !in_array($medlemsid, $plasserteMedlemsIder);
+}, ARRAY_FILTER_USE_KEY);
 
-$gruppeIder = array_keys($grupper);
-
-echo "
+?>
 <script type='text/javascript'>
 	var endredeBrukereErIGruppe = {};
-	var eksisterendeGrupper = [".join(',', $gruppeIder)."];
+	var endredeBrukerSomErLeder = {};
+	var eksisterendeGrupper = [<?php echo join(',', $gruppeIder); ?>];
 </script>
-";
+<link rel="stylesheet" href="css/slagverkhjelp.css" type="text/css" />
+<article class='slagverkhjelp'>
 
-echo "<article class='slagverkhjelp'>";
+<h1>Slagverkbæregrupper</h1>
+<p>Se <a href='?side=forside'>hovedsiden</a> for å se neste gang du skal bære og hvilken gruppe du hører til</p>
+<p>Klikk og dra navn for å endre slagverkgruppe. Alle uten gruppe finner du i den nederste boksen.</p>
+<button class='button button-border lagre' disabled=disabled>Status: <i class='status-ikon fa'></i><span class='status'>Gjør dine endringer</span></button>
 
-echo "<h1>Slagverkbæregrupper</h1>";
-echo "<p>Se <a href='?side=forside'>hovedsiden</a> for å se neste gang du skal bære og hvilken gruppe du hører til</p>";
-echo "<p>Klikk og dra navn for å endre slagverkgruppe. Alle uten gruppe finner du i den nederste boksen.</p>";
-echo "<button class='button button-border lagre' disabled=disabled>Status: <i class='status-ikon fa'></i><span class='status'>Gjør dine endringer</span></button>";
+<div class='clearfix'></div>
+<?php if (tilgang_endre()) { ?>
+<p>
+	<span class='gruppeleder'>GL = Gruppeleder</span>
+	<span class='hengerfeste'>H = Har tilgang til bil med hengefeste</span>
+</p>
+<?php } ?>
+<section class='slagverkgrupper'>
 
-echo "<div class='clearfix'></div>";
 
-echo "<section class='slagverkgrupper'>";
+<?php
 
-for($i = 1; $i < 10; $i++) {
-	if(!in_array($i, $gruppeIder)) {
-		echo formater_gruppe($i, Array());
+foreach($gruppeIder as $gruppeid) {
+	if(in_array($gruppeid, $gruppeIder)) {
+		echo formater_gruppe($gruppeid, $grupper[$gruppeid]);
+	} else {
+		echo formater_gruppe($gruppeid, Array());
 	}
 }
 
-// MÅ SORTERES INN I LISTA... FYLL INN BARE MANGLENDE MELLOM TOPP OG BUNN
-
-foreach($grupper as $gruppeid => $gruppe) {
-	echo formater_gruppe($gruppeid, $gruppe);
-}
-
-echo "<section class='gruppe add-gruppe button'>
-	<i class='ikon fa fa-plus'></i>
-	<p>Legg til ny gruppe</p>
-</section>";
-
-echo "</section>";
-echo "</article>";
-
 ?>
+	<section class='gruppe add-gruppe button'>
+		<i class='ikon fa fa-plus'></i>
+		<p>Legg til ny gruppe</p>
+	</section>
+
+	<section class='gruppe uplasserte' data-gruppe-id='uplasserte' data-drop-effect='all'>
+		<h2>Medlemmer uten gruppe</h2>
+		<ul class='hjelpere'>
+		<?php
+		if(empty($uplasserteMedlemmer)) {
+			echo "<li>Ingen. Alle er tildelt gruppe :)</li>";
+		} else {
+			foreach($uplasserteMedlemmer as $hjelper) {
+				echo "<li class='hjelper' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>" 
+				. $hjelper['fnavn'] . " " . $hjelper['enavn']
+				. "</li>";
+			}
+		}
+		?>
+		</ul>
+		</section>
+	</section>
+</article>
+
 <script type="text/javascript">
 
 function addEventlistenerToGroup(gruppe) {
@@ -89,22 +115,10 @@ var lagreknappStatus = function(isDisabled) {
 }
 
 var leggTilNyGruppe = function() {
-	console.log(eksisterendeGrupper);
-	var gruppeId = 1;
-	while(eksisterendeGrupper.indexOf(gruppeId) != -1) {
-		console.log("fant gruppeId: "+gruppeId);
-		gruppeId++;
+	var gruppeId = _.max(eksisterendeGrupper) + 1;
+	var template = <?php echo "\"".formater_gruppe("{{gruppeId}}", Array())."\""; ?>;
 
-		if(gruppeId > 30) {
-			break;
-		}
-	}
-
-	var nyGruppeHtml = "<section class='gruppe' data-gruppe-id='" + gruppeId + "' data-drop-effect='all'>";
-	nyGruppeHtml += "<h2>Gruppe " + gruppeId + "</h2>";
-	nyGruppeHtml += "<ul class='hjelpere'>";
-	nyGruppeHtml += "</ul>";
-	nyGruppeHtml += "</section>";
+	var nyGruppeHtml = template.replace(/{{gruppeId}}/g, gruppeId);
 
 	$(".add-gruppe").before(nyGruppeHtml);
 	eksisterendeGrupper.push(gruppeId);
@@ -115,13 +129,21 @@ var leggTilNyGruppe = function() {
 var lagreSlagverkoppsett = function () {
 	statusIkon("fa-refresh", "Lagrer");
 	lagreknappStatus(false);
-	var data = {'endredeBrukereErIGruppe': endredeBrukereErIGruppe};
+
+	var data = {
+		'endredeBrukereErIGruppe': endredeBrukereErIGruppe,
+		'endredeBrukerSomErLeder': endredeBrukerSomErLeder
+	};
 
 	$.post("sider/intern/slagverkhjelp/lagre.php", data)
 		.success(function(message){
 			console.log("lagret", message);
 			statusIkon("fa-check", "Lagret");
 			lagreknappStatus(true);
+
+			// Endringer lagret, tøm buffer
+			endredeBrukerSomErLeder = {};
+			endredeBrukereErIGruppe = {};
 
 			_.delay(statusIkon, 2000, "", "Gjør dine endringer");
 		})
@@ -143,6 +165,47 @@ function handleDragStart(e) {
 	e.dataTransfer.setData('text/html', this.innerHTML);
 }
 
+function settInnElementIKorrektPosisjonIListen(e, gruppeEl, drattMedlemEl) {
+	var medlemsidForDrattElement = $(drattMedlemEl).data("medlemsid");
+	var hjelpere = gruppeEl.find(".hjelper").filter(function(index, hjelper) {
+		return $(hjelper).data("medlemsid") != medlemsidForDrattElement;
+	});
+	var top = e.pageY;
+	var hjelpereEl =  gruppeEl.find(".hjelpere");
+
+	if (hjelpere && hjelpere.length > 1) {
+		for(var i = 1; i<hjelpere.length; i++) {
+			var hjelper = $(hjelpere.get(i));
+			var hjelper_top = hjelper.position().top + (hjelper.height()/2);
+			var forrige_hjelper = $(hjelpere.get(i-1));
+			var forrige_hjelper_top = forrige_hjelper.position().top + (forrige_hjelper.height()/2);
+
+			if (forrige_hjelper_top < top && top < hjelper_top) {
+				// Dratt element skal mellom i-1 og i
+				forrige_hjelper.after(drattMedlemEl);
+				return false;
+			}
+
+			if(top < forrige_hjelper_top) {
+				// Dratt element er høyere opp enn første hjelper, legg øverst i lista som leder
+				hjelpereEl.prepend(drattMedlemEl);
+				return true;
+			}
+		}
+	}
+	if(hjelpere && hjelpere.length == 1) {
+		var hjelper = $(hjelpere.get(i));
+		var hjelper_top = hjelper.position().top + (hjelper.height()/2);
+		if(top < hjelper_top) {
+			// Dratt element er høyere opp enn første hjelper, legg øverst i lista som leder
+			hjelpereEl.prepend(drattMedlemEl);
+			return true;
+		}
+	}
+	hjelpereEl.append(drattMedlemEl);
+	return hjelpere.length == 0;  // Bare leder hvis gruppen var tom
+}
+
 function handleDragOver(e) {
 	if (e.stopPropagation) {
 		e.preventDefault(); // Stops some browsers from redirecting.
@@ -151,15 +214,24 @@ function handleDragOver(e) {
 		e.stopPropagation(); // Stops some browsers from redirecting.
 	}
 
-	if (drattMedlemEl != this && drattMedlemEl != null) {
-		var gruppeEl = $(this);
-		gruppeEl.find(".hjelpere").append(drattMedlemEl);
+	if (drattMedlemEl != null) {
 
-		var brukerId = parseInt(drattMedlemEl.dataset.medlemsid, 10);
-		var gruppeId = parseInt(gruppeEl.data("gruppe-id"), 10);
-		
-		if (!_.isNaN(brukerId) && !_.isNaN(gruppeId)) {
-			endredeBrukereErIGruppe[brukerId] = gruppeId;
+		if (drattMedlemEl != this) {
+			// Endre gruppe for medlem
+			var gruppeEl = $(this);
+
+
+			var brukerId = parseInt(drattMedlemEl.dataset.medlemsid, 10);
+			var gruppeId = parseInt(gruppeEl.data("gruppe-id"), 10);
+
+			var innsattSomLeder = settInnElementIKorrektPosisjonIListen(e, gruppeEl, drattMedlemEl);
+
+			if (!_.isNaN(brukerId) && !_.isNaN(gruppeId)) {
+				endredeBrukereErIGruppe[brukerId] = gruppeId;
+				if (innsattSomLeder) {
+					endredeBrukerSomErLeder[gruppeId] = brukerId;
+				}
+			}
 		}
 	}
   	return false;

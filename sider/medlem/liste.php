@@ -1,23 +1,6 @@
 <?php
     
-    //SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
-    //sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
-    if(er_logget_inn() && get('alle')==1){
-   		$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-    	medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE instrumentid LIKE instnr ORDER BY posisjon, 
-    	grleder  desc, status, fnavn";
-	}
-	elseif(er_logget_inn()){
-    	$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-    	medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid LIKE instnr 
-    	ORDER BY posisjon, grleder desc, status, fnavn";
-	}else{
-    	$sql="SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-    	medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND begrenset=0 AND 
-    	instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
-	};
-
-    $medlemmer = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
+  $medlemmer = hent_medlemmer(get('alle') == 1);
 
 	//spørring som henter ut medlemsid til alle styrevervene
 	$sql="SELECT vervid, tittel, medlemsid, epost FROM verv WHERE komiteid='3'";
