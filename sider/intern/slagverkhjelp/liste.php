@@ -38,7 +38,7 @@ $grupper = hent_slagverkhjelp();
 $redigeringsmodus = tilgang_endre();
 
 if ($redigeringsmodus) {
-	$gruppeIder = range(1, max(array_keys($grupper))); // Lag gruppeIder for alle grupper mellom 1 og høyeste id
+	$gruppeIder = range(1, max(1, max(array_keys($grupper)))); // Lag gruppeIder for alle grupper mellom 1 og høyeste id
 	$plasserteMedlemsIder = array_values($grupper);
 	$uplasserteMedlemmer = array_filter(hent_medlemmer(), function($medlemsid) {
 	    return !in_array($medlemsid, $plasserteMedlemsIder);
