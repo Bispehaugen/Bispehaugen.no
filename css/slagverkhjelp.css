@@ -27,13 +27,14 @@
 	padding: 1em;
 	width: 45%;
 	min-height: 150px;
-	cursor: default;
 	margin: 1em;
-
+}
+.rediger .slagverkgrupper .gruppe {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+	cursor: default;
 }
 
 .slagverkgrupper .gruppe.uplasserte {
@@ -55,7 +56,8 @@
 .slagverkgrupper .gruppe ul {
 	padding: 0;
 }
-.slagverkgrupper .add-gruppe {
+
+.rediger .slagverkgrupper .add-gruppe {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
@@ -68,7 +70,7 @@
 
 	cursor: pointer;
 }
-.slagverkgrupper .add-gruppe > * {
+.rediger .slagverkgrupper .add-gruppe > * {
 	font-size: 1.5em;
 	font-weight: bold;
 	margin: 0;
@@ -77,6 +79,8 @@
 
 .slagverkgrupper .hjelper {
 	margin: 1em;
+}
+.rediger .slagverkgrupper .hjelper {
 	cursor: move;
 
     -webkit-touch-callout: none;
@@ -101,7 +105,6 @@
 }
 
 /* Prevent the text contents of draggable elements from being selectable. */
-
 [draggable] {
   -moz-user-select: none;
   -khtml-user-select: none;
