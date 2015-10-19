@@ -150,16 +150,20 @@ function hent_komiteer_for_bruker() {
 	return hent_og_putt_inn_i_array($sql);
 }
 
-function hent_medlemmer($alleMedlemmer = false) {
+function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
 	//SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
 	//sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
 	if(er_logget_inn() && $alleMedlemmer){
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE instrumentid LIKE instnr ORDER BY posisjon, 
+		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE instrumentid = instnr ORDER BY posisjon, 
 		grleder  desc, status, fnavn";
+	} else if(er_logget_inn() && $hentStottemedlemmer){
+		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
+		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid = instnr 
+		ORDER BY posisjon, grleder desc, status, fnavn";
 	} elseif(er_logget_inn()){
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid LIKE instnr 
+		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instnr < 100 AND instrumentid = instnr 
 		ORDER BY posisjon, grleder desc, status, fnavn";
 	} else {
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
