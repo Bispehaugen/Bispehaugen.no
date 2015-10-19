@@ -48,6 +48,7 @@
 		$postnr=post('postnr');
 		$poststed=post('poststed');
 		$hengerfeste=post('hengerfeste');
+		$bil=post('bil');
 		$tlfmobil=post('tlfmobil');
 		$email=post('email');
 		$bakgrunn=post('bakgrunn');
@@ -129,6 +130,7 @@ Den gamle adressen var:
 					postnr = '$postnr',
 					poststed = '$poststed',
 					hengerfeste = '$hengerfeste',
+					bil = '$bil',
 					tlfmobil = '$tlfmobil',
 					email = '$email',
 					bakgrunn = '$bakgrunn',
@@ -147,9 +149,9 @@ Den gamle adressen var:
 			} else {
 				$sql="
 				INSERT INTO 
-				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, hengerfeste, tlfmobil, 
+				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, hengerfeste, bil, tlfmobil, 
 					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset, rettigheter)
-				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$hengerfeste','$tlfmobil',
+				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$hengerfeste','$bil','$tlfmobil',
 					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset','$rettigheter')";
 				mysql_query($sql);
 				$medlemsid = mysql_insert_id();
@@ -215,6 +217,7 @@ Den gamle adressen var:
 				<tr><td>Adresse:</td><td><input type='text' name='adresse' value='".kanskje($medlemmer, 'adresse')."'></td></tr>
 				<tr><td>Postnr:</td><td><input type='text' name='postnr' value='".kanskje($medlemmer, 'postnr')."'></td></tr>
 				<tr><td>Poststed:</td><td><input type='text' name='poststed' value='".kanskje($medlemmer, 'poststed')."'></td></tr>
+				<tr><td>Bil:</td><td><label><input type='checkbox' name='bil' value='1' ".((kanskje($medlemmer, 'bil')==1) ? "checked":"")."> Tilgang på bil</label></td></tr>
 				<tr><td>Hengerfeste:</td><td><label><input type='checkbox' name='hengerfeste' value='1' ".((kanskje($medlemmer, 'hengerfeste')==1) ? "checked":"")."> Tilgang på bil med hengerfeste</label></td></tr>
 				<tr><td>Mobilnummer:</td><td><input type='text' name='tlfmobil' value='".kanskje($medlemmer, 'tlfmobil')."'></td></tr>
 				<tr><td>E-post:</td><td><input type='text' name='email' value='".kanskje($medlemmer, 'email')."'></td></tr>

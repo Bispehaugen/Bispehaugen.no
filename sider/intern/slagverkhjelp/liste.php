@@ -30,8 +30,9 @@ function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus, $innlogget_id
 		} else {
 			$html .= brukerlenke($hjelper, Navnlengde::FulltNavn, false);
 		}
-		$html .= (($hjelper['hengerfeste']==1 && tilgang_endre()) ? " <span class='hengerfeste' title='Har tilgang på bil med hengerfeste'>(H)</span>":"")
-		. "</li>";
+		$html .= (($hjelper['hengerfeste']==1 && tilgang_endre()) ? " <span class='hengerfeste' title='Har tilgang på bil med hengerfeste'>(H)</span>":"");
+		$html .= (($hjelper['bil']==1 && tilgang_endre()) ? " <span class='bil' title='Har tilgang på bil'>(B)</span>":"");
+		$html .= "</li>";
 	}
 	$html .=  "</ul>";
 	$html .=  "</section>";
@@ -77,6 +78,7 @@ if ($redigeringsmodus) {
 <p>
 	<span class='gruppeleder'>GL = Gruppeleder</span>
 	<span class='hengerfeste'>H = Har tilgang til bil med hengefeste</span>
+	<span class='bil'>B = Har tilgang til bil</span>
 </p>
 <?php 
 if ($redigeringsmodus) {

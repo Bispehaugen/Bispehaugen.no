@@ -77,13 +77,20 @@ echo '
 	<p>
 		<strong>Kommer fra:</strong> <?php echo $medlem['kommerfra']; ?>
 	</p>
-	<?php } ?>
+<?php } ?>
+
+<?php if(isset($medlem['bil']) && $medlem['bil'] && tilgang_endre()){ ?>
+	<p>
+		<strong>Bil:</strong> Har tilgang på bil
+	</p>
+<?php } ?>
+
 
 <?php if(isset($medlem['hengerfeste']) && $medlem['hengerfeste'] && tilgang_endre()){ ?>
 	<p>
 		<strong>Hengefeste:</strong> Har tilgang på bil med hengerfeste
 	</p>
-	<?php } ?>
+<?php } ?>
 
 <?php if(er_logget_inn()) { ?>
 	<h4>Kontaktinfo</h4>

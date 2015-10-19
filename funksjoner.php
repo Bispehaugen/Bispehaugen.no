@@ -155,15 +155,15 @@ function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
 	//sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
 	if(er_logget_inn() && $alleMedlemmer){
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE instrumentid = instnr ORDER BY posisjon, 
+		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE instrumentid = instnr ORDER BY posisjon, 
 		grleder  desc, status, fnavn";
 	} else if(er_logget_inn() && $hentStottemedlemmer){
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid = instnr 
+		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid = instnr 
 		ORDER BY posisjon, grleder desc, status, fnavn";
 	} elseif(er_logget_inn()){
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instnr < 100 AND instrumentid = instnr 
+		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instnr < 100 AND instrumentid = instnr 
 		ORDER BY posisjon, grleder desc, status, fnavn";
 	} else {
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
@@ -212,7 +212,7 @@ function hent_brukerdata($medlemid = ""){
 
 	if(er_logget_inn()){
 		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, I.instrument, I.instrumentid, I.instrumentid as instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste
+					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste, bil
 				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	} else {
 		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, bakgrunn, kommerfra 

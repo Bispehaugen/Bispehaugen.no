@@ -679,6 +679,10 @@ migrering(37, "Legger til hengerfeste på medlemmer",
 migrering(38, "Legger til slagverk gruppeid på arranngement",
 	"ALTER TABLE `arrangement` ADD `slagverk` INT NOT NULL COMMENT 'gruppeid for slagverk' AFTER `hjelpere`;"
 );
+
+migrering(39, "Legger til bil på medlemmer",
+	"ALTER TABLE `medlemmer` ADD `bil` BOOLEAN NOT NULL DEFAULT FALSE ;"
+);
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
