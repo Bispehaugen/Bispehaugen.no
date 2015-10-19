@@ -5,3 +5,4 @@
 
 # Send ut kakebakeepost, en gang om dagen kl. 16
 0 16 * * * php /var/www/prod/skript/send_ut_kakebaker_epost.php
+10 16 * * * php /var/www/prod/skript/send_ut_slagverkhjelp_epost.php
