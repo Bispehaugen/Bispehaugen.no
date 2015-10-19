@@ -25,16 +25,31 @@ $endredeBrukereErIGruppe = post('endredeBrukereErIGruppe');
 $endredeBrukerSomErLeder = post('endredeBrukerSomErLeder');
 
 foreach($endredeBrukereErIGruppe as $brukerId => $gruppeId) {
-	$sql = "INSERT INTO slagverkhjelp (gruppeid, medlemsid) 
+	$gruppeId = mysql_real_escape_string($gruppeId);
+	$brukerId = mysql_real_escape_string($brukerId);
+
+	if ($gruppeId == 0) {
+		// Slett brukerplassering
+		$sql = "DELETE FROM slagverkhjelp WHERE medlemsid = $brukerId";
+		if(!mysql_query($sql)) {
+			logg("delete-slagverkhjelpere", $sql." | ".mysql_error());
+			die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
+		}
+	} else {
+		$sql = "INSERT INTO slagverkhjelp (gruppeid, medlemsid) 
 			VALUES ($gruppeId, $brukerId)
 			ON DUPLICATE KEY UPDATE gruppeid=$gruppeId";
-	if(!mysql_query($sql)) {
-		logg("update-slagverkhjelpere", $sql." | ".mysql_error());
-		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
+		if(!mysql_query($sql)) {
+			logg("update-slagverkhjelpere", $sql." | ".mysql_error());
+			die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
+		}
 	}
 }
 
 foreach($endredeBrukerSomErLeder as $gruppeId => $brukerId) {
+	$gruppeId = mysql_real_escape_string($gruppeId);
+	$brukerId = mysql_real_escape_string($brukerId);
+
 	$sql_fjern_gammel_leder = "UPDATE slagverkhjelp SET gruppeleder = 0 WHERE gruppeid = ".$gruppeId. " AND gruppeleder = 1";
 	if(!mysql_query($sql_fjern_gammel_leder)) {
 		logg("update-slagverkhjelpere", $sql_fjern_gammel_leder." | ".mysql_error());

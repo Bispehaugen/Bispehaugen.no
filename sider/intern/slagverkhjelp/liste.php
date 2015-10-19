@@ -7,7 +7,7 @@ if (!er_logget_inn()) {
 	die();
 }
 
-function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus) {
+function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus, $innlogget_id) {
 	$html .= "<section class='gruppe med-leder' ";
 	if($redigeringsmodus) {
 		$html .= "data-gruppe-id='".$gruppeid."' data-drop-effect='all'";
@@ -16,7 +16,11 @@ function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus) {
 	$html .=  "<h2>Gruppe " . $gruppeid . "</h2>";
 	$html .=  "<ul class='hjelpere'>";
 	foreach($medlemmer as $hjelper) {
-		$html .=  "<li class='hjelper'";
+		$html .=  "<li class='hjelper";
+		if ($hjelper['medlemsid'] == $innlogget_id) {
+			$html .= " innlogget-bruker";
+		}
+		$html .= "'";
 		if($redigeringsmodus) {
 			$html .= " draggable='true' data-medlemsid='".$hjelper['medlemsid']."'";
 		}
@@ -33,6 +37,8 @@ function formater_gruppe($gruppeid, $medlemmer, $redigeringsmodus) {
 	$html .=  "</section>";
 	return $html;
 }
+
+$innlogget_id = innlogget_bruker()['medlemsid'];
 
 $grupper = hent_slagverkhjelp();
 $redigeringsmodus = tilgang_endre();
@@ -90,14 +96,14 @@ if ($redigeringsmodus) {
 if ($redigeringsmodus) {
 	foreach($gruppeIder as $gruppeid) {
 		if(in_array($gruppeid, $gruppeIder)) {
-			echo formater_gruppe($gruppeid, $grupper[$gruppeid], $redigeringsmodus=true);
+			echo formater_gruppe($gruppeid, $grupper[$gruppeid], $redigeringsmodus=true, $innlogget_id);
 		} else {
-			echo formater_gruppe($gruppeid, Array(), $redigeringsmodus=true);
+			echo formater_gruppe($gruppeid, Array(), $redigeringsmodus=true, $innlogget_id);
 		}
 	}
 } else {
 	foreach($grupper as $gruppeid => $gruppe) {
-		echo formater_gruppe($gruppeid, $grupper[$gruppeid], $redigeringsmodus=false);
+		echo formater_gruppe($gruppeid, $grupper[$gruppeid], $redigeringsmodus=false, $innlogget_id);
 	}
 }
 
@@ -108,7 +114,7 @@ if ($redigeringsmodus) {
 		<p>Legg til ny gruppe</p>
 	</section>
 
-	<section class='gruppe uplasserte' data-gruppe-id='uplasserte' data-drop-effect='all'>
+	<section class='gruppe uplasserte' data-gruppe-id='0' data-drop-effect='all'>
 		<h2>Medlemmer uten gruppe</h2>
 		<ul class='hjelpere'>
 		<?php
@@ -116,7 +122,9 @@ if ($redigeringsmodus) {
 			echo "<li>Ingen. Alle er tildelt gruppe :)</li>";
 		} else {
 			foreach($uplasserteMedlemmer as $hjelper) {
-				echo "<li class='hjelper' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>" 
+				echo "<li class='hjelper" . 
+				(($hjelper['medlemsid'] == $innlogget_id) ? " innlogget-bruker" : "")
+				. "' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>" 
 				. $hjelper['fnavn'] . " " . $hjelper['enavn']
 				. "</li>";
 			}
@@ -176,7 +184,6 @@ var lagreSlagverkoppsett = function () {
 
 	$.post("sider/intern/slagverkhjelp/lagre.php", data)
 		.success(function(message){
-			console.log("lagret", message);
 			statusIkon("fa-check", "Lagret");
 			lagreknappStatus(true);
 
@@ -253,23 +260,20 @@ function handleDragOver(e) {
 		e.stopPropagation(); // Stops some browsers from redirecting.
 	}
 
-	if (drattMedlemEl != null) {
-
-		if (drattMedlemEl != this) {
-			// Endre gruppe for medlem
-			var gruppeEl = $(this);
+	if (drattMedlemEl != null && drattMedlemEl != this) {
+		// Endre gruppe for medlem
+		var gruppeEl = $(this);
 
 
-			var brukerId = parseInt(drattMedlemEl.dataset.medlemsid, 10);
-			var gruppeId = parseInt(gruppeEl.data("gruppe-id"), 10);
+		var brukerId = parseInt(drattMedlemEl.dataset.medlemsid, 10);
+		var gruppeId = parseInt(gruppeEl.data("gruppe-id"), 10);
 
-			var innsattSomLeder = settInnElementIKorrektPosisjonIListen(e, gruppeEl, drattMedlemEl);
+		var innsattSomLeder = settInnElementIKorrektPosisjonIListen(e, gruppeEl, drattMedlemEl);
 
-			if (!_.isNaN(brukerId) && !_.isNaN(gruppeId)) {
-				endredeBrukereErIGruppe[brukerId] = gruppeId;
-				if (innsattSomLeder) {
-					endredeBrukerSomErLeder[gruppeId] = brukerId;
-				}
+		if (!_.isNaN(brukerId) && !_.isNaN(gruppeId)) {
+			endredeBrukereErIGruppe[brukerId] = gruppeId;
+			if (innsattSomLeder) {
+				endredeBrukerSomErLeder[gruppeId] = brukerId;
 			}
 		}
 	}
