@@ -683,6 +683,10 @@ migrering(38, "Legger til slagverk gruppeid på arranngement",
 migrering(39, "Legger til bil på medlemmer",
 	"ALTER TABLE `medlemmer` ADD `bil` BOOLEAN NOT NULL DEFAULT FALSE ;"
 );
+
+migrering(40, "Legg til medlemsid for varsling",
+	"ALTER TABLE `varsling` ADD `medlemsid` INT NOT NULL AFTER `type`;"
+);
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

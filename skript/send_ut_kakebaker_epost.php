@@ -50,7 +50,7 @@ Med vennlig hilsen
 Styret";
 
 	if(epost($to, $replyto, $subject, $message)) {
-		$sql_varling = "INSERT INTO varsling (arrid, type, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", '".date("Y-m-d H:i:s")."')";
+		$sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . " '".date("Y-m-d H:i:s")."')";
 		mysql_query($sql_varling);
 	}
 }
