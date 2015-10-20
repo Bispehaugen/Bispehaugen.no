@@ -458,7 +458,7 @@ function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = fa
 			break;
 		case Navnlengde::Fornavn:
 		default:
-			$html .= "<span>". $bruker['fnavn'] ."</span>";
+			$html .= "<span title='".$bruker['fnavn'] ." ". $bruker['enavn'] ."'>". $bruker['fnavn'] ."</span>";
 			break;
 	}
 	$html .= "";

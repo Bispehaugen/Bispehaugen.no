@@ -46,6 +46,17 @@ if(get('alle')==0){
 if (er_logget_inn()) {
 	$innlogget_bruker_id = innlogget_bruker()['medlemsid'];
 	$innlogget_brukers_slagverkergruppe = hent_slagverkgruppe_for_medlem($innlogget_bruker_id)['gruppeid'];
+
+	$kakebakere = Array();
+	$kakebakerIder = Array();
+
+	foreach($aktiviteter as $aktivitet){
+		$kakebaker = $aktivitet['kakebaker'];
+		if(!empty($kakebaker)) {
+			array_push($kakebakerIder, $kakebaker);
+		}
+	}
+	$kakebakere = hent_brukerdata($kakebakerIder);
 }
 
 #Det som printes på sida
@@ -53,6 +64,7 @@ echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th>";
 if(er_logget_inn()) {
 		echo "<th>Bæregruppe:</th>";
+		echo "<th>Kakebaker:</th>";
 }
 echo "<th colspan='2'>Sted:</th></tr></thead>";
 
@@ -67,20 +79,20 @@ $forrigeAktivitetesAar = date("Y");
 	}
 
 	echo "<tr>";
-		echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
+	echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
 
-		echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
+	echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
 	
 	#hvis tildato er satt eller lik
-		if((dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start']))||($aktivitet['slutt']=="0000-00-00 00:00:00")){
+	if((dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start']))||($aktivitet['slutt']=="0000-00-00 00:00:00")){
 		echo "";
-	}else{
-			echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
+	} else {
+		echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
 	}
 	echo "</td>";
 
-		if($aktivitet['start']=="0000-00-00 00:00:00"){
-			echo "<td></td>";
+	if($aktivitet['start']=="0000-00-00 00:00:00"){
+		echo "<td></td>";
 	}else{
 		echo "<td>".strftime("%H:%M", strtotime($aktivitet['start']))."</td>";
 	}
@@ -94,19 +106,34 @@ $forrigeAktivitetesAar = date("Y");
 	}
 	echo "<td><a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
 		
-		if(er_logget_inn()) {
-			echo "<td>";
-			$slagverk = $aktivitet['slagverk'];
-			if (!empty($slagverk)) {
-				echo "<a href='?side=intern/slagverkhjelp/liste'";
-				if($slagverk == $innlogget_brukers_slagverkergruppe) {
-					echo " class='din-gruppe' title='Din bæregruppe'";
-				}
-				echo ">Gruppe ".$slagverk."</a>";
+	if(er_logget_inn()) {
+		echo "<td>";
+		$slagverk = $aktivitet['slagverk'];
+		if (!empty($slagverk)) {
+			echo "<a href='?side=intern/slagverkhjelp/liste'";
+			if($slagverk == $innlogget_brukers_slagverkergruppe) {
+				echo " class='din-gruppe' title='Din bæregruppe'";
 			}
-			echo "</td>";
+			echo ">Gruppe ".$slagverk."</a>";
 		}
-		echo "<td>".$aktivitet['sted']."</td>";
+		echo "</td>";
+
+		echo "<td>";
+		$kakebaker = $aktivitet['kakebaker'];
+		if (!empty($kakebaker)) {
+			echo "<span'";
+			if($kakebaker == $innlogget_bruker_id) {
+				echo " class='din-gruppe' title='Din kakebaketur'";
+			}
+			echo ">".brukerlenke($kakebakere[$kakebaker], Navnlengde::Fornavn, false)."</span>";
+		}
+		echo "</td>";
+
+
+	}
+
+
+	echo "<td>".$aktivitet['sted']."</td>";
 
 	#Viser endre/slettkapper hvis man er admin
 	if(tilgang_endre()){
