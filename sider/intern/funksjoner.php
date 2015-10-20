@@ -29,14 +29,14 @@ function antall_noter($konsertid) {
 
 function neste_kakebaking() {
 	$bruker = hent_brukerdata();
-	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = '".$bruker['medlemsid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` DESC LIMIT 1";
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = '".$bruker['medlemsid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
 	return hent_og_putt_inn_i_array($sql);
 }
 
 function neste_kakebakere() {
 	$sql = "SELECT arrid, tittel, dato, kakebaker
 			FROM arrangement
-			WHERE kakebaker > 0 AND slettet = 0 AND slutt > NOW() ORDER BY `start` DESC";
+			WHERE kakebaker > 0 AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC";
 
 	$arrangementer = hent_og_putt_inn_i_array($sql, "arrid");
 
@@ -52,6 +52,6 @@ function neste_slagverkhjelp() {
 	if(empty($gruppe)) {
 		return Array();
 	}
-	$sql = "SELECT arrid, tittel, dato, oppmoetetid, slagverk FROM `arrangement` WHERE slagverk = '".$gruppe['gruppeid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` DESC LIMIT 1";
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid, slagverk FROM `arrangement` WHERE slagverk = '".$gruppe['gruppeid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
 	return hent_og_putt_inn_i_array($sql);
 }
