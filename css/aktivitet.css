@@ -36,3 +36,8 @@
 	margin: 1em;
 	color: rgba(34, 41, 51, 1);
 }
+
+.aktivitetsliste a.din-gruppe {
+	color: red !important;
+	cursor: help;
+}
