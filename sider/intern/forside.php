@@ -18,10 +18,10 @@
 		include_once "widgets/neste_slagverkhjelp.php";
 	?>
 
-	<h2>Mer som kommer:</h2>
+	<h2>Praktiske lenker</h2>
 	<section>
-		<!--<p>Du skal ha med kake den 4. september kl. 19. Det er bare 15 dager til!</p> //-->
-	<h3>Kjøre med henger?</h3>
+	<h3><a href="?side=intern/kakeliste">Kakebakerliste</a></h3>
+	<h3><a href="?side=intern/slagverkhjelp/liste">Slagverkbæreliste</a></h3>
 	
 	<?php
 		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();

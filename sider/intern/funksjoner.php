@@ -33,6 +33,19 @@ function neste_kakebaking() {
 	return hent_og_putt_inn_i_array($sql);
 }
 
+function neste_kakebakere() {
+	$sql = "SELECT arrid, tittel, dato, kakebaker
+			FROM arrangement
+			WHERE kakebaker > 0 AND slettet = 0 AND slutt > NOW() ORDER BY `start` DESC";
+
+	$arrangementer = hent_og_putt_inn_i_array($sql, "arrid");
+
+	foreach($arrangementer as $arrid => $arrangement) {
+		$arrangementer[$arrid]['kakebaker'] = hent_brukerdata($arrangement['kakebaker']);
+	}
+	return $arrangementer;
+}
+
 function neste_slagverkhjelp() {
 	$bruker = hent_brukerdata();
 	$gruppe = hent_slagverkgruppe_for_medlem($bruker['medlemsid']);
