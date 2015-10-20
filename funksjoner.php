@@ -182,7 +182,7 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	if ($query === false) {
 		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"]."', query:'".$_SERVER['QUERY_STRING']."', sql:'".$sql."'}");
 		
-		if (tilgang_admin()) {
+		if (tilgang_full()) {
 			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"]."?".$_SERVER['QUERY_STRING'].", sql: ".$sql);
 		}
 		die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
