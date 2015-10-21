@@ -238,6 +238,7 @@ Den gamle adressen var:
 						<div id='bytt-bilde'>
 							<img src='".thumb(kanskje($medlemmer, 'foto'), 200)."' />
 							<i class='ikon fa fa-edit'></i>
+							<div class='spinner'><i class='fa fa-spinner fa-spin'></i></div>
 						</div>
 						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vises kun for innloggede</label></p>
 					</td>
@@ -286,10 +287,12 @@ flow.assignBrowse(document.getElementById('bytt-bilde'));
 flow.assignDrop($('.dropzone'));
 
 var preview = $("#bytt-bilde img, .liten.profilbilde");
+var spinner = $("#bytt-bilde .spinner");
 
 flow.on('fileAdded', function(fileinfo, event){
 
 	// Legg til upload greie
+	spinner.show();
 
 	var reader = new FileReader();
 	reader.onload = function (e) {
@@ -310,7 +313,7 @@ flow.on('fileSuccess', function(file,message){
 	
 	flow.removeFile(file);
 
-	// fjern spinner?
+	spinner.hide();
 });
 
 flow.on('fileError', function(file){

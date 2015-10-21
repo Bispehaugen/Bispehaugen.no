@@ -210,6 +210,14 @@ li.profilbilde {
 	border: 1px solid black;
 }
 
+#bytt-bilde .spinner {
+	display: none;
+	position: absolute;
+	left: 35%;
+	bottom: 25%;
+	font-size: 4em;
+}
+
 .feilmeldingsliste .feil {
 	margin: 1em;
 	border: 1px solid white;
