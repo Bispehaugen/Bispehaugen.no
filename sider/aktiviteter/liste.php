@@ -61,12 +61,14 @@ if (er_logget_inn()) {
 
 #Det som printes på sida
 echo "<table class='aktivitetsliste'>
-<thead><tr><th colspan=2>Dato:</th><th>Tid:</th><th>Arrangement:</th>";
+<thead><tr><th colspan=2>Dato:</th>
+<th>Tid:</th><th>Arrangement:</th>
+<th colspan='2'>Sted:</th>";
 if(er_logget_inn()) {
 		echo "<th>Bæregruppe:</th>";
 		echo "<th>Kakebaker:</th>";
 }
-echo "<th colspan='2'>Sted:</th></tr></thead>";
+echo "</tr></thead>";
 
 $forrigeAktivitetesAar = date("Y");
 
@@ -106,6 +108,8 @@ $forrigeAktivitetesAar = date("Y");
 	}
 	echo "<td><a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
 		
+	echo "<td>".$aktivitet['sted']."</td>";
+
 	if(er_logget_inn()) {
 		echo "<td>";
 		$slagverk = $aktivitet['slagverk'];
@@ -131,9 +135,6 @@ $forrigeAktivitetesAar = date("Y");
 
 
 	}
-
-
-	echo "<td>".$aktivitet['sted']."</td>";
 
 	#Viser endre/slettkapper hvis man er admin
 	if(tilgang_endre()){
