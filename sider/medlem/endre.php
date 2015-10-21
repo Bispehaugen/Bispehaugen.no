@@ -312,6 +312,7 @@ flow.on('fileSuccess', function(file,message){
 
 	// fjern spinner?
 });
+
 flow.on('fileError', function(file){
 	console.log("Filopplastingen feilet med fil: ", file);
 	
