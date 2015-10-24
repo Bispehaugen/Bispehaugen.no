@@ -71,10 +71,9 @@ foreach($medlemmer as $medlem){
 				echo "<span class='telefon'><a href='tel:".$telefonnummer."'><i class='fa fa-phone'></i>".$telefonnummer."</a></span>";
 			}
 		}
+		//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
+		echo "<div class='clearfix'></div>";
+		echo "</section>";
 	}
-
-	//hvis brukeren er admin kommer det opp endre/slette knapp på alle medlemmer
-	echo "<div class='clearfix'></div>";
-	echo "</section>";
 }    
 echo "</section>";
