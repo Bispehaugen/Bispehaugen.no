@@ -8,7 +8,7 @@
     </p>
 
     <p>
-	Jan Viggo Øwre har bachelor i utøvende tuba fra Universitetet i Stavanger og Universitetet i Bergen. 2009-2010 var han vernepliktig musiker i Forsvarets Musikkorps Vestlandet (nå Sjøforsvarets Musikkorps), og har siden 2010 vært ansatt i Alta Kulturskole som messinglærer og korpsdirigent. En av hovedoppgavene her har vært å dirigere skole- og voksenkorps i Alta.
+	Vår nye dirigent i 2015 er Jan Viggo Øwre. Jan Viggo har bachelor i utøvende tuba fra Universitetet i Stavanger og Universitetet i Bergen. 2009-2010 var han vernepliktig musiker i Forsvarets Musikkorps Vestlandet (nå Sjøforsvarets Musikkorps), og har siden 2010 vært ansatt i Alta Kulturskole som messinglærer og korpsdirigent. En av hovedoppgavene her har vært å dirigere skole- og voksenkorps i Alta.
 	</p>
 <p>
 I Alta tok han praktisk-pedagogisk utdanning ved Universitetet i Tromsø og skal nå begynne på master i musikkvitenskap ved NTNU.
