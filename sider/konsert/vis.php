@@ -13,7 +13,7 @@ if(has_get('arrid')) {
 	}
 }
 
-$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";
+$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted, aktiv FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";
 
 $konsert = hent_og_putt_inn_i_array($sql);
 
