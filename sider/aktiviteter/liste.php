@@ -63,10 +63,13 @@ if (er_logget_inn()) {
 echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th>
 <th>Tid:</th><th>Arrangement:</th>
-<th colspan='2'>Sted:</th>";
+<th>Sted:</th>";
 if(er_logget_inn()) {
-		echo "<th>Bæregruppe:</th>";
+		echo "<th>Bæring:</th>";
 		echo "<th>Kakebaker:</th>";
+}
+if(tilgang_endre()) {
+	echo "<th></th>";
 }
 echo "</tr></thead>";
 
@@ -117,8 +120,10 @@ $forrigeAktivitetesAar = date("Y");
 			echo "<a href='?side=intern/slagverkhjelp/liste'";
 			if($slagverk == $innlogget_brukers_slagverkergruppe) {
 				echo " class='din-gruppe' title='Din bæregruppe'";
+			} else {
+				echo " title='Gruppe ".$slagverk."'";
 			}
-			echo ">Gruppe ".$slagverk."</a>";
+			echo ">G".$slagverk."</a>";
 		}
 		echo "</td>";
 
