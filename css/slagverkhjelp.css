@@ -89,7 +89,7 @@
 
 .slagverkgrupper .hjelper.innlogget-bruker {
 	background: white;
-	color: rgba(34, 41, 51, 1);
+	color: rgba(34, 41, 51, 1) !important;
 	padding: 0.3em 0.5em;
 }
 
