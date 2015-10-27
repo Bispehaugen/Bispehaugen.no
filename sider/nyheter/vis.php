@@ -15,7 +15,6 @@ if(er_logget_inn() === false){
 
 $nyhet = hent_og_putt_inn_i_array($sql);
 
-print_r($nyhet);
 if ($nyhet['type'] == "nestekonsert") {
 	// Konsert, redirecte til konsert/vis
 	header('Location: ?side=konsert/vis&id='.$id);
