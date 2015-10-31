@@ -19,3 +19,11 @@ foreach($arrangementer as $arrangement) {
 }
 ?>
 </table>
+
+<?php
+
+if(tilgang_endre()) {
+?>
+	<p>Gå inn for å endre en aktivitet for å legge til kakebakere</p>
+<?php
+}
