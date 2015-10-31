@@ -25,19 +25,16 @@
 		}
 		
 	echo '
-		<article class="box news">
-          '.fancyDato($nyhet['tid']).'
-          <div class="bilde-og-innhold">
-            <div class="bilde">
-                <img src="'.thumb($bilde, 125).'" />
-            </div>
-            <div class="innhold">
-                <h4><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'">'.$nyhet['overskrift'].'</a></h4>
-                <p class="ingress">'.$nyhet['ingress'].'</p>
-            </div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="neste-pil" title="Les nyhet"><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
+		<article class="box news" onclick="location.href=\'?side=nyheter/vis&id='.$nyhet['nyhetsid'].'\'">
+	        <div class="bilde">
+	            <img src="'.thumb($bilde, 125).'" />
+	        </div>
+	        <div class="innhold">
+	            <h4>'.$nyhet['overskrift'].'</h4>
+	            <p class="ingress">'.$nyhet['ingress'].'</p>
+	        </div>
+      		'.fancyDato($nyhet['tid']).'
         </article>
 		';
+        //<div class="neste-pil" title="Les nyhet"><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
 	}

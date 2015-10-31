@@ -63,12 +63,12 @@ if (er_logget_inn()) {
 echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th>
 <th>Tid:</th><th>Arrangement:</th>
-<th>Sted:</th>";
+<th class='sted' colspan='2'>Sted:</th>";
 if(er_logget_inn()) {
-		echo "<th>Bæring:</th>";
-		echo "<th>Kakebaker:</th>";
+	echo "<th>Bæring:</th>";
+	echo "<th>Kakebaker:</th>";
 }
-if(tilgang_endre()) {
+if(tilgang_endre()){
 	echo "<th></th>";
 }
 echo "</tr></thead>";
@@ -84,7 +84,7 @@ $forrigeAktivitetesAar = date("Y");
 	}
 
 	echo "<tr>";
-	echo "<td>".strftime("%a", strtotime($aktivitet['start']))."</td>";
+	echo "<td class='day-of-week'>".strftime("%a", strtotime($aktivitet['start']))."</td>";
 
 	echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
 	
@@ -109,9 +109,12 @@ $forrigeAktivitetesAar = date("Y");
 		$aktivitetstype = "konsert";
 		$id_url = "id=".hent_konsert_nyhetsid($aktivitet['arrid']);
 	}
-	echo "<td><a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a></td>";
+	echo "<td>
+			<a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a>
+			<p class='inline-sted'>".$aktivitet['sted']."</p>
+		  </td>";
 		
-	echo "<td>".$aktivitet['sted']."</td>";
+	echo "<td class='sted'>".$aktivitet['sted']."</td>";
 
 	if(er_logget_inn()) {
 		echo "<td>";
@@ -137,8 +140,6 @@ $forrigeAktivitetesAar = date("Y");
 			echo ">".brukerlenke($kakebakere[$kakebaker], Navnlengde::Fornavn, false)."</span>";
 		}
 		echo "</td>";
-
-
 	}
 
 	#Viser endre/slettkapper hvis man er admin
@@ -150,9 +151,9 @@ $forrigeAktivitetesAar = date("Y");
 		echo " / ";
 		echo "<a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a>";
 
-		echo "</td></tr>";
-	}else{
-		echo "<td></td></tr>";
+		echo "</td>";
 	}
+
+	echo "</tr>";
 }
 echo "</table>";

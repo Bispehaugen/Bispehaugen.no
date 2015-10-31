@@ -545,16 +545,48 @@ input.error {
 		}
 	}
 
-  .box {
-    clear: left;
-    position: relative;
-    padding: 1em 0em;
-  }
-  
-  .box img {
-  	max-width: 100%;
+  @media screen and (min-width: 699px) { 
+    .nyhet img, .konsert img {
+      max-height: initial;
+    }
+
+    .box {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      flex-flow: row nowrap;
+      align-content: stretch;
+
+      position: 
+    }
+
+    .box > {
+      margin: auto;
+    }
   }
 
+  @media screen and (max-width: 700px) { 
+    .box {
+      position: relative;
+    }
+    .box .fancy-date {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+    }
+    .box .innhold {
+      padding: 1em;
+    }
+  }
+
+  .box {
+    padding: 1em 0em;
+    cursor: pointer;
+  }
+  
   .box:nth-child(odd) {
   	background: #29313D;
   }
@@ -564,59 +596,70 @@ input.error {
     color: rgba(255,255,255,0.8);
     text-shadow: 0 1px 0 #000;
     text-align: center;
-    float: left;
   }
 
     .fancy-date .month, .fancy-date .weekday {
-        font-size: 1.2em;
-        text-transform: uppercase;
+      font-size: 1.2em;
+      text-transform: uppercase;
     }
 
     .fancy-date .day {
-        font-size: 2em;
-        font-weight: bold;
-        margin: -5px 0;
+      font-size: 2em;
+      font-weight: bold;
+      margin: -5px 0;
     }
     .konsert .fancy-date .day {
       margin: 0;
     }
 
     .fancy-date .year {
-        font-size: 0.9em;
-        font-weight: bold;
+      font-size: 0.9em;
+      font-weight: bold;
     }
 
-  .box .bilde-og-innhold {
-    padding-left: 5em;
-    width: 100%;
-    padding-right: 4em;
+  .box .fancy-date {
+    flex-grow: 1;
+    padding: 0.5em 1em;
+    max-width: 5em;
+    min-width: 5em;
   }
 
   .box .bilde {
-    float: left;
-    width: 200px;
+    display: inline-block;
+    min-width: 130px;
+    max-width: 130px;
+    margin-right: 2em;
+    flex-grow: 1;
     text-align: center;
   }
 
   .box .bilde img {
-    background-color: white;
-    border: 1px solid #c6c6c6;
     max-width: 125px;
-    padding: 1px;
+    max-height: 125px;
+    background-color: white;
+    border: 2px solid white;
+    margin: auto;
   }
 
   .box .innhold {
-    width: 100%;
-    padding-left: 200px;
     vertical-align: top;
+    flex-grow: 5;
+    word-break: break-word;
   }
 
   .box .innhold h4 {
-      margin: 0px;
+    margin: 0px;
   }
 
   .box .innhold .ingress {
     line-height: 1.5em;
+  }
+
+  .box .innhold .ingress img {
+    border: 2px solid white;
+    display: block;
+    margin: 1em 0em;
+    max-width: 100%;
   }
 
   .box .neste-pil {
@@ -635,16 +678,6 @@ input.error {
   @media screen and (max-width: 799px) {
     .side.forside {
       padding: 3em 0em;
-    }
-
-    .box .bilde {
-      width: 100%;
-    }
-
-    .box .innhold {
-        padding-left: 0px;
-        padding-top: 1em;
-        clear: left;
     }
   }
 

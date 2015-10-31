@@ -19,18 +19,14 @@ foreach($konserter as $konsert){
 	
 echo '
 	<article class="box konsert">
-      '.fancyDato($konsert['konsert_tid']).'
-      <div class="bilde-og-innhold">
-        <div class="bilde">
-            <img src="'.thumb($bilde, 125).'" />
-        </div>
-        <div class="innhold">
-            <h4>'.$konsert['overskrift'].'</h4>
-            <p class="ingress">'.$konsert['ingress'].'</p>
-        </div>
-        <div class="clearfix"></div>
+      <div class="bilde">
+          <img src="'.thumb($bilde, 125).'" />
       </div>
-      <div class="neste-pil" title="Les nyhet"><a href="?side=konsert/vis&id='.$konsert['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
+      <div class="innhold">
+          <h4>'.$konsert['overskrift'].'</h4>
+          <p class="ingress">'.$konsert['ingress'].'</p>
+      </div>
+      '.fancyDato($konsert['konsert_tid']).'
     </article>
 	';
 }

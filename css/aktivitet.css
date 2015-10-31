@@ -41,3 +41,19 @@
 	color: red !important;
 	cursor: help;
 }
+
+.no-touch .aktivitetsliste .inline-sted {
+	display: none;
+}
+
+.no-touch .aktivitetsliste .sted {
+	display: initial;
+}
+
+.aktivitetsliste .sted {
+	display: none;
+}
+
+.aktivitetsliste .inline-sted {
+	font-size: 0.8em;
+}

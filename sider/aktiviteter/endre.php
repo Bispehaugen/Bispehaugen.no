@@ -8,6 +8,7 @@
 		header('Location: ?side=aktiviteter/liste');
 		die();
 	}
+	include_once "sider/aktiviteter/funksjoner.php";
 	include_once "sider/intern/slagverkhjelp/funksjoner.php";
 
 	$aktiviteter = Array();
@@ -239,4 +240,75 @@ echo "
 			<input type='hidden' name='id' value='".$arrid."'>
 		</form> 
 	";
+
 ?>
+<section>
+<h2>Legg til noter til arrangement</h2>
+
+<link href="css/select2.css" type="text/css" rel="stylesheet">
+<script type='text/javascript' src='js/select2.min.js'></script>
+<script type='text/javascript'>
+var valgtMappe = null;
+
+function formatResult (mappe) {
+	if (mappe.loading) return mappe.text;
+
+	return "<span data-mappe-id='" + mappe.id + "'>" + mappe.text + "</span>";
+}
+
+function formatResultSelection (mappe) {
+	valgtMappe = mappe;
+
+	return mappe.text;
+}
+
+function lagreNyNote() {
+	
+}
+
+$(function() {
+
+	$('.js-data-example-ajax').select2({
+	  ajax: {
+	    url: 'sider/dokumenter/sok.php',
+	    dataType: 'json',
+	    delay: 250,
+	    data: function (params) {
+	      return {
+	        sok: params.term, // search term
+	        type: 3, // Mappetype::Noter
+	        page: params.page
+	      };
+	    },
+	    processResults: function (data, page) {
+	      // parse the results into the format expected by Select2.
+	      // since we are using custom formatting functions we do not need to
+	      // alter the remote JSON data
+	      console.log("process", data, page);
+	      return {
+	        results: _.map(data, function(mappe) {
+	            return { id: parseInt(mappe.id), text: mappe.text };
+	        })
+	      };
+	    },
+	    cache: true
+	  },
+	  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+	  minimumInputLength: 1,
+	  templateResult: formatResult, // omitted for brevity, see the source of this page
+	  templateSelection: formatResultSelection // omitted for brevity, see the source of this page
+	});
+	console.log("FERDIG");
+});
+</script>
+
+<select class='js-data-example-ajax'>
+  <option value='' selected='selected'>Klikk for å søke i noter</option>
+</select>
+<button>Legg til</button>
+
+<section class='sanger'>
+17. mai sanger
+</section>
+
+</section>
