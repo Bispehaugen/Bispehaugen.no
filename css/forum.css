@@ -213,6 +213,7 @@
 
 .forum-liste ul {
 	margin: 0;
+	padding: 0;
 	display: inline-block;
 	display: -webkit-flex;
 	display: flex;
@@ -222,7 +223,7 @@
 
 .forum-liste li {
 	display: inline-block;
-	padding: 0em 1em;
+	padding: 0.5em 1em;
 	margin: auto;
 }
 
