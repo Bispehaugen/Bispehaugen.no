@@ -63,7 +63,7 @@ if (er_logget_inn()) {
 echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th>
 <th>Tid:</th><th>Arrangement:</th>
-<th class='sted' colspan='2'>Sted:</th>";
+<th class='sted'>Sted:</th>";
 if(er_logget_inn()) {
 	echo "<th>Bæring:</th>";
 	echo "<th>Kakebaker:</th>";
