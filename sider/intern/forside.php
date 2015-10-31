@@ -22,6 +22,7 @@
 	<section>
 	<h3><a href="?side=intern/kakeliste">Kakebakerliste</a></h3>
 	<h3><a href="?side=intern/slagverkhjelp/liste">Slagverkbæreliste</a></h3>
+	<h3><a href="?side=kontakt">Styret</a></h3>
 	
 	<?php
 		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();
