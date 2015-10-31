@@ -47,7 +47,7 @@
 }
 
 .no-touch .aktivitetsliste .sted {
-	display: initial;
+	display: table-cell;
 }
 
 .aktivitetsliste .sted {

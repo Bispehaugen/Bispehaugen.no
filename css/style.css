@@ -245,18 +245,6 @@ nav, .nav-container {
   z-index: 1000;
 }
 
-nav {
-  position: fixed;
-}
-
-.forside nav, .forside .nav-container {
-  height: 113px;
-}
-
-.forside nav {
-  position: absolute;
-}
-
   .nav-container a {
     color: #777;
   }
@@ -297,6 +285,10 @@ nav {
   }
 
   @media screen and (min-width: 800px) {
+    nav {
+      position: fixed;
+    }
+    
     .mobil {
       display: none;
     }
@@ -328,10 +320,6 @@ nav {
       -webkit-border-radius: 0px;
       -moz-border-radius: 0px;
       border-radius: 0px;
-    }
-
-    nav, .nav-container {
-      height: 3.5em;
     }
 
     nav.top {
