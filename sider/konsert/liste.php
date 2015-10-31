@@ -18,7 +18,7 @@ foreach($konserter as $konsert){
 	}
 	
 echo '
-	<article class="box konsert">
+	<article class="box konsert" onclick="location.href=\'?side=konsert/vis&id='.$konsert['id'].'\'">
       <div class="bilde">
           <img src="'.thumb($bilde, 125).'" />
       </div>
