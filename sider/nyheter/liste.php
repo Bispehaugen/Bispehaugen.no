@@ -36,5 +36,4 @@
       		'.fancyDato($nyhet['tid']).'
         </article>
 		';
-        //<div class="neste-pil" title="Les nyhet"><a href="?side=nyheter/vis&id='.$nyhet['nyhetsid'].'"><i class="fa fa-chevron-right"></i></a></div>
 	}
