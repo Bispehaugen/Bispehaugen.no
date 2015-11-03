@@ -72,14 +72,12 @@ function sok_i_notesett($sokestreng) {
 	}
 	
 	$notesett = hent_og_putt_inn_i_array($sql, $id_verdi="mappeid");
+	if (empty($notesett)) return Array();
 
-	$mappeider = "";
-	foreach($notesett as $mappeid => $ignore) {
-		$mappeider .= $mappeid.",";
-	}
-	if (empty($mappeider)) return Array();
-	$mapper = $sql = hent_mapper_sql(substr($mappeider, 0, -1), "id", Mappetype::Noter);
-	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+	$mappeider = implode(",", array_keys($notesett));
+
+	$mapper_sql = hent_mapper_sql($mappeider, "id", Mappetype::Noter);
+	return hent_og_putt_inn_i_array($mapper_sql, "id");
 }
 
 function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
@@ -103,7 +101,25 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	usort($mergedArray, function($a, $b) {
 	    return $b['tittel'] - $a['tittel'];
 	});
-	return $mergedArray;
+
+	$brukteIder = Array();
+	$filtrer_bort_duplikater_med_samme_id = function($mappeEllerFil) use (&$brukteIder) {
+		$navnInklusivId = "";
+		if (array_key_exists("mappenavn", $mappeEllerFil)) {
+			// Mappe
+			$navnInklusivId = $mappeEllerFil['mappenavn'];
+		} else {
+			// Fil
+			$navnInklusivId = $mappeEllerFil['filnavn'];
+		}
+		if (!array_key_exists($navnInklusivId, $brukteIder)) {
+			$brukteIder[$navnInklusivId] = $navnInklusivId;
+			return true;
+		}
+		return false;
+    };
+
+	return array_filter($mergedArray, $filtrer_bort_duplikater_med_samme_id);
 }
 
 function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {

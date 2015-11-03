@@ -687,6 +687,21 @@ migrering(39, "Legger til bil på medlemmer",
 migrering(40, "Legg til medlemsid for varsling",
 	"ALTER TABLE `varsling` ADD `medlemsid` INT NOT NULL AFTER `type`;"
 );
+
+migrering(41, "Key er reservert i mysql, endre til id",
+	"ALTER TABLE `noter_konsert` CHANGE `key` `id` INT(11) NOT NULL AUTO_INCREMENT;"
+);
+
+migrering(42, "Legger til mapper_arrangement for binding mellom",
+	"CREATE TABLE IF NOT EXISTS `mapper_arrangement` (
+	  `id` int(11) NOT NULL,
+	  `arrid` int(11) NOT NULL,
+	  `mappeid` int(11) NOT NULL
+	) DEFAULT CHARSET=latin1;",
+	"ALTER TABLE `mapper_arrangement`
+	 ADD PRIMARY KEY (`id`)"
+ );
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

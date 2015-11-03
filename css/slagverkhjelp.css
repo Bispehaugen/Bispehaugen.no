@@ -88,8 +88,8 @@
 }
 
 .slagverkgrupper .hjelper.innlogget-bruker {
-	background: white;
-	color: rgba(34, 41, 51, 1) !important;
+	background: green;
+	color: black;
 	padding: 0.3em 0.5em;
 }
 
