@@ -229,7 +229,7 @@ echo "<section class='soke-knapp legg-til-knapp'>
 		<section class='fa-stack fa-lg'>
 		  <i class='fa fa-search fa-stack-2x'></i>
 		</section>
-		<p>Søk i dokumenter</p>
+		<p>Søk</p>
 		</button>
 	</section>";
 }
