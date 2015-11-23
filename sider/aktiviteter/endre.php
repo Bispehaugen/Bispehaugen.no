@@ -152,7 +152,7 @@
 <?php 
 echo feilmeldinger($feilmeldinger);
 
-$gyldige_typer = Array("Øvelse", "Seminar", "Dugnad", "Sosialt", "Spilleoppdrag", "Møte", "Tur", "Annet");
+$gyldige_typer = Array("Øvelse", "Konsert", "Seminar", "Dugnad", "Sosialt", "Spilleoppdrag", "Møte", "Tur", "Annet");
 
 $aktivitetsdato = kanskje($aktiviteter, 'dato');
 $datoer = is_array($aktivitetsdato) ? $aktivitetsdato : Array(0 => $aktivitetsdato);
