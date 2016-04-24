@@ -138,6 +138,10 @@ li.profilbilde {
 	margin-top: 4em;
 }
 
+.styret-og-komiteer p {
+	margin-left: 1em;
+}
+
 .mobil.brukervalg .valg a {
 	border: 1px solid gray;
 	padding: 1em;
