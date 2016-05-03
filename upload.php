@@ -10,8 +10,6 @@ if ($tilkobling === false) {
 	exit ;
 }
 
-require_once './vendor/autoload.php';
-
 if(!er_logget_inn()) {
 	die("Du må være logget inn");
 }

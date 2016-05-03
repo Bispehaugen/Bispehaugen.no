@@ -2,6 +2,8 @@
 
 global $connection;
 
+require 'vendor/autoload.php';
+
 // Felles funksjoner som skal brukes mange plasser
 // Ellers legg ting på samme side
 
@@ -546,66 +548,36 @@ function hent_komiteer() {
 	}, ARRAY_FILTER_USE_BOTH);
 }
 
-function epost_gammel($to,$replyto,$subject,$message,$extra_header = "") {
-	$eol = PHP_EOL;
-
-	$headers = "";
-
-	$headers .= "Message-ID: <".time()." ikke-svar@bispehaugen.no>".$eol;
-	$headers .= "X-Mailer: PHP v".phpversion().$eol;          // These two to help avoid spam-filters
-	# Boundry for marking the split & Multitype Headers
-	$mime_boundary=md5(time());
-	$headers .= 'MIME-Version: 1.0'.$eol;
-	$headers .= "Content-Type: multipart/related; boundary=\"".$mime_boundary."\"".$eol;
-
-	$realfrom_tmp = getenv("REMOTE_HOST") ? getenv("REMOTE_HOST") : getenv("REMOTE_ADDR");
-	$headers .= "Real-From: ".$realfrom_tmp.$eol;
-	$headers .= "From: Bispehaugen.no <ikke-svar@bispehaugen.no>".$eol;
-	$headers .= "Reply-To: ".$replyto.$eol;
-	$headers .= "Return-Path: ".$replyto.$eol;    // these two to set reply address
-
-	if (!empty($extra_header)) {
-		$headers .= $eol.$extra_header;
-	}
-
-	$epostBleSendt = mail($to,$subject,$message,$headers);
-
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message." | Headers: ".$headers;
-
-	if ($epostBleSendt) {
-		logg("epost", $melding);	
-	} else {
-		logg("error-epost", $melding);
-	}
-	return $epostBleSendt;
-}
-
 function epost($to,$replyto,$subject,$message,$extra_header = "")  {
 
-	require_once 'mail/swift_required.php';
+	$sendgrid = new SendGrid(SENDGRID_APIKEY);
+	$email = new SendGrid\Email();
+	$email
+	    ->addTo($to)
+	    ->setFrom('ikke-svar@bispehaugen.no')
+	  	->setFromName('Bispehaugen.no')
+	    ->setSubject($subject)
+	    ->setText($message)
+	    ->setHtml($message)
+	    ->setReplyTo($replyto)
+	    ->setHeaders(array('X-Sent-Using' => 'SendGrid-API', 'X-Transport' => 'web'))
+	;
 
-	$transport = Swift_SmtpTransport::newInstance('smtp.mandrillapp.com', 587)
-	  ->setUsername(MAIL_USERNAME)
-	  ->setPassword(MAIL_PASSWORD);
-
-	$mailer = Swift_Mailer::newInstance($transport);
-
-	$email = Swift_Message::newInstance('SendEpost')
-	  ->setFrom(array('ikke-svar@bispehaugen.no' => 'Bispehaugen.no'))
-	  ->setTo(array($to))
-	  ->setSubject($subject)
-	  ->setBody($message);
-
+	// Or catch the error
 	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message;
 
-	$epostBleSendt = $mailer->send($email);
-
-	if ($epostBleSendt) {
+	try {
+	    $sendgrid->send($email);
 		logg("epost", $melding);	
-	} else {
+		return true;
+	} catch(\SendGrid\Exception $e) {
 		logg("error-epost", $melding);
+	    echo $e->getCode();
+	    foreach($e->getErrors() as $er) {
+	        echo $er;
+	    }
+	    return false;
 	}
-	return $epostBleSendt;
 }
 
 function feilmeldinger($feilmeldinger) {

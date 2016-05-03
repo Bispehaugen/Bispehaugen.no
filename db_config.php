@@ -25,6 +25,5 @@ Lagrer alle passord i lokal fil på alle pcer, slik at man kan endre for seg sel
 	$database_string="passord her";
 	$database_database = "solfrih_bukdb";
 
-	DEFINE("MAIL_USERNAME", "");
-	DEFINE("MAIL_PASSWORD", "");
+	DEFINE("SENDGRID_APIKEY", "");
 */

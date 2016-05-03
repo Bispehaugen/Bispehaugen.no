@@ -18,7 +18,6 @@ if (has_get("loggut")) {
 	logg_ut();
 }
 
-
 if (!$er_produksjon) {
 	if(file_exists("migrering.php")){
 		include("migrering.php");

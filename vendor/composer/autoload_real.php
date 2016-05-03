@@ -23,28 +23,30 @@ class ComposerAutoloaderInit6149e146252097429f641f15480d0154
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInit6149e146252097429f641f15480d0154', 'loadClassLoader'));
 
-        $map = require __DIR__ . '/autoload_namespaces.php';
-        foreach ($map as $namespace => $path) {
-            $loader->set($namespace, $path);
-        }
+        $useStaticLoader = PHP_VERSION_ID >= 50600 && !defined('HHVM_VERSION');
+        if ($useStaticLoader) {
+            require_once __DIR__ . '/autoload_static.php';
 
-        $map = require __DIR__ . '/autoload_psr4.php';
-        foreach ($map as $namespace => $path) {
-            $loader->setPsr4($namespace, $path);
-        }
+            call_user_func(\Composer\Autoload\ComposerStaticInit6149e146252097429f641f15480d0154::getInitializer($loader));
+        } else {
+            $map = require __DIR__ . '/autoload_namespaces.php';
+            foreach ($map as $namespace => $path) {
+                $loader->set($namespace, $path);
+            }
 
-        $classMap = require __DIR__ . '/autoload_classmap.php';
-        if ($classMap) {
-            $loader->addClassMap($classMap);
+            $map = require __DIR__ . '/autoload_psr4.php';
+            foreach ($map as $namespace => $path) {
+                $loader->setPsr4($namespace, $path);
+            }
+
+            $classMap = require __DIR__ . '/autoload_classmap.php';
+            if ($classMap) {
+                $loader->addClassMap($classMap);
+            }
         }
 
         $loader->register(true);
 
         return $loader;
     }
-}
-
-function composerRequire6149e146252097429f641f15480d0154($file)
-{
-    require $file;
 }
