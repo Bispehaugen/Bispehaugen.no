@@ -63,10 +63,11 @@ function sqlerror($sql = "") {
     $func = $bt[1]["function"];
     $errno = mysql_errno();
     $error = mysql_error();
-    logg("sqlerror", "{fil: '$file', funksjon: '$func', linje: $linje, query: '".$_SERVER['QUERY_STRING']."', sql: '$sql', error: '$errno: $error'}");
 
+    $message = "Feil i fil '$file' rundt linje $linje i funksjonen '$func'?<br />Query: ".$_SERVER['QUERY_STRING']."<br />SQL: $sql<br />MySQL error nr. $errno: $error";
+    logg("sqlerror", $message);
     if (tilgang_full()) {
-        die("Feil i fil '$file' rundt linje $linje i funksjonen '$func'?<br />Query: ".$_SERVER['QUERY_STRING']."<br />SQL: $sql<br />Error: $errno: $error");
+        die($message);
     }
     die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
 }
