@@ -39,6 +39,38 @@ function koble_til_database($database_host, $database_user, $database_string, $d
     return true;
 }
 
+/*
+ * Rapporterer sql-feil ved å legge inn en detaljert rapport i weblog i databasen,
+ * og ved å si ifra til brukeren hvis den har de nødvendige rettighetene.
+ *
+ * Det som rapporteres er:
+ * * hvilken fil, funksjon og linje denne funksjonen blir kalt fra (som sannsynligvis er rett under feilen)
+ * * sql-koden som ble kjørt (hvis den er vedlagt, se under)
+ * * MySQL errorkode og feilmelding
+ *
+ * Det er ikke nødvendig å legge ved sql-koden siden linjenummeret funksjonen blir
+ * kalt fra blir lagt ved, men det kan være nyttig for å identifisere problemet
+ * uten å lete gjennom koden først.
+ */
+function sqlerror($sql = "") {
+    // Lager en backtrace for å finne ut hvor funksjonen ble kjørt fra
+    $bt = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
+    // Det første elementet i $bt inneholder informasjon om hvordan denne funksjonen
+    // ble kalt, inklusivt hvilken fil, linje og navnet på DENNE funksjonen.
+    // For å finne navnet på funksjonen som kalte denne funksjonen må vi gå ett skritt lengre bak
+    $file = basename($bt[0]["file"]);
+    $linje = $bt[0]["line"];
+    $func = $bt[1]["function"];
+    $errno = mysql_errno();
+    $error = mysql_error();
+    logg("sqlerror", "{fil: '$file', funksjon: '$func', linje: $linje, query: '".$_SERVER['QUERY_STRING']."', sql: '$sql', error: '$errno: $error'}");
+
+    if (tilgang_full()) {
+        die("Feil i fil '$file' rundt linje $linje i funksjonen '$func'?<br />Query: ".$_SERVER['QUERY_STRING']."<br />SQL: $sql<br />Error: $errno: $error");
+    }
+    die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
+}
+
 function get($attributt) {
 	return isset($_GET[$attributt]) ? mysql_real_escape_string($_GET[$attributt]) : null; 
 }
@@ -182,12 +214,7 @@ function hent_og_putt_inn_i_array($sql, $id_verdi=""){
 	$array = Array();
 
 	if ($query === false) {
-		logg("sqlerror", "{fil: '".$_SERVER["SCRIPT_NAME"]."', query:'".$_SERVER['QUERY_STRING']."', sql:'".$sql."'}");
-		
-		if (tilgang_full()) {
-			die("Feil i fil: ".$_SERVER["SCRIPT_NAME"]."?".$_SERVER['QUERY_STRING'].", sql: ".$sql);
-		}
-		die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
+        sqlerror($sql);
 	}
 
 	while($row = mysql_fetch_assoc($query)){
