@@ -81,7 +81,7 @@
 			<input type="hidden" name="erForside" id="erForside" value="<?php echo erForside(); ?>" />
 			<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
 			<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
-            <label>Husk meg <input id="husk_meg" name="husk_meg" type="checkbox" value="Ja" /></label>
+            <input id="husk_meg" name="husk_meg" type="checkbox" value="Ja" /><label for="husk_meg">Husk meg <i class="fa fa-2x fa-check-square-o"></i><i class="fa fa-2x fa-square-o"></i></label>
 			<button class="login-button button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
 		</form>
 	</div>
