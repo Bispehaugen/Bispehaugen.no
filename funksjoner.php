@@ -11,6 +11,10 @@ session_start();
 
 define("SPAMFILTER","/kukk|informative|\<\/a\>|site|seite|Beach|Hera|Estate|lugo|migliore|informativo|significo1|casino|poker|viagra|mortgage|porno|porn|\[URL=|discount|rental|Oprah|Obama|lhxtfozb|itrpgkf/i");
 
+// Algoritmen som brukes for å hashe passord. Når den er satt til PASSWORD_DEFAULT
+// vil algoritmen automatisk bli erstattet når en bedre blir tilgjengelig.
+$passord_algo = PASSWORD_DEFAULT;
+
 function koble_til_database($database_host, $database_user, $database_string, $database_database){
 
 	global $connection;
@@ -742,6 +746,10 @@ function feilmeldinger($feilmeldinger) {
 	return $html;
 }
 
+/*
+ * Denne funksjonen er utdatert og beholdes bare for kompabilitetsårsaker.
+ * Den skal under ingen omstendighet brukes for å lagre nye passord.
+ */
 function generer_passord_hash($passord) {
 	return sha1($passord);
 }

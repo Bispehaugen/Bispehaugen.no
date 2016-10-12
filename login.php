@@ -10,26 +10,39 @@
 	}
 	
 	$epost=post("epost");
-	$password=generer_passord_hash(post("password"));
+
+    $update_hash = false;
 	
-	##Sjekker om passordet finnes i medlemmer-tabellen
-	$sql="SELECT COUNT(email) FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
-	$mysql_result=mysql_query($sql);
-	
-	$row=mysql_fetch_assoc($mysql_result);
-	if($row['COUNT(email)']==0){
-		$_SESSION["Errors"]="Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt 
-		å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)";
-		header('Location: index.php');
-		die();
+	##Sjekker om passordet stemmer med eposten
+	$sql = "SELECT medlemsid, rettigheter, passord FROM medlemmer WHERE email='$epost'";
+	$result = mysql_query($sql);
+    if (!$result) sqlerror($sql);
+	$row = mysql_fetch_assoc($result);
+
+	if (!password_verify(post("password"), $row["passord"])) {
+        // Sjekker om passordet er lagret i det gamle formatet
+        $hash = generer_passord_hash(post("password"));
+        if($row['passord'] == $hash) {
+            $update_password = true;
+        } else {
+            $_SESSION["Errors"] = "Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt 
+            å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)";
+            header('Location: index.php');
+            die();
+        }
 	}
-	
+
+    // Sjekker om det har kommet en ny passord_algoritme siden dette passordet ble lagret, og oppdaterer til den
+    if ($update_password || password_needs_rehash($hash, $passord_algo)) {
+        $hash = password_hash(post("password"), $passord_algo);
+        $sql = "UPDATE medlemmer SET passord='$hash' WHERE email='$epost'";
+        $result = mysql_query($sql);
+        if (!$result) sqlerror($sql);
+    }
 	
 	##Henter ut medlemsid og rettigheter
-	$sql="SELECT medlemsid, rettigheter FROM medlemmer WHERE email='".$epost."' AND passord='".$password."'";
-	$mysql_result=mysql_query($sql);
-	$medlemsid=mysql_result($mysql_result, 0,'medlemsid');
-	$rettigheter=mysql_result($mysql_result, 0,'rettigheter');
+	$medlemsid = $row["medlemsid"];
+	$rettigheter = $row["rettigheter"];
 	
 	if($rettigheter==0){
 		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
