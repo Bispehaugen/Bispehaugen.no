@@ -38,8 +38,10 @@
 		header('Location: index.php');
 		die();
 	}
+
+    $husk = (post("husk_meg") == "Ja");
 	
-	logg_inn($medlemsid, $rettigheter);
+	logg_inn($medlemsid, $rettigheter, $husk);
 	
 	if (!has_get("ajax")){
 		header('Location: index.php?side=forside');
@@ -47,5 +49,3 @@
 	} else {
 		echo "{} && {login: true}";
 	}
-	
-	

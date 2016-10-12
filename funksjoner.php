@@ -288,8 +288,86 @@ function hent_bruker($brukerdata, $id) {
 	return Array("fnavn" => "Ukjent", "enavn" => "", "medlemsid" => 0);
 }
 
+function generer_token() {
+    return bin2hex(openssl_random_pseudo_bytes(16));
+}
+
+/*
+ * Sjekker om brukeren er logget inn.
+ *
+ * Se funksjonen 'logg_inn' for en beskrivelse av hvordan 'husk_meg' funksjonen virker.
+ */
 function er_logget_inn(){
-	return isset($_SESSION["medlemsid"]);
+    if (isset($_SESSION["medlemsid"])) {
+        // Sjekk at 'husk_meg' informasjonskapselen eksisterer hvis brukeren vil bli husket
+        // Siden innloggingen skjer gjennom javascript er det sannsynligvis først her informasjons-
+        // kapselen blir satt etter innlogging. Derfor må $_SESSION["login_token"] være tokenet og
+        // ikke hashen for at det skal virke.
+        if (isset($_SESSION["husk_meg"]) && $_SESSION["husk_meg"] && !isset($_COOKIE["husk_meg"])) {
+            // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
+            // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
+            setrawcookie("husk_meg", $_SESSION["login_serie"]."=".$_SESSION["login_token"], time()+3600*24*365,
+                NULL, NULL, NULL, true);
+        }
+        return true;
+    } else if (isset($_COOKIE["husk_meg"])) {
+        $tmp = explode("=", $_COOKIE["husk_meg"]);
+        if (count($tmp) != 2) {
+            setcookie("husk_meg", "", time()-3600);
+            return false;
+        }
+        $serie = mysql_real_escape_string($tmp[0]);
+        $token = hash("sha256", $tmp[1]);
+        $result = mysql_query("SELECT 1 FROM `husk_meg` where `serie`='$serie'");
+        if ($result && mysql_num_rows($result) > 0) {
+            $sql = "SELECT medlemmer.medlemsid, medlemmer.rettigheter FROM husk_meg INNER JOIN medlemmer ON husk_meg.medlemsid=medlemmer.medlemsid WHERE husk_meg.serie='$serie' AND husk_meg.token='$token'";
+            $result = mysql_query($sql);
+            if ($result && mysql_num_rows($result) > 0) {
+                // Logg inn
+                $array = mysql_fetch_assoc($result);
+                $medlemsid = $array["medlemsid"];
+                $rettigheter = $array["rettigheter"];
+                // Vi setter 'husk' til false får å ikke lage en informasjonskapsel i en ny serie
+                logg_inn($medlemsid, $rettigheter, false);
+
+                // Lag en ny token og erstatt informasjonskapselen
+                $sql = "DELETE FROM husk_meg WHERE serie='$serie' AND token='$token'";
+                $result = mysql_query($sql);
+                if (!$result) sqlerror($sql);
+                $new_token = generer_token();
+                $token_hash = hash("sha256", $new_token);
+                $sql = "INSERT INTO husk_meg (token, serie, sist_brukt, medlemsid) VALUES ('$token_hash', '$serie', NOW(), '$medlemsid')";
+                $result = mysql_query($sql);
+                if (!$result) sqlerror($sql);
+                // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
+                // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
+                setrawcookie("husk_meg", "$serie=$new_token", time()+3600*24*365, NULL, NULL, NULL, true);
+
+                $_SESSION["husk_meg"] = true;
+                $_SESSION["login_token"] = $new_token;
+                $_SESSION["login_serie"] = $serie;
+
+                return true;
+            } else if ($result) {
+                /*
+                 * Det brukes en token fra tidligere i rekken. Det betyr sannsynligvis at noen har
+                 * stjålet informasjonskapselen og logget inn med den selv, slik at den originale
+                 * ble ugyldig, og nå har brukeren prøvd å logge seg inn med den gamle informasjonskapselen.
+                 * Ved å slette den fra databasen hindrer vi angriperen å komme inn med den, og brukeren kan
+                 * logge inn med brukernavn og passord og bruke siden som vanlig.
+                 */
+                mysql_query("DELETE FROM husk_meg WHERE serie='$serie'");
+                logg("Sikkerhet", "Mulig angrep på informasjonskapsel i serie '$serie'");
+            } else {
+                sqlerror($sql);
+            }
+        }
+
+        // Informasjonskapselen er ugyldig, og blir derfor slettet
+        setcookie("husk_meg", "", time()-3600);
+    }
+
+    return false;
 }
 
 /*
@@ -321,8 +399,22 @@ function hent_konserter($antall = "", $type="nestekonsert"){
 }
 
 
-// Innloggin og utlogging
-function logg_inn($medlemsid, $rettigheter){
+/*
+ * Innlogging og utlogging.
+ *
+ * 'Husk meg'-funksjonen fungerer ved at det opprettes to tilfeldige verdier (token og serie),
+ * som lagres i databasen og i en informasjonskapsel hos brukere. Så lenge PHPSESSIONen
+ * er gyldig brukes denne til å identifisere brukerer, men når den går ut brukes
+ * informasjonskapselen. Da vil den ene verdien (token) byttes mens den andre (serie) forblir.
+ * Hvis informasjonskapselen blir snappet opp av en angriper og brukes til å logge inn vil tokenet
+ * endres, så når brukeren prøver å logge inn senere vil det ikke gå, men siden serien er den samme
+ * har vi oppdaget angrepet. Den serien blir da ugyldig slik at angriperen blir kastet ut, og
+ * brukeren kan logge inn på nytt med brukernavn og passord. Tokens lagres i databasen som en hash,
+ * slik at en som får tilgang til databasen ikke skal kunne bruke dem til å logge inn som noen andre.
+ *
+ * Dette er kanskje litt overkill, men det skader ikke å være på den sikre siden.
+ */
+function logg_inn($medlemsid, $rettigheter, $husk=false){
 	$_SESSION["medlemsid"]   = $medlemsid;
 	$_SESSION["rettigheter"] = $rettigheter;
 	
@@ -330,6 +422,21 @@ function logg_inn($medlemsid, $rettigheter){
 	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
 	
 	$melding = $navn . " logget nettopp inn med rettighetene: ".$rettigheter;
+
+    if ($husk) {
+        $token = generer_token();
+        $token_hash = hash("sha256", $token);
+        $serie = substr(generer_token(), 0, 12);
+        $sql = "INSERT INTO `husk_meg` (token, serie, sist_brukt, medlemsid) VALUES ('$token_hash', '$serie', NOW(), '$medlemsid')";
+        $result = mysql_query($sql);
+        if (!$result) sqlerror($sql);
+        // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
+        // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
+        setrawcookie("husk_meg", "$serie=$token", time()+3600*24*365, NULL, NULL, NULL, true);
+        $_SESSION["husk_meg"] = true;
+        $_SESSION["login_token"] = $token;
+        $_SESSION["login_serie"] = $serie;
+    }
 	
 	logg("login", $melding);
 }
@@ -341,6 +448,18 @@ function logg_ut() {
 	$melding = $navn . " logget ut";
 	
 	logg("logout", $melding);
+
+    if (isset($_SESSION["husk_meg"])) {
+        $serie = mysql_real_escape_string($_SESSION["login_serie"]);
+        $sql = "DELETE FROM husk_meg WHERE serie='$serie'";
+        $result = mysql_query($sql);
+
+        if (!$result) sqlerror($sql);
+        setcookie("husk_meg", "", time()-3600);
+        $_SESSION["husk_meg"] = "";
+        $_SESSION["token"] = "";
+        $_SESSION["serie"] = "";
+    }
 	
 	// Slett sessions
 	$_SESSION["medlemsid"]   = "";

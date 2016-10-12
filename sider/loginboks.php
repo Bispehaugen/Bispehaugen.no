@@ -12,6 +12,11 @@
 		
 		var epost = $(".login-box #epost");
 		var password = $(".login-box #password");
+        var husk = $(".login-box #husk_meg");
+        var skal_huske = "Nei";
+        if husk.is(":checked") {
+            skal_huske = "Ja";
+        }
 		
 		var has_error = false;
 		
@@ -35,7 +40,7 @@
 		
 		$(".login .spinner").show();
 		
-		var data = {epost: epost.val(), password: password.val()};
+		var data = {epost: epost.val(), password: password.val(), husk_meg: skal_huske};
 		
 		$.post("login.php?ajax=true", data)
 			.done(function(data){
@@ -76,6 +81,7 @@
 			<input type="hidden" name="erForside" id="erForside" value="<?php echo erForside(); ?>" />
 			<label><input id="epost" name="epost" type="text" placeholder="E-post" required="required" /><i class="fa fa-2x fa-user"></i></label>
 			<label><input id="password" name="password" type="password" placeholder="Passord" required="required" /><i class="fa fa-2x fa-asterisk"></i></label>
+            <label>Husk meg <input id="husk_meg" name="husk_meg" type="checkbox" value="Ja" /></label>
 			<button class="login-button button"><i class="spinner fa fa-circle-o-notch fa-spin"></i>Logg inn</button>
 		</form>
 	</div>

@@ -687,6 +687,18 @@ migrering(39, "Legger til bil på medlemmer",
 migrering(40, "Legg til medlemsid for varsling",
 	"ALTER TABLE `varsling` ADD `medlemsid` INT NOT NULL AFTER `type`;"
 );
+
+migrering(41, "Oppretter en tabell for lagring av 'husk meg' token",
+    "CREATE TABLE IF NOT EXISTS `husk_meg` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `serie` char(12),
+        `token` char(64),
+        `medlemsid` int,
+        `sist_brukt` datetime,
+        PRIMARY KEY (`id`)
+    )"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
