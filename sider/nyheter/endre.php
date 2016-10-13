@@ -90,7 +90,7 @@ echo "
 				foreach($gyldige_nyhetstyper as $type) {
 					$selected = (kanskje($nyhet, 'type')=="$type") ? " selected=selected" : "";
 					
-					echo "<option value='".$type."'".$type.">".$type."</option>";
+					echo "<option value='".$type."'".$selected.">".$type."</option>";
 				}
 				echo "
 				</select></td></tr>
