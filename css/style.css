@@ -359,13 +359,19 @@ nav, .nav-container {
     }
   }
 
-  @media screen and (min-width: 800px) and (max-width: 970px) {
+  @media screen and (min-width: 800px) and (max-width: 874px) {
+    nav > ul > li > span, nav > ul > li > a {
+      font-size: 0.7em;
+    }
+  }
+
+  @media screen and (min-width: 875px) and (max-width: 1050px) {
     nav > ul > li > span, nav > ul > li > a {
       font-size: 0.8em;
     }
   }
 
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: 1275px) {
     nav > ul > li {
       margin-left: 2em;
     }

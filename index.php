@@ -100,11 +100,6 @@ $innhold = ob_get_clean();
 
 	<div class="white-line"></div>
     	
-	<?php 
-	if(!er_logget_inn() && erForside()) {
-		inkluder_side_fra_undermappe("loginboks");
-	}
-	?>
 		<main class="main">
 			<a name="main"></a>
 			<?php
@@ -180,7 +175,7 @@ $innhold = ob_get_clean();
         }
     }
 
-    $("nav > ul > li > a").click(function(event) {
+    $("nav > ul > li > a").not(".login_link").click(function(event) {
         event.preventDefault();
         changeHash($(this).attr("href"));
     });
