@@ -465,6 +465,9 @@ input.error {
 
 .side.forside {
   background-image:url("../images/front_mobile.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 110% auto;
 }
 @media screen and (min-width: 800px) {
   .side.forside {
