@@ -171,6 +171,7 @@
 <p>Stephanie Buadu (medlem)</p>
 <p>Rasmus Høgberg (medlem)</p>
 <p>Jørgen Olsen Finvik (medlem)</p>
+<p>Sindre Stephansen (medlem)</p>
 <p>Anne-Siri Borander (fullfører nettsiden)</p>
 <p>Trond Klakken (fullfører nettsiden)</p>
 <br />
