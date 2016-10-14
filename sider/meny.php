@@ -15,6 +15,7 @@ if(er_logget_inn()){
     <li><a href="?side=bli-medlem" class="bli-medlem">Bli medlem</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=annet">Om oss</a></li>
+    <li><a href="?side=login">Logg inn</a></li>
 </ul>
 <?php
 	} else {
@@ -41,6 +42,9 @@ if(er_logget_inn()){
     <li>
         <span data-scroll-nav='7'>Om oss</span>
 	</li>
+    <li>
+        <a class="login_link" href="?side=login">Logg inn</a>
+    </li>
 </ul>
 
 <?php
