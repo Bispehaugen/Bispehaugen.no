@@ -36,7 +36,7 @@ if(isset($konsert['normal_pris']) || isset($konsert['student_pris'])) {
     }
 
     if (isset($konsert['student_pris'])) {
-      echo '<p class="pris"><b>Student/honør:</b> ';
+      echo '<p class="pris"><b>Student:</b> ';
       if ($konsert['student_pris'] == 0) {
         echo " Gratis";
       } else {
