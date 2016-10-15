@@ -54,7 +54,7 @@ $bilde = isset($konsert['bilde']) ? $konsert['bilde'] : "";
                 <div class="year">2016</div>
             </div>
             <div class="time boks">kl. 15:00</div>
-            <div class="time boks">kl. 18:00</div>
+            <div class="time boks">kl. 19:00</div>
         </time>
                 <?php } else { echo fancyDato($konsert['konsert_tid'], true); }?>
 
