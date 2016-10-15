@@ -5,7 +5,7 @@ $konsert = neste_konsert_nyhet();
 echo "<h2><a href='?side=konsert/liste'>Konserter</a></h2>";
 
 echo '
-    <article class="box konsert neste-konsert" onclick="location.href=\'?side=konsert/vis&id='.$konsert['id'].'\'">
+    <article class="box konsert neste-konsert" onclick="location.href=\'?side=konsert/vis&id='.$konsert['nyhetsid'].'\'">
 ';
 
 if (isset($konsert['bilde']) && !empty($konsert['bilde'])) {
