@@ -20,37 +20,40 @@ if ($tilkobling === false) {
 $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
-$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < '".$om_4_dager."' ORDER BY dato LIMIT 1";
+$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < '".$om_4_dager."' ORDER BY dato";
+$result = mysql_query($neste_kakebaker_sql);
+if (!$result) sqlerror($neste_kakebaker_sql);
 
-$arrangement = hent_og_putt_inn_i_array($neste_kakebaker_sql);
+for ($i = 0; $i < mysql_num_rows($result); $i++) {
+    $arrangement = mysql_fetch_assoc($result);
+    // Sjekk om arrangement allerede er varslet
+    $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Kakebaker;
+    $allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql);
 
-// Sjekk om arrangement allerede er varslet
-$allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Kakebaker;
-$allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql);
+    if ($allerede_varlset['antall'] == 0) {
 
-if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
+        $bruker = hent_brukerdata($arrangement['kakebaker']);
+        $tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
 
-	$bruker = hent_brukerdata($arrangement['kakebaker']);
-	$tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
+        $antall_dager = round(($tid - time()) / $sekunder_i_ett_dogn);
 
-	$antall_dager = round(($tid - time()) / $sekunder_i_ett_dogn);
+        $to = $bruker['email'];
+        $replyto = "styret@bispehaugen.no";
+        $subject = "Kakebaking - Bispehaugen.no";
+        $message = "
+    Hei " . $bruker['fnavn'] . "!
 
-	$to = $bruker['email'];
-	$replyto = "styret@bispehaugen.no";
-	$subject = "Kakebaking - Bispehaugen.no";
-	$message = "
-Hei " . $bruker['fnavn'] . "!
+    Det er du som skal bake kake om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
+    Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
 
-Det er du som skal bake kake om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
-Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
+    Les mer på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
 
-Les mer på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
+    Med vennlig hilsen
+    Styret";
 
-Med vennlig hilsen
-Styret";
-
-	if(epost($to, $replyto, $subject, $message)) {
-		$sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . " '".date("Y-m-d H:i:s")."')";
-		mysql_query($sql_varling);
-	}
+        if(epost($to, $replyto, $subject, $message)) {
+            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . " '".date("Y-m-d H:i:s")."')";
+            mysql_query($sql_varling);
+        }
+    }
 }
