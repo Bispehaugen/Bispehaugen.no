@@ -52,7 +52,7 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
     Styret";
 
         if(epost($to, $replyto, $subject, $message)) {
-            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . " '".date("Y-m-d H:i:s")."')";
+            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . ", '".date("Y-m-d H:i:s")."')";
             mysql_query($sql_varling);
         }
     }
