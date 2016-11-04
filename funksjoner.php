@@ -302,6 +302,17 @@ function generer_token() {
  * Se funksjonen 'logg_inn' for en beskrivelse av hvordan 'husk_meg' funksjonen virker.
  */
 function er_logget_inn(){
+    // Simuler at man ikke er logget inn, for å kunne se forsiden uten å logge ut
+    if (session("sim_logget_ut") && get("vis") == "intern") {
+        $_SESSION["sim_logget_ut"] = false;
+    } else if (get("vis") == "forside" || $_SESSION["sim_logget_ut"]) {
+        $_SESSION["sim_logget_ut"] = true;
+        return false;
+    }
+    return er_faktisk_logget_inn();
+}
+
+function er_faktisk_logget_inn(){
     if (isset($_SESSION["medlemsid"])) {
         // Sjekk at 'husk_meg' informasjonskapselen eksisterer hvis brukeren vil bli husket
         // Siden innloggingen skjer gjennom javascript er det sannsynligvis først her informasjons-
