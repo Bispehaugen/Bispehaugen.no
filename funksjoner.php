@@ -880,3 +880,23 @@ function debug($array) {
 	print_r($array);
 	echo "</pre>";
 }
+
+function innhold($navn, $tag="div", $class="", $id="") {
+    $class = tilgang_endre() ? "class='redigerbar $class'" : "";
+    if (empty($id)) {
+        $id = tilgang_endre() ? "id='redigerbar-$navn'" : "";
+    }
+    $sql = "SELECT tekst FROM innhold WHERE navn='$navn'";
+    $result = mysql_query($sql);
+    if (!$result) sqlerror($sql);
+    if (mysql_num_rows($result) == 1) {
+        $arr = mysql_fetch_assoc($result);
+        $innhold = stripslashes($arr["tekst"]);
+        return "<$tag $id $class data-navn='$navn'>$innhold</$tag>";
+    }
+    if (tilgang_endre()) {
+        return "<$tag $id $class data-navn='$navn'>Skriv noe her...</$tag>";
+    } else {
+        return "";
+    }
+}

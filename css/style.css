@@ -819,34 +819,34 @@ table .aarskille {
 		margin-left: 1em;
 	}
 
-.bli-medlem .bli-medlem, .bli-medlem .stottemedlem {
+.bli-medlem-stotte > .bli-medlem, .bli-medlem-stotte > .stottemedlem {
     width: 100%;
 }
 
 @media screen and (min-width: 600px) {
-	.bli-medlem .bli-medlem, .bli-medlem .stottemedlem {
+	.bli-medlem-stotte > .bli-medlem, .bli-medlem-stotte > .stottemedlem {
 	  	float: left;
     	width: 50%;
 	}
 	
-	.bli-medlem .stottemedlem {
+	.bli-medlem-stotte > .stottemedlem {
 		padding-left: 2em;
 	}
 }
 
-.bli-medlem .stottemedlem ul {
+.bli-medlem-stotte > .stottemedlem ul {
 	list-style: circle;
 }
 
-.bli-medlem input[type=text], .bli-medlem textarea {
+.bli-medlem-stotte input[type=text], .bli-medlem-stotte textarea {
   width: 100%;
 }
 
-.bli-medlem .content {
+.bli-medlem-stotte .content {
   text-align: left;
 }
 
-.bli-medlem form {
+.bli-medlem-stotte form {
 	margin-top: 2em;	
 }
 
@@ -1108,12 +1108,12 @@ nav .arkiv {
   padding: 2em;
 }
 
-.spilleoppdrag .informasjon {
+.spilleoppdrag > .informasjon {
   margin-bottom: 5em;
 }
 
 @media screen and (min-width: 1000px) {
-  .spilleoppdrag .informasjon, .spilleoppdrag form {
+  .spilleoppdrag > .informasjon, .spilleoppdrag form {
     float: left;
     display: inline-block;
     width: 50%;

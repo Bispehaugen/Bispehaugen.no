@@ -6,41 +6,7 @@ include_once "funksjoner.php";
 ?>
 <div class="spilleoppdrag gjennomsiktig-boks">
 	<section class="informasjon">
-		<h2>Levende musikk for anledningen?</h2>
-		<p>
-			Ønsker du underholdning til ditt arrangement?
-		</p>
-
-		<p>
-			Bispehaugen Ungdomskorps er alltid klare til å heve stemningen i selskapet!
-		</p>
-		<div>
-			
-			<b>Vi skaper den rette stemningen på:</b>
-			<ul>
-				<li>Juletrefester og julebord</li>
-				<li>Kundearrangement</li>
-				<li>Fester / selskap</li>
-				<li>Åpningsseremonier</li>
-				<li>Eksamensseremonier</li>
-				<li>Bryllyp</li>
-			</ul>
-			
-			<b>Vi kan stille med:</b>
-			<ul>
-				<li>Fullt musikkorps</li>
-				<li>Mindre ensembler</li>
-				<li>Tyrolerorkester</li>
-				<li>Fanfarebesetning</li>
-			</ul>
-
-			<p>
-				Lurer du på noe? Kontakt oss på <a href="mailto:styret@bispehaugen.no">styret@bispehaugen.no</a>,
-			</p>
-			<p>
-				så finner vi det som passer perfekt for dere!</b>
-			</p>
-		</div>
+    <?php echo innhold("spilleoppdrag", "div"); ?>
 	</section>
 <?php
 

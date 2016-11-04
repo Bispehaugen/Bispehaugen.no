@@ -64,8 +64,15 @@ $innhold = ob_get_clean();
 	<link rel="stylesheet" href="css/dokumenter.css" type="text/css" />
 	<?php } ?>
 
+
 	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
 	<script type="text/javascript" src='js/underscore-min-1.8.3.js'></script>
+
+	<?php if (tilgang_endre()) { ?>
+	<link rel="stylesheet" href="css/redigerbar.css" type="text/css" />
+    <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="js/redigerbar.js"></script>
+	<?php } ?>
 </head>
 
 <body class="no-touch">

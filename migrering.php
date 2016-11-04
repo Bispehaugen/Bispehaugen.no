@@ -699,6 +699,15 @@ migrering(41, "Oppretter en tabell for lagring av 'husk meg' token",
     )"
 );
 
+migrering(42, "Oppretter en tabell for innhold på siden",
+    "CREATE TABLE IF NOT EXISTS `innhold` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `navn` varchar(50) NOT NULL UNIQUE,
+        `tekst` text,
+        PRIMARY KEY(`id`)
+    )"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
