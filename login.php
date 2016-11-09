@@ -27,8 +27,12 @@
         } else {
             $_SESSION["Errors"] = "Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt 
             å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)";
-            header('Location: index.php');
-            die();
+            if (!has_get("ajax")){
+                header('Location: ?side=login');
+                die();
+            } else {
+                die("{} && {login: false}");
+            }
         }
 	}
 
@@ -48,7 +52,7 @@
 		$_SESSION["Errors"]="Du har ikke tilgang til internsidene. Vennligst kontakt webkom på 
 		<a href='mailto:webkom@bispehaugen.no'>e-post</a> dersom du mener at du skulle hatt det. Dersom du nylig har 
 		blitt medlem kan det være at brukeren ditt ikke har fått tilgang ennå.";
-		header('Location: index.php');
+		header('Location: ?side=login');
 		die();
 	}
 

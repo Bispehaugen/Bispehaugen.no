@@ -14,7 +14,7 @@
 		var password = $(".login-box #password");
         var husk = $(".login-box #husk_meg");
         var skal_huske = "Nei";
-        if husk.is(":checked") {
+        if (husk.is(":checked")) {
             skal_huske = "Ja";
         }
 		
