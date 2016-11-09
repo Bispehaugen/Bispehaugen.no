@@ -20,7 +20,7 @@ if (has_post("token")) {
 	} else {
 		
 		$token = post("token");
-		$passord = password_hash($unhashedPassword, $passord_algo);
+		$passord = password_hash($unhashedPassword, PASSWORD_DEFAULT);
 		
 		$sql_update = "UPDATE medlemmer SET bytt_passord_token = NULL, passord = '".$passord."' WHERE bytt_passord_token = '".$token."' LIMIT 1";
 		
