@@ -58,7 +58,7 @@ echo '
                 <div class="year">2016</div>
             </div>
             <div class="time boks">kl. 15:00</div>
-            <div class="time boks">kl. 19:00</div>
+            <div class="time boks">kl. 18:00</div>
         </time>
         </article>
     ';
