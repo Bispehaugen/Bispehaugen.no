@@ -25,8 +25,7 @@
         if($row['passord'] == $hash) {
             $update_password = true;
         } else {
-            $_SESSION["Errors"] = "Kunne ikke logge inn, e-post eller passord er feil. Husk at vi har begynt 
-            å bruke e-post i stedet for brukernavn. Kontakt webkom hvis dette fortsetter :)";
+            $_SESSION["Errors"] = "Kunne ikke logge inn, e-post eller passord er feil. Kontakt webkom hvis dette fortsetter :)";
             if (!has_get("ajax")){
                 header('Location: ?side=login');
                 die();
