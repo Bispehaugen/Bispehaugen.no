@@ -18,6 +18,7 @@
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=forum/forum">Forum</a></li>
     <li><a href="?side=intern/organisasjon">Praktisk</a></li>
+    <li><a href="?side=forside&vis=forside">Forside</a></li>
     <li class="no-border profilbilde">
         <span class="profil-lenke">
             <img class="liten profilbilde" src="<?php echo thumb($profilbilde, '', 25); ?>" /> <?php echo $bruker['fnavn']; ?> 
