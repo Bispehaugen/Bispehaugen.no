@@ -1,14 +1,24 @@
 $(document).ready(function() {
     $(".redigerbar").each(function() {
-        var skin = "lightgray";
-        if ($(".side:nth-child(even)").find($(this)).length != 0) {
-            skin = "charcoal";
+        var skin = "charcoal";
+        if ($(".side:nth-child(2n)").find($(this)).length == 0) {
+            skin = "lightgray";
         }
+        var $editor = $(this);
 
         tinymce.init({
             selector: "#"+$(this).attr("id"),
             skin: skin,
-            plugins: "link",
+            plugins: "link image imagetools",
+            file_browser_callback_types: "image",
+            file_browser_callback: function(field_name, url, type, win) {
+                var $input = $("<input type='file' style='display: none;' />")
+                    .insertAfter($editor);
+                $input.change(function(event) {
+                    win.document.getElementById(field_name).value = URL.createObjectURL(event.target.files[0]);
+                });
+                $input.trigger("click");
+            },
             language: "nb_NO",
             inline: true,
             menu: {
@@ -43,16 +53,99 @@ $(document).ready(function() {
                         editor.setProgressState(true);
                         var btn = this;
                         var navn = $(editor.getElement()).data("navn");
-                        var content = editor.getContent();
-                        $.ajax("sider/intern/innhold.php", {
-                            method: "POST",
-                            data: {navn: navn, innhold: content},
-                            success: function() {
-                                btn.disabled(true);
-                            },
-                            complete: function() {
-                                editor.setProgressState(false);
+                        var num_uploads = 0;
+                        var uploads_completed = 0;
+                        var error = false;
+
+                        function uploadContents() {
+                            if (!error && num_uploads == uploads_completed) {
+                                var content = editor.getContent();
+                                $.ajax("sider/intern/innhold.php", {
+                                    method: "POST",
+                                    dataType: "JSON",
+                                    data: {navn: navn, innhold: content},
+                                    success: function(data) {
+                                        if (typeof data["status"] == "undefined") {
+                                            error = true;
+                                            if (typeof data["error"] == "undefined") {
+                                                alert("Det har oppstått en feil. Ta kontakt med webkom.");
+                                            } else {
+                                                alert(data["error"]);
+                                            }
+                                        } else {
+                                            btn.disabled(true);
+                                        }
+                                    },
+                                    complete: function() {
+                                        editor.setProgressState(false);
+                                    }
+                                });
                             }
+                        }
+
+                        $editor.find("img").each(function(i) {
+                            var $img = $(this);
+                            var src = $img.attr("src");
+                            if (!error && src.startsWith("blob")) {
+                                num_uploads += 1;
+                                var xhr = new XMLHttpRequest();
+                                xhr.open('GET', src, true);
+                                xhr.responseType = 'blob';
+
+                                xhr.onload = function(e) {
+                                    if (this.status == 200) {
+                                        var blob = this.response;
+                                        var xhr, formData;
+
+                                        xhr = new XMLHttpRequest();
+                                        xhr.withCredentials = false;
+                                        xhr.open('POST', 'upload_image_innhold.php');
+
+                                        xhr.onload = function() {
+                                            if (error) {
+                                                return;
+                                            }
+                                            var json;
+
+                                            if (xhr.status != 200) {
+                                                error = true;
+                                                console.log('HTTP Error: ' + xhr.status);
+                                                alert("Det har oppstått en feil. Ta kontakt med webkom.");
+                                                return;
+                                            }
+
+                                            json = JSON.parse(xhr.responseText);
+
+                                            if (!json || typeof json.location != 'string') {
+                                                editor.setProgressState(false);
+                                                error = true;
+                                                if (json.hasOwnProperty("error")) {
+                                                    alert(json.error);
+                                                } else {
+                                                    alert("Det har oppstått en feil. Ta kontakt med webkom.");
+                                                }
+                                                return;
+                                            }
+
+                                            $img.attr("src", json.location);
+                                            uploads_completed += 1;
+                                            uploadContents();
+                                        };
+
+                                        formData = new FormData();
+                                        formData.append('navn', navn);
+                                        var blobname = "blob" + i;
+                                        formData.append('blobname', blobname);
+                                        formData.append(blobname, blob);
+
+                                        xhr.send(formData);
+                                    }
+                                };
+
+                                xhr.send();
+                            }
+                        }).promise().done(function() {
+                            uploadContents();
                         });
                     },
                     onpostrender: function() {

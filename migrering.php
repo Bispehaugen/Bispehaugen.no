@@ -708,6 +708,16 @@ migrering(42, "Oppretter en tabell for innhold på siden",
     )"
 );
 
+migrering(43, "Oppretter en tabell for bilder tilhørende innhold på siden",
+    "CREATE TABLE IF NOT EXISTS `innhold_bilder` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `type` varchar(5) NOT NULL,
+        `innhold_id` int NOT NULL,
+        PRIMARY KEY (`id`),
+        FOREIGN KEY (`innhold_id`) REFERENCES `innhold` (`id`)
+    )"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."
