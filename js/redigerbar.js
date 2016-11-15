@@ -59,7 +59,22 @@ $(document).ready(function() {
 
                         function uploadContents() {
                             if (!error && num_uploads == uploads_completed) {
-                                var content = editor.getContent();
+                                // As .getContent() returnes a set of all the child elements of the
+                                // editor we must append it to a dummy element to get the html content
+                                var $content = $('<div />').append($(editor.getContent()).clone());
+                                $content.find("img").each(function() {
+                                    // Convert the image size to make it consistent across all screens
+                                    // The width is stored as a percentage, so that it's tied to the width
+                                    // of the screen. The height is stored as a percentage of the height,
+                                    // which is applied through padding, to keep the aspect ratio.
+                                    var width = (100 * $(this).width() / $editor.width()) + "%";
+                                    var padding = ($(this).height() / $(this).width()) + "%";
+                                    console.log("width: "+width+", padding: "+padding);
+                                    $(this).css("width", width).css("padding-bottom", padding).css("min-width", "250px")
+                                           .css("max-width", "100%").removeAttr("height").removeAttr("width");
+                                });
+                                var content = $content.html();
+
                                 $.ajax("sider/intern/innhold.php", {
                                     method: "POST",
                                     dataType: "JSON",
