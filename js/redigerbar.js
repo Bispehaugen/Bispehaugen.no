@@ -67,15 +67,15 @@ $(document).ready(function() {
                                     // The width is stored as a percentage, so that it's tied to the width
                                     // of the screen. The height is stored as a percentage of the height,
                                     // which is applied through padding, to keep the aspect ratio.
-                                    var min-width = "";
+                                    var min_width = "";
                                     if ($(this)[0].width < 200) {
-                                        min-width = $(this)[0].width + "px";
+                                        min_width = $(this)[0].width + "px";
                                     } else {
-                                        min-width = "200px";
+                                        min_width = "200px";
                                     }
                                     var width = (100 * $(this)[0].width / $editor[0].width) + "%";
                                     var padding = ($(this)[0].height / $(this)[0].width) + "%";
-                                    $(this).css("width", width).css("padding-bottom", padding).css("min-width", min-width)
+                                    $(this).css("width", width).css("padding-bottom", padding).css("min-width", min_width)
                                            .css("max-width", "100%").removeAttr("height").removeAttr("width");
                                 });
                                 var content = $content.html();
