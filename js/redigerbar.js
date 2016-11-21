@@ -62,21 +62,27 @@ $(document).ready(function() {
                                 // As .getContent() returnes a set of all the child elements of the
                                 // editor we must append it to a dummy element to get the html content
                                 var $content = $('<div />').append($(editor.getContent()).clone());
-                                $content.find("img").each(function() {
+                                // Go through the images in the editor to get the correct sizes
+                                $editor.find("img").each(function(i) {
                                     // Convert the image size to make it consistent across all screens
                                     // The width is stored as a percentage, so that it's tied to the width
                                     // of the screen. The height is stored as a percentage of the height,
                                     // which is applied through padding, to keep the aspect ratio.
                                     var min_width = "";
-                                    if ($(this)[0].width < 200) {
-                                        min_width = $(this)[0].width + "px";
+                                    // Set a minimum width, so that images doesn't shrink too much on small screens.
+                                    // The standard minimum width is overridden if the image is originally smaller than that
+                                    if ($(this).width() < 200) {
+                                        min_width = $(this).width() + "px";
                                     } else {
                                         min_width = "200px";
                                     }
-                                    var width = (100 * $(this)[0].width / $editor[0].width) + "%";
-                                    var padding = ($(this)[0].height / $(this)[0].width) + "%";
-                                    $(this).css("width", width).css("padding-bottom", padding).css("min-width", min_width)
-                                           .css("max-width", "100%").removeAttr("height").removeAttr("width");
+                                    var width = (100 * $(this).width() / $editor.width()) + "%";
+                                    var padding = ($(this).height() / $(this).width()) + "%";
+
+                                    // Set the size of the cloned images
+                                    $content.find("img").eq(i).css("width", width).css("padding-bottom", padding)
+                                            .css("min-width", min_width).css("max-width", "100%")
+                                            .removeAttr("height").removeAttr("width");
                                 });
                                 var content = $content.html();
 
