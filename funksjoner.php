@@ -15,6 +15,68 @@ define("SPAMFILTER","/kukk|informative|\<\/a\>|site|seite|Beach|Hera|Estate|lugo
 // vil algoritmen automatisk bli erstattet når en bedre blir tilgjengelig.
 $passord_algo = PASSWORD_DEFAULT;
 
+/*
+ * Håndterer php-feil ved å passe på at feilmeldingen blir lagt til i loggen, og at
+ * brukeren får en feilmelding hvis skriptet ikke kan fortsette.
+ *
+ * Denne funksjonen vil ikke kunne håndtere de mest alvorlige feilene, og hvis det er
+ * databasefeil vil ikke feilmeldingene bli lagret i databasen. Feilmeldingene må da
+ * leses fra /var/log/apache2/error.log
+ */
+function error_handler($errno, $errstr, $errfile, $errline, $errcontext) {
+    // Hvis feilkoden ikke skal registreres
+    if (!(error_reporting() & $errno)) {
+        return;
+    }
+
+    $message = "$errfile:$errline [$errno] $errstr";
+
+    switch ($errno) {
+    case E_USER_ERROR:
+        logg("error", "FATAL ERROR $message");
+        if (tilgang_endre()) {
+            echo "FATAL ERROR $message";
+        } else {
+            echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
+        }
+        // Koden kan ikke fortsette etter en slik feil
+        exit(1);
+        break;
+
+    case E_USER_WARNING:
+        logg("warning", "WARNING $message");
+        break;
+
+    case E_USER_NOTICE:
+        logg("notice", "NOTICE $message");
+        break;
+
+    default:
+        break;
+    }
+
+    // Fortsett å kjøre
+    return true;
+}
+set_error_handler("error_handler");
+
+/*
+ * Håndterer exceptions som ikke blir håndtert ellers, og passer på å skrive
+ * informasjonen til loggen. Koden kan ikke fortsette etterpå, så denne funksjonen
+ * skal bare være nødvendig når alt annet feiler. Exceptions må håndteres med try catch
+ * der de kan dukke opp for at koden skal fortsette å kjøre, og for å gi ordentlige 
+ * feilmeldinger.
+ */
+function exception_handler($e) {
+    logg("exception", "UNCAUGHT EXCEPTION: {$e->getMessage()}");
+    if (tilgang_endre()) {
+        echo "UNCAUGHT EXCEPTION: {$e->getMessage()}";
+    } else {
+        echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
+    }
+}
+set_exception_handler("exception_handler");
+
 function koble_til_database($database_host, $database_user, $database_string, $database_database){
 
 	global $connection;
@@ -761,7 +823,7 @@ function logg($type, $melding) {
 
 function siste_sql_feil() {
 	$enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
-	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
+	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
 	return hent_og_putt_inn_i_array($sql, 'id');
 }
 

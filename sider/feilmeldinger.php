@@ -29,8 +29,6 @@ foreach($sisteSqlFeil as $feil) {
 		$query = $matches[2];
 		$sql = $matches[3];
 		
-		echo "<div>Marker som løst!</div>";
-		
 		echo "<div class='fil'>".$fil."</div>";
 		echo "<div class='query'>".$query."</div>";
 		echo "<div class='query'>".$feil['tid']."</div>";
