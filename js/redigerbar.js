@@ -71,10 +71,10 @@ $(document).ready(function() {
                                     var min_width = "";
                                     // Set a minimum width, so that images doesn't shrink too much on small screens.
                                     // The standard minimum width is overridden if the image is originally smaller than that
-                                    if ($(this).width() < 200) {
+                                    if ($(this).width() < 100) {
                                         min_width = $(this).width() + "px";
                                     } else {
-                                        min_width = "200px";
+                                        min_width = "100px";
                                     }
                                     var width = (100 * $(this).width() / $editor.width()) + "%";
                                     var padding = ($(this).height() / $(this).width()) + "%";
