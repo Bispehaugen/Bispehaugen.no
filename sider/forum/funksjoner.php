@@ -350,7 +350,7 @@ function siste_forumposter_sql($antall = 5) {
 			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
 			LEFT JOIN forum AS f ON fi.forumid = f.forumid
 			WHERE f.rettigheter <= " . session('rettigheter') . "
-			ORDER BY skrevet DESC 
+			ORDER BY ft.tidsisteinnlegg DESC 
 			LIMIT ".$antall;
 	return $sql;
 }
