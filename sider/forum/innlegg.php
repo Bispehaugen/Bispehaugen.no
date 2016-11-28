@@ -54,6 +54,13 @@
 		}
 		$sql=substr($sql,0,-1);
 		mysql_query($sql);
+
+        // Oppdaterer tidsisteinnlegg
+        $sql = "SELECT fnavn, enavn FROM medlemmer where medlemsid=".$_SESSION["medlemsid"];
+        $result = mysql_query($sql);
+        $row = mysql_fetch_array($result);
+        $sql = "UPDATE forum_tema SET tidsisteinnlegg='".date("Y-m-d H:i:s")."', sisteinnleggskrevetav='{$row[0]} {$row[1]}' WHERE temaid=$temaid";
+        mysql_query($sql);
 		
 		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
 		sett_sisteinnleggid($temaid);
