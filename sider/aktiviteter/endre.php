@@ -1,6 +1,7 @@
 <?php 
 	//TODO: mangler fortsatt test på tidsformat, og en liste for å koble slagverksbærere til medlemmer
 	
+    global $dbh;
 	$feilmeldinger = Array();
 	
 	//sjekker om man er admin
@@ -50,17 +51,17 @@
 			if ($id){
 				$dato = $dato[0];
 
-				$sql="UPDATE arrangement SET tittel='".$tittel."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
-				,start='".$dato." ".$starttid."',slutt='".$dato." ".$sluttid."',ingress='".$ingress."',public='".$public."',type='".$type."',hjelpere='".$hjelpere."'
-				,kakebaker='".$kakebaker."', slagverk='".$slagverk."' WHERE arrid='".$id."';";
-				mysql_query($sql);
+				$sql="UPDATE arrangement SET tittel=?,sted=?,dato=?,oppmoetetid=?
+				,start=?,slutt=?,ingress=?,public=?,type=?,hjelpere=?,kakebaker=?, slagverk=? WHERE arrid=?";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($tittel, $sted, $dato, $oppmote, "$dato $starttid", "$dato $sluttid", $ingress, $public, $type, $hjelpere, $kakebaker, $slagverk, $id));
 				header('Location: ?side=aktiviteter/vis&arrid='.$id);
 				die();
 			} else {
 				foreach($dato as $d) {
-					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker,slagverk)
-	values ('$tittel','$type','$sted','$d','$oppmote','$d $starttid','$d $sluttid','$ingress','','$public','$hjelpere','$kakebaker','$slagverk')";
-					mysql_query($sql);
+					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker,slagverk) values (?,?,?,?,?,?,?,?,'',?,?,?,?)";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute(array($tittel, $type, $sted, $d, $oppmote, "$d $starttid", "$d $sluttid", $ingress, $public, $hjelpere, $kakebaker, $slagverk));
 				}
 				
 				header('Location: ?side=aktiviteter/liste');
@@ -89,9 +90,10 @@
 	if(has_get('id')){	
 		#Hente ut valgte nyhet hvis "endre"
 		$arrid=get('id');
-		$sql="SELECT * FROM `arrangement` WHERE `arrid`=".$arrid;
-		$mysql_result=mysql_query($sql);
-		$aktiviteter=mysql_fetch_array($mysql_result);
+		$sql="SELECT * FROM `arrangement` WHERE `arrid`=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($arrid));
+		$aktiviteter=$stmt->fetch();
 		$handling = "Endre";
 
 		$public = kanskje($aktiviteter, 'public');
@@ -101,8 +103,7 @@
 	
 	//henter ut alle medlemmer som kakebaker
 	$sql="SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
-	$mysql_result=mysql_query($sql);
-	while($row=mysql_fetch_array($mysql_result)){
+    foreach ($dbh->query($sql) as $row) {
 		$medlemmer[$row['medlemsid']] = $row;
 	}
 		

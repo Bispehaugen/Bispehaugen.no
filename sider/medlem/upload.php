@@ -1,5 +1,6 @@
 <?php
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
+global $dbh;
 
 $root = "../../";
 
@@ -43,11 +44,9 @@ $filename = $medlemsid.".jpg";
 $filepath = "..".$dir.$filename;
 
 if (\Flow\Basic::save( $root . $dir . $filename, '../../temp', $request)) {
-	$sql = "UPDATE medlemmer SET foto = '".addslashes($filepath)."' WHERE medlemsid = ".$medlemsid." LIMIT 1";
-	if(!mysql_query($sql)) {
-		logg("error-profilbilde", "Feilet under opplasting av profilbilde for brukerId: ".$medlemsid. " sql: ".$sql);
-		die(json_response(HttpStatus::ERROR, "Ett problem oppstod under opplastingen. Webkom er varslet! 2", 500));
-	}
+	$sql = "UPDATE medlemmer SET foto = ? WHERE medlemsid = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($filepath, $medlemsid));
 	innlogget_bruker_oppdatert();
 	die(json_response(HttpStatus::SUCCESS, "Fil opplastet", 200));
 } else {

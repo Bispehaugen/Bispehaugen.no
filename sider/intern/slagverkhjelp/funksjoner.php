@@ -25,7 +25,8 @@ function hent_slagverkhjelp($gruppeid = 0) {
 }
 
 function hent_slagverkgruppe_for_medlem($medlemsid) {
-	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp WHERE medlemsid = " . mysql_real_escape_string($medlemsid) . " LIMIT 1";
+    global $dbh;
+	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp WHERE medlemsid = " . $dbh->quote($medlemsid) . " LIMIT 1";
 	return hent_og_putt_inn_i_array($sql);
 }
 

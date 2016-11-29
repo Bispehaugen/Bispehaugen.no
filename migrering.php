@@ -1,10 +1,11 @@
 <?php
 
-$query = mysql_query("SELECT MAX(id) FROM `migreringer`");
-$forrige_migrering = mysql_result($query, 0);
+$stmt = $dbh->query("SELECT MAX(id) FROM `migreringer`");
+$forrige_migrering = $stmt->fetchColumn();
 
 function migrering($id) {
 	global $forrige_migrering;
+    global $dbh;
 
 	$arg_list = func_get_args();
 	// sjekk om $nr er kjørt
@@ -12,14 +13,15 @@ function migrering($id) {
 
 	// Kjør alle strenger som blir sendt inn
 	for($i = 2; $i<func_num_args(); $i++) {
-		$result = mysql_query($arg_list[$i]);
-		if (!$result) {
-		    die('Migrering id: '.$id.'. Query number '.$i.'. Invalid query: ' . mysql_error());
-		}
+        try {
+            $dbh->query($arg_list[$i]);
+        } catch (PDOException $e) {
+            die('Migrering id: '.$id.'. Query number '.$i.'. Invalid query: ' . $e->getMessage());
+        }
 	}
 
 	// Sett inn at migrering er kjørt
-	mysql_query("INSERT INTO `migreringer` (`id`, `kommentar`) VALUES ('".$id."', '".$arg_list[1]."')");
+	$dbh->query("INSERT INTO `migreringer` (`id`, `kommentar`) VALUES ('".$id."', '".$arg_list[1]."')");
 }
 
 migrering(1, "opprett migreringer tabell",

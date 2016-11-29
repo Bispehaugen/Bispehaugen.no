@@ -197,21 +197,23 @@ function forum_list_tema($forumid, $skip) {
 }
 
 function forum_paginering($id, $skip, $type) {
+    global $dbh;
 
 	switch($type) {
 		case "tema":
-			$sql = "SELECT COUNT( temaid ) AS antall FROM forum_tema WHERE forumid=".$id;
+			$sql = "SELECT COUNT( temaid ) AS antall FROM forum_tema WHERE forumid=:id";
 		break;
 		case "innlegg":
-			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=".$id;
+			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=:id";
 			die("IKKE IMPLEMENTERT, sjekk om dette er riktig...");
 		break;
 		default:
 			die("Pagineringstype ".$type." finnes ikke");
 	}
 
-	$query = mysql_query($sql);
-	$antall = mysql_result($query, 0);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(":id" => $id));
+    $antall = $stmt->rowCount();
 
 	$max_antall_sider = floor($antall / antall_tema_per_side);
 	$midtside = floor($max_antall_sider/2);
@@ -326,22 +328,24 @@ function har_tilgang_til_forum($forumid = "", $temaid = "") {
 }
 
 function sett_sisteinnleggid($temaid){
+    global $dbh;
 	//oppdaterer sisteinnleggid i forum_tema-tabellen
-	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=".$temaid." ORDER BY innleggid DESC LIMIT 1";
-	$result=mysql_query($sql);
-	$sisteinnleggid=mysql_result($result, '0');
+	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=? ORDER BY innleggid DESC LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($temaid));
+	$sisteinnleggid = $stmt->fetchColumn();
 	
-	$sql="UPDATE forum_tema SET sisteinnleggid=".$sisteinnleggid." WHERE temaid=".$temaid;
-	mysql_query($sql);
+	$sql="UPDATE forum_tema SET sisteinnleggid=? WHERE temaid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($sisteinnleggid, $temaid));
 		
 	//oppdaterer sisteinnleggig i forum-tabellen
 	$sql="SELECT sisteinnleggid, forumid FROM forum_tema ORDER BY sisteinnleggid DESC LIMIT 1";
 	$sisteinnlegg = hent_og_putt_inn_i_array($sql, "sisteinnleggid");
 	
-	foreach($sisteinnlegg as $sisteinnleggid){
-		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
-	};
-	mysql_query($sql);
+    $sql="UPDATE forum SET sisteinnleggid=? WHERE forumid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($sisteinnlegg[0]['sisteinnleggid'], $sisteinnlegg[0]['forumid']));
 }
 
 function siste_forumposter_sql($antall = 5) {

@@ -60,8 +60,9 @@ if ($type == "profilbilde") {
 // slett filer som starter på medlemsid: rm 211-*
 
 if (\Flow\Basic::save( "." . $dir . $filename, $config, $request)) {
-	$sql = "UPDATE medlemmer SET foto = '".addslashes($filepath)."' WHERE medlemsid = ".$medlemsid." LIMIT 1";
-	mysql_query($sql);
+	$sql = "UPDATE medlemmer SET foto = ? WHERE medlemsid = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(addslashes($filepath), $medlemsid));
 } else {
 	echo "Fail... :(";
 }

@@ -1,7 +1,8 @@
 <?php
 
 function hent_mapper_sql($ider, $id_type, $mappetype) {
-	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".mysql_real_escape_string($ider).")";
+    global $dbh;
+	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".$dbh->quote($ider).")";
 	if(!is_null($mappetype)) {
 		$sql .= " AND mappetype = ".$mappetype;
 	}
@@ -19,7 +20,8 @@ function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
 }
 
 function hent_filer($mappeid) {
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval(mysql_real_escape_string($mappeid)) . " ORDER BY tittel ASC";
+    global $dbh;
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval($dbh->quote($mappeid)) . " ORDER BY tittel ASC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
 }
 
@@ -42,7 +44,8 @@ function hent_undermapper($id, $mappetype = Mappetype::Dokumenter) {
 }
 
 function hent_fil($filid) {
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, mappetype, tid FROM filer WHERE id = ".intval(mysql_real_escape_string($filid));
+    global $dbh;
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, mappetype, tid FROM filer WHERE id = ".intval($dbh->quote($filid));
 	return hent_og_putt_inn_i_array($sql);
 }
 
@@ -57,17 +60,18 @@ function hent_filpath($filMedMappeinfo) {
 }
 
 function sok_i_notesett($sokestreng) {
+    global $dbh;
 
 	if (is_numeric($sokestreng)) {
 		$sql = "SELECT mappeid 
 			FROM noter_notesett 
-			WHERE arkivnr = " . intval(mysql_real_escape_string($sokestreng)) . "
+			WHERE arkivnr = " . intval($dbh->quote($sokestreng)) . "
 			ORDER BY tittel ASC";
 	} else {
 		$sql = "SELECT mappeid 
 				FROM noter_notesett 
-				WHERE arrangor LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
-				   OR komponist LIKE '%" . mysql_real_escape_string($sokestreng) . "%'
+				WHERE arrangor LIKE '%" . $dbh->quote($sokestreng) . "%'
+				   OR komponist LIKE '%" . $dbh->quote($sokestreng) . "%'
 				ORDER BY tittel ASC";
 	}
 	
@@ -87,7 +91,7 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 	$delstrenger = explode(" ", $sokestreng);
 
 	foreach($delstrenger as $delstreng) {
-		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
+		$sql .= "AND tittel LIKE '%" . $dbh->quote($delstreng) . "%'";
 	}
 	$sql .=" ORDER BY tittel ASC";
 
@@ -107,10 +111,11 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 }
 
 function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
+    global $dbh;
 	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = ".$mappetype." ";
 	$delstrenger = explode(" ", $sokestreng);
 	foreach($delstrenger as $delstreng) {
-		$sql .= "AND tittel LIKE '%" . mysql_real_escape_string($delstreng) . "%'";
+		$sql .= "AND tittel LIKE '%" . $dbh->quote($delstreng) . "%'";
 	}
 	$sql .=" ORDER BY tittel ASC";
 	return hent_og_putt_inn_i_array($sql, $id_verdi="id");

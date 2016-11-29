@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+global $dbh;
 
 date_default_timezone_set('Europe/Oslo');
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
@@ -72,9 +73,10 @@ if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
 	Styret";
 
 		if(epost($to, $replyto, $subject, $message)) {
-			$sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Slagverkhjelper . ", " . $bruker['medlemsid'] . ", '".date("Y-m-d H:i:s")."')";
+			$sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
 
-			mysql_query($sql_varling);
+            $stmt = $dbh->prepare($sql_varling);
+            $stmt->execute(array($arrangement["arrid"], Varslingstype::Slagverkhjelper, $bruker["medlemsid"], date("Y-m-d H:i:s")));
 		}
 	}
 }

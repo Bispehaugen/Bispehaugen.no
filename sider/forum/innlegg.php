@@ -1,5 +1,6 @@
 <?php 
 	include_once("sider/forum/funksjoner.php");
+    global $dbh;
 
 	//funksjonalitet
 	
@@ -21,8 +22,9 @@
 	//slette innlegg
 	if(has_get('sletteinnlegg')){
 		$sletteinnleggid=get('sletteinnlegg');
-		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=".$sletteinnleggid;
-		mysql_query($sql);
+		$sql="DELETE FROM `forum_innlegg_ny` WHERE innleggid=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($sletteinnleggid));
 		sett_sisteinnleggid($temaid);
 		header('Location: ?side=forum/innlegg&id='.$temaid.'');
 	};
@@ -30,8 +32,9 @@
 	//liker et innlegg
 	if(has_get('likerinnlegg')){
 		$likerinnleggid=get('likerinnlegg');
-		$sql="INSERT INTO `forum_liker`(`medlemsid`, `innleggid`) VALUES ('".$_SESSION["medlemsid"]."',".$likerinnleggid.")";
-		mysql_query($sql);
+		$sql="INSERT INTO `forum_liker`(`medlemsid`, `innleggid`) VALUES (?,?)";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($_SESSION["medlemsid"], $likerinnleggid));
 		sett_sisteinnleggid($temaid);
 		header('Location: ?side=forum/innlegg&id='.$temaid.'');
 	};
@@ -39,21 +42,21 @@
 	//hvis det er lagt til et nytt innlegg legges dette inn i databasen
 	if(has_post('tekst')){
 		$sql="INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetavid, sistredigert) 
-			VALUES ('".$temaid."','".post('tekst')."','".date('Y-m-d H:i:s')."','".$_SESSION['medlemsid']."','".date('Y-m-d h:i:s')."')";
-		mysql_query($sql);
+			VALUES (?,?,'".date('Y-m-d H:i:s')."',?,'".date('Y-m-d h:i:s')."')";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($temaid, post("tekst"), $_SESSION["medlemsid"]));
 		//henter ut id til det nye innlegget
-		$id = mysql_insert_id();
+		$id = $dbh->lastInsertId();
 		//henter ut liste over alle aktive medlemmer
 		$sql="SELECT medlemsid FROM medlemmer WHERE status!='Sluttet';";
 		$aktivemedlemmer=hent_og_putt_inn_i_array($sql, "medlemsid");
 		//legger inn innlegget som ulest for alle aktive medlemmer
 		$sql="INSERT INTO `forum_leste`(`medlemsid`, `uleste_innlegg`, `temaid`) 
-			VALUES ";
+			VALUES (?, ?, ?)";
+        $stmt = $dbh->prepare($sql);
 		foreach ($aktivemedlemmer as $medlemsid => $medlem) {
-			$sql.="('".$medlem['medlemsid']."','".$id."','".$temaid."'),";
+            $stmt->execute(array($medlem["medlemsid"], $id, $temaid));
 		}
-		$sql=substr($sql,0,-1);
-		mysql_query($sql);
 		
 		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
 		sett_sisteinnleggid($temaid);
@@ -66,20 +69,23 @@
 		if(post('flagg')==1){$flagg=1;}else{$flagg=0;};
 		//sql - databasen er sånn at pdd. kan du ikke melde deg på når du allerede er påmeldt
 		$sql="INSERT INTO forum_listeinnlegg_ny (listeid, flagg, brukerid, kommentar, tid) 
-			VALUES ('".post('listeinnlegg')."','".$flagg."','".$_SESSION["medlemsid"]."','".$kommentar."','".date('Y-m-d h:i:s')."')";
-		mysql_query($sql);	
+			VALUES (?,?,?,?,'".date('Y-m-d h:i:s')."')";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array(post("listeinnlegg"), $flagg, $_SESSION["medlemsid"], $kommentar));
 	};
 		
 	$medlemsid= $_SESSION["medlemsid"];
 	
 	//Henter ut tema-tittel
-	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=".$temaid.";";
-	$mysql_result=mysql_query($sql);
-	$tema = mysql_fetch_array($mysql_result);
+	$sql="SELECT tittel, temaid FROM forum_tema WHERE temaid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($temaid));
+	$tema = $stmt->fetch();
 	
 	//Setter alle innlegg i aktuelle tråd som lest i databasen (så neste gang blir de merket som lest)
-	$sql = "DELETE FROM `forum_leste` WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
-	mysql_query($sql);
+	$sql = "DELETE FROM `forum_leste` WHERE temaid=? AND medlemsid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($temaid, $medlemsid));
 	
     #Det som printes på sida
     

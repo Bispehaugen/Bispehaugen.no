@@ -3,21 +3,17 @@
 	include_once "db_config.php";
 	include_once "funksjoner.php";
 
-	$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-	if ( $tilkobling === false ){
-    	exit("tilkoblingsfeil");
-	}
+	koble_til_database($database_host, $database_user, $database_string, $database_database);
 	
 	$epost=post("epost");
 
     $update_hash = false;
 	
 	##Sjekker om passordet stemmer med eposten
-	$sql = "SELECT medlemsid, rettigheter, passord FROM medlemmer WHERE email='$epost'";
-	$result = mysql_query($sql);
-    if (!$result) sqlerror($sql);
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT medlemsid, rettigheter, passord FROM medlemmer WHERE email=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($epost));
+    $row = $stmt->fetch();
 
 	if (!password_verify(post("password"), $row["passord"])) {
         // Sjekker om passordet er lagret i det gamle formatet
@@ -38,9 +34,9 @@
     // Sjekker om det har kommet en ny passord_algoritme siden dette passordet ble lagret, og oppdaterer til den
     if ($update_password || password_needs_rehash($hash, $passord_algo)) {
         $hash = password_hash(post("password"), $passord_algo);
-        $sql = "UPDATE medlemmer SET passord='$hash' WHERE email='$epost'";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
+        $sql = "UPDATE medlemmer SET passord=:hash WHERE email=:email";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array(":hash" => $hash, ":email" => $epost));
     }
 	
 	##Henter ut medlemsid og rettigheter

@@ -1,6 +1,6 @@
 <?php
 
-global $connection;
+global $dbh;
 
 require 'vendor/autoload.php';
 
@@ -62,15 +62,24 @@ set_error_handler("error_handler");
 
 /*
  * Håndterer exceptions som ikke blir håndtert ellers, og passer på å skrive
- * informasjonen til loggen. Koden kan ikke fortsette etterpå, så denne funksjonen
- * skal bare være nødvendig når alt annet feiler. Exceptions må håndteres med try catch
- * der de kan dukke opp for at koden skal fortsette å kjøre, og for å gi ordentlige 
- * feilmeldinger.
+ * informasjonen til loggen. Programmet slutter når denne funksjonen fullfører,
+ * så hvis skriptet skal fortsette må den håndteres med try...catch.
+ *
+ * PDO er satt til å kaste exceptions når noe går galt, men med mindre det er
+ * forutsett skal ikke disse håndteres med try...catch. Hvis det er noe galt med
+ * databasen eller SQL-koden er det vaneligvis ikke noe vits i å fortsette programmet,
+ * så det er best å bare krasje.
  */
 function exception_handler($e) {
-    logg("exception", "UNCAUGHT EXCEPTION: {$e->getMessage()}");
+    if ($e instanceof PDOException) {
+        sqlerror("", $e);
+    } else {
+        logg("exception", "UNCAUGHT EXCEPTION: {$e->getMessage()}");
+    }
+
     if (tilgang_endre()) {
-        echo "UNCAUGHT EXCEPTION: {$e->getMessage()}";
+        echo "UNCAUGHT EXCEPTION: {$e->getMessage()}<br /><br />";
+        echo "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
     } else {
         echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
     }
@@ -78,31 +87,18 @@ function exception_handler($e) {
 set_exception_handler("exception_handler");
 
 function koble_til_database($database_host, $database_user, $database_string, $database_database){
-
-	global $connection;
+	global $dbh;
 	
-    $connection = mysql_connect($database_host, $database_user, $database_string);
-	
-    if (!$connection) {
-        echo "Kunne ikke koble opp mot database.<br>Prøv igjen senere...";
-        return false;
+    try {
+        $dbh = new PDO("mysql:host={$database_host};dbname={$database_database};charset=utf8",
+            $database_user, $database_string, array(
+                PDO::ATTR_PERSISTENT => true
+        ));
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        //echo "Kunne ikke koble opp mot database.<br>Prøv igjen senere...";
+        die($e->getMessage());
     }
-
-	$select_db = mysql_select_db($database_database, $connection);
-	
-   	if(!$select_db){
-   		echo "Kunne ikke velge database";
-   		return false;
-   	}
-	
-	$utf8_db = mysql_set_charset("utf8", $connection);
-	
-	if (!$utf8_db) {
-		echo "Kunne ikke bruke utf8 mot databasen";
-		return false;
-	}
-
-    return true;
 }
 
 /*
@@ -110,27 +106,23 @@ function koble_til_database($database_host, $database_user, $database_string, $d
  * og ved å si ifra til brukeren hvis den har de nødvendige rettighetene.
  *
  * Det som rapporteres er:
- * * hvilken fil, funksjon og linje denne funksjonen blir kalt fra (som sannsynligvis er rett under feilen)
- * * sql-koden som ble kjørt (hvis den er vedlagt, se under)
- * * MySQL errorkode og feilmelding
+ * * SQL-koden som ble kjørt (hvis den er vedlagt, se under)
+ * * PDO errorkode og feilmelding (igjen, se under)
+ * * Backtrace
  *
  * Det er ikke nødvendig å legge ved sql-koden siden linjenummeret funksjonen blir
  * kalt fra blir lagt ved, men det kan være nyttig for å identifisere problemet
- * uten å lete gjennom koden først.
+ * uten å lete gjennom koden først. Det er heller ikke nødvendig å legge ved exception-et,
+ * men 
  */
-function sqlerror($sql = "") {
-    // Lager en backtrace for å finne ut hvor funksjonen ble kjørt fra
-    $bt = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
-    // Det første elementet i $bt inneholder informasjon om hvordan denne funksjonen
-    // ble kalt, inklusivt hvilken fil, linje og navnet på DENNE funksjonen.
-    // For å finne navnet på funksjonen som kalte denne funksjonen må vi gå ett skritt lengre bak
-    $file = basename($bt[0]["file"]);
-    $linje = $bt[0]["line"];
-    $func = $bt[1]["function"];
-    $errno = mysql_errno();
-    $error = mysql_error();
+function sqlerror($sql = "", $e = "") {
+    $sql = empty($sql) ? "" : "<br />SQL:<br />$sql<br /><br />";
 
-    $message = "Feil i fil '$file' rundt linje $linje i funksjonen '$func'?<br />Query: ".$_SERVER['QUERY_STRING']."<br />SQL: $sql<br />MySQL error nr. $errno: $error";
+    $message = "SQL ERROR:".$sql;
+    if ($e instanceof PDOException) {
+        $message .= "<br />PDO error: {$e->getMessage()}<br /><br />";
+        $message .= "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
+    }
     logg("sqlerror", $message);
     if (tilgang_full()) {
         die($message);
@@ -139,23 +131,15 @@ function sqlerror($sql = "") {
 }
 
 function get($attributt) {
-	return isset($_GET[$attributt]) ? mysql_real_escape_string($_GET[$attributt]) : null; 
+	return isset($_GET[$attributt]) ? $_GET[$attributt] : null; 
 }
 
 function post($attributt) {
-	if (isset($_POST[$attributt])) {
-		$data = $_POST[$attributt];
-		if (is_array($data)) {
-			return array_map('mysql_real_escape_string', $data);
-		} else {
-			return mysql_real_escape_string($data);
-		}
-	}
-	return null; 
+	return isset($_POST[$attributt]) ? $_POST[$attributt] : null; 
 }
 
 function session($attributt) {
-	return isset($_SESSION[$attributt]) ? mysql_real_escape_string($_SESSION[$attributt]) : null; 
+	return isset($_SESSION[$attributt]) ? $_SESSION[$attributt] : null; 
 }
 
 function has_get($attributt) {
@@ -276,28 +260,24 @@ function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
 }
 
 function hent_og_putt_inn_i_array($sql, $id_verdi=""){
-	$query = mysql_query($sql);
-	
+    global $dbh;
 	$array = Array();
 
-	if ($query === false) {
-        sqlerror($sql);
-	}
-
-	while($row = mysql_fetch_assoc($query)){
-		if(empty($id_verdi)) {
-			$array = $row; 
-		} else {
-			if (array_key_exists($id_verdi, $row)) {
-				$array[$row[$id_verdi]] = $row; 
-			}
-		}
-	}
+    foreach($dbh->query($sql) as $row) {
+        if(empty($id_verdi)) {
+            $array = $row; 
+        } else {
+            if (array_key_exists($id_verdi, $row)) {
+                $array[$row[$id_verdi]] = $row; 
+            }
+        }
+    }
 	
 	return $array;
 }
 
 function hent_brukerdata($medlemid = ""){
+    global $dbh;
 	if(empty($medlemid)){
 		if (has_session('medlemsid')) {
 			$medlemid = session("medlemsid");
@@ -315,33 +295,31 @@ function hent_brukerdata($medlemid = ""){
 				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	}
 
-	if (is_array($medlemid)) {
-		$medlemid = array_filter($medlemid);
-		sort($medlemid);
+    $sql .= " WHERE `medlemsid`=?";
 
-		if (empty($medlemid)) {
-			return Array();
-		}
+    if (is_array($medlemid)) {
+        $medlemid = array_filter($medlemid);
+        sort($medlemid);
 
-		$sql .= " WHERE `medlemsid` IN (".implode(',',$medlemid).")";
-	} else {
-		$sql .= " WHERE `medlemsid`=".$medlemid;
-	}
-	$query = mysql_query($sql);
-
-	if ($query === false) {
-		die("Oppsto en feil i hent_brukerdata. Sql: " . $sql);
-	}
+        if (empty($medlemid)) {
+            return Array();
+        }
+    } else {
+        $medlemid = array($medlemid);
+    }
 
 	$medlemmer = Array();
 
-	while($medlem = mysql_fetch_assoc($query)) {
-		if(is_array($medlemid)) {
-			$medlemmer[$medlem['medlemsid']] = $medlem;
-		} else {
-			return $medlem;
-		}
-	}
+    $stmt = $dbh->prepare($sql);
+    foreach ($medlemid as $id) {
+        $stmt->execute(array($id));
+        $medlem = $stmt->fetch();
+        if (count($medlemid) != 1) {
+            $medlemmer[$medlem['medlemsid']] = $medlem;
+        } else {
+            return $medlem;
+        }
+    }
 
 	return $medlemmer;
 }
@@ -364,6 +342,7 @@ function generer_token() {
  * Se funksjonen 'logg_inn' for en beskrivelse av hvordan 'husk_meg' funksjonen virker.
  */
 function er_logget_inn(){
+    global $dbh;
     if (isset($_SESSION["medlemsid"])) {
         // Sjekk at 'husk_meg' informasjonskapselen eksisterer hvis brukeren vil bli husket
         // Siden innloggingen skjer gjennom javascript er det sannsynligvis først her informasjons-
@@ -382,29 +361,36 @@ function er_logget_inn(){
             setcookie("husk_meg", "", time()-3600);
             return false;
         }
-        $serie = mysql_real_escape_string($tmp[0]);
+        $serie = $dbh->quote($tmp[0]);
         $token = hash("sha256", $tmp[1]);
-        $result = mysql_query("SELECT 1 FROM `husk_meg` where `serie`='$serie'");
-        if ($result && mysql_num_rows($result) > 0) {
-            $sql = "SELECT medlemmer.medlemsid, medlemmer.rettigheter FROM husk_meg INNER JOIN medlemmer ON husk_meg.medlemsid=medlemmer.medlemsid WHERE husk_meg.serie='$serie' AND husk_meg.token='$token'";
-            $result = mysql_query($sql);
-            if ($result && mysql_num_rows($result) > 0) {
+
+        $sql = "SELECT 1 FROM `husk_meg` where `serie`=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($serie));
+        if ($stmt->rowCount() > 0) {
+            $sql = "SELECT medlemmer.medlemsid, medlemmer.rettigheter FROM husk_meg INNER JOIN medlemmer ON husk_meg.medlemsid=medlemmer.medlemsid WHERE husk_meg.serie=:serie AND husk_meg.token=:token";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array(":serie" => $serie, ":token" => $token));
+            if ($stmt->rowCount() > 0) {
                 // Logg inn
-                $array = mysql_fetch_assoc($result);
-                $medlemsid = $array["medlemsid"];
-                $rettigheter = $array["rettigheter"];
+                $row = $stmt->fetch();
+                $medlemsid = $row["medlemsid"];
+                $rettigheter = $row["rettigheter"];
                 // Vi setter 'husk' til false får å ikke lage en informasjonskapsel i en ny serie
                 logg_inn($medlemsid, $rettigheter, false);
 
                 // Lag en ny token og erstatt informasjonskapselen
-                $sql = "DELETE FROM husk_meg WHERE serie='$serie' AND token='$token'";
-                $result = mysql_query($sql);
-                if (!$result) sqlerror($sql);
+                $sql = "DELETE FROM husk_meg WHERE serie=:serie AND token=:token";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array(":serie" => $serie, ":token" => $token));
+
                 $new_token = generer_token();
                 $token_hash = hash("sha256", $new_token);
-                $sql = "INSERT INTO husk_meg (token, serie, sist_brukt, medlemsid) VALUES ('$token_hash', '$serie', NOW(), '$medlemsid')";
-                $result = mysql_query($sql);
-                if (!$result) sqlerror($sql);
+                $sql = "INSERT INTO husk_meg (token, serie, sist_brukt, medlemsid) VALUES (:token_hash, :serie, NOW(), :medlemsid)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array(":token_hash" => $token_hash, ":serie" => $serie, ":token" => $token,
+                                     ":medlemsid" => $medlemsid));
+
                 // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
                 // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
                 setrawcookie("husk_meg", "$serie=$new_token", time()+3600*24*365, NULL, NULL, NULL, true);
@@ -414,7 +400,7 @@ function er_logget_inn(){
                 $_SESSION["login_serie"] = $serie;
 
                 return true;
-            } else if ($result) {
+            } else {
                 /*
                  * Det brukes en token fra tidligere i rekken. Det betyr sannsynligvis at noen har
                  * stjålet informasjonskapselen og logget inn med den selv, slik at den originale
@@ -422,10 +408,9 @@ function er_logget_inn(){
                  * Ved å slette den fra databasen hindrer vi angriperen å komme inn med den, og brukeren kan
                  * logge inn med brukernavn og passord og bruke siden som vanlig.
                  */
-                mysql_query("DELETE FROM husk_meg WHERE serie='$serie'");
+                $stmt = $dbh->prepare("DELETE FROM husk_meg WHERE serie=?");
+                $stmt->execute(array($serie));
                 logg("Sikkerhet", "Mulig angrep på informasjonskapsel i serie '$serie'");
-            } else {
-                sqlerror($sql);
             }
         }
 
@@ -481,6 +466,7 @@ function hent_konserter($antall = "", $type="nestekonsert"){
  * Dette er kanskje litt overkill, men det skader ikke å være på den sikre siden.
  */
 function logg_inn($medlemsid, $rettigheter, $husk=false){
+    global $dbh;
 	$_SESSION["medlemsid"]   = $medlemsid;
 	$_SESSION["rettigheter"] = $rettigheter;
 	
@@ -493,9 +479,10 @@ function logg_inn($medlemsid, $rettigheter, $husk=false){
         $token = generer_token();
         $token_hash = hash("sha256", $token);
         $serie = substr(generer_token(), 0, 12);
-        $sql = "INSERT INTO `husk_meg` (token, serie, sist_brukt, medlemsid) VALUES ('$token_hash', '$serie', NOW(), '$medlemsid')";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
+        $sql = "INSERT INTO `husk_meg` (token, serie, sist_brukt, medlemsid) VALUES (:token_hash, :serie, NOW(), :medlemsid)";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array(":token_hash" => $token_hash, ":serie" => $serie, ":medlemsid" => $medlemsid));
+
         // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
         // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
         setrawcookie("husk_meg", "$serie=$token", time()+3600*24*365, NULL, NULL, NULL, true);
@@ -508,6 +495,7 @@ function logg_inn($medlemsid, $rettigheter, $husk=false){
 }
 
 function logg_ut() {
+    global $dbh;
 	$bruker = innlogget_bruker();
 	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
 	
@@ -516,11 +504,11 @@ function logg_ut() {
 	logg("logout", $melding);
 
     if (isset($_SESSION["husk_meg"])) {
-        $serie = mysql_real_escape_string($_SESSION["login_serie"]);
-        $sql = "DELETE FROM husk_meg WHERE serie='$serie'";
-        $result = mysql_query($sql);
+        $serie = $dbh->quote($_SESSION["login_serie"]);
+        $sql = "DELETE FROM husk_meg WHERE serie=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($serie));
 
-        if (!$result) sqlerror($sql);
         setcookie("husk_meg", "", time()-3600);
         $_SESSION["husk_meg"] = "";
         $_SESSION["token"] = "";
@@ -817,8 +805,10 @@ function generer_passord_hash($passord) {
 }
 
 function logg($type, $melding) {
-	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES ('$type', '".mysql_real_escape_string(session("medlemsid"))."', '".mysql_real_escape_string($melding)."', '".date("Y-m-d H:i:s")."')";
-	mysql_query($sql);
+    global $dbh;
+	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES (:type, :medlemsid, :melding, '".date("Y-m-d H:i:s")."')";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(":type" => $type, ":medlemsid" => session("medlemsid"), ":melding" => $melding));
 }
 
 function siste_sql_feil() {

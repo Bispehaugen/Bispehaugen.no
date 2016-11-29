@@ -25,42 +25,28 @@ $endredeBrukereErIGruppe = post('endredeBrukereErIGruppe');
 $endredeBrukerSomErLeder = post('endredeBrukerSomErLeder');
 
 foreach($endredeBrukereErIGruppe as $brukerId => $gruppeId) {
-	$gruppeId = mysql_real_escape_string($gruppeId);
-	$brukerId = mysql_real_escape_string($brukerId);
-
 	if ($gruppeId == 0) {
 		// Slett brukerplassering
-		$sql = "DELETE FROM slagverkhjelp WHERE medlemsid = $brukerId";
-		if(!mysql_query($sql)) {
-			logg("delete-slagverkhjelpere", $sql." | ".mysql_error());
-			die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
-		}
+		$sql = "DELETE FROM slagverkhjelp WHERE medlemsid = ?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($brukerId));
 	} else {
 		$sql = "INSERT INTO slagverkhjelp (gruppeid, medlemsid) 
-			VALUES ($gruppeId, $brukerId)
-			ON DUPLICATE KEY UPDATE gruppeid=$gruppeId";
-		if(!mysql_query($sql)) {
-			logg("update-slagverkhjelpere", $sql." | ".mysql_error());
-			die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for medlemsid: ".$brukerId, 500));
-		}
+			VALUES (?, ?)
+			ON DUPLICATE KEY UPDATE gruppeid=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($gruppeId, $brukerId, $gruppeId));
 	}
 }
 
 foreach($endredeBrukerSomErLeder as $gruppeId => $brukerId) {
-	$gruppeId = mysql_real_escape_string($gruppeId);
-	$brukerId = mysql_real_escape_string($brukerId);
+	$sql_fjern_gammel_leder = "UPDATE slagverkhjelp SET gruppeleder = 0 WHERE gruppeid = ? AND gruppeleder = 1";
+    $stmt = $dbh->prepare($sql_fjern_gammel_leder);
+    $stmt->execute(array($gruppeId));
 
-	$sql_fjern_gammel_leder = "UPDATE slagverkhjelp SET gruppeleder = 0 WHERE gruppeid = ".$gruppeId. " AND gruppeleder = 1";
-	if(!mysql_query($sql_fjern_gammel_leder)) {
-		logg("update-slagverkhjelpere", $sql_fjern_gammel_leder." | ".mysql_error());
-		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for fjern gammel leder medlemsid: ".$brukerId, 500));
-	}
-	$sql_update_ny_leder = "UPDATE slagverkhjelp SET gruppeleder = 1 WHERE medlemsid = ".$brukerId;
-
-	if(!mysql_query($sql_update_ny_leder)) {
-		logg("update-slagverkhjelpere", $sql_update_ny_leder." | ".mysql_error());
-		die(json_response(HttpStatus::ERROR, "Ukjent lagringsproblem for oppdater ny leder medlemsid: ".$brukerId, 500));
-	}
+	$sql_update_ny_leder = "UPDATE slagverkhjelp SET gruppeleder = 1 WHERE medlemsid = ?";
+    $stmt = $dbh->prepare($sql_update_ny_leder);
+    $stmt->execute(array($brukerId));
 }
 
 die(json_response(HttpStatus::SUCCESS, "Lagret", 200));

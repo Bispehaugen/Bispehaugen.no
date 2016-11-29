@@ -1,5 +1,5 @@
 <?php 
-	
+global $dbh;
 
 if(tilgang_endre() && has_get('id')){
 
@@ -13,8 +13,9 @@ if(tilgang_endre() && has_get('id')){
 		die();
 	}
 
-	$sql = "UPDATE arrangement SET slettet=true WHERE arrid = '".$id."';";
-	mysql_query($sql);
+	$sql = "UPDATE arrangement SET slettet=true WHERE arrid = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($id));
 
 }
 header('Location: ?side=aktiviteter/liste');

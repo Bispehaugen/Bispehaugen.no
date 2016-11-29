@@ -1,6 +1,7 @@
 <?php 
 //TODO Bilde, sjekk på at alle obligatoriske felter er fyllt ut, hvis man endrer seg selv autogenerer mail til webkom/sekretær
 
+    global $dbh;
 	global $opprett_ny_medlem;
 	$endre_seg_selv = false;
 	
@@ -41,14 +42,14 @@
 		$enavn=post('enavn');
 		$brukernavn=post('brukernavn');
 		$instnr=post('instnr');		
-		$grleder=post('grleder');
+		$grleder=post('grleder') ? post('grleder') : 0;
 		$status=post('status');
 		$fdato=date("Y-m-d", strtotime(post('fdato')));
 		$adresse=post('adresse');
 		$postnr=post('postnr');
 		$poststed=post('poststed');
-		$hengerfeste=post('hengerfeste');
-		$bil=post('bil');
+		$hengerfeste=post('hengerfeste') ? post('hengerfeste') : 0;
+		$bil=post('bil') ? post('bil') : 0;
 		$tlfmobil=post('tlfmobil');
 		$email=post('email');
 		$bakgrunn=post('bakgrunn');
@@ -58,7 +59,7 @@
 		$kommerfra=post('kommerfra');
 		$ommegselv=post('ommegselv');
 		$foto = post('foto');
-		$begrenset=post('begrenset');
+		$begrenset=post('begrenset') ? post('begrenset') : 0;
 		if(has_post('rettigheter')){
 			$rettigheter=post('rettigheter');
 		}else if(isset($bruker['rettigheter'])){
@@ -86,12 +87,14 @@
 			}
 		
 			if($grleder==1){
-				$sql="SELECT medlemsid, instrument FROM medlemmer WHERE grleder=1 AND instnr='".$instnr."';";
-				$mysql_result = mysql_query($sql);
+				$sql="SELECT medlemsid, instrument FROM medlemmer WHERE grleder=1 AND instnr=?";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($instnr));
 				
-				while ($medl = mysql_fetch_assoc($mysql_result)) {
-					$sql2 = "UPDATE medlemmer SET grleder=0 WHERE medlemsid=".$medl['medlemsid']." AND instrument=".$medl['instrument'].";";
-					mysql_query($sql2);
+				while ($medl = $stmt->fetch()) {
+					$sql2 = "UPDATE medlemmer SET grleder=0 WHERE medlemsid=? AND instrument=?";
+                    $stmt2 = $dbh->prepare($sql2);
+                    $stmt2->execute(array($medl['medlemsid'], $medl['instrument']));
 				}
 			}
 	
@@ -120,41 +123,46 @@ Den gamle adressen var:
 				UPDATE 
 					medlemmer 
 				SET 
-					fnavn = '$fnavn',
-					enavn = '$enavn',
-					fdato = '$fdato',
-					status = '$status',
-					instnr = '$instnr',
-					grleder = '$grleder',
-					adresse = '$adresse',
-					postnr = '$postnr',
-					poststed = '$poststed',
-					hengerfeste = '$hengerfeste',
-					bil = '$bil',
-					tlfmobil = '$tlfmobil',
-					email = '$email',
-					bakgrunn = '$bakgrunn',
-					startetibuk_date = '$startetibuk',
-					sluttetibuk_date = '$sluttetibuk',
-					studieyrke = '$studieyrke',
-					kommerfra = '$kommerfra',
-					ommegselv = '$ommegselv',
-					begrenset = '$begrenset', 
-					rettigheter = '$rettigheter'
+					fnavn = ?,
+					enavn = ?,
+					fdato = ?,
+					status = ?,
+					instnr = ?,
+					grleder = ?,
+					adresse = ?,
+					postnr = ?,
+					poststed = ?,
+					hengerfeste = ?,
+					bil = ?,
+					tlfmobil = ?,
+					email = ?,
+					bakgrunn = ?,
+					startetibuk_date = ?,
+					sluttetibuk_date = ?,
+					studieyrke = ?,
+					kommerfra = ?,
+					ommegselv = ?,
+					begrenset = ?, 
+					rettigheter = ?
 				WHERE 
-					medlemsid = '$medlemsid';
+					medlemsid = ?;
 				";
-				mysql_query($sql);
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($fnavn, $enavn, $fdato, $status, $instnr, $grleder, $adresse, $postnr,
+                    $poststed, $hengerfeste, $bil, $tlfmobil, $email, $bakgrunn, $startetibuk, $sluttetibuk, 
+                    $studieyrke, $kommerfra, $ommegselv, $begrenset, $rettigheter, $medlemsid));
 				innlogget_bruker_oppdatert();
 			} else {
 				$sql="
 				INSERT INTO 
-				medlemmer (fnavn, enavn, fdato, status, instrument, instnr, grleder, adresse, postnr, poststed, hengerfeste, bil, tlfmobil, 
+				medlemmer (fnavn, enavn, fdato, status, instnr, grleder, adresse, postnr, poststed, hengerfeste, bil, tlfmobil, 
 					email, bakgrunn, startetibuk_date, sluttetibuk_date, studieyrke, kommerfra, ommegselv, begrenset, rettigheter)
-				values ('$fnavn','$enavn','$fdato','$status','$instrument','$instnr','$grleder','$adresse','$postnr','$poststed','$hengerfeste','$bil','$tlfmobil',
-					'$email','$bakgrunn','$startetibuk','$sluttetibuk','$studieyrke','$kommerfra','$ommegselv','$begrenset','$rettigheter')";
-				mysql_query($sql);
-				$medlemsid = mysql_insert_id();
+				values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($fnavn, $enavn, $fdato, $status, $instnr, $grleder, $adresse, $postnr,
+                    $poststed, $hengerfeste, $bil, $tlfmobil, $email, $bakgrunn, $startetibuk, $sluttetibuk, 
+                    $studieyrke, $kommerfra, $ommegselv, $begrenset, $rettigheter));
+				$medlemsid = $dbh->lastInsertId();
 			}
 			header('Location: ?side=medlem/vis&id='.$medlemsid);
 			die();
