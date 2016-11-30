@@ -9,7 +9,7 @@ if ( $tilkobling === false ){
     exit("tilkoblingsfeil");
 }
 
-if (tilgang_endre()) {
+if (tilgang_full()) {
     if (!(isset($_POST["innhold"]) || isset($_POST["navn"]))) {
         logg("innhold", "Enten innhold eller navn er ikke satt under lagringen av innholdet på en side");
         die(json_encode(array("error" => "Det har oppstått en feil. Ta kontakt med webkom.")));

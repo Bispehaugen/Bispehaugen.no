@@ -15,7 +15,7 @@ if (!file_exists($imageFolder)) {
 }
 $imageFolder .= "/";
 
-if (tilgang_endre()) {
+if (tilgang_full()) {
     $tmp = $_FILES[post("blobname")];
     if (is_uploaded_file($tmp["tmp_name"])) {
         header('Access-Control-Allow-Credentials: true');

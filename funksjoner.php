@@ -882,9 +882,9 @@ function debug($array) {
 }
 
 function innhold($navn, $tag="div", $class="", $id="") {
-    $class = tilgang_endre() ? "class='redigerbar $class'" : "";
+    $class = tilgang_full() ? "class='redigerbar $class'" : "";
     if (empty($id)) {
-        $id = tilgang_endre() ? "id='redigerbar-$navn'" : "";
+        $id = tilgang_full() ? "id='redigerbar-$navn'" : "";
     }
     $sql = "SELECT tekst FROM innhold WHERE navn='$navn'";
     $result = mysql_query($sql);
@@ -894,7 +894,7 @@ function innhold($navn, $tag="div", $class="", $id="") {
         $innhold = stripslashes($arr["tekst"]);
         return "<$tag $id $class data-navn='$navn'>$innhold</$tag>";
     }
-    if (tilgang_endre()) {
+    if (tilgang_full()) {
         return "<$tag $id $class data-navn='$navn'>Skriv noe her...</$tag>";
     } else {
         return "";
