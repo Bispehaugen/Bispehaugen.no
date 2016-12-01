@@ -32,7 +32,7 @@
 			$antallFeil += $feil['telling'];
 		}
 		
-		if (session("rettigheter") >= 3) {
+		if (tilgang_webmaster()) {
 	?>
 	<section class="widget neste-konsert<?php if($neste_konsert_markert) echo " markert" ?>">
 		
