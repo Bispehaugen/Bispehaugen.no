@@ -70,7 +70,7 @@ function sqlerror($sql = "") {
 
     $message = "Feil i fil '$file' rundt linje $linje i funksjonen '$func'?<br />Query: ".$_SERVER['QUERY_STRING']."<br />SQL: $sql<br />MySQL error nr. $errno: $error";
     logg("sqlerror", $message);
-    if (tilgang_full()) {
+    if (tilgang_webmaster()) {
         die($message);
     }
     die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
@@ -171,8 +171,12 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	}
 }
 
+function tilgang_webmaster() {
+	return $_SESSION['rettigheter'] == 10;
+}
+
 function tilgang_full() {
-	return $_SESSION['rettigheter'] == 3;
+	return $_SESSION['rettigheter'] > 2;
 }
 
 function tilgang_intern() {
