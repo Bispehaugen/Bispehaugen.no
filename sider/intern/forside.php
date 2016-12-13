@@ -63,9 +63,7 @@
 		<h3><?php echo list_forum(); ?></h3>
 		<div class="clearfix"></div>
 		<?php
-		$sql = siste_forumposter_sql(3);
-
-		forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster siste-poster-intern");
+		siste_forumposter_liste(3, "forum-innlegg-liste siste-poster siste-poster-intern");
 		?>
 
 	</section>

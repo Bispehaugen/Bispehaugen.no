@@ -49,7 +49,7 @@
 		$id = $dbh->lastInsertId();
 		//henter ut liste over alle aktive medlemmer
 		$sql="SELECT medlemsid FROM medlemmer WHERE status!='Sluttet';";
-		$aktivemedlemmer=hent_og_putt_inn_i_array($sql, "medlemsid");
+		$aktivemedlemmer=hent_og_putt_inn_i_array($sql);
 		//legger inn innlegget som ulest for alle aktive medlemmer
 		$sql="INSERT INTO `forum_leste`(`medlemsid`, `uleste_innlegg`, `temaid`) 
 			VALUES (?, ?, ?)";
@@ -95,12 +95,13 @@
 
 	$sql="SELECT fi.* , ft.tittel as innleggtittel, ft.tittel as tematittel FROM forum_tema AS ft, forum_innlegg_ny AS fi
 	WHERE ft.temaid=".$temaid." AND fi.temaid=".$temaid." ORDER BY skrevet;";
+    $innleggliste = hent_og_putt_inn_i_array($sql, array(":temaid" => $temaid));
 
 	//skriver ut temaet for denne tråden
     echo "<section class='forum'>
     	<h2>".$tema['tittel']."</h2>";
 
-	echo forum_innlegg_liste($sql, "forum-innlegg-liste", $temaid);
+	echo forum_innlegg_liste($innleggliste, "forum-innlegg-liste", $temaid);
 
 	$innlogget_bruker = innlogget_bruker();
 

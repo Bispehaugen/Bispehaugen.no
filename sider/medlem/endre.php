@@ -31,8 +31,8 @@
 	};
 	
 	//henter ut alle instrumenter
-	$sql="SELECT instrument, posisjon, instrumentid FROM instrument ORDER BY posisjon";
-	$instrumenter=hent_og_putt_inn_i_array($sql, $id_verdi='posisjon');
+	$sql="SELECT posisjon, instrument, instrumentid FROM instrument ORDER BY posisjon";
+	$instrumenter=hent_og_putt_inn_i_array($sql);
 	
 	$feilmeldinger = Array();
 	//hvis et medlem er lagt inn og noen har trykket på lagre hentes verdiene ut

@@ -1,5 +1,6 @@
 <?php 
 //TODO: mangler fortsatt test på tidsformat, og en liste for å koble slagverksbærere til medlemmer
+global $dbh;
 
 $feilmeldinger = Array();
 //sjekker om man er admin
@@ -105,21 +106,25 @@ if(has_get('id')||has_post('arrid')){
 	if (has_post('id')) {
 		$arrid = post('id');
 	}
-	$sql = "SELECT * FROM arrangement WHERE arrid = ".$arrid.";";
-	$konsert_arrangement = hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT * FROM arrangement WHERE arrid = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($arrid));
+	$konsert_arrangement = $stmt->fetch();
 
 	$sql = "SELECT nyheter.* 
 		    FROM nyheter, konserter, arrangement 
-		    WHERE arrangement.arrid=".$arrid." AND arrangement.arrid = konserter.arrid_konsert
+		    WHERE arrangement.arrid=? AND arrangement.arrid = konserter.arrid_konsert
 			  AND nyheter.nyhetsid = konserter.nyhetsid_konsert
 		    LIMIT 1";
-	$konsert = hent_og_putt_inn_i_array($sql);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($arrid));
+	$konsert = $stmt->fetch();
 	$handling = "Endre";
 }
 
 //henter ut alle medlemmer som kakebaker
-$sql = "SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
-$medlemmer = hent_og_putt_inn_i_array($sql, 'medlemsid');
+$sql = "SELECT medlemsid, fnavn, enavn FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
+$medlemmer = hent_og_putt_inn_i_array($sql);
 
 $aktivChecked = (isset($aktiv) && $aktiv == 0) ? "" : "checked";
 

@@ -215,8 +215,10 @@ function tilgang_endre() {
 
 function hent_komiteer_for_bruker() {
 	$bruker = hent_brukerdata();
-	$sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ".$bruker['medlemsid'];
-	return hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($bruker["medlemsid"]));
+	return array_map("reset", $stmt->fetchAll());
 }
 
 function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
@@ -240,24 +242,39 @@ function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
 		instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
 	}
 
-	return hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
+	return hent_og_putt_inn_i_array($sql);
 }
 
-function hent_og_putt_inn_i_array($sql, $id_verdi=""){
+/*
+ * Denne funksjonen kjører den gitte SQL-koden og returnerer alle resultatene i ett
+ * array med en kolonne (id som standard) som indeks.
+ *
+ * Hvis det skal brukes variabler i SQL-koden skal disse legges inn som beskrevet
+ * her: http://php.net/manual/en/pdo.prepared-statements.php
+ * $params er ett array med alle verdiene av variablene, tilsvarende det første
+ * argumentet til $stmt->execute($params). Les mer om det her:
+ * http://php.net/manual/en/pdostatement.execute.php
+ *
+ * $index er hvilken kolonne som brukes som indeks for arrayet. Hvis ikke annet er
+ * oppgitt brukes den første kolonnen i SQL-koden. For eksempel hvis SQLen er
+ * 'SELECT id, fnavn, enavn FROM medlemmer' vil verdien av 'id' være indeks for
+ * hver rad. Skriptet krasjer hvis $index ikke er en gyldig kolonne.
+ */
+function hent_og_putt_inn_i_array($sql, $params=array(), $index = ""){
     global $dbh;
 	$array = Array();
-
-    foreach($dbh->query($sql) as $row) {
-        if(empty($id_verdi)) {
-            $array = $row; 
-        } else {
-            if (array_key_exists($id_verdi, $row)) {
-                $array[$row[$id_verdi]] = $row; 
-            }
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($params);
+    if (empty($index)) {
+        return array_map("reset", $stmt->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC));
+    } else {
+        $result = array();
+        while ($row = $stmt->fetch()) {
+            // Hvis index ikke er i row er det noe veldig feil i koden, så det er hensiktsmessig å la den krasje
+            $result[$row[$index]] = $row;
         }
+        return $result;
     }
-	
-	return $array;
 }
 
 function hent_brukerdata($medlemid = ""){
@@ -345,7 +362,7 @@ function er_logget_inn(){
             setcookie("husk_meg", "", time()-3600);
             return false;
         }
-        $serie = $dbh->quote($tmp[0]);
+        $serie = $tmp[0];
         $token = hash("sha256", $tmp[1]);
 
         $sql = "SELECT 1 FROM `husk_meg` where `serie`=?";
@@ -410,27 +427,26 @@ function er_logget_inn(){
  */
 function hent_siste_nyheter($antall, $type="Public"){
 	#For å kunne hente ut interne og public nyheter samtidig
+    $params = array(":antall" => $antall);
 	if ($type=="Intern+Public"){
-		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT ".$antall;		
+		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT :antall";
 	} else{
-		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type='".$type."' ORDER BY tid DESC LIMIT ".$antall;
+		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type=:type ORDER BY tid DESC LIMIT :antall";
+        $params[":type"] = $type;
 	};
-	return hent_og_putt_inn_i_array($sql, "nyhetsid");
+	return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function hent_konserter($antall = "", $type="nestekonsert"){
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type='".$type."' AND konsert_tid>now() ORDER BY konsert_tid";
+    $params = array(":type" => $type);
+	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type=:type AND konsert_tid>now() ORDER BY konsert_tid";
 
 	if (!empty($antall)) {
-		$sql .= " LIMIT ".$antall;
+		$sql .= " LIMIT :antall";
+        $params[":antall"] = $antall;
 	}
 
-	$id_verdi = "nyhetsid";
-	if ($antall == 1) {
-		$id_verdi = "";
-	}
-
-	return hent_og_putt_inn_i_array($sql, $id_verdi);
+	return hent_og_putt_inn_i_array($sql, $params);
 }
 
 
@@ -488,7 +504,7 @@ function logg_ut() {
 	logg("logout", $melding);
 
     if (isset($_SESSION["husk_meg"])) {
-        $serie = $dbh->quote($_SESSION["login_serie"]);
+        $serie = $_SESSION["login_serie"];
         $sql = "DELETE FROM husk_meg WHERE serie=?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute(array($serie));
@@ -530,37 +546,38 @@ function ant_dager_siden($dato){
 function hent_aktiviteter($skip = "", $take = "", $alle = "") {
 
 	if ($alle==1){
-		$sql = "SELECT * FROM `arrangement` WHERE slettet=false ";
+		$sql = "SELECT * FROM `arrangement` WHERE slettet=false";
 	}else{
-		$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false ";
+		$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false";
 	}
 
 	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
 		$sql .= " AND public < 2";
 	} elseif ( er_logget_inn() && tilgang_full()){
-		$sql .= " ";
+		$sql .= "";
 	} elseif ( er_logget_inn() && tilgang_intern()){
 		$sql .= " AND public < 2";
 	} else {
 		$sql .= " AND public = 1";
 	}
 
-	$sql .= " ORDER BY dato, start ";
+	$sql .= " ORDER BY dato, start";
 
+    $params = array();
 	if ($skip != "" || $skip === 0) {
-		$sql .= " LIMIT ".$skip;
-		
-		if ($take != "" || $take === 0) {
-			$sql .= " , ".$take;
-		}
+		$sql .= " LIMIT ?";
+        if ($skip == 0 && $take > 0) {
+            $params[] = $take;
+        } else {
+            $params[] = $skip;
+            if ($take != "" || $take === 0) {
+                $sql .= ", ?";
+                $params[] = $take;
+            }
+        }
 	}
 
-	$id_verdi = "arrid";
-	if ($take == 1) {
-		$id_verdi = "";
-	}
-
-	return hent_og_putt_inn_i_array($sql, $id_verdi);
+    return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function innlogget_bruker() {
@@ -706,8 +723,10 @@ function neste_ovelse() {
 }
 
 function neste_konsert_arrangement() {
+    global $dbh;
 	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND type='Konsert' AND slettet=false ORDER BY dato, start LIMIT 1";
-	return hent_og_putt_inn_i_array($sql);
+    $stmt = $dbh->query($sql);
+	return $stmt->fetch();
 }
 
 function neste_konsert_nyhet() {
@@ -715,18 +734,18 @@ function neste_konsert_nyhet() {
 }
 
 function hent_styret() {
-	$sql = "SELECT komite.komiteid, verv.komiteid, navn, vervid, verv.posisjon, komite.posisjon,
+	$sql = "SELECT vervid, komite.komiteid, verv.komiteid, navn, verv.posisjon, komite.posisjon,
 				   tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn, foto
 		    FROM komite, verv, medlemmer
 		    WHERE medlemmer.medlemsid=verv.medlemsid 
 		      AND komite.komiteid=verv.komiteid
 		    ORDER BY komite.posisjon, verv.posisjon";
-    return hent_og_putt_inn_i_array($sql, $id_verdi = "vervid");
+    return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_komiteer() {
 	$sql = "SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
-	$komiteer = hent_og_putt_inn_i_array($sql,$id_verdi = "komiteid");
+	$komiteer = hent_og_putt_inn_i_array($sql);
 
 	return array_filter($komiteer, function($komite, $komiteid) {
 	    return !empty($komite['navn']);
@@ -798,12 +817,12 @@ function logg($type, $melding) {
 function siste_sql_feil() {
 	$enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
 	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
-	return hent_og_putt_inn_i_array($sql, 'id');
+	return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_besetning() {
 	$sql = "SELECT besetningsid, besetningstype FROM noter_besetning";
-	return hent_og_putt_inn_i_array($sql, 'besetningsid');
+	return hent_og_putt_inn_i_array($sql);
 }
 
 function finn_filtype($filnavn) {

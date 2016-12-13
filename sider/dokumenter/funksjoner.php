@@ -1,28 +1,29 @@
 <?php
 
-function hent_mapper_sql($ider, $id_type, $mappetype) {
-    global $dbh;
-	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE ".$id_type." IN (".$dbh->quote($ider).")";
-	if(!is_null($mappetype)) {
-		$sql .= " AND mappetype = ".$mappetype;
-	}
-	$sql .=" ORDER BY tittel ASC";
-	return $sql;
-}
-
 function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
 	$id_type = $hentUndermapper ? "foreldreid" : "id";
 	$id_verdi = $hentUndermapper ? "id" : "";
 
-	$sql = hent_mapper_sql($ider, $id_type, $mappetype);
+    if (is_string($ider)) {
+        $ider = explode(" ", $ider);
+    }
 
-	return hent_og_putt_inn_i_array($sql, $id_verdi=$id_verdi);
+    $placeholders = implode(",", array_fill(0, count($ider), "?"));
+	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE :id_type IN ($placeholders)";
+    $params = array(":id_type" => $id_type)
+	if(!is_null($mappetype)) {
+		$sql .= " AND mappetype = :mappetype".$mappetype;
+        $params[":mappetype"] = $mappetype;
+	}
+	$sql .=" ORDER BY tittel ASC";
+
+	return hent_og_putt_inn_i_array($sql, array_merge($params, $ider), $id_verdi);
 }
 
 function hent_filer($mappeid) {
     global $dbh;
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ".intval($dbh->quote($mappeid)) . " ORDER BY tittel ASC";
-	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappetype, tid FROM filer WHERE mappeid = ? ORDER BY tittel ASC";
+	return hent_og_putt_inn_i_array($sql, array($mappeid));
 }
 
 function hent_mappe($id, $mappetype = null) {
@@ -45,13 +46,16 @@ function hent_undermapper($id, $mappetype = Mappetype::Dokumenter) {
 
 function hent_fil($filid) {
     global $dbh;
-	$sql="SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, mappetype, tid FROM filer WHERE id = ".intval($dbh->quote($filid));
-	return hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, mappeid, mappetype, tid FROM filer WHERE id = ?";
+	return hent_og_putt_inn_i_array($sql, array($filid));
 }
 
 function hent_fil_med_mappeinfo($filid) {
-	$sql = "SELECT m.mappenavn, f.filnavn, f.filtype, f.tittel, f.mappetype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ".$filid;
-	return hent_og_putt_inn_i_array($sql);
+    global $dbh;
+	$sql = "SELECT m.mappenavn, f.filnavn, f.filtype, f.tittel, f.mappetype FROM filer AS f JOIN mapper AS m ON f.mappeid = m.id WHERE f.id = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($filid));
+    return $stmt->fetch();
 }
 
 function hent_filpath($filMedMappeinfo) {
@@ -62,40 +66,49 @@ function hent_filpath($filMedMappeinfo) {
 function sok_i_notesett($sokestreng) {
     global $dbh;
 
+    $params = array();
 	if (is_numeric($sokestreng)) {
 		$sql = "SELECT mappeid 
 			FROM noter_notesett 
-			WHERE arkivnr = " . intval($dbh->quote($sokestreng)) . "
+			WHERE arkivnr = ?
 			ORDER BY tittel ASC";
+        $params[] = $sokestreng;
 	} else {
 		$sql = "SELECT mappeid 
 				FROM noter_notesett 
-				WHERE arrangor LIKE '%" . $dbh->quote($sokestreng) . "%'
-				   OR komponist LIKE '%" . $dbh->quote($sokestreng) . "%'
+				WHERE arrangor LIKE ?
+				   OR komponist LIKE ?
 				ORDER BY tittel ASC";
+        $params[] = "%$sokestreng%";
 	}
-	
-	$notesett = hent_og_putt_inn_i_array($sql, $id_verdi="mappeid");
 
-	$mappeider = "";
-	foreach($notesett as $mappeid => $ignore) {
-		$mappeider .= $mappeid.",";
-	}
-	if (empty($mappeider)) return Array();
-	$mapper = $sql = hent_mapper_sql(substr($mappeider, 0, -1), "id", Mappetype::Noter);
-	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($sokestreng));
+	if ($stmt->rowCount() == 0) return Array();
+	
+	$notesett = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    $placeholders = implode(",", array_fill(0, count($notesett), "?"));
+
+    $sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE :id_type IN ($placeholders) AND mappetype = :mappetype ORDER BY tittel ASC";
+
+    $params[":id_type"] = $id_type;
+    $params[":mappetype"] = Mappetype::Noter;
+
+	return hent_og_putt_inn_i_array($sql, array_merge($notesett, $params));
 }
 
 function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
-	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE  mappetype = ".$mappetype." ";
-	$delstrenger = explode(" ", $sokestreng);
+	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE mappetype = :mappetype";
+    $params = array(":mappetype" => $mappetype);
 
+	$delstrenger = explode(" ", $sokestreng);
 	foreach($delstrenger as $delstreng) {
-		$sql .= "AND tittel LIKE '%" . $dbh->quote($delstreng) . "%'";
+		$sql .= " AND tittel LIKE ?";
+        $params[] = "%$delstreng%";
 	}
 	$sql .=" ORDER BY tittel ASC";
 
-	$mapperesultat = hent_og_putt_inn_i_array($sql, "id");
+	$mapperesultat = hent_og_putt_inn_i_array($sql, $params);
 
 	// Søk etter arkivid, arrangører og komponister i noter_notesett
 	$notesettresultat = sok_i_notesett($sokestreng);
@@ -112,21 +125,23 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 
 function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
     global $dbh;
-	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = ".$mappetype." ";
+	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = :mappetype";
+    $params = array(":mappetype" => $mappetype);
 	$delstrenger = explode(" ", $sokestreng);
 	foreach($delstrenger as $delstreng) {
-		$sql .= "AND tittel LIKE '%" . $dbh->quote($delstreng) . "%'";
+		$sql .= " AND tittel LIKE ?";
+        $params[] = "%$delstreng%";
 	}
 	$sql .=" ORDER BY tittel ASC";
-	return hent_og_putt_inn_i_array($sql, $id_verdi="id");
+	return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function hent_noteinfo($mappeid) {
 	$sql = "SELECT noteid, tittel, komponist, arrangor, besetningstype, arkivnr, b.besetningsid
 			FROM noter_notesett AS n
 			JOIN noter_besetning b ON n.besetningsid = b.besetningsid
-			WHERE mappeid = ".$mappeid;
-	return hent_og_putt_inn_i_array($sql);
+			WHERE mappeid = ?";
+	return hent_og_putt_inn_i_array($sql, array($mappeid));
 }
 
 ///////////// Liste funksjoner

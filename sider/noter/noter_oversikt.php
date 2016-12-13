@@ -17,7 +17,7 @@
 	//henter alle konsertene
 	$sql="SELECT DISTINCT noter_konsert.arrid, tittel, dato FROM noter_konsert, arrangement 
 	WHERE noter_konsert.arrid=arrangement.arrid ORDER BY dato DESC;";
-	$konserter=hent_og_putt_inn_i_array($sql,'arrid');
+	$konserter=hent_og_putt_inn_i_array($sql);
 	
 	echo "<h2>Noter</h2>";
 

@@ -22,7 +22,7 @@ $stmt->execute(array($om_4_dager));
 while ($arrangement = $stmt->fetch()) {
     // Sjekk om arrangement allerede er varslet
     $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Kakebaker;
-    $allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql);
+    $allerede_varlset = $dbh->exec($allerede_varslet_sql);
 
     if ($allerede_varlset['antall'] == 0) {
 

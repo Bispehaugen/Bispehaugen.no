@@ -1,14 +1,16 @@
 <?php
+global $dbh;
+
 //Henter ut mobilnummeret til leder
 //Denne skal det egentlig være
 //$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel='Leder'");
 
 //fiks akkurat når leder er utenlands
-$leder = hent_og_putt_inn_i_array("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel = 'Leder'");
+$leder = $dbh->query("SELECT tlfmobil, fnavn, enavn FROM medlemmer, verv WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3' AND verv.tittel = 'Leder'")->fetch();
 	
 //henter ut info om medlemmer++ om styret
-	$sql="SELECT foto, verv.komiteid, vervid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
-    $styremedlemmer=hent_og_putt_inn_i_array($sql,$id_verdi="vervid");
+$sql="SELECT vervid, foto, verv.komiteid, verv.posisjon, tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn FROM verv, medlemmer WHERE medlemmer.medlemsid=verv.medlemsid AND verv.komiteid='3'  ORDER BY verv.posisjon;";
+$styremedlemmer=hent_og_putt_inn_i_array($sql);
 ?>
 
 <h2>Kontakt oss</h2>

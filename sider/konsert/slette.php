@@ -5,15 +5,16 @@ if(tilgang_endre() && has_get('arrid')){
 
 	$arrid = get('arrid');
 
-	$sql = "SELECT nyhetsid_konsert FROM konserter WHERE arrid_konsert=" . $arrid;
-	$konserter = hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT nyhetsid_konsert FROM konserter WHERE arrid_konsert=?";
+    $stmt = $dbh->prepare();
+    $stmt->execute(array($arrid));
 
-	if(empty($konserter)) {
+	if($stmt->rowCount() == 0) {
 		$melding = "Fant ikke kobling til konsert for arrid: " . $arrid;
 		logg("slett-konsert", $melding);
 		die($melding);
 	}
-	$nyhetsid = $konserter['nyhetsid_konsert'];
+	$nyhetsid = $stmt->fetchColumn();
 
 	$sql_nyhet = "UPDATE nyheter SET aktiv=false WHERE nyhetsid = ? LIMIT 1";
     $stmt = $dbh->prepare($sql_nyhet);

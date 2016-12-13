@@ -16,13 +16,13 @@ $_SESSION["medlemsid"] = -1; // Logget inn som bot
 $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
-$neste_slagverk_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < '".$om_4_dager."' ORDER BY dato LIMIT 1";
+$neste_slagverk_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < ? ORDER BY dato LIMIT 1";
 
-$arrangement = hent_og_putt_inn_i_array($neste_slagverk_sql);
+$arrangement = hent_og_putt_inn_i_array($neste_slagverk_sql, array($om_4_dager));
 
 // Sjekk om arrangement allerede er varslet
-$allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Slagverkhjelper;
-$allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql);
+$allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = ? AND type = ?";
+$allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql, array($arrangement['arrid'], Varslingstype::Slagverkhjelper));
 
 if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
 	$gruppeId = $arrangement['slagverk'];

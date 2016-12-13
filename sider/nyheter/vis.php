@@ -1,19 +1,23 @@
 <?php
 setlocale(LC_TIME, "nb_NO.utf8");
+global $dbh;
 // Vis enkelnyhet
 if(!has_get('id') ){
 	throw new Exception();	
 }
 
 $id = get('id');
-$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid FROM `nyheter` WHERE nyhetsid=".$id;
+$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid FROM `nyheter` WHERE nyhetsid=?";
 
 // If not signed in, add news restrictions
 if(er_logget_inn() === false){
 	$sql .= " AND type='Public' ";
 }
 
-$nyhet = hent_og_putt_inn_i_array($sql);
+$stmt = $dbh->prepare($sql);
+$stmt->execute(array($id));
+
+$nyhet = $stmt->fetch();
 
 if ($nyhet['type'] == "nestekonsert") {
 	// Konsert, redirecte til konsert/vis

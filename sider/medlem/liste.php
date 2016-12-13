@@ -3,8 +3,8 @@ $hentAlle = get('alle') == 1;
 $medlemmer = hent_medlemmer($hentAlle, $hentStottemedlemmer = true);
 
 //spørring som henter ut medlemsid til alle styrevervene
-$sql="SELECT vervid, tittel, medlemsid, epost FROM verv WHERE komiteid='3'";
-$styreverv = hent_og_putt_inn_i_array($sql, $id_verdi="medlemsid");
+$sql="SELECT medlemsid, vervid, tittel, epost FROM verv WHERE komiteid='3'";
+$styreverv = hent_og_putt_inn_i_array($sql);
 
 #Det som printes p� sida
 

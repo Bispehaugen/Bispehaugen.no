@@ -1,36 +1,46 @@
 <?php
 
 function hent_slagverkhjelp($gruppeid = 0) {
-	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp";
+	$sql = "SELECT medlemsid, gruppeid, gruppeleder FROM slagverkhjelp";
+    $params = array();
 	if (!empty($gruppeid)) {
-		$sql .= " WHERE gruppeid = ".$gruppeid;
+		$sql .= " WHERE gruppeid = ?";
+        $params[] = $gruppeid;
 	}
 	$sql .=" ORDER BY gruppeid, gruppeleder DESC, medlemsid";
-	$hjelpere = hent_og_putt_inn_i_array($sql, "medlemsid");
+	$hjelpere = hent_og_putt_inn_i_array($sql, $params);
 
 	$brukere = hent_brukerdata(array_keys($hjelpere));
 
 	$grupper = Array();
 
-	foreach($hjelpere as $h) {
-		$hjelper = $brukere[$h['medlemsid']];
+	foreach($hjelpere as $medlemsid => $h) {
+		$hjelper = $brukere[$medlemid];
 		if (array_key_exists($h['gruppeid'], $grupper)) {
-			$grupper[$h['gruppeid']][$hjelper['medlemsid']] = $hjelper;
+			$grupper[$h['gruppeid']][$medlemsid] = $hjelper;
 		} else {
-			$grupper[$h['gruppeid']] = Array($hjelper['medlemsid'] => $hjelper);
+			$grupper[$h['gruppeid']] = Array($medlemsid => $hjelper);
 		}
 	}
 
+    echo "<pre>";
+    print_r($hjelpere);
+    echo "</pre>";
+    die();
 	return $grupper;
 }
 
 function hent_slagverkgruppe_for_medlem($medlemsid) {
     global $dbh;
-	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp WHERE medlemsid = " . $dbh->quote($medlemsid) . " LIMIT 1";
-	return hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT gruppeid, medlemsid, gruppeleder FROM slagverkhjelp WHERE medlemsid = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($medlemsid));
+    return $stmt->fetch();
 }
 
 function hent_slagverksgrupper() {
+    global $dbh;
 	$sql = "SELECT gruppeid FROM slagverkhjelp GROUP BY gruppeid";
-	return array_keys(hent_og_putt_inn_i_array($sql, 'gruppeid'));
+    $stmt = $dbh->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
