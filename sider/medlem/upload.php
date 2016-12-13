@@ -8,15 +8,7 @@ if (empty($_REQUEST) || empty($_REQUEST['medlemsid'])) {
 	die(json_response(HttpStatus::ERROR, "Må sende inn medlemsid som parameter til Flow", 412));
 }
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die(json_response(HttpStatus::ERROR, "Ingen tilgang til databasen", 500));
-}
-
 require_once $root.'vendor/autoload.php';
 
 if(!er_logget_inn()) {

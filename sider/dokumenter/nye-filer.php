@@ -7,16 +7,8 @@ if (empty($_REQUEST) || empty($_REQUEST['foreldreId'])) {
 	die("Må sende inn foreldreId og mappetype som parameter til Flow");
 }
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
 include_once 'funksjoner.php'; // For dokumenter
-
-koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die("Ingen tilkobling");
-}
-
 require_once $root.'vendor/autoload.php';
 
 if(!er_logget_inn()) {

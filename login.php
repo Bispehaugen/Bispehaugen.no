@@ -1,10 +1,7 @@
 
 <?php 
-	include_once "db_config.php";
 	include_once "funksjoner.php";
 
-	koble_til_database($database_host, $database_user, $database_string, $database_database);
-	
 	$epost=post("epost");
 
     $update_hash = false;

@@ -7,17 +7,11 @@ setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = str_replace("skript", "", dirname(__FILE__));
 
-include_once $root."db_config.php";
 include_once $root."lokal_config.php";
 include_once $root.'funksjoner.php';
 
 $_SESSION["medlemsid"] = -1; // Logget inn som bot
 
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-    die("Ingen tilkobling");
-}
 $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";

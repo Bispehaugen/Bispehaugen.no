@@ -1,8 +1,7 @@
 <?php
 
-global $dbh;
-
 require 'vendor/autoload.php';
+require_once realpath(dirname(__FILE__)) . "/koble_til_database.php";
 
 // Felles funksjoner som skal brukes mange plasser
 // Ellers legg ting på samme side
@@ -85,21 +84,6 @@ function exception_handler($e) {
     }
 }
 set_exception_handler("exception_handler");
-
-function koble_til_database($database_host, $database_user, $database_string, $database_database){
-	global $dbh;
-	
-    try {
-        $dbh = new PDO("mysql:host={$database_host};dbname={$database_database};charset=utf8",
-            $database_user, $database_string, array(
-                PDO::ATTR_PERSISTENT => true
-        ));
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        //echo "Kunne ikke koble opp mot database.<br>Prøv igjen senere...";
-        die($e->getMessage());
-    }
-}
 
 /*
  * Rapporterer sql-feil ved å legge inn en detaljert rapport i weblog i databasen,

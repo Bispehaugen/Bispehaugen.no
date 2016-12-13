@@ -3,16 +3,8 @@ setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = "../../../";
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
 include_once "funksjoner.php";
-
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die(json_response(HttpStatus::ERROR, "Ingen databasetilkobling", 500));
-}
 
 if(!er_logget_inn()) {
 	die(json_response(HttpStatus::ERROR, "Ikke logget inn", 403));

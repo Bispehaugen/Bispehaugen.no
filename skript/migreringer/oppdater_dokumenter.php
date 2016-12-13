@@ -7,10 +7,7 @@ die("ALLEREDE KJØRT");
 
 $root = "../";
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
-
-koble_til_database($database_host, $database_user, $database_string, $database_database);
 
 if(!er_logget_inn() || !tilgang_full()) {
 	die("Må være admin!");
