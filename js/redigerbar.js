@@ -42,6 +42,7 @@ $(document).ready(function() {
                         }
                         editor.setMode("design");
                         editor.fire("activate");
+                        $editor.find("a").off("click");
                         locked = false;
                     }
                 });
@@ -187,8 +188,22 @@ $(document).ready(function() {
                     onclick: function() {
                         editor.setMode("readonly");
                         editor.fire("deactivate");
+                        $editor.find("a").click(function(event) {
+                            event.stopPropagation();
+                        });
                         locked = true;
                     }
+                });
+            }
+        }).then(function(editors) {
+            // This is executed when the editor is initialized
+            for (var i = 0; i < editors.length; i++) {
+                var editor = editors[i];
+
+                // Make links clickable as the editor is disabled to begin with
+                var $editor = $("#"+editor.id);
+                $editor.find("a").click(function(event) {
+                    event.stopPropagation();
                 });
             }
         });
