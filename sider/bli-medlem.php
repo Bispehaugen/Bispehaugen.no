@@ -78,49 +78,9 @@ if(has_post("sEpost")){
 if($har_alle_feltene_utfylt_og_sendt_mail == false){
 ?>
 
-<div class="bli-medlem">
-
-<div class="bli-medlem">
-    <h2>Bli medlem!</h2>
-    
-	<b>Vil du være med oss og spille?</b>
-	<p>
-	Vi ønsker nye medlemmer velkomne! Våre sentrale verdier består i å være inkluderende, ambisiøse og lekne.
-	<br>
-	Dette innebører at vi lover være medlemmer å spille utfordrende og engasjerende musikk, samtidig som at vi stiller krav både til dirigent
-	og musikere. Dessuten synes vi det er viktig å gi publikum gode konsertopplevelser. 
-	</p>
-	<p>
-	Vil du være med oss og spille, lover vi å få deg til å føle deg velkommen!<br>
-	</p>
-	<b>Tar du utfordringen?</b>
-	<p>	
-		Du kan også ta turen innom på en av våre øvelser, mandager kl 19:30 i gymsalen
-		på <a href="http://kart.gulesider.no/query?what=map_yp&search_word=bispehaugen%2Bskole&q=bispehaugen%20skole">Bispehaugen skole (Nonnegt. 19</a>). Øvings- og konsertplanen finner du under
-	<a href="?side=aktiviteter">aktiviteter</a>.
-	</p>
-	
-	<p>
-	<span class="viktig">Interessert i å være med i Bispehaugen?
-	<!--Fyll ut skjemaet så tar vi kontakt med deg!</span>-->
-	</p>
-	<p>
-	  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Bli medlem i Bispehaugen ungdomskorps">styret@bispehaugen.no</a>.
-	</p>
-</div>
-
-<div class="stottemedlem">
-	<h2>Eller bli støttemedlem!</h2>
-	<p><b>Det er ressurskrevende å drive et ambisiøst korps som Bispehaugen.</b>
-	  Vi har derfor etablert en støttemedlemskapsordning for å skaffe ekstra midler til korpset.
-	  <p>
-	  Støttemedlemsskap i Bispehaugen koster 300 kr i året, dersom du vil støtte mer kan du 
-	  legge på 300 eller 600kr. Som støttemedlem får du personlig invitasjon til alle korpsets konserter og jevnlige nyhetsbrev om korpsets aktiviter.
-	  </p>
-	  <p>
-	  Ta kontakt på mail på <a href="mailto:styret@bispehaugen.no?subject=Støttemedlemsskap">styret@bispehaugen.no</a>.
-	</p>
-</div>
+<div class="bli-medlem-stotte">
+<?php echo innhold("bli-medlem", "div", "bli-medlem"); ?>
+<?php echo innhold("stottemedlem", "div", "stottemedlem"); ?>
 <div class="clearfix"></div>
 
 <?php echo feilmeldinger($feilmeldinger); ?>

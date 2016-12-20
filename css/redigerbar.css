@@ -1,0 +1,7 @@
+.redigerbar:focus {
+    outline: none;
+}
+
+.redigerbar::moz-focus-inner {
+    border: 0;
+}

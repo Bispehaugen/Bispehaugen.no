@@ -108,7 +108,7 @@ function sqlerror($sql = "", $e = "") {
         $message .= "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
     }
     logg("sqlerror", $message);
-    if (tilgang_full()) {
+    if (tilgang_webmaster()) {
         die($message);
     }
     die("Det oppstod en feil vi ikke kunne rette. Webkom er varslet!");
@@ -201,8 +201,12 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	}
 }
 
+function tilgang_webmaster() {
+	return $_SESSION['rettigheter'] == 10;
+}
+
 function tilgang_full() {
-	return $_SESSION['rettigheter'] == 3;
+	return $_SESSION['rettigheter'] > 2;
 }
 
 function tilgang_intern() {
@@ -343,6 +347,17 @@ function generer_token() {
  * Se funksjonen 'logg_inn' for en beskrivelse av hvordan 'husk_meg' funksjonen virker.
  */
 function er_logget_inn(){
+    // Simuler at man ikke er logget inn, for å kunne se forsiden uten å logge ut
+    if (session("sim_logget_ut") && get("vis") == "intern") {
+        $_SESSION["sim_logget_ut"] = false;
+    } else if (get("vis") == "forside" || $_SESSION["sim_logget_ut"]) {
+        $_SESSION["sim_logget_ut"] = true;
+        return false;
+    }
+    return er_faktisk_logget_inn();
+}
+
+function er_faktisk_logget_inn(){
     global $dbh;
     if (isset($_SESSION["medlemsid"])) {
         // Sjekk at 'husk_meg' informasjonskapselen eksisterer hvis brukeren vil bli husket
@@ -923,4 +938,24 @@ function debug($array) {
 	echo "<pre>";
 	print_r($array);
 	echo "</pre>";
+}
+
+function innhold($navn, $tag="div", $class="", $id="") {
+    global $dbh;
+    $class = tilgang_full() ? "class='redigerbar $class'" : "";
+    if (empty($id)) {
+        $id = tilgang_full() ? "id='redigerbar-$navn'" : "";
+    }
+    $sql = "SELECT tekst FROM innhold WHERE navn=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($navn));
+    if ($stmt->rowCount() == 1) {
+        $innhold = stripslashes($stmt->fetchColumn());
+        return "<$tag $id $class data-navn='$navn'>$innhold</$tag>";
+    }
+    if (tilgang_full()) {
+        return "<$tag $id $class data-navn='$navn'>Skriv noe her...</$tag>";
+    } else {
+        return "";
+    }
 }

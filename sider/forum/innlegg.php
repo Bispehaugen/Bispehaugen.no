@@ -57,6 +57,12 @@
 		foreach ($aktivemedlemmer as $medlemsid => $medlem) {
             $stmt->execute(array($medlem["medlemsid"], $id, $temaid));
 		}
+
+        // Oppdaterer tidsisteinnlegg
+        $sql = "SELECT fnavn, enavn FROM medlemmer where medlemsid=".$_SESSION["medlemsid"];
+        $row = $dbh->query($sql)->fetch();
+        $sql = "UPDATE forum_tema SET tidsisteinnlegg='".date("Y-m-d H:i:s")."', sisteinnleggskrevetav='{$row[0]} {$row[1]}' WHERE temaid=$temaid";
+        $dbh->query($sql);
 		
 		//oppdaterer sistelesteid i både forum- og forum_tema-tabellen
 		sett_sisteinnleggid($temaid);

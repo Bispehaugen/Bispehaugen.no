@@ -701,6 +701,25 @@ migrering(41, "Oppretter en tabell for lagring av 'husk meg' token",
     )"
 );
 
+migrering(42, "Oppretter en tabell for innhold på siden",
+    "CREATE TABLE IF NOT EXISTS `innhold` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `navn` varchar(50) NOT NULL UNIQUE,
+        `tekst` text,
+        PRIMARY KEY(`id`)
+    )"
+);
+
+migrering(43, "Oppretter en tabell for bilder tilhørende innhold på siden",
+    "CREATE TABLE IF NOT EXISTS `innhold_bilder` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `type` varchar(5) NOT NULL,
+        `innhold_id` int NOT NULL,
+        PRIMARY KEY (`id`),
+        FOREIGN KEY (`innhold_id`) REFERENCES `innhold` (`id`)
+    )"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

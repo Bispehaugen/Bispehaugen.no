@@ -15,7 +15,11 @@ if(er_logget_inn()){
     <li><a href="?side=bli-medlem" class="bli-medlem">Bli medlem</a></li>
     <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=annet">Om oss</a></li>
+    <?php if (er_faktisk_logget_inn()) { ?>
+    <li><a href="?side=forside&vis=intern">Intern</a></li>
+    <?php } else { ?>
     <li><a href="?side=login">Logg inn</a></li>
+    <?php } ?>
 </ul>
 <?php
 	} else {
@@ -42,9 +46,21 @@ if(er_logget_inn()){
     <li>
         <span data-scroll-nav='7'>Om oss</span>
 	</li>
+    <?php if (er_faktisk_logget_inn()) { ?>
+    <li>
+        <a class="internlink" href="?side=forside&vis=intern">Intern</a>
+    </li>
+    <script>
+    $("a.internlink").click(function() {
+        // Nettleseren vil kanskje ikke laste inn siden, så vi må tvinge den
+        window.location("?side=forside&vis=intern");
+    });
+    </script>
+    <?php } else { ?>
     <li>
         <a class="login_link" href="?side=login">Logg inn</a>
     </li>
+    <?php } ?>
 </ul>
 
 <?php
