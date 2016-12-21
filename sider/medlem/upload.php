@@ -1,5 +1,6 @@
 <?php
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
+global $dbh;
 
 $root = "../../";
 
@@ -7,15 +8,7 @@ if (empty($_REQUEST) || empty($_REQUEST['medlemsid'])) {
 	die(json_response(HttpStatus::ERROR, "Må sende inn medlemsid som parameter til Flow", 412));
 }
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die(json_response(HttpStatus::ERROR, "Ingen tilgang til databasen", 500));
-}
-
 require_once $root.'vendor/autoload.php';
 
 if(!er_logget_inn()) {
@@ -43,11 +36,9 @@ $filename = $medlemsid.".jpg";
 $filepath = "..".$dir.$filename;
 
 if (\Flow\Basic::save( $root . $dir . $filename, '../../temp', $request)) {
-	$sql = "UPDATE medlemmer SET foto = '".addslashes($filepath)."' WHERE medlemsid = ".$medlemsid." LIMIT 1";
-	if(!mysql_query($sql)) {
-		logg("error-profilbilde", "Feilet under opplasting av profilbilde for brukerId: ".$medlemsid. " sql: ".$sql);
-		die(json_response(HttpStatus::ERROR, "Ett problem oppstod under opplastingen. Webkom er varslet! 2", 500));
-	}
+	$sql = "UPDATE medlemmer SET foto = ? WHERE medlemsid = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($filepath, $medlemsid));
 	innlogget_bruker_oppdatert();
 	die(json_response(HttpStatus::SUCCESS, "Fil opplastet", 200));
 } else {

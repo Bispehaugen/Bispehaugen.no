@@ -1,6 +1,6 @@
 <?php 
 
-global $connection;
+global $dbh;
 
 $feilmeldinger = Array();
 
@@ -42,21 +42,25 @@ if(has_post("tittel")) {
 		$skrevetav = $innlogget_bruker["fnavn"] . " " . $innlogget_bruker["enavn"];
 		$skrevetavid = $innlogget_bruker["medlemsid"];
 		
-		$tema_sql = "INSERT INTO forum_tema (forumid, tittel, startetav, startetavid, startet, tidsisteinnlegg) VALUES ('$forumid', '$tittel', '$skrevetav', '$skrevetavid', NOW(), NOW());";
-		mysql_query($tema_sql, $connection);
-		$temaid = mysql_insert_id($connection);
+		$tema_sql = "INSERT INTO forum_tema (forumid, tittel, startetav, startetavid, startet, tidsisteinnlegg) VALUES (?, ?, ?, ?, NOW(), NOW())";
+        $stmt = $dbh->prepare($tema_sql);
+        $stmt->execute(array($forumid, $tittel, $skrevetav, $skrevetavid));
+		$temaid = $dbh->lastInsertId();
 		
 		// INSERT INNLEGG
-		$innlegg_sql = "INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetav, skrevetavid, forumid) VALUES ('$temaid', '$innlegg', NOW(), '$skrevetav', '$skrevetavid', '$forumid');";
-		mysql_query($innlegg_sql, $connection);
-		$innleggid = mysql_insert_id($connection);
+		$innlegg_sql = "INSERT INTO forum_innlegg_ny (temaid, tekst, skrevet, skrevetav, skrevetavid, forumid) VALUES (?, ?, NOW(), ?, ?, ?)";
+        $stmt = $dbh->prepare($innlegg_sql);
+        $stmt->execute(array($temaid, $innlegg, $skrevetav, $skrevetavid, $forumid));
+		$innleggid = $dbh->lastInsertId();
 
-		$update_tema_sql = "UPDATE forum_tema SET sisteinnleggid = '$innleggid',  antallinnlegg = 1, sisteinnleggskrevetavid = '$skrevetavid', sisteinnleggskrevetav = '$skrevetav', tidsisteinnlegg = NOW() WHERE temaid = '$temaid'";
-		mysql_query($update_tema_sql);
+		$update_tema_sql = "UPDATE forum_tema SET sisteinnleggid = ?,  antallinnlegg = 1, sisteinnleggskrevetavid = ?, sisteinnleggskrevetav = ?, tidsisteinnlegg = NOW() WHERE temaid = ?";
+        $stmt = $dbh->prepare($update_tema_sql);
+        $stmt->execute(array($innleggid, $skrevetavid, $skrevetav, $temaid));
 
 		if($harListe) {
-			$liste_sql = "INSERT INTO forum_liste (listeid, tittel, alternativer, expires) VALUES ('$innleggid', '$listeTittel', '$listeAlternativer', '$stegningsdato')";
-			mysql_query($liste_sql);
+			$liste_sql = "INSERT INTO forum_liste (listeid, tittel, alternativer, expires) VALUES (?, ?, ?, ?)";
+            $stmt = $dbh->prepare($liste_sql);
+            $stmt->execute(array($innleggid, $listeTittel, $listeAlternativer, $stegningsdato));
 		}
 		echo "<script type='text/javascript'>
 				window.location = '?side=forum/innlegg&id=".$temaid."';

@@ -3,16 +3,9 @@
 // Fjern denne linja
 setlocale(LC_TIME, "Norwegian");
 error_reporting(E_ERROR | E_PARSE);
-include_once "db_config.php";
 include_once "funksjoner.php";
 require_once( "./icalendar.php" );
 //header('Content-type: text/calendar; charset=utf-8');
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	exit ;
-}
 
 $aktiviteter = hent_aktiviteter();
 $filename = date("d-m-Y").".ics";

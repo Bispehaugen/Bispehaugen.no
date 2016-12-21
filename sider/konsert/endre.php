@@ -1,5 +1,6 @@
 <?php 
 //TODO: mangler fortsatt test på tidsformat, og en liste for å koble slagverksbærere til medlemmer
+global $dbh;
 
 $feilmeldinger = Array();
 //sjekker om man er admin
@@ -54,39 +55,42 @@ if(has_post()) {
 		//sjekker om det finnes en oppføring i hhv. arrangement, nyhet, konserter og oppdaterer eller oppretter oppføringene
 		if ($nyhetsid){
 			#denne oppdatererer nyhetsoversikten
-			$sql1 = "UPDATE nyheter SET overskrift='".$overskrift."',sted='".$sted."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
-			,type='nestekonsert',aktiv='".$aktiv."',bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konsertstart."'
-			,normal_pris='".$normal_pris."',student_pris='".$student_pris."' WHERE nyhetsid='".$nyhetsid."';";
-			mysql_query($sql1);
+			$sql1 = "UPDATE nyheter SET overskrift=?,sted=?,ingress=?,hoveddel=?,bilde=?
+			,type='nestekonsert',aktiv=?,bildebredde=?,bilderamme=?,konsert_tid=?
+			,normal_pris=?,student_pris=? WHERE nyhetsid=?";
+            $stmt = $dbh->prepare($sql1);
+            $stmt->execute(array($overskrift, $sted, $ingress, $hoveddel, $bilde, $aktiv, $bildebredde, $bilderamme, "$dato $konsertstart", $normal_pris, $student_pris, $nyhetsid));
 			echo $sql1;
 		} else {
 			$skrevetavid = hent_brukerdata()["medlemsid"];
 			$skerevet_tid = date("Y-m-d H:i:s");
 			$sql2 = "INSERT INTO nyheter (overskrift,ingress,hoveddel,bilde,type,aktiv,bildebredde,bilderamme,konsert_tid
-			,normal_pris,student_pris,skrevetavid,tid, sted)
-			values ('$overskrift','$ingress','$hoveddel','$bilde','nestekonsert','$aktiv','$bildebredde','$bilderamme','$dato $konsertstart'
-			,'$normal_pris','$student_pris','$skrevetavid','$skerevet_tid','$sted');";
-			mysql_query($sql2);
-			$nyhetsid = mysql_insert_id();
+			,normal_pris,student_pris,skrevetavid,tid, sted) values (?,?,?,?,'nestekonsert',?,?,?,?,?,?,?,?,?)";
+            $stmt = $dbh->prepare($sql2);
+            $stmt->execute(array($overskrift, $ingress, $hoveddel, $bilde, $aktiv, $bildebredde, $bilderamme, "$dato $konsertstart", $normal_pris, $student_pris, $skrevetavid, $skerevet_tid, $sted));
+			$nyhetsid = $dbh->lastInsertId();
 		}
 		
 		if ($arrid){
 			#sql som oppdaterer arrangementstabellen								
-			$sql3 = "UPDATE arrangement SET tittel='".$overskrift."',sted='".$sted."',dato='".$dato."',oppmoetetid='".$oppmote."'
-			,start='".$dato." ".$konsertstart."',slutt='".$dato." ".$konsertslutt."',ingress='".$ingress."',public='1',type='Konsert',hjelpere='".$hjelpere."'
-			,kakebaker='".$kakebaker."' WHERE arrid='".$arrid."';";
-			mysql_query($sql3);
+			$sql3 = "UPDATE arrangement SET tittel=?,sted=?,dato=?,oppmoetetid=?
+			,start=?,slutt=?,ingress=?,public='1',type='Konsert',hjelpere=?
+			,kakebaker=? WHERE arrid=?";
+            $stmt = $dbh->prepare($sql3);
+            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere, $kakebaker, $arrid));
 		} else {
 			
 			$sql4 = "INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
-values ('$overskrift','Konsert','$sted','$dato','$oppmote','$dato $konsertstart','$dato $konsertslutt','$ingress','','1','$hjelpere','$kakebaker')";
-			mysql_query($sql4);
-			$arrid = mysql_insert_id();
+values (?,'Konsert',?,?,?,?,?,?,'','1',?,?)";
+            $stmt = $dbh->prepare($sql4);
+            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere, $kakebaker));
+			$arrid = $dbh->lastInsertId();
 		}
 
 		if(empty($konserttabellid)){
-			$sql5 = "INSERT INTO konserter (arrid_konsert, nyhetsid_konsert) values ('$arrid','$nyhetsid')";
-			mysql_query($sql5);
+			$sql5 = "INSERT INTO konserter (arrid_konsert, nyhetsid_konsert) values (?,?)";
+            $stmt = $dbh->prepare($sql5);
+            $stmt->execute(array($arrid, $nyhetsid));
 		}
 		header('Location: ?side=aktiviteter/liste');
 		die();
@@ -102,21 +106,25 @@ if(has_get('id')||has_post('arrid')){
 	if (has_post('id')) {
 		$arrid = post('id');
 	}
-	$sql = "SELECT * FROM arrangement WHERE arrid = ".$arrid.";";
-	$konsert_arrangement = hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT * FROM arrangement WHERE arrid = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($arrid));
+	$konsert_arrangement = $stmt->fetch();
 
 	$sql = "SELECT nyheter.* 
 		    FROM nyheter, konserter, arrangement 
-		    WHERE arrangement.arrid=".$arrid." AND arrangement.arrid = konserter.arrid_konsert
+		    WHERE arrangement.arrid=? AND arrangement.arrid = konserter.arrid_konsert
 			  AND nyheter.nyhetsid = konserter.nyhetsid_konsert
 		    LIMIT 1";
-	$konsert = hent_og_putt_inn_i_array($sql);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($arrid));
+	$konsert = $stmt->fetch();
 	$handling = "Endre";
 }
 
 //henter ut alle medlemmer som kakebaker
-$sql = "SELECT fnavn, enavn, medlemsid FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
-$medlemmer = hent_og_putt_inn_i_array($sql, 'medlemsid');
+$sql = "SELECT medlemsid, fnavn, enavn FROM medlemmer WHERE status='Aktiv' ORDER BY fnavn";
+$medlemmer = hent_og_putt_inn_i_array($sql);
 
 $aktivChecked = (isset($aktiv) && $aktiv == 0) ? "" : "checked";
 

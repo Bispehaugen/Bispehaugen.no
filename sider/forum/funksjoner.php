@@ -1,8 +1,8 @@
 <?php
 define("antall_tema_per_side", 25);
 
-function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
-	$innleggliste=hent_og_putt_inn_i_array($sql, "innleggid");
+function forum_innlegg_liste($innleggliste, $class="forum-innlegg-liste", $temaid = 0) {
+    global $dbh;
 	$medlemsid = $_SESSION["medlemsid"];
 
 	$har_temaid =  ($temaid > 0);
@@ -12,21 +12,23 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 	if ($temaid != 0) {
 		//henter listeid til alle innlegg i valgte forum og tema som det er en liste knyttet til
 		$sql="SELECT forum_liste.listeid, forum_liste.tittel, forum_liste.expires FROM forum_liste, forum_innlegg_ny
-			WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_innlegg_ny.temaid=".$temaid.";";
-		$listeinnlegg=hent_og_putt_inn_i_array($sql, "listeid");	
+			WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_innlegg_ny.temaid=?";
+		$listeinnlegg=hent_og_putt_inn_i_array($sql, array($temaid));
 		
 		//henter ut alle aktuelle liste-oppføringer
 		$sql="SELECT medlemsid, fnavn, enavn, forum_listeinnlegg_ny.listeid, forum_listeinnlegg_ny.tid, forum_listeinnlegg_ny.innleggid, 
 		forum_listeinnlegg_ny.kommentar, forum_listeinnlegg_ny.flagg, forum_liste.expires 
 		FROM forum_liste, forum_innlegg_ny, forum_listeinnlegg_ny, forum_tema, medlemmer 
 		WHERE forum_liste.listeid=forum_innlegg_ny.innleggid AND forum_liste.listeid=forum_listeinnlegg_ny.listeid AND
-		 forum_tema.temaid=".$temaid." AND forum_innlegg_ny.temaid=".$temaid." AND brukerid=medlemmer.medlemsid ORDER BY tid ;";
-		$listeoppforinger=hent_og_putt_inn_i_array($sql, "innleggid");	
+		 forum_tema.temaid=? AND forum_innlegg_ny.temaid=? AND brukerid=medlemmer.medlemsid ORDER BY tid ;";
+		$listeoppforinger=hent_og_putt_inn_i_array($sql, array($temaid, $temaid), "innleggid");	
 
 
 		//Henter ut siste uleste innlegg i tråd
-		$sql="SELECT uleste_innlegg FROM forum_leste WHERE temaid=".$temaid." AND medlemsid=".$medlemsid.";";
-		$ulesteinnlegg=hent_og_putt_inn_i_array($sql, "uleste_innlegg");		
+		$sql="SELECT uleste_innlegg FROM forum_leste WHERE temaid=? AND medlemsid=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($temaid, $medlemsid));
+		$ulesteinnlegg = $stmt->fetchAll(PDO::FETCH_COLUMN);
 	}
 	
 	$hentMedlemsid = function($innleggliste) {
@@ -45,7 +47,7 @@ function forum_innlegg_liste($sql, $class="forum-innlegg-liste", $temaid = 0) {
 		$b = $brukerdata[$innlegg['skrevetavid']];
 		$tid = strtotime($innlegg['skrevet']);
 
-		$erLestClass = array_key_exists($id, $ulesteinnlegg) ? "ulest" : "lest";
+		$erLestClass = in_array($id, $ulesteinnlegg) ? "ulest" : "lest";
 
 		echo "<li class='innlegg ".$erLestClass."'>";
 		echo "<header>";
@@ -139,9 +141,9 @@ function forum_list_tema($forumid, $skip) {
 
 	//henter ut alle temaene i valgte forum og henter ut siste innlegg
 	$sql="SELECT forum_tema.temaid, forum_tema.forumid, tittel, sisteinnleggid, skrevetavid, tekst, innleggid, skrevet
-	FROM forum_tema LEFT JOIN forum_innlegg_ny ON innleggid=sisteinnleggid WHERE forum_tema.forumid=".$forumid." ORDER BY sisteinnleggid DESC LIMIT ".$skip." , ".antall_tema_per_side.";";
+	FROM forum_tema LEFT JOIN forum_innlegg_ny ON innleggid=sisteinnleggid WHERE forum_tema.forumid=? ORDER BY sisteinnleggid DESC LIMIT ? , ?";
 
-	$forumtemaer = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
+	$forumtemaer = hent_og_putt_inn_i_array($sql, array($forumid, $skip, antall_tema_per_side));
 
 	$hentMedlemsid = function($innlegg) {
 		return $innlegg['skrevetavid'];
@@ -152,8 +154,8 @@ function forum_list_tema($forumid, $skip) {
 
 	//Henter ut alle temaer med uleste innlegg
 	$medlemsid= $_SESSION["medlemsid"];
-	$sql="SELECT forum_leste.temaid FROM forum_leste WHERE medlemsid=".$medlemsid.";";
-	$uleste_innlegg = hent_og_putt_inn_i_array($sql, $id_verdi="temaid");
+	$sql="SELECT forum_leste.temaid FROM forum_leste WHERE medlemsid=?";
+	$uleste_innlegg = hent_og_putt_inn_i_array($sql, array($medlemsid));
 
 	echo "<section class='forum temaliste'>";
 
@@ -176,7 +178,7 @@ function forum_list_tema($forumid, $skip) {
    			echo "<i class='fa fa-envelope-o'></i>";
    		}
 
-   		echo "<a href='?side=forum/innlegg&id=".$forumtema['temaid']."'>".$forumtema['tittel']."</a></h1>
+   		echo "<a href='?side=forum/innlegg&id=$temaid'>".$forumtema['tittel']."</a></h1>
    			<div class='siste-post'>";
 			if (!empty($b['foto'])) {
 				$foto = $b['foto'];
@@ -197,21 +199,23 @@ function forum_list_tema($forumid, $skip) {
 }
 
 function forum_paginering($id, $skip, $type) {
+    global $dbh;
 
 	switch($type) {
 		case "tema":
-			$sql = "SELECT COUNT( temaid ) AS antall FROM forum_tema WHERE forumid=".$id;
+			$sql = "SELECT COUNT( temaid ) AS antall FROM forum_tema WHERE forumid=:id";
 		break;
 		case "innlegg":
-			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=".$id;
+			$sql = "SELECT COUNT( innlegg_id ) AS antall FROM forum_innlegg_ny WHERE temaid=:id";
 			die("IKKE IMPLEMENTERT, sjekk om dette er riktig...");
 		break;
 		default:
 			die("Pagineringstype ".$type." finnes ikke");
 	}
 
-	$query = mysql_query($sql);
-	$antall = mysql_result($query, 0);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(":id" => $id));
+    $antall = $stmt->rowCount();
 
 	$max_antall_sider = floor($antall / antall_tema_per_side);
 	$midtside = floor($max_antall_sider/2);
@@ -288,7 +292,7 @@ function pagineringErAktiv($lokalSkip, $skip, $antall_tema_per_side) {
 //lister opp alle forumene med link til hvert forum 
 function list_forum($aktivId = ""){
     $sql = "SELECT * FROM  `forum` ORDER BY pos ASC";
-    $forum_liste = hent_og_putt_inn_i_array($sql, "forumid");
+    $forum_liste = hent_og_putt_inn_i_array($sql);
 ?>
     <section class="forum-liste">
     	<ul>
@@ -310,15 +314,19 @@ function list_forum($aktivId = ""){
 }
 
 function har_tilgang_til_forum($forumid = "", $temaid = "") {
+    $sql = "";
+    $params = array();
 	if (!empty($forumid)) {
-		$sql = "SELECT forumid, rettigheter FROM forum WHERE forumid = ".$forumid;
+		$sql = "SELECT forumid, rettigheter FROM forum WHERE forumid = ?";
+        $params[] = $forumid;
 	}
 
 	if (!empty($temaid)) {
-		$sql = "SELECT ft.forumid, f.rettigheter FROM forum_tema AS ft LEFT JOIN forum AS f ON ft.forumid = f.forumid WHERE ft.temaid = ".$temaid;
+		$sql = "SELECT ft.forumid, f.rettigheter FROM forum_tema AS ft LEFT JOIN forum AS f ON ft.forumid = f.forumid WHERE ft.temaid = ?";
+        $params[] = $temaid;
 	}
 
-	$forum = hent_og_putt_inn_i_array($sql);
+	$forum = hent_og_putt_inn_i_array($sql, $params);
 
 	if (session("rettigheter") < $forum['rettigheter']) {
 		die("Du har ikke tilgang til dette forumet");
@@ -326,32 +334,35 @@ function har_tilgang_til_forum($forumid = "", $temaid = "") {
 }
 
 function sett_sisteinnleggid($temaid){
+    global $dbh;
 	//oppdaterer sisteinnleggid i forum_tema-tabellen
-	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=".$temaid." ORDER BY innleggid DESC LIMIT 1";
-	$result=mysql_query($sql);
-	$sisteinnleggid=mysql_result($result, '0');
+	$sql="SELECT innleggid FROM forum_innlegg_ny WHERE temaid=? ORDER BY innleggid DESC LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($temaid));
+	$sisteinnleggid = $stmt->fetchColumn();
 	
-	$sql="UPDATE forum_tema SET sisteinnleggid=".$sisteinnleggid." WHERE temaid=".$temaid;
-	mysql_query($sql);
+	$sql="UPDATE forum_tema SET sisteinnleggid=? WHERE temaid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($sisteinnleggid, $temaid));
 		
 	//oppdaterer sisteinnleggig i forum-tabellen
 	$sql="SELECT sisteinnleggid, forumid FROM forum_tema ORDER BY sisteinnleggid DESC LIMIT 1";
-	$sisteinnlegg = hent_og_putt_inn_i_array($sql, "sisteinnleggid");
+	$sisteinnlegg = hent_og_putt_inn_i_array($sql);
 	
-	foreach($sisteinnlegg as $sisteinnleggid){
-		$sql="UPDATE forum SET sisteinnleggid=".$sisteinnleggid['sisteinnleggid']." WHERE forumid=".$sisteinnleggid['forumid'];
-	};
-	mysql_query($sql);
+    $sql="UPDATE forum SET sisteinnleggid=? WHERE forumid=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($sisteinnlegg[0]['sisteinnleggid'], $sisteinnlegg[0]['forumid']));
 }
 
-function siste_forumposter_sql($antall = 5) {
+function siste_forumposter_liste($antall = 5, $class="forum-innlegg-liste", $temaid = 0) {
 	$sql = "SELECT fi . * , ft.tittel as innleggtittel, f.tittel as tematittel
 			FROM forum_innlegg_ny AS fi
 			LEFT JOIN forum_tema AS ft ON fi.temaid = ft.temaid
 			LEFT JOIN forum AS f ON fi.forumid = f.forumid
-			WHERE f.rettigheter <= " . session('rettigheter') . "
-			ORDER BY ft.tidsisteinnlegg DESC 
-			LIMIT ".$antall;
-	return $sql;
+			WHERE f.rettigheter <= ?
+			ORDER BY skrevet DESC 
+			LIMIT ?";
+    $innleggliste = hent_og_putt_inn_i_array($sql, array(session("rettigheter"), $antall));
+	return forum_innlegg_liste($innleggliste, $class, $temaid);
 }
 

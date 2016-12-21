@@ -1,34 +1,28 @@
 <?php
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+global $dbh;
 
 date_default_timezone_set('Europe/Oslo');
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = str_replace("skript", "", dirname(__FILE__));
 
-include_once $root."db_config.php";
 include_once $root."lokal_config.php";
 include_once $root.'funksjoner.php';
 
 $_SESSION["medlemsid"] = -1; // Logget inn som bot
 
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-    die("Ingen tilkobling");
-}
 $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
-$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < '".$om_4_dager."' ORDER BY dato";
-$result = mysql_query($neste_kakebaker_sql);
-if (!$result) sqlerror($neste_kakebaker_sql);
+$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < ? ORDER BY dato";
+$stmt = $dbh->prepare($neste_kakebaker_sql);
+$stmt->execute(array($om_4_dager));
 
-for ($i = 0; $i < mysql_num_rows($result); $i++) {
-    $arrangement = mysql_fetch_assoc($result);
+while ($arrangement = $stmt->fetch()) {
     // Sjekk om arrangement allerede er varslet
     $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Kakebaker;
-    $allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql);
+    $allerede_varlset = $dbh->exec($allerede_varslet_sql);
 
     if ($allerede_varlset['antall'] == 0) {
 
@@ -52,8 +46,9 @@ for ($i = 0; $i < mysql_num_rows($result); $i++) {
     Styret";
 
         if(epost($to, $replyto, $subject, $message)) {
-            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (".$arrangement['arrid'].", " . Varslingstype::Kakebaker . ", " . $bruker['medlemsid'] . ", '".date("Y-m-d H:i:s")."')";
-            mysql_query($sql_varling);
+            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
+            $stmt = $dbh->prepare($sql_varling);
+            $stmt->execute(array($arrangement["arrid"], Varslingstype::Kakebaker, $bruker["medlemsid"], date("Y-m-d H:i:s")));
         }
     }
 }

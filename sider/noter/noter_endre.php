@@ -1,4 +1,6 @@
 <?php 	
+    global $dbh;
+
 	//funksjonalitet
 	//sjekker om man er admin
 	if($_SESSION['rettigheter']<2){
@@ -16,16 +18,18 @@
 		 $besetningsid=post('besetningsid');
 	     //sjekker om man vil legge til eller endre et notesett
 		 if ($noteid){
-			$sql="UPDATE noter_notesett SET tittel='".$tittel."',komponist='".$komponist."',arrangor='".$arrangor."',
-			arkivnr='".$arkivnr."',besetningsid='".$besetningsid."' WHERE noteid='".$noteid."';";
-			mysql_query($sql);
+			$sql="UPDATE noter_notesett SET tittel=?,komponist=?,arrangor=?,
+			arkivnr=?,besetningsid=? WHERE noteid=?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($tittel, $komponist, $arrangor, $arkivnr, $besetningsid, $noteid));
+
 			header('Location: ?side=noter/noter_oversikt');
 		 }else{
 		 	//utkommenteres for å ikke lage bøtter og spamm av mapper lokalt
 		 	//echo "<pre>".shell_exec("mkdir ../noter/".$filpath)."</pre>";
-			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values 
-			('".$tittel."','".$komponist."','".$arrangor."','".$arkivnr."','".$besetningsid."','/noter/".$filpath."/')";
-			mysql_query($sql);
+			$sql="INSERT INTO noter_notesett (tittel,komponist,arrangor,arkivnr,besetningsid,filpath) values (?,?,?,?,?,?)";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($tittel, $komponist, $arrangor, $arkivnr, $besetningsid, "/noter/$filpath"));
 			header('Location: ?side=noter/noter_oversikt');
 		 }
 			};
@@ -33,19 +37,17 @@
 	//henter valgte notesett fra databasen
 	if(has_get('noteid')){
 		$noteid=get('noteid');
-		$sql="SELECT * FROM `noter_notesett` WHERE `noteid`=".$noteid;
-		$mysql_result=mysql_query($sql);
-		$noter = Array();
-		$noter=mysql_fetch_array($mysql_result);
-		print_r($noter);		
+		$sql="SELECT * FROM `noter_notesett` WHERE `noteid`=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($noteid));
+		print_r($stmt->fetch(););
 	};
 	
 	//henter ut alle besetningstyper
-		$sql="SELECT * FROM noter_besetning";
-		$mysql_result=mysql_query($sql);
-		while($row=mysql_fetch_array($mysql_result)){
-    		$besetningstyper[$row['besetningsid']] = $row;
-		};
+    $sql="SELECT * FROM noter_besetning";
+    foreach ($dbh->query($sql) as $row) {
+        $besetningstyper[$row['besetningsid']] = $row;
+    };
 		
 		
 	

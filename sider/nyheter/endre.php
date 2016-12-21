@@ -1,5 +1,6 @@
 <?php 
 //TODO: mangler fortsatt test på tidsformat, og en liste for å koble slagverksbærere til medlemmer
+global $dbh;
 
 $feilmeldinger = Array();
 //sjekker om man er admin
@@ -38,10 +39,10 @@ if(has_post()) {
 		
 		//sjekker om man vil legge til eller endre en aktivitet
 		if ($id){
-			$sql="UPDATE nyheter SET overskrift='".$overskrift."',ingress='".$ingress."',hoveddel='".$hoveddel."',bilde='".$bilde."'
-			,type='".$type."',aktiv='".$aktiv."',bildebredde='".$bildebredde."',bilderamme='".$bilderamme."',konsert_tid='".$dato." ".$konserttid."'
-			 WHERE nyhetsid='".$id."';";
-			mysql_query($sql);
+			$sql="UPDATE nyheter SET overskrift=?,ingress=?,hoveddel=?,bilde=?
+			,type=?,aktiv=?,bildebredde=?,bilderamme=?,konsert_tid=? WHERE nyhetsid=?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($overskrift, $ingress, $hoveddel, $bilde, $type, $aktiv, $bildebredde, $bilderamme, "$dato $konserttid", $id));
 			header('Location: ?side=nyheter/vis&id='.$id);
 			die();
 		} else {
@@ -51,8 +52,9 @@ if(has_post()) {
 			,skrevetavid,tid)
 			values ('$overskrift','$ingress','$hoveddel','$bilde','$type','$aktiv','$bildebredde','$bilderamme','$dato $konserttid'
 			,'$skrevetavid','$skerevet_tid');";
-			mysql_query($sql);
-			$id = mysql_insert_id();
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($overskrift, $ingress, $hoveddel, $bilde, $type, $aktiv, $bildebredde, $bilderamme, "$dato $konserttid", $skrevetavid, $skerevet_tid));
+			$id = $dbh->lastInsertId();
 			header('Location: ?side=nyheter/vis&id='.$id);
 			die();
 		}

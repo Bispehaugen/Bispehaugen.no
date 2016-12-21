@@ -1,4 +1,5 @@
 <?php
+global $dbh;
 $epost_sendt = false;
 $feilmeldinger = Array();
 
@@ -13,26 +14,26 @@ if (has_post("epost")) {
 	
 	$epost = post("epost");
 	
-	$sql = sprintf("SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE email = '%s' LIMIT 1", post("epost"));
+	$sql = "SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE email = ? LIMIT 1";
 	
-	$query = mysql_query($sql);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(post("epost")));
 	
-	if (mysql_num_rows($query)==1) {
-				
-				
-		while($b = mysql_fetch_assoc($query)) {
+	if ($stmt->rowCount() ==1) {
+        $b = $stmt->fetch();
 			
-			$to = $b['email'];
-			$replyto = "Reply-To: Webkom <webkom@bispehaugen.no>";
-			$subject = "Bispehaugen.no - Glemt passord";
-			
-			$token = sha1(substr( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" ,mt_rand( 0 ,50 ) ,1 ) .substr( md5( time() ), 1));
-			
-			$sql_token = "UPDATE medlemmer SET bytt_passord_token = '".$token."' WHERE medlemsid = '".$b['medlemsid']."' LIMIT 1";
-			
-			mysql_query($sql_token);
-			
-			$message = 
+        $to = $b['email'];
+        $replyto = "Reply-To: Webkom <webkom@bispehaugen.no>";
+        $subject = "Bispehaugen.no - Glemt passord";
+        
+        $token = sha1(substr( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" ,mt_rand( 0 ,50 ) ,1 ) .substr( md5( time() ), 1));
+        
+        $sql_token = "UPDATE medlemmer SET bytt_passord_token = ? WHERE medlemsid = ? LIMIT 1";
+        
+        $stmt = $dbh->prepare($sql_token);
+        $stmt->execute(array($token, $b["medlemsid"]));
+        
+        $message = 
 "Hei ".$b["fnavn"]."!
 
 Bruk lenken under for å skifte passordet ditt på Bispehaugen.no.
@@ -42,12 +43,11 @@ Har du ikke brukt glemt passord funksjonen? Ta kontakt med webkom@bispehaugen.no
 
 Med vennlig hilsen
 Webkom";
-	
-			if (epost($to,$replyto,$subject,$message)) {
-				$epost_sendt = true;
-			} else {
-				$feilmeldinger[] = "Det oppstod en feil under sendelse av epost.";
-			}
+
+        if (epost($to,$replyto,$subject,$message)) {
+            $epost_sendt = true;
+        } else {
+            $feilmeldinger[] = "Det oppstod en feil under sendelse av epost.";
  		}
 	} else {
 		$epost_sendt = true;

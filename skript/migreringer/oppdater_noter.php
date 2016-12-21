@@ -8,14 +8,7 @@ $root = "../";
 $dir = $root . "noter/";
 $dir = "/home/webkom/filer/filer/noter/";//str_replace("skript", "dokumenter", getcwd())."/";
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die("Ingen tilkobling");
-}
 
 if(!er_logget_inn() || !tilgang_full()) {
 	die("Må være admin!");
@@ -35,27 +28,29 @@ function fjern_filtype($file) {
 }
 
 function legg_inn_directory_i_database($mappenavn, $path, $foreldreid) {
+    global $dbh;
 	$tittel = ucfirst(str_replace("?", "å", str_replace("-", " ", $mappenavn)));
 
-	$sql = "INSERT INTO mapper (mappenavn, tittel, mappetype, foreldreid) VALUES ('".$mappenavn."', '".$tittel."', '".Mappetype::Noter."', '".$foreldreid."')";
-	mysql_query($sql) or die($sql . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
+	$sql = "INSERT INTO mapper (mappenavn, tittel, mappetype, foreldreid) VALUES (?, ?, ?, ?)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($mappenavn, $tittel, Mappetype::Noter, $foreldreid));
 
-	$id = mysql_insert_id();
+	$id = $dbh->lastInsertId();
 
 	$mappenavnMedId = $id."-".$mappenavn;
 
-	$sql_update = "UPDATE mapper SET mappenavn = '".$mappenavnMedId."' WHERE id = ".$id;
-
-	mysql_query($sql_update) or die($sql_update . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
+	$sql_update = "UPDATE mapper SET mappenavn = ? WHERE id = ?";
+    $stmt = $dbh->prepare($sql_update);
+    $stmt->execute(array($mappenavnMedId, $id));
 
 	$filpath = "/noter/" . $mappenavn . "/";
-	$sql_update_notesett = "UPDATE noter_notesett SET mappeid = '".$id."' WHERE filpath = '".addslashes($filpath)."'";
+	$sql_update_notesett = "UPDATE noter_notesett SET mappeid = ? WHERE filpath = ?";
+    $stmt = $dbh->prepare($sql_update_notesett);
+    $stmt->execute(array($id, $filpath));
 
-	mysql_query($sql_update_notesett) or die($sql_update_notesett . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
-
-	$sql_update_mappe_med_tittel_fra_notesett = "UPDATE mapper SET tittel = (SELECT tittel FROM noter_notesett WHERE mappeid = '".$id."') WHERE id = '".$id."'";
-
-	mysql_query($sql_update_mappe_med_tittel_fra_notesett) or die($sql_update_mappe_med_tittel_fra_notesett . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
+	$sql_update_mappe_med_tittel_fra_notesett = "UPDATE mapper SET tittel = (SELECT tittel FROM noter_notesett WHERE mappeid = :id) WHERE id = :id";
+    $stmt = $dbh->prepare($sql_update_mappe_med_tittel_fra_notesett);
+    $stmt->execute(array(":id" => $id));
 
 	echo "</section>";
 	echo "<section class='mappe'>";
@@ -67,22 +62,24 @@ function legg_inn_directory_i_database($mappenavn, $path, $foreldreid) {
 }
 
 function legg_inn_note_i_database($file, $path, $foreldreid) {
+    global $dbh;
 	$navnUtenNorskeTegn = fornorske($file);
 	$tittel = fjern_filtype($file);
 	$filtype = gjett_filtype($file);
 
 
-	$sql = "INSERT INTO filer (filnavn, tittel, filtype, medlemsid, mappeid, mappetype) VALUES ('".$file."', '".$tittel."', '".$filtype."', 211,'".$foreldreid."', '".Mappetype::Noter."')";
-	
-	mysql_query($sql) or die($sql . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
+	$sql = "INSERT INTO filer (filnavn, tittel, filtype, medlemsid, mappeid, mappetype) VALUES (?, ?, ?, 211, ?, ?)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($file, $tittel, $filtype, $foreldreid, Mappetype::Noter));
 
-	$id = mysql_insert_id();
+	$id = $dbh->lastInsertId();
 
 	$navnUtenNorskeTegn = $id."-".$navnUtenNorskeTegn;
 
-	$sql_update = "UPDATE filer SET filnavn = '".$navnUtenNorskeTegn."' WHERE id = ".$id;
+	$sql_update = "UPDATE filer SET filnavn = ? WHERE id = ?";
 
-	mysql_query($sql_update) or die($sql_update . "<br />" . mysql_error() ." <-- There was an error when proccessing query");
+    $stmt = $dbh->prepare($sql_update);
+    $stmt->execute(array($navnUtenNorskeTegn, $id));
 
 	echo "<p>$navnUtenNorskeTegn</p>";
 
@@ -145,16 +142,19 @@ function parse_dir($parentdir, $path, $foreldreid) {
 }
 
 function slett_mapper() {
+    global $dbh;
 	$sql = "DELETE FROM mapper WHERE mappetype = ".Mappetype::Noter;
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+    $dbh->query($sql);
 }
 function slett_noter() {
+    global $dbh;
 	$sql = "DELETE FROM filer WHERE mappetype = ".Mappetype::Noter;
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+    $dbh->query($sql);
 }
 function slett_mapping_mot_notesett() {
+    global $dbh;
 	$sql = "UPDATE noter_notesett SET mappeid = NULL";
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+    $dbh->query($sql);
 }
 
 slett_mapper();

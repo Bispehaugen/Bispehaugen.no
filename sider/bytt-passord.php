@@ -1,4 +1,5 @@
 <?php
+global $dbh;
 
 $token = "";
 $feilmeldinger = Array();
@@ -22,9 +23,10 @@ if (has_post("token")) {
 		$token = post("token");
 		$passord = password_hash($unhashedPassword, PASSWORD_DEFAULT);
 		
-		$sql_update = "UPDATE medlemmer SET bytt_passord_token = NULL, passord = '".$passord."' WHERE bytt_passord_token = '".$token."' LIMIT 1";
+		$sql_update = "UPDATE medlemmer SET bytt_passord_token = NULL, passord = ? WHERE bytt_passord_token = ? LIMIT 1";
 		
-		mysql_query($sql_update);
+        $stmt = $dbh->prepare($sql_update);
+        $stmt->execute(array($passord, $token));
 		
 		header("Location: index.php?side=forside");
 		die();
@@ -36,12 +38,13 @@ if (has_get("token")) {
 	
 	$token = get("token");
 	
-	$sql = sprintf("SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE bytt_passord_token = '%s' LIMIT 1", $token);
-	$query = mysql_query($sql);
+	$sql = "SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE bytt_passord_token = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($token));
 	
 	$token_allerede_brukt = true;
 
-	while($b=mysql_fetch_assoc($query)) {
+	while($b = $stmt->fetch()) {
 		$fornavn = $b['fnavn'];
 		$token_allerede_brukt = false;
 	};

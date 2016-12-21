@@ -2,18 +2,12 @@
 
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
+global $dbh;
+
 $root = "../../";
 
-
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
 include_once "funksjoner.php";
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die("Ingen tilkobling");
-}
 
 // Skriving starter
 
@@ -28,25 +22,26 @@ if (has_get('mappe')) {
 
 	$sql_antall_filer_og_undermapper_i_mappe = "SELECT SUM(antall) AS antall FROM
 (
-(SELECT COUNT(f.id) AS antall FROM filer AS f WHERE f.mappeid = $mappeid)
+(SELECT COUNT(f.id) AS antall FROM filer AS f WHERE f.mappeid = :mappeid)
 UNION
-(SELECT COUNT(m.id) AS antall FROM mapper AS m WHERE m.foreldreid = $mappeid)
+(SELECT COUNT(m.id) AS antall FROM mapper AS m WHERE m.foreldreid = :mappeid)
 ) AS antall";
 
-	$antall_filer_og_undermapper_i_mappe = mysql_result(mysql_query($sql_antall_filer_og_undermapper_i_mappe), 0);
+    $stmt = $dbh->prepare($sql_antall_filer_og_undermapper_i_mappe);
+    $stmt->execute(array(":mappeid" => $mappeid));
+
+	$antall_filer_og_undermapper_i_mappe = $stmt->fetchColumn();
 
 	if($antall_filer_og_undermapper_i_mappe == 0){
-		$sql = "DELETE FROM mapper WHERE id = " . $mappeid . " LIMIT 1";
+		$sql = "DELETE FROM mapper WHERE id = ? LIMIT 1";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($mappeid));
 
-		if(mysql_query($sql)) {
-			$path = $root . "dokumenter/" . $mappe['mappenavn'] . "/";
-			if(is_dir($path)) {
-				rmdir($path);
-			}
-			die(json_response(HttpStatus::SUCCESS, "Mappe $mappeid slettet"));
-		} else {
-			die(json_response(HttpStatus::ERROR, "Feil under sletting av mappe. Prøv på nytt"));
-		}
+        $path = $root . "dokumenter/" . $mappe['mappenavn'] . "/";
+        if(is_dir($path)) {
+            rmdir($path);
+        }
+        die(json_response(HttpStatus::SUCCESS, "Mappe $mappeid slettet"));
 	} else {
 		die(json_response(HttpStatus::ERROR, "Du kan bare slette tomme mapper", 403));
 	}
@@ -58,17 +53,15 @@ UNION
 	$fil = hent_fil($filid);
 	$mappe = hent_mappe($fil['mappeid']);
 
-	$sql = "DELETE FROM filer WHERE id = " . $filid . " LIMIT 1";
+	$sql = "DELETE FROM filer WHERE id = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($filid));
 
-	if(mysql_query($sql)) {
-		$path = $root . "dokumenter/" . $mappe['mappenavn'] . "/" . $fil['filnavn'];
-		if(file_exists($path)) {
-			unlink($path);
-		}
-		die(json_response(HttpStatus::SUCCESS, "Fil $filid slettet"));
-	} else {
-		die(json_response(HttpStatus::ERROR, "Feil under sletting av fil. Prøv på nytt"));
-	}
+    $path = $root . "dokumenter/" . $mappe['mappenavn'] . "/" . $fil['filnavn'];
+    if(file_exists($path)) {
+        unlink($path);
+    }
+    die(json_response(HttpStatus::SUCCESS, "Fil $filid slettet"));
 
 } else {
 	// Finner ikke id
