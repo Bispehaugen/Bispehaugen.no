@@ -403,8 +403,7 @@ function er_faktisk_logget_inn(){
                 $token_hash = hash("sha256", $new_token);
                 $sql = "INSERT INTO husk_meg (token, serie, sist_brukt, medlemsid) VALUES (:token_hash, :serie, NOW(), :medlemsid)";
                 $stmt = $dbh->prepare($sql);
-                $stmt->execute(array(":token_hash" => $token_hash, ":serie" => $serie, ":token" => $token,
-                                     ":medlemsid" => $medlemsid));
+                $stmt->execute(array(":token_hash" => $token_hash, ":serie" => $serie, ":medlemsid" => $medlemsid));
 
                 // Setter HttpOnly (den siste parameteren) til true for å beskytte mot XSS
                 // Bruker setRAWcookie istedenfor setcookie for å ikke urlencode likehetstegnet
