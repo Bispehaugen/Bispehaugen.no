@@ -1,4 +1,5 @@
 <?php
+global $dbh;
 
 include_once("sider/dokumenter/funksjoner.php");
 
@@ -18,11 +19,12 @@ $foreldreid = post('foreldreid');
 $mappetype = intval(post('mappetype'));
 
 // Opprett ny mappe i sql
-$sql = "INSERT INTO mapper (mappenavn, tittel, mappetype, foreldreid) VALUES ('Kommer', '$navn', $mappetype, $foreldreid)";
-mysql_query($sql) or die(mysql_error());
+$sql = "INSERT INTO mapper (mappenavn, tittel, mappetype, foreldreid) VALUES ('Kommer', ?, ?, ?)";
+$stmt = $dbh->prepare($sql);
+$stmt->execute(array($navn, $mappetype, $foreldreid));
 
 // hent ID
-$ny_id = mysql_insert_id();
+$ny_id = $dbh->lastInsertId();
 
 // Opprett ny mappe i filstruktur
 $mappenavn = $ny_id . "-" . $navn;
@@ -34,8 +36,9 @@ if(!is_dir($path)) {
 }
 
 // Oppdatert mappe med riktig filstruktur
-$update_sql = "UPDATE mapper SET mappenavn = '".$mappenavn."' WHERE id = '".$ny_id."' LIMIT 1";
-mysql_query($update_sql) or die(mysql_error());
+$update_sql = "UPDATE mapper SET mappenavn = ? WHERE id = ? LIMIT 1";
+$stmt = $dbh->prepare($update_sql);
+$stmt->execute(array($mappenavn, $ny_id));
 
 echo "
 <script type='text/javascript'>

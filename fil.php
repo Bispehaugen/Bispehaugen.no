@@ -4,15 +4,8 @@ setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 
 $root = "./";
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
 include_once $root.'/sider/dokumenter/funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die("Ingen tilkobling");
-}
 
 if(!er_logget_inn() || !has_get("fil")) {
 	header('Location: index.php?side=ikke_funnet');

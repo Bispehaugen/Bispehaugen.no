@@ -7,14 +7,7 @@ die("ALLEREDE KJØRT");
 
 $root = "../";
 
-include_once $root."db_config.php";
 include_once $root.'funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	die("Ingen tilkobling");
-}
 
 if(!er_logget_inn() || !tilgang_full()) {
 	die("Må være admin!");
@@ -25,18 +18,20 @@ $antall_filer = 0;
 $dir = "/home/webkom/filer/filer/dokumenter/";//str_replace("skript", "dokumenter", getcwd())."/";
 
 function legg_inn_directory_i_database($dir, $idpath, $path, $foreldreid) {
+    global $dbh;
 	$navnUtenNorskeTegn = fornorske($dir);
 
-	$sql = "INSERT INTO mapper (mappenavn, idpath, tittel, mappetype, foreldreid) VALUES ('".$navnUtenNorskeTegn."', '".addslashes($idpath)."', '".$dir."', '1', '".$foreldreid."')";
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+	$sql = "INSERT INTO mapper (mappenavn, idpath, tittel, mappetype, foreldreid) VALUES (?, ?, ?, '1', ?)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($navnUtenNorskeTegn, $idpath, $dir, $foreldreid));
 
-	$id = mysql_insert_id();
+	$id = $dbh->lastInsertId();
 
 	$navnUtenNorskeTegn = $id."-".$navnUtenNorskeTegn;
 
-	$sql_update = "UPDATE mapper SET mappenavn = '".$navnUtenNorskeTegn."' WHERE id = ".$id;
-
-	mysql_query($sql_update) or die(mysql_error() ." <-- There was an error when proccessing query");
+	$sql_update = "UPDATE mapper SET mappenavn = ? WHERE id = ?";
+    $stmt = $dbh->prepare($sql_update);
+    $stmt->execute(array($navnUtenNorskeTegn, $id));
 
 	echo "</section>";
 	echo "<section class='mappe'>";
@@ -48,20 +43,22 @@ function legg_inn_directory_i_database($dir, $idpath, $path, $foreldreid) {
 }
 
 function legg_inn_fil_i_database($file, $path, $foreldreid) {
+    global $dbh;
 	$navnUtenNorskeTegn = fornorske($file);
 	$tittel = fjern_filtype($file);
 	$filtype = gjett_filtype($file);
 
-	$sql = "INSERT INTO filer (filnavn, tittel, filtype, medlemsid, mappeid) VALUES ('".$file."', '".$tittel."', '".$filtype."', 211,'".$foreldreid."')";
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+	$sql = "INSERT INTO filer (filnavn, tittel, filtype, medlemsid, mappeid) VALUES (?, ?, ?, 211, ?)";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($file, $tittel, $filtype, $foreldreid));
 
-	$id = mysql_insert_id();
+	$id = $dbh->lastInsertId();
 
 	$navnUtenNorskeTegn = $id."-".$navnUtenNorskeTegn;
 
-	$sql_update = "UPDATE filer SET filnavn = '".$navnUtenNorskeTegn."' WHERE id = ".$id;
-
-	mysql_query($sql_update) or die(mysql_error() ." <-- There was an error when proccessing query");
+	$sql_update = "UPDATE filer SET filnavn = ? WHERE id = ?";
+    $stmt = $dbh->prepare($sql_update);
+    $stmt->execute(array($navnUtenNorskeTegn, $id));
 
 	echo "<p>$navnUtenNorskeTegn</p>";
 
@@ -134,12 +131,14 @@ function parse_dir($parentdir, $idpath, $path, $foreldreid) {
 }
 
 function slett_mapper($type) {
+    global $dbh;
 	$sql = "TRUNCATE mapper"; //DELETE FROM mapper WHERE mappetype = ".$type;
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+    $dbh->query($sql);
 }
 function slett_filer() {
+    global $dbh;
 	$sql = "TRUNCATE filer";
-	mysql_query($sql) or die(mysql_error() ." <-- There was an error when proccessing query");
+    $dbh->query($sql);
 }
 
 //slett_mapper(1);

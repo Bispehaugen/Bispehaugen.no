@@ -3,24 +3,22 @@
 include_once "sider/intern/slagverkhjelp/funksjoner.php";
 
 function hent_noter($konsertid, $bareAntall = false) {
-
-	$felter = "*";
-	if ($bareAntall) {
-		$felter = "COUNT(noter_notesett.noteid)";
-	}
-
+    $params = array();
 	if(!empty($konsertid) && $konsertid!='alle'){
-		$sql = "SELECT ".$felter." FROM noter_notesett, noter_konsert, noter_besetning 
-			WHERE arrid=".$konsertid." AND noter_notesett.noteid=noter_konsert.noteid AND noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
+		$sql = "SELECT * FROM noter_notesett, noter_konsert, noter_besetning 
+			WHERE arrid=? AND noter_notesett.noteid=noter_konsert.noteid AND noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
+        $params[] = $konsertid;
 	} else {
-		$sql="SELECT ".$felter." FROM noter_notesett, noter_besetning WHERE noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
+		$sql="SELECT * FROM noter_notesett, noter_besetning WHERE noter_notesett.besetningsid=noter_besetning.besetningsid ORDER BY tittel;";
 	}
+
+	$result = hent_og_putt_inn_i_array($sql, $params);
 
 	if ($bareAntall) {
-		return hent_og_putt_inn_i_array($sql);
-	}
-
-	return hent_og_putt_inn_i_array($sql, "noteid");
+		return count($result);
+    } else {
+        return $result;
+    }
 }
 
 function antall_noter($konsertid) {
@@ -29,8 +27,8 @@ function antall_noter($konsertid) {
 
 function neste_kakebaking() {
 	$bruker = hent_brukerdata();
-	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = '".$bruker['medlemsid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
-	return hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = ? AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
+	return hent_og_putt_inn_i_array($sql, array($bruker["medlemsid"]));
 }
 
 function neste_kakebakere() {
@@ -38,7 +36,7 @@ function neste_kakebakere() {
 			FROM arrangement
 			WHERE kakebaker > 0 AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC";
 
-	$arrangementer = hent_og_putt_inn_i_array($sql, "arrid");
+	$arrangementer = hent_og_putt_inn_i_array($sql);
 
 	foreach($arrangementer as $arrid => $arrangement) {
 		$arrangementer[$arrid]['kakebaker'] = hent_brukerdata($arrangement['kakebaker']);
@@ -47,11 +45,14 @@ function neste_kakebakere() {
 }
 
 function neste_slagverkhjelp() {
+    global $dbh;
 	$bruker = hent_brukerdata();
 	$gruppe = hent_slagverkgruppe_for_medlem($bruker['medlemsid']);
 	if(empty($gruppe)) {
 		return Array();
 	}
-	$sql = "SELECT arrid, tittel, dato, oppmoetetid, slagverk FROM `arrangement` WHERE slagverk = '".$gruppe['gruppeid']."' AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
-	return hent_og_putt_inn_i_array($sql);
+	$sql = "SELECT arrid, tittel, dato, oppmoetetid, slagverk FROM `arrangement` WHERE slagverk = ? AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($gruppe["gruppeid"]));
+    return $stmt->fetch();
 }

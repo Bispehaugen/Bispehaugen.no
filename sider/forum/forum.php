@@ -14,12 +14,10 @@
 	//Her legges det inn en oversikt over alle forumene
     list_forum();
 	
-	$sql = siste_forumposter_sql(5);
-
 	echo "<section class='forum'>";
 	echo "<h2>Siste poster</h2>";
 
-	forum_innlegg_liste($sql, "forum-innlegg-liste siste-poster");
+	siste_forumposter_liste(5, "forum-innlegg-liste siste-poster");
 
 	echo "</section>";
 ?>	

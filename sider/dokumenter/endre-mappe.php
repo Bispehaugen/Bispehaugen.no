@@ -1,4 +1,5 @@
 <?php
+global $dbh;
 
 include_once("sider/dokumenter/funksjoner.php");
 
@@ -18,8 +19,9 @@ $mappeid = post('mappeid');
 $mappetype = intval(post('mappetype'));
 
 // Endre mappe i sql
-$sql = "UPDATE mapper SET tittel = '$navn' WHERE id = " . $mappeid . " LIMIT 1";
-mysql_query($sql) or die(mysql_error());
+$sql = "UPDATE mapper SET tittel = ? WHERE id = ? LIMIT 1";
+$stmt = $dbh->prepare($sql);
+$stmt->execute(array($navn, $mappeid));
 
 
 if (has_post('noteid')) {
@@ -29,8 +31,10 @@ if (has_post('noteid')) {
 	$arkivnr = post('arkivnr');
 	$besetningsid = post('besetningsid');
 
-	$sql_update_notesett = "UPDATE noter_notesett SET komponist = '".$komponist."', arrangor = '".$arrangor."', arkivnr = '".$arkivnr."', besetningsid = '".$besetningsid."' WHERE noteid = ".$noteid." AND mappeid = ".$mappeid;
-	mysql_query($sql_update_notesett) or die(mysql_error());
+	$sql_update_notesett = "UPDATE noter_notesett SET komponist = ?, arrangor = ?, arkivnr = ?, besetningsid = ? WHERE noteid = ? AND mappeid = ?";
+    $stmt = $dbh->prepare($sql_update_notesett);
+    $stmt->execute(array($komponist, $arrangor, $arkivnr, $besetningsid, $noteid, $mappeid));
+
 }
 
 echo "

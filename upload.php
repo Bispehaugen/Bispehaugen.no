@@ -1,14 +1,7 @@
 <?php
 die("Disabled");
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
-include_once "db_config.php";
 include_once 'funksjoner.php';
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	exit ;
-}
 
 if(!er_logget_inn()) {
 	die("Du må være logget inn");
@@ -60,8 +53,9 @@ if ($type == "profilbilde") {
 // slett filer som starter på medlemsid: rm 211-*
 
 if (\Flow\Basic::save( "." . $dir . $filename, $config, $request)) {
-	$sql = "UPDATE medlemmer SET foto = '".addslashes($filepath)."' WHERE medlemsid = ".$medlemsid." LIMIT 1";
-	mysql_query($sql);
+	$sql = "UPDATE medlemmer SET foto = ? WHERE medlemsid = ? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array(addslashes($filepath), $medlemsid));
 } else {
 	echo "Fail... :(";
 }

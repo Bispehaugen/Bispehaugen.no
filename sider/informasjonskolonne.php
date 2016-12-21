@@ -1,11 +1,12 @@
 <?php
+global $dbh;
 
 ###############
 ## Neste konsert
 ###############
 setlocale(LC_TIME, "norwegian"); 
 
-$konsert = hent_og_putt_inn_i_array("SELECT * FROM nyheter WHERE type='nestekonsert' AND aktiv='1' ORDER BY tid DESC");
+$konsert = $dbh->query("SELECT * FROM nyheter WHERE type='nestekonsert' AND aktiv='1' ORDER BY tid DESC")->fetch();
 
 // Bare vis hvis det fins en aktiv neste konsert
 if (!empty($konsert)) {

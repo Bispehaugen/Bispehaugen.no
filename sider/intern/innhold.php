@@ -3,11 +3,7 @@ include_once "../../db_config.php";
 include_once "../../funksjoner.php";
 include_once "funksjoner.php";
 
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ( $tilkobling === false ){
-    exit("tilkoblingsfeil");
-}
+global $dbh;
 
 if (tilgang_full()) {
     if (!(isset($_POST["innhold"]) || isset($_POST["navn"]))) {
@@ -16,17 +12,17 @@ if (tilgang_full()) {
     }
     $navn = post("navn");
     $innhold = addslashes($_POST["innhold"]);
-    $sql = "SELECT * FROM innhold WHERE navn='$navn'";
-    $result = mysql_query($sql);
-    if (!$result) sqlerror($sql);
-    if (mysql_num_rows($result) == 0) {
-        $sql = "INSERT INTO innhold (navn, tekst) VALUES ('$navn', '$innhold')";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
+    $sql = "SELECT * FROM innhold WHERE navn=?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($navn));
+    if ($stmt->rowCount() == 0) {
+        $sql = "INSERT INTO innhold (navn, tekst) VALUES (?, ?)";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($navn, $innhold));
     } else {
-        $sql = "UPDATE innhold SET tekst='$innhold' WHERE navn='$navn'";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
+        $sql = "UPDATE innhold SET tekst='$innhold' WHERE navn=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($navn));
     }
     die(json_encode(array("status" => "success", "innhold" => $innhold)));
 }

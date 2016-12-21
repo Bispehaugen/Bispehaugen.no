@@ -1,17 +1,10 @@
 <?php
 date_default_timezone_set('Europe/Oslo');
 setlocale(LC_TIME, "nb_NO.utf8");
-include_once "db_config.php";
 include_once "funksjoner.php";
 
 if (er_logget_inn()) {
 	include_once "sider/intern/funksjoner.php";
-}
-
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ($tilkobling === false) {
-	exit ;
 }
 
 if (has_get("loggut")) {

@@ -1,11 +1,14 @@
 <?php
+global $dbh;
 
 $id = get('id');
 
 if(has_get('arrid')) {
 	$arrid = get('arrid');
-	$nyhetsidSql = "SELECT nyhetsid_konsert FROM `konserter` WHERE arrid_konsert = ".$arrid." LIMIT 1";
-	$id = hent_og_putt_inn_i_array($nyhetsidSql)['nyhetsid_konsert'];
+	$nyhetsidSql = "SELECT nyhetsid_konsert FROM `konserter` WHERE arrid_konsert = ? LIMIT 1";
+    $stmt = $dbh->prepare($nyhetsidSql);
+    $stmt->execute(array($arrid));
+	$id = $stmt->fetchColumn();
 
 	if (empty($id)) {
 		header('Location: ?side=aktiviteter/vis&arrid='.$arrid);
@@ -13,9 +16,11 @@ if(has_get('arrid')) {
 	}
 }
 
-$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted, aktiv FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ".$id." LIMIT 1";
+$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, skrevetavid, konsert_tid, normal_pris, student_pris, sted, aktiv FROM `nyheter` WHERE type='nestekonsert' AND nyhetsid = ? LIMIT 1";
+$stmt = $dbh->prepare($sql);
+$stmt->execute(array($id));
 
-$konsert = hent_og_putt_inn_i_array($sql);
+$konsert = $stmt->fetch();
 
 $skrevet_av_id = isset($konsert['skrevetavid']) ? $konsert['skrevetavid'] : "";
 $skrevet_av = hent_brukerdata($skrevet_av_id);

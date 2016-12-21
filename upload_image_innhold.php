@@ -3,12 +3,6 @@ include_once "db_config.php";
 include_once "funksjoner.php";
 include_once "sider/intern/funksjoner.php";
 
-$tilkobling = koble_til_database($database_host, $database_user, $database_string, $database_database);
-
-if ( $tilkobling === false ){
-    exit("tilkoblingsfeil");
-}
-
 $imageFolder = "images/innhold";
 if (!file_exists($imageFolder)) {
     mkdir($imageFolder, 0777, true);
@@ -46,28 +40,28 @@ if (tilgang_full()) {
         }
 
         $navn = post("navn");
-        $sql = "SELECT id FROM innhold WHERE navn='$navn'";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
-        if (mysql_num_rows($result) == 1) {
-            $arr = mysql_fetch_assoc($result);
-            $innhold_id = $arr["id"];
+        $sql = "SELECT id FROM innhold WHERE navn=?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($navn));
+        if ($stmt->rowCount() == 1) {
+            $innhold_id = $stmt->fetchColumn();
         } else {
-            $sql = "INSERT INTO innhold (navn, tekst) VALUES ('$navn', 'Skriv noe her...')";
-            $result = mysql_query($sql);
-            if (!$result) sqlerror($sql);
-            $innhold_id = mysql_insert_id();
+            $sql = "INSERT INTO innhold (navn, tekst) VALUES (?, 'Skriv noe her...')";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($navn));
+            $innhold_id = $dbh->lastInsertId();
         }
 
-        $sql = "INSERT INTO innhold_bilder (type, innhold_id) VALUES ('$extension', $innhold_id)";
-        $result = mysql_query($sql);
-        if (!$result) sqlerror($sql);
+        $sql = "INSERT INTO innhold_bilder (type, innhold_id) VALUES (?, ?)";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($extension, $innhold_id))
 
-        $filetowrite = $imageFolder . mysql_insert_id() . ".$extension";
+        $filetowrite = $imageFolder . $dbh->lastInsertId() . ".$extension";
         if (move_uploaded_file($tmp['tmp_name'], $filetowrite)) {
             die(json_encode(array('location' => $filetowrite)));
         } else {
-            mysql_query("DELETE FROM innhold_bilder WHERE id=$innhold_id");
+            $stmt = $dbh->prepare("DELETE FROM innhold_bilder WHERE id=?");
+            $stmt->execute(array($innhold_id));
             logg("upload", "Kunne ikke flytte et bilde til 'images/innhold': " . print_r($tmp, true));
             die(json_encode(array("error" => "Ett av bildene kunne ikke lastes opp. Ta kontakt med webkom.")));
         }
