@@ -73,14 +73,13 @@ function exception_handler($e) {
     if ($e instanceof PDOException) {
         sqlerror("", $e);
     } else {
-        logg("exception", "UNCAUGHT EXCEPTION: {$e->getMessage()}");
-    }
-
-    if (tilgang_endre()) {
-        echo "UNCAUGHT EXCEPTION: {$e->getMessage()}<br /><br />";
-        echo "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
-    } else {
-        echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
+        $message = "UNCAUGHT EXCEPTION: {$e->getMessage()}\n\nException backtrace:\n".print_r($e->getTrace(), true);
+        logg("exception", $message);
+        if (tilgang_webmaster()) {
+            echo "<pre>$message</pre>";
+        } else {
+            echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
+        }
     }
 }
 set_exception_handler("exception_handler");
