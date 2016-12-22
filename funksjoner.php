@@ -184,13 +184,7 @@ function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider
 	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
 		
 		if ( file_exists($php_fil) ) {
-			try {
-				include $php_fil;
-			} catch (Exception $e) {
-				logg("exception", $e);
-				die($e);
-			    include "sider/ikke_funnet.php";
-			}
+            include $php_fil;
 		} else {
 			include "sider/ikke_funnet.php";
 		}
