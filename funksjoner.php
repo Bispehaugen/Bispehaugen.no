@@ -73,7 +73,7 @@ function exception_handler($e) {
     if ($e instanceof PDOException) {
         sqlerror("", $e);
     } else {
-        $message = "UNCAUGHT EXCEPTION: {$e->getMessage()}\n\nException backtrace:\n".print_r($e->getTrace(), true);
+        $message = "UNCAUGHT EXCEPTION IN {$e->getFile()}:{$e->getLine()}: {$e->getMessage()}\n\nException backtrace:\n".print_r($e->getTrace(), true);
         logg("exception", $message);
         if (tilgang_webmaster()) {
             echo "<pre>$message</pre>";
@@ -103,7 +103,7 @@ function sqlerror($sql = "", $e = "") {
 
     $message = "SQL ERROR:".$sql;
     if ($e instanceof PDOException) {
-        $message .= "<br />PDO error: {$e->getMessage()}<br /><br />";
+        $message .= "<br />PDO error in {$e->getFile()}:{$e->getLine()}: {$e->getMessage()}<br /><br />";
         $message .= "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
     }
     logg("sqlerror", $message);
