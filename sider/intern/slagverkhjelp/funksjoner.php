@@ -15,7 +15,7 @@ function hent_slagverkhjelp($gruppeid = 0) {
 	$grupper = Array();
 
 	foreach($hjelpere as $medlemsid => $h) {
-		$hjelper = $brukere[$medlemid];
+		$hjelper = $brukere[$medlemsid];
 		if (array_key_exists($h['gruppeid'], $grupper)) {
 			$grupper[$h['gruppeid']][$medlemsid] = $hjelper;
 		} else {
@@ -23,10 +23,6 @@ function hent_slagverkhjelp($gruppeid = 0) {
 		}
 	}
 
-    echo "<pre>";
-    print_r($hjelpere);
-    echo "</pre>";
-    die();
 	return $grupper;
 }
 

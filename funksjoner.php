@@ -211,6 +211,7 @@ function tilgang_endre() {
 }
 
 function hent_komiteer_for_bruker() {
+    global $dbh;
 	$bruker = hent_brukerdata();
 	$sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ?";
     $stmt = $dbh->prepare($sql);
@@ -726,7 +727,7 @@ function visKartNederst() {
 }
 
 function neste_ovelse() {
-	return hent_aktiviteter(0, 1);
+	return reset(hent_aktiviteter(0, 1));
 }
 
 function neste_konsert_arrangement() {
@@ -737,7 +738,7 @@ function neste_konsert_arrangement() {
 }
 
 function neste_konsert_nyhet() {
-	return hent_konserter(1);
+	return reset(hent_konserter(1));
 }
 
 function hent_styret() {

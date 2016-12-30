@@ -1,6 +1,9 @@
 <?php
 
 function hent_nyhet($nyhetsid) {
+    global $dbh;
 	$sql="SELECT * FROM `nyheter` WHERE `nyhetsid`=?";
-	return hent_og_putt_inn_i_array($sql, array($nyhetsid));
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($nyhetsid));
+    return $stmt->fetch();
 }

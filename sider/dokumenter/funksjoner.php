@@ -9,15 +9,21 @@ function hent_mapper($ider, $hentUndermapper=false, $mappetype = null) {
     }
 
     $placeholders = implode(",", array_fill(0, count($ider), "?"));
-	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE :id_type IN ($placeholders)";
-    $params = array(":id_type" => $id_type)
+	$sql="SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE $id_type IN ($placeholders)";
+
+    if (is_array($ider)) {
+        $params = $ider;
+    } else {
+        $params = array($ider);
+    }
+
 	if(!is_null($mappetype)) {
-		$sql .= " AND mappetype = :mappetype".$mappetype;
-        $params[":mappetype"] = $mappetype;
+		$sql .= " AND mappetype = ?";
+        $params[] = $mappetype;
 	}
 	$sql .=" ORDER BY tittel ASC";
 
-	return hent_og_putt_inn_i_array($sql, array_merge($params, $ider), $id_verdi);
+	return hent_og_putt_inn_i_array($sql, $params, $id_verdi);
 }
 
 function hent_filer($mappeid) {
@@ -37,7 +43,7 @@ function hent_mappe($id, $mappetype = null) {
 		echo "<a href='?side=dokumenter/liste'>Tilbake til dokumenter</a><br />";
 		die();
 	}
-	return $mappe;
+	return reset($mappe);
 }
 
 function hent_undermapper($id, $mappetype = Mappetype::Dokumenter) {
@@ -80,10 +86,11 @@ function sok_i_notesett($sokestreng) {
 				   OR komponist LIKE ?
 				ORDER BY tittel ASC";
         $params[] = "%$sokestreng%";
+        $params[] = "%$sokestreng%";
 	}
 
     $stmt = $dbh->prepare($sql);
-    $stmt->execute(array($sokestreng));
+    $stmt->execute($params);
 	if ($stmt->rowCount() == 0) return Array();
 	
 	$notesett = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -98,8 +105,8 @@ function sok_i_notesett($sokestreng) {
 }
 
 function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
-	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE mappetype = :mappetype";
-    $params = array(":mappetype" => $mappetype);
+	$sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE mappetype = ?";
+    $params = array($mappetype);
 
 	$delstrenger = explode(" ", $sokestreng);
 	foreach($delstrenger as $delstreng) {
@@ -125,8 +132,8 @@ function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
 
 function sok_filer($sokestreng, $mappetype = Mappetype::Dokumenter) {
     global $dbh;
-	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = :mappetype";
-    $params = array(":mappetype" => $mappetype);
+	$sql = "SELECT id, filnavn, tittel, beskrivelse, filtype, medlemsid, tid FROM filer WHERE mappetype = ?";
+    $params = array($mappetype);
 	$delstrenger = explode(" ", $sokestreng);
 	foreach($delstrenger as $delstreng) {
 		$sql .= " AND tittel LIKE ?";

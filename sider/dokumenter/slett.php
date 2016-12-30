@@ -22,13 +22,13 @@ if (has_get('mappe')) {
 
 	$sql_antall_filer_og_undermapper_i_mappe = "SELECT SUM(antall) AS antall FROM
 (
-(SELECT COUNT(f.id) AS antall FROM filer AS f WHERE f.mappeid = :mappeid)
+(SELECT COUNT(f.id) AS antall FROM filer AS f WHERE f.mappeid = ?)
 UNION
-(SELECT COUNT(m.id) AS antall FROM mapper AS m WHERE m.foreldreid = :mappeid)
+(SELECT COUNT(m.id) AS antall FROM mapper AS m WHERE m.foreldreid = ?)
 ) AS antall";
 
     $stmt = $dbh->prepare($sql_antall_filer_og_undermapper_i_mappe);
-    $stmt->execute(array(":mappeid" => $mappeid));
+    $stmt->execute(array($mappeid, $mappeid));
 
 	$antall_filer_og_undermapper_i_mappe = $stmt->fetchColumn();
 

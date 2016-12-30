@@ -18,11 +18,16 @@ $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
 $neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < ? ORDER BY dato";
 $stmt = $dbh->prepare($neste_kakebaker_sql);
 $stmt->execute(array($om_4_dager));
+$arrangementer = $stmt->fetchAll();
+$stmt->closeCursor();
 
-while ($arrangement = $stmt->fetch()) {
+foreach ($arrangementer as $arrangement) {
     // Sjekk om arrangement allerede er varslet
-    $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = " . $arrangement['arrid'] . " AND type = " . Varslingstype::Kakebaker;
-    $allerede_varlset = $dbh->exec($allerede_varslet_sql);
+    $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = ? AND type = ?";
+    $stmt = $dbh->prepare($allerede_varslet_sql);
+    $stmt->execute(array($arrangement['arrid'], Varslingstype::Kakebaker));
+    $allerede_varlset = $stmt->fetch();
+    $stmt->closeCursor();
 
     if ($allerede_varlset['antall'] == 0) {
 

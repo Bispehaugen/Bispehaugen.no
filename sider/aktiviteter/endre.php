@@ -16,7 +16,7 @@
 
 	//hvis en aktivitet er lagt inn og noen har trykket på lagre hentes verdiene ut
 	if(has_post()) {
-		$id = post('id');
+		$id = post('arrid');
 		$tittel = post('tittel');
 		$public = post('public');
 		$type = post('type');
@@ -28,7 +28,7 @@
 		$sluttid = post('sluttid');
 		$hjelpere = post('hjelpere');
 		$slagverk = post('slagverk');
-		$kakebaker = post('kakebaker');
+		$kakebaker = !empty(post('kakebaker')) ? post('kakebaker') : 0;
 
 		if (!isset($tittel) || $tittel=="") { 
 		   $feilmeldinger[] =  "Du må fylle inn tittel"; 
@@ -84,12 +84,12 @@
 	}
 	$handling = "Ny";
 
-	$arrid = post('id');
+	$arrid = post('arrid');
 	
 	//henter valgte aktivitet fra databasen
-	if(has_get('id')){	
+	if(has_get('arrid') || has_get('id')){
 		#Hente ut valgte nyhet hvis "endre"
-		$arrid=get('id');
+		$arrid = has_get('arrid') ? get('arrid') : get('id');
 		$sql="SELECT * FROM `arrangement` WHERE `arrid`=?";
         $stmt = $dbh->prepare($sql);
         $stmt->execute(array($arrid));
@@ -111,7 +111,7 @@
 	<section class="informasjonslinje">
 	  	<h2><?php echo $handling; ?> aktivitet</h2>
 
-	  	<?php if(!has_get('id') && session('rettigheter')>1){ ?>
+        <?php if(!has_get('arrid') && session('rettigheter')>1){ ?>
 	  	<span class='verktoy standard-oving'><i class='fa fa-check'></i>Fyll ut standard øving</span>
 		<span class='verktoy flere-dato'><i class='fa fa-calendar-o'></i>Ekstra dato</span>
 		<?php } ?>
@@ -139,7 +139,7 @@
         	$(".sluttid").val("22:00");
         };
 
-        <?php if (!has_get('id')) { ?>
+        <?php if (!has_get('arrid')) { ?>
     		$('.flere-dato').click(flereDato);
 
     		$('.fjern-dato').click(fjernDato);
@@ -238,7 +238,7 @@ echo "
 						</td>
 					</tr>
 			</table>
-			<input type='hidden' name='id' value='".$arrid."'>
+			<input type='hidden' name='arrid' value='".$arrid."'>
 		</form> 
 	";
 

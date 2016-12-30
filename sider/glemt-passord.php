@@ -37,7 +37,7 @@ if (has_post("epost")) {
 "Hei ".$b["fnavn"]."!
 
 Bruk lenken under for å skifte passordet ditt på Bispehaugen.no.
-http://bispehaugen.no/?side=bytt-passord&token=".$token."
+<a href='https://bispehaugen.no/?side=bytt-passord&token=$token'>https://bispehaugen.no/?side=bytt-passord&token=$token</a>
 
 Har du ikke brukt glemt passord funksjonen? Ta kontakt med webkom@bispehaugen.no!
 

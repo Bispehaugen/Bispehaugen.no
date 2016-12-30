@@ -54,7 +54,8 @@
 		$email=post('email');
 		$bakgrunn=post('bakgrunn');
 		$startetibuk=post('startetibuk_date');
-		$sluttetibuk=post('sluttetibuk_date');
+        $sluttetibuk=post('sluttetibuk_date') != "0000-00-00" && post('sluttetibuk_date') != ""
+            ? post('sluttetibuk_date') : NULL;
 		$studieyrke=post('studieyrke');
 		$kommerfra=post('kommerfra');
 		$ommegselv=post('ommegselv');
@@ -179,6 +180,10 @@ Den gamle adressen var:
 	$gyldige_statuser = Array("Aktiv", "Permisjon", "Sluttet", "Ubekreftet");
 	$gyldige_rettigheter = Array("0", "1", "2", "3");
 	$navn_gyldige_rettigheter = Array("Ikke tilgang", "Internsider", "Admin light", "Full admin");
+    if (session("rettigheter") == 10) {
+        $gyldige_rettigheter[] = "10";
+        $navn_gyldige_rettigheter[10] = "Sysadmin";
+    }
 	
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
 	

@@ -5,8 +5,8 @@ if(tilgang_endre() && has_get('id')){
 
 	$id = get('id');
 
-	$sql = "SELECT COUNT(id) AS antall FROM konserter WHERE arrid_konsert=? LIMIT 1";
-    $stmt->prepare($sql);
+	$sql = "SELECT id AS antall FROM konserter WHERE arrid_konsert=? LIMIT 1";
+    $stmt = $dbh->prepare($sql);
     $stmt->execute(array($id));
 
 	if($stmt->rowCount() > 0) {

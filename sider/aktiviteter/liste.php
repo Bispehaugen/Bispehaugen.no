@@ -75,7 +75,7 @@ echo "</tr></thead>";
 
 $forrigeAktivitetesAar = date("Y");
 
-	foreach($aktiviteter as $aktivitet){
+	foreach($aktiviteter as $arrid => $aktivitet){
 		
 	$startdatosAar = date("Y", strtotime($aktivitet['start']));
 	if ($startdatosAar != $forrigeAktivitetesAar) {
@@ -103,11 +103,11 @@ $forrigeAktivitetesAar = date("Y");
 	}
 
 	$aktivitetstype = "aktiviteter";
-	$id_url = "arrid=".$aktivitet['arrid'];
+	$id_url = "arrid=".$arrid;
 
 	if ($aktivitet['type']=="Konsert") {
 		$aktivitetstype = "konsert";
-		$id_url = "id=".hent_konsert_nyhetsid($aktivitet['arrid']);
+		$id_url = "id=".hent_konsert_nyhetsid($arrid);
 	}
 	echo "<td>
 			<a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a>
@@ -145,11 +145,11 @@ $forrigeAktivitetesAar = date("Y");
 	#Viser endre/slettkapper hvis man er admin
 	if(tilgang_endre()){
 		echo "<td>";
-		echo"<a href='?side=aktiviteter/vis&arrid=".$aktivitet['arrid']."'><i class='fa fa-music' title='Klikk for å legge til noter'></i></a> / ";
+		echo"<a href='?side=aktiviteter/vis&arrid=".$arrid."'><i class='fa fa-music' title='Klikk for å legge til noter'></i></a> / ";
 		$endre_url = ($aktivitet['type']=="Konsert") ? "konsert/endre" : "aktiviteter/endre";
-		echo"<a href='?side=".$endre_url."&id=".$aktivitet['arrid']."'><i class='fa fa-edit' title='Klikk for å endre'></i></a>";
+		echo"<a href='?side=".$endre_url."&arrid=".$arrid."'><i class='fa fa-edit' title='Klikk for å endre'></i></a>";
 		echo " / ";
-		echo "<a href='#' class='slett-aktivitet' data-id='".$aktivitet['arrid']."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a>";
+		echo "<a href='#' class='slett-aktivitet' data-id='".$arrid."' data-title='".addslashes($aktivitet['tittel'])."'><i class='fa fa-times' title='Klikk for å slette'></i></a>";
 
 		echo "</td>";
 	}

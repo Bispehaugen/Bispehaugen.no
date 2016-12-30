@@ -100,8 +100,8 @@
 
 
 	$sql="SELECT fi.* , ft.tittel as innleggtittel, ft.tittel as tematittel FROM forum_tema AS ft, forum_innlegg_ny AS fi
-	WHERE ft.temaid=".$temaid." AND fi.temaid=".$temaid." ORDER BY skrevet;";
-    $innleggliste = hent_og_putt_inn_i_array($sql, array(":temaid" => $temaid));
+	WHERE ft.temaid=? AND fi.temaid=ft.temaid ORDER BY skrevet;";
+    $innleggliste = hent_og_putt_inn_i_array($sql, array($temaid));
 
 	//skriver ut temaet for denne tråden
     echo "<section class='forum'>

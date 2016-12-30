@@ -49,9 +49,7 @@ if(has_post()) {
 			$skrevetavid=$_SESSION["medlemsid"];
 			$skerevet_tid=date("Y-m-d H:i:s");
 			$sql="INSERT INTO nyheter (overskrift,ingress,hoveddel,bilde,type,aktiv,bildebredde,bilderamme,konsert_tid
-			,skrevetavid,tid)
-			values ('$overskrift','$ingress','$hoveddel','$bilde','$type','$aktiv','$bildebredde','$bilderamme','$dato $konserttid'
-			,'$skrevetavid','$skerevet_tid');";
+			,skrevetavid,tid) values (?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $dbh->prepare($sql);
             $stmt->execute(array($overskrift, $ingress, $hoveddel, $bilde, $type, $aktiv, $bildebredde, $bilderamme, "$dato $konserttid", $skrevetavid, $skerevet_tid));
 			$id = $dbh->lastInsertId();

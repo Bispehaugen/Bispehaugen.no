@@ -29,7 +29,7 @@ if(has_post()) {
 	$student_pris = post('student_pris');
 	$sted = post('sted');
 	$hjelpere = post('hjelpere');
-	$kakebaker = post('kakebaker');
+	$kakebaker = !empty(post('kakebaker')) ? post('kakebaker') : 0;
 
 	if (!isset($overskrift) || $overskrift=="") { 
 	   $feilmeldinger[] =  "Du må fylle inn overskrift"; 
@@ -98,13 +98,18 @@ values (?,'Konsert',?,?,?,?,?,?,'','1',?,?)";
 }
 $handling = "Ny";
 //henter valgte nyhet fra databasen
-if(has_get('id')||has_post('arrid')){	
+if(has_get('id')||has_get('arrid')||has_post('arrid')){
 	#Hente ut valgte nyhet hvis "endre"
 	if (has_get('id')) {
-		$arrid = get('id');
-	}
-	if (has_post('id')) {
-		$arrid = post('id');
+		$nyhetsid = get('id');
+        $sql = "SELECT arrid_konsert from konserter where nyhetsid_konsert = ?";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute(array($nyhetsid));
+        $arrid = $stmt->fetchColumn();
+    } else if (has_get('arrid')) {
+        $arrid = get('arrid');
+	} else {
+		$arrid = post('arrid');
 	}
 	$sql = "SELECT * FROM arrangement WHERE arrid = ?";
     $stmt = $dbh->prepare($sql);

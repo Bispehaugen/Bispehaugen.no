@@ -26,9 +26,12 @@ function antall_noter($konsertid) {
 }
 
 function neste_kakebaking() {
+    global $dbh;
 	$bruker = hent_brukerdata();
 	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = ? AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
-	return hent_og_putt_inn_i_array($sql, array($bruker["medlemsid"]));
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($bruker["medlemsid"]));
+    return $stmt->fetch();
 }
 
 function neste_kakebakere() {

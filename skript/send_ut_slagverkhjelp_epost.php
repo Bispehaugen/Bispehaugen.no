@@ -17,12 +17,16 @@ $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
 $neste_slagverk_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < ? ORDER BY dato LIMIT 1";
-
-$arrangement = hent_og_putt_inn_i_array($neste_slagverk_sql, array($om_4_dager));
+$stmt = $dbh->prepare($neste_slagverk_sql);
+$stmt->execute(array($om_4_dager));
+$arrangement = $stmt->fetch();
 
 // Sjekk om arrangement allerede er varslet
 $allerede_varslet_sql = "SELECT COUNT(id) as antall FROM varsling WHERE arrid = ? AND type = ?";
-$allerede_varlset = hent_og_putt_inn_i_array($allerede_varslet_sql, array($arrangement['arrid'], Varslingstype::Slagverkhjelper));
+$stmt = $dbh->prepare($allerede_varslet_sql);
+$stmt->execute(array($arrangement['arrid'], Varslingstype::Slagverkhjelper));
+$allerede_varlset = $stmt->fetch();
+$stmt->closeCursor();
 
 if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
 	$gruppeId = $arrangement['slagverk'];
@@ -32,14 +36,14 @@ if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
 		die();
 	}
 
-	$brukere = hent_slagverkhjelp($gruppeId);
+	$grupper = hent_slagverkhjelp($gruppeId);
 
-	if (empty($brukere)) {
+	if (empty($grupper)) {
 		logg("slagverk-epost-feil", "Kunne ikke finne noen medlemmer for gruppe ".$gruppeId. " arrid: ".$arrangement['arrid']);
 		die();
 	}
 
-	$brukere = $brukere[$gruppeId];
+	$brukere = $grupper[$gruppeId];
 	
 	$tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
 

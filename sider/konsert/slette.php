@@ -6,7 +6,7 @@ if(tilgang_endre() && has_get('arrid')){
 	$arrid = get('arrid');
 
 	$sql = "SELECT nyhetsid_konsert FROM konserter WHERE arrid_konsert=?";
-    $stmt = $dbh->prepare();
+    $stmt = $dbh->prepare($sql);
     $stmt->execute(array($arrid));
 
 	if($stmt->rowCount() == 0) {
