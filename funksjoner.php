@@ -262,16 +262,16 @@ function hent_og_putt_inn_i_array($sql, $params=array(), $index = ""){
 	$array = Array();
     $stmt = $dbh->prepare($sql);
     $stmt->execute($params);
-    if (empty($index)) {
-        return array_map("reset", $stmt->fetchAll(PDO::FETCH_GROUP | PDO::FETCH_ASSOC));
-    } else {
-        $result = array();
-        while ($row = $stmt->fetch()) {
+    $result = array();
+    while ($row = $stmt->fetch()) {
+        if (empty($index)) {
+            $result[$row[0]] = $row;
+        } else {
             // Hvis index ikke er i row er det noe veldig feil i koden, så det er hensiktsmessig å la den krasje
             $result[$row[$index]] = $row;
         }
-        return $result;
     }
+    return $result;
 }
 
 function hent_brukerdata($medlemid = ""){
