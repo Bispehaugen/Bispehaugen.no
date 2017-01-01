@@ -80,6 +80,11 @@ function exception_handler($e) {
         } else {
             echo "Det oppstod en feil vi ikke kunne rette. Webkom er varslet!";
         }
+
+        $to = ADMIN_EMAIL;
+        $replyto = "webkom@bispehaugen.no";
+        $subject = "Feilmelding - Bispehaugen.no";
+        epost($to, $replyto, $subject, $message);
     }
 }
 set_exception_handler("exception_handler");
@@ -107,6 +112,10 @@ function sqlerror($sql = "", $e = "") {
         $message .= "Exception backtrace:<br /><pre>".print_r($e->getTrace(), true)."</pre>";
     }
     logg("sqlerror", $message);
+    $to = ADMIN_EMAIL;
+    $replyto = "webkom@bispehaugen.no";
+    $subject = "Feilmelding - Bispehaugen.no";
+    epost($to, $replyto, $subject, $message);
     if (tilgang_webmaster()) {
         die($message);
     }
