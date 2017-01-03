@@ -96,12 +96,12 @@ function sok_i_notesett($sokestreng) {
 	$notesett = $stmt->fetchAll(PDO::FETCH_COLUMN);
     $placeholders = implode(",", array_fill(0, count($notesett), "?"));
 
-    $sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE :id_type IN ($placeholders) AND mappetype = :mappetype ORDER BY tittel ASC";
+    $sql = "SELECT id, mappenavn, tittel, beskrivelse, mappetype, foreldreid, filid, komiteid FROM mapper WHERE id IN ($placeholders) AND mappetype = ? ORDER BY tittel ASC";
 
-    $params[":id_type"] = $id_type;
-    $params[":mappetype"] = Mappetype::Noter;
+    $params = array_keys($notesett);
+    $params[] = Mappetype::Noter;
 
-	return hent_og_putt_inn_i_array($sql, array_merge($notesett, $params));
+	return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function sok_mapper($sokestreng, $mappetype = Mappetype::Dokumenter) {
