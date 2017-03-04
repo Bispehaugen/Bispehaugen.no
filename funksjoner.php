@@ -656,7 +656,7 @@ function thumbFilid($filid, $width = "", $height = "") {
 	return "thumb.php?size=".$width."x".$height."&filid=".$filid;
 }
 
-function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $ekstra_info) {
+function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $ekstra_info = "") {
 	if (empty($bruker)) {
 		return "";
 	}
