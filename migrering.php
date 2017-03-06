@@ -720,6 +720,21 @@ migrering(43, "Oppretter en tabell for bilder tilhørende innhold på siden",
     )"
 );
 
+migrering(44, "Oppretter en mange-til-mange tabell for kakebakere",
+    "CREATE TABLE IF NOT EXISTS `kakebakere` (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        `medlemsid` INT NOT NULL,
+        `arrid` INT NOT NULL
+    )"
+);
+
+migrering(46, "Importerer kakebakere til mange-til-mange tabellen",
+    "INSERT INTO `kakebakere` (`medlemsid`, `arrid`)
+        SELECT `kakebaker`, `arrid`
+        FROM `arrangement` AS arr JOIN `medlemmer` AS m
+        ON arr.kakebaker = m.medlemsid"
+);
+
 	/*
 migrering(17, "Neste kommer her", 
 	"INSERT INTO ..."

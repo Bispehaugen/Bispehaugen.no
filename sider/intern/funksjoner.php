@@ -25,24 +25,42 @@ function antall_noter($konsertid) {
 	return hent_noter($konsertid, true);
 }
 
+function kakebakere_id($arrid) {
+    global $dbh;
+    $sql = "SELECT medlemsid FROM kakebakere WHERE arrid = ?";
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute(array($arrid));
+    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+function kakebakere($arrid) {
+    $ider = kakebakere_id($arrid);
+    $kakebakere = array();
+    for ($i = 0; $i < count($ider); $i++) {
+        $kakebakere[$i] = hent_brukerdata($ider[$i]);
+    }
+    return $kakebakere;
+}
+
 function neste_kakebaking() {
     global $dbh;
 	$bruker = hent_brukerdata();
-	$sql = "SELECT arrid, tittel, dato, oppmoetetid FROM `arrangement` WHERE kakebaker = ? AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
+	$sql = "SELECT arr.arrid, tittel, dato, oppmoetetid FROM kakebakere as k JOIN arrangement as arr ON arr.arrid = k.arrid WHERE medlemsid = ? AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC LIMIT 1";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($bruker["medlemsid"]));
     return $stmt->fetch();
 }
 
 function neste_kakebakere() {
-	$sql = "SELECT arrid, tittel, dato, kakebaker
-			FROM arrangement
-			WHERE kakebaker > 0 AND slettet = 0 AND slutt > NOW() ORDER BY `start` ASC";
+	$sql = "SELECT arr.arrid, tittel, dato
+            FROM arrangement AS arr JOIN kakebakere AS k
+            ON arr.arrid = k.arrid
+            WHERE slettet = 0 AND slutt > NOW() ORDER BY `start` ASC";
 
 	$arrangementer = hent_og_putt_inn_i_array($sql);
 
 	foreach($arrangementer as $arrid => $arrangement) {
-		$arrangementer[$arrid]['kakebaker'] = hent_brukerdata($arrangement['kakebaker']);
+        $arrangementer[$arrid]['kakebakere'] = kakebakere($arrid);
 	}
 	return $arrangementer;
 }
