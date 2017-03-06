@@ -29,7 +29,7 @@ if(has_post()) {
 	$student_pris = post('student_pris');
 	$sted = post('sted');
 	$hjelpere = post('hjelpere');
-	$kakebaker = !empty(post('kakebaker')) ? post('kakebaker') : 0;
+	$kakebakere = !empty(post('kakebakere')) ? post('kakebakere') : array();
 
 	if (!isset($overskrift) || $overskrift=="") { 
 	   $feilmeldinger[] =  "Du må fylle inn overskrift"; 
@@ -74,17 +74,34 @@ if(has_post()) {
 		if ($arrid){
 			#sql som oppdaterer arrangementstabellen								
 			$sql3 = "UPDATE arrangement SET tittel=?,sted=?,dato=?,oppmoetetid=?
-			,start=?,slutt=?,ingress=?,public='1',type='Konsert',hjelpere=?
-			,kakebaker=? WHERE arrid=?";
+			,start=?,slutt=?,ingress=?,public='1',type='Konsert',hjelpere=? WHERE arrid=?";
             $stmt = $dbh->prepare($sql3);
-            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere, $kakebaker, $arrid));
+            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere, $arrid));
+
+
+            $sql = "DELETE FROM kakebakere WHERE arrid = ?";
+            $stmt = $dbh->prepare($sql);
+            $stmt->execute(array($arrid));
+            foreach ($kakebakere as $kakebaker) {
+                if ($kakebaker == 0) continue;
+                $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($arrid, $kakebaker));
+            }
 		} else {
 			
-			$sql4 = "INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker)
-values (?,'Konsert',?,?,?,?,?,?,'','1',?,?)";
+			$sql4 = "INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere)
+values (?,'Konsert',?,?,?,?,?,?,'','1',?)";
             $stmt = $dbh->prepare($sql4);
-            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere, $kakebaker));
+            $stmt->execute(array($overskrift, $sted, $dato, $oppmote, "$dato $konsertstart", "$dato $konsertslutt", $ingress, $hjelpere));
 			$arrid = $dbh->lastInsertId();
+
+            foreach ($kakebakere as $kakebaker) {
+                if ($kakebaker == 0) continue;
+                $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($arrid, $kakebaker));
+            }
 		}
 
 		if(empty($konserttabellid)){
@@ -115,6 +132,7 @@ if(has_get('id')||has_get('arrid')||has_post('arrid')){
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($arrid));
 	$konsert_arrangement = $stmt->fetch();
+    $konsert_arrangement['kakebakere'] = kakebakere($arrid);
 
 	$sql = "SELECT nyheter.* 
 		    FROM nyheter, konserter, arrangement 
@@ -163,18 +181,22 @@ echo "
 		<tr><td>Konsertslutt:</td><td><input type='text' class='timepicker' name='konsertslutt' value='".bare_tidspunkt(kanskje($konsert_arrangement, 'slutt'))."'></td></tr>
 		<tr><td>Sted:</td><td><input type='text' name='sted' value='".kanskje($konsert_arrangement, 'sted')."'></td></tr>
 		<tr><td>Slagverksbærere:</td><td><input type='text' name='hjelpere' value='".kanskje($konsert_arrangement, 'hjelpere')."'></td></tr>
-		<tr><td>Kakebaker:</td><td>
-			<select name='kakebaker'>
-			<option value=''>Ingen</option>";
-			foreach($medlemmer as $medlem){
-				echo"<option value='".$medlem['medlemsid']."'";
+        <tr><td>Kakebaker:</td><td>";
+            for ($i = 0; $i < count($konsert_arrangement['kakebakere']) + 2; $i++) {
+                $kakebaker = $konsert_arrangement['kakebakere'][$i];
+                echo "<select name='kakebakere[]'>
+                <option value='NULL'>Ingen</option>";
+                foreach($medlemmer as $medlem){
+                    echo"<option value='".$medlem['medlemsid']."'";
 
-				if ($medlem['medlemsid'] == kanskje($konsert_arrangement, 'kakebaker')) {
-					echo " selected=selected";
-				}
-				echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
-			}
-			echo "</select></td></tr>
+                    if ($i < count($konsert_arrangement['kakebakere']) && $medlem['medlemsid'] == $kakebaker['medlemsid']) {
+                        echo " selected=selected";
+                    }
+                    echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
+                }
+                echo "</select>";
+            }
+            echo "</td></tr>
 		<tr><td>Billettpris vanlig:</td><td><input type='text' name='normal_pris' value='".$normal_pris."'></td></tr>
 		<tr><td>Billettpris student:</td><td><input type='text' name='student_pris' value='".$student_pris."'></td></tr>
 		<tr><td>Bilde:</td><td>Kommer!!</td></tr>

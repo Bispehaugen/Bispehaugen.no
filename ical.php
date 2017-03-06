@@ -52,8 +52,22 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$description = $aktivitet["ingress"];
 
-	if (!empty($aktivitet["kakebaker"])) {
-		$description = "Kakebaker: " . $aktivitet["kakebaker"] . "\r\n" . $description;
+	if (!empty($aktivitet["kakebakere"])) {
+        $kakebakere = $aktivitet['kakebakere'];
+        $bakere = "";
+        if (count($kakebakere) == 1) {
+            $bakere = "Kakebaker: " . $kakebakere[0]['fnavn'] . ' ' . $kakebakere[0]['enavn'];
+        } else {
+            $bakere = "Kakebakere: ";
+            for ($i = 0; $i < count($kakebakere); $i++) {
+                $bakere .= $kakebakere[$i]['fnavn'] . ' ' . $kakebakere[$i]['enavn'];
+                if ($i < count($kakebakere)-1) {
+                    $bakere .= ", ";
+                }
+            }
+        }
+
+        $description = $bakere . "\r\n" . $description;
 	}
 
 	if (!empty($aktivitet["hjelpere"])) {

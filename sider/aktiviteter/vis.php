@@ -19,8 +19,8 @@ if(
 	die();
 }
 
-if (!empty($arrangement['kakebaker'])) {
-	$kakebaker = hent_brukerdata($arrangement['kakebaker']);
+if (!empty($arrangement['kakebakere'])) {
+	$kakebakere = $arrangement['kakebakere'];
 }
 
 $ingress = $arrangement['ingress'];
@@ -90,13 +90,26 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
 		}
 
 		if(er_logget_inn()) {
-			if(!empty($arrangement['hjelpere']) || !empty($kakebaker)) {
+			if(!empty($arrangement['hjelpere']) || !empty($kakebakere)) {
 				echo "<h2>Hjelpere</h2>";
 				if (isset($arrangement['hjelpere']) && !empty($arrangement['hjelpere'])) {
 					echo "<p><b>Slagværkbæring:</b> " . $arrangement['hjelpere'] . "</p>";
 				}
-				if (isset($kakebaker)) {
-					echo '<p><b>Kakebaker:</b> ' . brukerlenke($kakebaker, Navnlengde::FulltNavn, false) . '</p>';
+				if (isset($kakebakere)) {
+                    echo '<p><b>Kakebaker';
+                    if (count($kakebakere) > 1) {
+                        echo 'e';
+                    }
+                    echo ':</b> ';
+
+                    $bakere = "";
+                    foreach ($kakebakere as $kakebaker) {
+                        if (!empty($bakere)) {
+                            $bakere .= ', ';
+                        }
+                        $bakere .= brukerlenke($kakebaker, Navnlengde::FulltNavn, false);
+                    }
+                    echo $bakere . '</p>';
 				}
 			}
 		}

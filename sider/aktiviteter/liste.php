@@ -46,17 +46,6 @@ if(get('alle')==0){
 if (er_logget_inn()) {
 	$innlogget_bruker_id = innlogget_bruker()['medlemsid'];
 	$innlogget_brukers_slagverkergruppe = hent_slagverkgruppe_for_medlem($innlogget_bruker_id)['gruppeid'];
-
-	$kakebakere = Array();
-	$kakebakerIder = Array();
-
-	foreach($aktiviteter as $aktivitet){
-		$kakebaker = $aktivitet['kakebaker'];
-		if(!empty($kakebaker)) {
-			array_push($kakebakerIder, $kakebaker);
-		}
-	}
-	$kakebakere = hent_brukerdata($kakebakerIder);
 }
 
 #Det som printes på sida
@@ -131,15 +120,19 @@ $forrigeAktivitetesAar = date("Y");
 		echo "</td>";
 
 		echo "<td>";
-		$kakebaker = $aktivitet['kakebaker'];
-		if (!empty($kakebaker)) {
-			echo "<span'";
-			if($kakebaker == $innlogget_bruker_id) {
-				echo " class='din-gruppe' title='Din kakebaketur'";
+		$kakebakere = kakebakere($arrid);
+        $bakere = "";
+        foreach ($kakebakere as $kakebaker) {
+            if (!empty($bakere)) {
+                $bakere .= "<br/>";
+            }
+			$bakere .= "<span";
+			if($kakebaker['medlemsid'] == $innlogget_bruker_id) {
+				$bakere .= " class='din-gruppe' title='Din kakebaketur'";
 			}
-			echo ">".brukerlenke($kakebakere[$kakebaker], Navnlengde::Fornavn, false)."</span>";
+			$bakere .= ">".brukerlenke($kakebaker, Navnlengde::Fornavn, false)."</span>";
 		}
-		echo "</td>";
+		echo $bakere . "</td>";
 	}
 
 	#Viser endre/slettkapper hvis man er admin
