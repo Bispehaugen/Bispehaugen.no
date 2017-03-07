@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../intern/funksjoner.php';
+
 function hent_aktivitet($id) {
     global $dbh;
 	$sql = "SELECT arrid, tittel, type, sted, start, slutt, dato, oppmoetetid, ingress, beskrivelsesdok, public, uthevet, hjelpere, slettet, versjon FROM `arrangement` WHERE `arrid`=?";
