@@ -9,6 +9,7 @@ $root = str_replace("skript", "", dirname(__FILE__));
 
 include_once $root."lokal_config.php";
 include_once $root.'funksjoner.php';
+include_once $root.'sider/intern/funksjoner.php';
 
 $_SESSION["medlemsid"] = -1; // Logget inn som bot
 
@@ -31,29 +32,31 @@ foreach ($arrangementer as $arrangement) {
 
     if ($allerede_varlset['antall'] == 0) {
 
-        $bruker = hent_brukerdata($arrangement['kakebaker']);
+        $kakebakere = kakebakere($arrangement['arrid']);
         $tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
 
         $antall_dager = round(($tid - time()) / $sekunder_i_ett_dogn);
 
-        $to = $bruker['email'];
-        $replyto = "styret@bispehaugen.no";
-        $subject = "Kakebaking - Bispehaugen.no";
-        $message = "
-    Hei " . $bruker['fnavn'] . "!
+        foreach ($kakebakere as $bruker) {
+            $to = $bruker['email'];
+            $replyto = "styret@bispehaugen.no";
+            $subject = "Kakebaking - Bispehaugen.no";
+            $message = "
+        Hei " . $bruker['fnavn'] . "!
 
-    Det er du som skal bake kake om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
-    Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
+        Det er du som skal bake kake om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
+        Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
 
-    Les mer på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
+        Les mer på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
 
-    Med vennlig hilsen
-    Styret";
+        Med vennlig hilsen
+        Styret";
 
-        if(epost($to, $replyto, $subject, $message)) {
-            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
-            $stmt = $dbh->prepare($sql_varling);
-            $stmt->execute(array($arrangement["arrid"], Varslingstype::Kakebaker, $bruker["medlemsid"], date("Y-m-d H:i:s")));
+            if(epost($to, $replyto, $subject, $message)) {
+                $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
+                $stmt = $dbh->prepare($sql_varling);
+                $stmt->execute(array($arrangement["arrid"], Varslingstype::Kakebaker, $bruker["medlemsid"], date("Y-m-d H:i:s")));
+            }
         }
     }
 }

@@ -13,7 +13,16 @@ $arrangementer = neste_kakebakere();
 foreach($arrangementer as $arrangement) {
 	echo "<tr>";
 	echo "<td>" . strftime("%#d. %B %Y", strtotime($arrangement['dato'])) . "</td>";
-	echo "<td>" . brukerlenke($arrangement['kakebaker'], Navnlengde::FulltNavn, false). "</td>";
+    echo "<td>";
+    $bakere = "";
+    foreach ($arrangement['kakebakere'] as $kakebaker) {
+        if (!empty($bakere)) {
+            $bakere .= "<br/>";
+        }
+        $bakere .= brukerlenke($kakebaker, Navnlengde::FulltNavn, false);
+    }
+    echo $bakere;
+    echo "</td>";
 	echo "<td>" . "<a href='?side=aktiviteter/vis&arrid=".$arrangement['arrid']."'>" . $arrangement['tittel'] . "</a>" . "</td>";
 	echo "</tr>";
 }

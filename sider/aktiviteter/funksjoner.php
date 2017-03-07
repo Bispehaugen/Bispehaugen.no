@@ -2,10 +2,12 @@
 
 function hent_aktivitet($id) {
     global $dbh;
-	$sql = "SELECT arrid, tittel, type, sted, start, slutt, dato, oppmoetetid, ingress, beskrivelsesdok, public, uthevet, hjelpere, kakebaker, slettet, versjon FROM `arrangement` WHERE `arrid`=?";
+	$sql = "SELECT arrid, tittel, type, sted, start, slutt, dato, oppmoetetid, ingress, beskrivelsesdok, public, uthevet, hjelpere, slettet, versjon FROM `arrangement` WHERE `arrid`=?";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($id));
-	return $stmt->fetch();
+	$arr = $stmt->fetch();
+    $arr['kakebakere'] = kakebakere($id);
+    return $arr;
 }
 
 function hent_konsert_nyhetsid($arrid) {

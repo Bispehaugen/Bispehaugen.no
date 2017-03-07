@@ -28,7 +28,7 @@
 		$sluttid = post('sluttid');
 		$hjelpere = post('hjelpere');
 		$slagverk = post('slagverk');
-		$kakebaker = !empty(post('kakebaker')) ? post('kakebaker') : 0;
+		$kakebakere = !empty(post('kakebakere')) ? post('kakebakere') : array();
 
 		if (!isset($tittel) || $tittel=="") { 
 		   $feilmeldinger[] =  "Du må fylle inn tittel"; 
@@ -52,16 +52,34 @@
 				$dato = $dato[0];
 
 				$sql="UPDATE arrangement SET tittel=?,sted=?,dato=?,oppmoetetid=?
-				,start=?,slutt=?,ingress=?,public=?,type=?,hjelpere=?,kakebaker=?, slagverk=? WHERE arrid=?";
+				,start=?,slutt=?,ingress=?,public=?,type=?,hjelpere=?, slagverk=? WHERE arrid=?";
                 $stmt = $dbh->prepare($sql);
-                $stmt->execute(array($tittel, $sted, $dato, $oppmote, "$dato $starttid", "$dato $sluttid", $ingress, $public, $type, $hjelpere, $kakebaker, $slagverk, $id));
+                $stmt->execute(array($tittel, $sted, $dato, $oppmote, "$dato $starttid", "$dato $sluttid", $ingress, $public, $type, $hjelpere, $slagverk, $id));
+
+                $sql = "DELETE FROM kakebakere WHERE arrid = ?";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array($id));
+                foreach ($kakebakere as $kakebaker) {
+                    if ($kakebaker == 0) continue;
+                    $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
+                    $stmt = $dbh->prepare($sql);
+                    $stmt->execute(array($id, $kakebaker));
+                }
+
 				header('Location: ?side=aktiviteter/vis&arrid='.$id);
 				die();
 			} else {
 				foreach($dato as $d) {
-					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,kakebaker,slagverk) values (?,?,?,?,?,?,?,?,'',?,?,?,?)";
+					$sql="INSERT INTO arrangement (tittel,type,sted,dato,oppmoetetid,start,slutt,ingress,beskrivelsesdok,public,hjelpere,slagverk) values (?,?,?,?,?,?,?,?,'',?,?,?)";
                     $stmt = $dbh->prepare($sql);
-                    $stmt->execute(array($tittel, $type, $sted, $d, $oppmote, "$d $starttid", "$d $sluttid", $ingress, $public, $hjelpere, $kakebaker, $slagverk));
+                    $stmt->execute(array($tittel, $type, $sted, $d, $oppmote, "$d $starttid", "$d $sluttid", $ingress, $public, $hjelpere, $slagverk));
+
+                    $id = $dbh->lastInsertId();
+                    foreach ($kakebakere as $kakebaker) {
+                        $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
+                        $stmt = $dbh->prepare($sql);
+                        $stmt->execute(array($id, $medlemsid));
+                    }
 				}
 				
 				header('Location: ?side=aktiviteter/liste');
@@ -79,7 +97,7 @@
 			"start" => $starttid,
 			"slutt" => $sluttid,
 			"hjelpere" => $hjelpere,
-			"kakebaker" => $kakebaker
+			"kakebakere" => $kakebakere
 		);
 	}
 	$handling = "Ny";
@@ -94,6 +112,7 @@
         $stmt = $dbh->prepare($sql);
         $stmt->execute(array($arrid));
 		$aktiviteter=$stmt->fetch();
+        $aktiviteter['kakebakere'] = kakebakere($arrid);
 		$handling = "Endre";
 
 		$public = kanskje($aktiviteter, 'public');
@@ -216,18 +235,22 @@ echo "
 					<a href='?side=intern/slagverkhjelp/liste' target='_blank'>Se liste over slagverkbæregrupper</a>
 				</td></tr>
 				<tr><td>Andre hjelpere:</td><td><input type='text' name='hjelpere' value='".kanskje($aktiviteter, 'hjelpere')."'></td></tr>
-				<tr><td>Kakebaker:</td><td>
-					<select name='kakebaker'>
-					<option value='NULL'>Ingen</option>";
-					foreach($medlemmer as $medlem){
-						echo"<option value='".$medlem['medlemsid']."'";
+				<tr><td>Kakebaker:</td><td>";
+                    for ($i = 0; $i < count($aktiviteter['kakebakere']) + 2; $i++) {
+                        echo "<select name='kakebakere[]'>
+                        <option value='NULL'>Ingen</option>";
+                        foreach($medlemmer as $medlem){
+                            echo"<option value='".$medlem['medlemsid']."'";
 
-						if ($medlem['medlemsid'] == kanskje($aktiviteter, 'kakebaker')) {
-							echo " selected=selected";
-						}
-						echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
-					}
-					echo "</select></td></tr>
+                            if ($i < count($aktiviteter['kakebakere']) &&
+                                    $medlem['medlemsid'] == $aktiviteter['kakebakere'][$i]['medlemsid']) {
+                                echo " selected=selected";
+                            }
+                            echo "'>".$medlem['fnavn']." ".$medlem['enavn']."</option>";
+                        }
+                        echo "</select>";
+                    }
+                    echo "</td></tr>
 
 					<tr>
 						<td colspan=2>
