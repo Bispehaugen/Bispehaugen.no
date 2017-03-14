@@ -17,7 +17,7 @@ foreach($arrangementer as $arrangement) {
     $bakere = "";
     foreach ($arrangement['kakebakere'] as $kakebaker) {
         if (!empty($bakere)) {
-            $bakere .= "<br/>";
+            $bakere .= " og ";
         }
         $bakere .= brukerlenke($kakebaker, Navnlengde::FulltNavn, false);
     }

@@ -105,7 +105,7 @@ $oppmøteDatoTid = (isset($arrangement['oppmoetetid']) ? substr($arrangement['st
                     $bakere = "";
                     foreach ($kakebakere as $kakebaker) {
                         if (!empty($bakere)) {
-                            $bakere .= ', ';
+                            $bakere .= ' og ';
                         }
                         $bakere .= brukerlenke($kakebaker, Navnlengde::FulltNavn, false);
                     }

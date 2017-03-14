@@ -124,7 +124,7 @@ $forrigeAktivitetesAar = date("Y");
         $bakere = "";
         foreach ($kakebakere as $kakebaker) {
             if (!empty($bakere)) {
-                $bakere .= "<br/>";
+                $bakere .= " og ";
             }
 			$bakere .= "<span";
 			if($kakebaker['medlemsid'] == $innlogget_bruker_id) {
