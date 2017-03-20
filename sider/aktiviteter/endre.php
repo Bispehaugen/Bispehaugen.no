@@ -78,7 +78,7 @@
                     foreach ($kakebakere as $kakebaker) {
                         $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
                         $stmt = $dbh->prepare($sql);
-                        $stmt->execute(array($id, $medlemsid));
+                        $stmt->execute(array($id, $kakebaker));
                     }
 				}
 				
