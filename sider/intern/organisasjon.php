@@ -46,33 +46,29 @@
 
 <h3>Styret</h3>
 <p>
-<b>Leder:</b> Mats Christensen
+<b>Leder:</b> Siri Espe
 </p><p>
-<b>Nestleder:</b> Siri Espe
+<b>Nestleder:</b> Ane Agdestein
 </p><p>
-<b>Økonomiansvarlig:</b>Venke Borander
+<b>Økonomiansvarlig:</b> Anne Margrethe Viik
 </p><p>
-<b>Materialforvalter:</b>Anette Fossum Morken
+<b>Materialforvalter:</b> Vebjørn Johnsen
 </p><p>
-<b>Sekretær:</b>Oda Elise Strandås
+<b>Sekretær:</b> Oda Elise Strandås
 </p><p>
-<b>Musikkansvarlig:</b>Silje Engeland
+<b>Musikkansvarlig:</b> Silje Engeland
 </p><p>
-<b>Sponsor- og dugnadsansvarlig:</b>Kristian Thinn Solheim
+<b>Sponsor- og dugnadsansvarlig:</b> Kristian Thinn Solheim
 </p><p>
-<b>Besetningsansvarlig:</b>Guro Rafoss Kverneland
+<b>Besetningsansvarlig:</b> Guro Rafoss Kverneland
 </p>
 
  
 <h3>Webkomiteen:</h3>
 
 <p>Sekretær; Oda Elise Strandås (leder)</p>
-<p>Stephanie Buadu (medlem)</p>
-<p>Rasmus Høgberg (medlem)</p>
-<p>Jørgen Olsen Finvik (medlem)</p>
 <p>Sindre Stephansen (medlem)</p>
-<p>Anne-Siri Borander (fullfører nettsiden)</p>
-<p>Trond Klakken (fullfører nettsiden)</p>
+<p>Jenny Bakkerud (medlem)</p>
 <br />
 <p>Komiteens arbeidsoppgaver omfavner i hovedsak å videreutvikle, drifte og oppdatere korpsets hjemmeside, facebookside og e-postlister. </p>
 
@@ -80,10 +76,9 @@
 <h3>Økonomikomiteen:</h3>
 
 <p>Sponsor og dugnadsansvarlig; Kristian Thinn Solheim (leder)</p>
-<p>Økonomiansvarlig: Venke Borander</p>
+<p>Økonomiansvarlig: Anne Margrethe Viik</p>
 <p>Lene Sevland (medlem)</p>
-<p>Morten Hals (medlem)</p>
-<p>Daniel Einskar Ellingsen (medlem)</p>
+<p>Merete Hvattum (medlem)</p>
 <br />
 <p>
 Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet å organisere dugnader og spilleoppdrag.</p>
@@ -93,8 +88,8 @@ Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet 
 
 <p>Musikkansvarlig; Silje Engeland (Musikalsk leder)</p>
 <p>Elise Andersen Solbakk (medlem)</p>
-<p>Silje Aagaard (medlem)</p>
-<p>Markus Skorpen (medlem)</p>
+<p>Solveig Rivenes Lone (medlem)</p>
+<p>Andreas K. L. Belboe (medlem)</p>
 <br />
 <p>Musikkomiteen skal fastsette korpsets repertoar og har ansvaret for korpsets noter, notearkiv og notedatabasen.</p>
 
@@ -102,11 +97,11 @@ Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet 
 
 <h3>Arrangementskomiteen:</h3>
 
-<p>Materialforvalter; Anette Fossum Morken (leder)</p>
+<p>Materialforvalter; Ane Agdestein (leder)</p>
 <p>Musikkansvarlig: Silje Engeland</p>
 <p>Silje Margrethe Jørgensen (medlem)</p>
-<p>Mari Raastad (medlem)</p>
-<p>Ane Agdestein(medlem)</p>
+<p>Mari Flønes (medlem)</p>
+<p>Rasmus Høgberg (medlem)</p>
 <br />
 <p>Komiteen har ansvaret for det tekniske ved alle konserter korpset med særlig fokus på høstkonserten.</p>
 
@@ -118,18 +113,19 @@ Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet 
 <p>Komiteen jobber med å ha kontroll på korpsets besetning til ulike konserter, arrangement og konkurranser, samt arrangere sosiale tilstelninger for korpsets medlemmer. </p>
 
 <h3>Valgkomiteen:</h3>
-<p>Martin Okstad (leder)</p>
-<p>Maria Mauring (medlem)</p>
-<p>Silje Aagaard (medlem)</p>
+<p>Markus Skorpen (leder)</p>
+<p>Bente Skårholen Lomnes (medlem)</p>
+<p>Arnhild Pedersen (medlem)</p>
+<p>Martin Okstad (vara)</p>
 <br />
 <p>Valgkomiteen skal innstille valgbare kandidater til tillitsverv.</p>
 
  
 
 <h3>Revisjonskomiteen:</h3>
-<p>Karianne Hansen (leder)</p>
-<p>Øyvind Øksnes Dalheim (medlem)</p>
-<p>Maria Mauring (vara)</p>
+<p>Martin Okstad (leder)</p>
+<p>Mari Lomnes (medlem)</p>
+<p>Karianne Hansen (vara)</p>
 <br />
 <p>Revisorene skal gjennomgå regnskapet for hver årsmøteperiode og legge fram beretning for årsmøtet.</p>
 		
