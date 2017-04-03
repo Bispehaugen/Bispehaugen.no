@@ -73,7 +73,18 @@ function exception_handler($e) {
     if ($e instanceof PDOException) {
         sqlerror("", $e);
     } else {
-        $medlem = has_session('medlemsid') ? " Medlem " . session("medlemsid") : "";
+        $medlem = "Ukjent bruker"
+        if has_session('medlemsid') {
+            try {
+                $sql = "SELECT fnavn, enavn FROM medlemmer WHERE medlemsid=?";
+                $stmt = $dbh->prepare($sql);
+                $stmt->execute(array(session("medlemsid")));
+                $m = $stmt->fetch();
+                $medlem = "{$m['fnavn']} {$m['enavn']}";
+            } catch (PDOException $e) {
+                $medlem = " Medlem " . session("medlemsid");
+            }
+        }
         $message = "UNCAUGHT EXCEPTION IN {$e->getFile()}:{$e->getLine()}$medlem: {$e->getMessage()}\n\nException backtrace:\n".print_r($e->getTrace(), true);
         logg("exception", $message);
         if (tilgang_webmaster()) {
