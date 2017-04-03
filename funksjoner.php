@@ -73,6 +73,7 @@ function exception_handler($e) {
     if ($e instanceof PDOException) {
         sqlerror("", $e);
     } else {
+        /*
         $medlem = "Ukjent bruker"
         if has_session('medlemsid') {
             try {
@@ -85,6 +86,8 @@ function exception_handler($e) {
                 $medlem = " Medlem " . session("medlemsid");
             }
         }
+         */
+        $medlem = " Medlem " . session("medlemsid");
         $message = "UNCAUGHT EXCEPTION IN {$e->getFile()}:{$e->getLine()}$medlem: {$e->getMessage()}\n\nException backtrace:\n".print_r($e->getTrace(), true);
         logg("exception", $message);
         if (tilgang_webmaster()) {
