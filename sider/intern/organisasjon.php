@@ -50,7 +50,7 @@
 </p><p>
 <b>Nestleder:</b> Ane Agdestein
 </p><p>
-<b>Økonomiansvarlig:</b> Anne Margrethe Viik
+<b>Økonomiansvarlig:</b> Anne Margrethe Vik
 </p><p>
 <b>Materialforvalter:</b> Vebjørn Johnsen
 </p><p>
@@ -76,7 +76,7 @@
 <h3>Økonomikomiteen:</h3>
 
 <p>Sponsor og dugnadsansvarlig; Kristian Thinn Solheim (leder)</p>
-<p>Økonomiansvarlig: Anne Margrethe Viik</p>
+<p>Økonomiansvarlig: Anne Margrethe Vik</p>
 <p>Lene Sevland (medlem)</p>
 <p>Merete Hvattum (medlem)</p>
 <br />
@@ -97,7 +97,7 @@ Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet 
 
 <h3>Arrangementskomiteen:</h3>
 
-<p>Materialforvalter; Ane Agdestein (leder)</p>
+<p>Nestleder; Ane Agdestein (leder)</p>
 <p>Musikkansvarlig: Silje Engeland</p>
 <p>Silje Margrethe Jørgensen (medlem)</p>
 <p>Mari Flønes (medlem)</p>
