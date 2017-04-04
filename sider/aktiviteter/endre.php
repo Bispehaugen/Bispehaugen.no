@@ -60,7 +60,7 @@
                 $stmt = $dbh->prepare($sql);
                 $stmt->execute(array($id));
                 foreach ($kakebakere as $kakebaker) {
-                    if ($kakebaker == 0) continue;
+                    if (!$kakebaker || $kakebaker == 0) continue;
                     $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
                     $stmt = $dbh->prepare($sql);
                     $stmt->execute(array($id, $kakebaker));
@@ -76,6 +76,7 @@
 
                     $id = $dbh->lastInsertId();
                     foreach ($kakebakere as $kakebaker) {
+                        if (!$kakebaker || $kakebaker == 0) continue;
                         $sql = "INSERT INTO kakebakere (arrid, medlemsid) VALUES (?, ?)";
                         $stmt = $dbh->prepare($sql);
                         $stmt->execute(array($id, $kakebaker));
