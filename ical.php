@@ -85,9 +85,9 @@ foreach($aktiviteter as $id => $aktivitet) {
 	$vevent->setProperty( "uid", $uid);
 	$vevent->setProperty( "uri", $uri);
 
-	$vevent->setProperty( "dtstart", $datestart );
+	$vevent->setProperty( "dtstart", $datestart["year"], $datestart["month"], $datestart["day"], $datestart["hour"], $datestart["minute"] );
+	$vevent->setProperty( "dtend", $dateend["year"], $dateend["month"], $dateend["day"], $dateend["hour"], $dateend["minute"] );
 
-	$vevent->setProperty( "dtend",   $dateend );
 	$vevent->setProperty( "LOCATION", $address );
 	  // property name - case independent
 	$vevent->setProperty( "summary", $title);
