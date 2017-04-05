@@ -576,7 +576,7 @@ function ant_dager_siden($dato){
 	return "<i>".$dagersiden_som_tekst."</i>";
 };
 
-function hent_aktiviteter($skip = "", $take = "", $alle = "") {
+function hent_aktiviteter($skip = "", $take = "", $alle = "", $reverse = false) {
 
 	if ($alle==1){
 		$sql = "SELECT * FROM `arrangement` WHERE slettet=false";
@@ -594,7 +594,11 @@ function hent_aktiviteter($skip = "", $take = "", $alle = "") {
 		$sql .= " AND public = 1";
 	}
 
-	$sql .= " ORDER BY dato, start";
+    if ($reverse) {
+        $sql .= " ORDER BY dato DESC, start DESC";
+    } else {
+        $sql .= " ORDER BY dato, start";
+    }
 
     $params = array();
 	if ($skip != "" || $skip === 0) {

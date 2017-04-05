@@ -7,7 +7,7 @@ include_once "funksjoner.php";
 require_once( "./icalendar.php" );
 //header('Content-type: text/calendar; charset=utf-8');
 
-$aktiviteter = hent_aktiviteter();
+$aktiviteter = hent_aktiviteter(0, 200, 1, true);
 $filename = date("d-m-Y").".ics";
 
 $tz     = "Europe/Oslo";
