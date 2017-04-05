@@ -4,6 +4,7 @@
 setlocale(LC_TIME, "Norwegian");
 error_reporting(E_ERROR | E_PARSE);
 include_once "funksjoner.php";
+include_once "sider/intern/funksjoner.php";
 require_once( "./icalendar.php" );
 //header('Content-type: text/calendar; charset=utf-8');
 
@@ -52,8 +53,9 @@ foreach($aktiviteter as $id => $aktivitet) {
 
 	$description = $aktivitet["ingress"];
 
-	if (!empty($aktivitet["kakebakere"])) {
-        $kakebakere = $aktivitet['kakebakere'];
+    $kakebakere = kakebakere($id);
+
+	if (!empty($kakebakere)) {
         $bakere = "";
         if (count($kakebakere) == 1) {
             $bakere = "Kakebaker: " . $kakebakere[0]['fnavn'] . ' ' . $kakebakere[0]['enavn'];
@@ -70,11 +72,11 @@ foreach($aktiviteter as $id => $aktivitet) {
         $description = $bakere . "\r\n" . $description;
 	}
 
-	if (!empty($aktivitet["hjelpere"])) {
-		$description = "Slagverkhjelpere: " . $aktivitet["hjelpere"] . "\r\n" . $description;
+	if (!empty($aktivitet["slagverk"])) {
+		$description = "Slagverkgruppe " . $aktivitet["slagverk"] . "\r\n" . $description;
 	}
 
-	if (!empty($aktivitet["oppmoetetid"]) && !$aktivitet["oppmoetetid"] == "00:00:00") {
+	if (!empty($aktivitet["oppmoetetid"]) && !($aktivitet["oppmoetetid"] == "00:00:00")) {
 		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
 	}
 	$description = str_replace("\r\n", "\\n", $description);
