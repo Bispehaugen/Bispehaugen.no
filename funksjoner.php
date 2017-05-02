@@ -247,7 +247,7 @@ function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
 		ORDER BY posisjon, grleder desc, status, fnavn";
 	} else {
 		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND begrenset=0 AND 
+		medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND
 		instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
 	}
 
@@ -301,7 +301,7 @@ function hent_brukerdata($medlemid = ""){
 					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste, bil
 				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	} else {
-		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, bakgrunn, kommerfra 
+		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, begrenset, bakgrunn, kommerfra 
 				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
 	}
 
