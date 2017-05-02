@@ -32,7 +32,7 @@ echo '
 
 <article class="medlem">
 	
-<?php if (!empty($bilde)) { ?>
+<?php if (!empty($bilde) && ($medlem['begrenset'] == 0 || er_logget_inn())) { ?>
 <div class="profilbilde"><img src='<?php echo thumb($bilde, 300); ?>' /></div>
 <?php } ?>
 

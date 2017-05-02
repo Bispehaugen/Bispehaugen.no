@@ -253,7 +253,7 @@ Den gamle adressen var:
 							<i class='ikon fa fa-edit'></i>
 							<div class='spinner'><i class='fa fa-spinner fa-spin'></i></div>
 						</div>
-						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vises kun for innloggede</label></p>
+						<p><label><input type='checkbox' name='begrenset' value='1' ".$begrensetChecked." /> Vis bilde kun for innloggede</label></p>
 					</td>
 				</tr>
 				";
