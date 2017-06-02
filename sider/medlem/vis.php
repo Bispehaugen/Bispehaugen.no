@@ -5,7 +5,7 @@
 	$id=get('id');
 	
 	if(!has_get('id') || empty($id)) {
-		throw new Exception();
+        header('Location: ?side=medlem/liste');
 	}
 
 	//henter valgte medlem fra databasen
