@@ -756,7 +756,8 @@ function visKartNederst() {
 }
 
 function neste_ovelse() {
-	return reset(hent_aktiviteter(0, 1));
+	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND type='Øvelse'";
+    return reset(hent_og_putt_inn_i_array($sql));
 }
 
 function neste_konsert_arrangement() {
