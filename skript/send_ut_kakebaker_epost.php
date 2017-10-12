@@ -16,7 +16,7 @@ $_SESSION["medlemsid"] = -1; // Logget inn som bot
 $sekunder_i_ett_dogn = 86400; //24*60*60;
 
 $om_4_dager = date('Y-m-d', time() + (4*$sekunder_i_ett_dogn)) . " 23:59:59";
-$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE dato > NOW() and dato < ? ORDER BY dato";
+$neste_kakebaker_sql = "SELECT * FROM arrangement WHERE slettet=0 and dato > NOW() and dato < ? ORDER BY dato";
 $stmt = $dbh->prepare($neste_kakebaker_sql);
 $stmt->execute(array($om_4_dager));
 $arrangementer = $stmt->fetchAll();
