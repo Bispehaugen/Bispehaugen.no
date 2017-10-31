@@ -494,15 +494,18 @@ input.error {
 
 .side.spilleoppdrag {
   background-image:url("../images/spille_mobile.jpg");
+  background-size: 100%;
 }
 @media screen and (min-width: 800px) {
   .side.spilleoppdrag {
     background-image:url("../images/spille_tablet.jpg");
+    background-size: 100%;
   }
 }
 @media screen and (min-width: 1024px) {
   .side.spilleoppdrag {
     background-image:url("../images/spille_full.jpg");
+    background-size: 100%;
   }
 }
 
