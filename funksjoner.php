@@ -756,7 +756,7 @@ function visKartNederst() {
 }
 
 function neste_ovelse() {
-	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND type='Øvelse'";
+	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND type='Øvelse' ORDER BY dato, start LIMIT 1";
     return reset(hent_og_putt_inn_i_array($sql));
 }
 
