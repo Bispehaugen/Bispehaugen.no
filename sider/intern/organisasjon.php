@@ -87,7 +87,7 @@ Komiteen arbeider med å skaffe korpset inntekter. Dette innebærer blant annet 
 
 <h3>Musikkomiteen:</h3>
 
-<p>Musikkansvarlig; Silje Engeland (Musikalsk leder)</p>
+<p>Musikkansvarlig; Silje Engeland (leder)</p>
 <p>Silje Margrethe Jørgensen (medlem)</p>
 <p>Kine Bjørnbakk (medlem)</p>
 <p>Daniel Einskar Ellevsen (medlem)</p>
