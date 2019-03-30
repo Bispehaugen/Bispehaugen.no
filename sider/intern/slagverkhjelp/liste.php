@@ -80,13 +80,13 @@ if ($redigeringsmodus) {
 	<span class='hengerfeste'>H = Har tilgang til bil med hengefeste</span>
 	<span class='bil'>B = Har tilgang til bil</span>
 </p>
-<?php 
+<?php
 if ($redigeringsmodus) {
 ?>
 <p>Klikk og dra navn for å endre slagverkgruppe. Alle uten gruppe finner du i den nederste boksen.</p>
 <button class='button button-border lagre' disabled=disabled>Status: <i class='status-ikon fa'></i><span class='status'>Gjør dine endringer</span></button>
 
-<?php 
+<?php
 } // $redigeringsmodus
 ?>
 <div class='clearfix'></div>
@@ -124,9 +124,9 @@ if ($redigeringsmodus) {
 			echo "<li>Ingen. Alle er tildelt gruppe :)</li>";
 		} else {
 			foreach($uplasserteMedlemmer as $hjelper) {
-				echo "<li class='hjelper" . 
+				echo "<li class='hjelper" .
 				(($hjelper['medlemsid'] == $innlogget_id) ? " innlogget-bruker" : "")
-				. "' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>" 
+				. "' draggable='true' data-medlemsid='".$hjelper['medlemsid']."'>"
 				. $hjelper['fnavn'] . " " . $hjelper['enavn']
 				. "</li>";
 			}
@@ -165,7 +165,7 @@ var lagreknappStatus = function(isDisabled) {
 
 var leggTilNyGruppe = function() {
 	var gruppeId = _.max(eksisterendeGrupper) + 1;
-	var template = <?php echo "\"".formater_gruppe("{{gruppeId}}", Array(), $redigeringsmodus)."\""; ?>;
+	var template = <?php echo "\"".formater_gruppe("{{gruppeId}}", Array(), $redigeringsmodus, $innlogget_id)."\""; ?>;
 
 	var nyGruppeHtml = template.replace(/{{gruppeId}}/g, gruppeId);
 
