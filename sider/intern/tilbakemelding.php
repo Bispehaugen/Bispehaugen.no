@@ -1,5 +1,7 @@
 <?php
 $feilmeldinger = Array();
+$feil_under_sending_av_mail = false;
+$mail_sent = false;
 
 if (has_post('send')) {
     if (post('tittel') == "") {
@@ -23,8 +25,9 @@ if (has_post('send')) {
 
 	$header="$from\r\n$realfrom\r\n$content_type";
 	if(epost($to, $replyto, $subject, $message)) {
-	    header('Location: ?side=forside');
-	    die();
+	    #header('Location: ?side=forside');
+	    #die();
+	    $mail_sent = true;
 	} else {
 	    $feil_under_sending_av_mail = true;
 	}
@@ -35,7 +38,15 @@ if (has_post('send')) {
 <h2>Anonym tilbakemelding</h2>
 <p>Her kan du gi anonym tilbakemelding til styret.</p>
 
-<?php echo feilmeldinger($feilmeldinger); ?>
+<?php
+echo feilmeldinger($feilmeldinger);
+
+if ($feil_under_sending_av_mail) {
+    echo "Det skjedde en feil under sendingen. Ta kontakt med <a href=\"mailto:webkom@bispehaugen.no\">webkom</a>";
+} else if ($mail_sent) {
+    echo "Tilbakemeldingen din har blitt sendt til styret.";
+}
+?>
 
 <form method='post' action=''>
     <table>
