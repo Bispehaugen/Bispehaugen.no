@@ -50,9 +50,14 @@ if (er_logget_inn()) {
 
 #Det som printes på sida
 echo "<table class='aktivitetsliste'>
-<thead><tr><th colspan=2>Dato:</th>
-<th>Oppmøte</th><th>Starttid:</th>
+<thead><tr><th colspan=2>Dato:</th>";
+if (er_logget_inn()) {
+    echo "<th>Oppmøte:</th>";
+}
+
+echo "<th>Starttid:</th>
 <th>Arrangement:</th><th class='sted'>Sted:</th>";
+
 if(er_logget_inn()) {
 	echo "<th>Bæring:</th>";
 	echo "<th>Kakebaker:</th>";
@@ -85,10 +90,12 @@ $forrigeAktivitetesAar = date("Y");
 	}
 	echo "</td>";
 
-	if($aktivitet['oppmoetetid']=="0000-00-00 00:00:00"){
-		echo "<td></td>";
-	}else{
-		echo "<td>".strftime("%H:%M", strtotime($aktivitet['oppmoetetid']))."</td>";
+	if (er_logget_inn()) {
+	    if($aktivitet['oppmoetetid']=="0000-00-00 00:00:00"){
+		    echo "<td></td>";
+	    }else{
+		    echo "<td>".strftime("%H:%M", strtotime($aktivitet['oppmoetetid']))."</td>";
+	    }
 	}
 
 	if($aktivitet['start']=="0000-00-00 00:00:00"){
