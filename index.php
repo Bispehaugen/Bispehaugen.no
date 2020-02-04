@@ -31,7 +31,7 @@ $innhold = ob_get_clean();
 
 
 <!DOCTYPE HTML>
-<html>
+<html lang="no">
 <head>
     <meta charset="UTF-8"/>
     <title>Bispehaugen Ungdomskorps</title>
@@ -41,16 +41,16 @@ $innhold = ob_get_clean();
     <meta name="keywords" content="Bispehaugen Ungdomskorps, Bispehaugen, Ungdomskorps, Korps, Band, Woodwind band, Trondheim, Korps Trondheim, Janitsjar, Janitsjarkorps, Janitsjarkorps Trondheim, 1923, NTNU, studentkorps, student, student korps" />
     <meta property="og:image" content="https://bispehaugen.no/icon_logo.png"/>
 
-	
+
 	<link rel="shortcut icon" href="icon_logo.png" type="image/png" />
-	
-	<link rel="stylesheet" href="css/fonts.css" type="text/css" /> 
+
+	<link rel="stylesheet" href="css/fonts.css" type="text/css" />
 	<link rel="stylesheet" href="css/style.css" type="text/css" />
 	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
-	
+
 	<link async href='https://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<link async href='https://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
-	
+
 	<?php if (er_logget_inn()) { ?>
 	<link rel="stylesheet" href="css/forum.css" type="text/css" />
 	<link rel="stylesheet" href="css/internside.css" type="text/css" />
@@ -74,7 +74,7 @@ $innhold = ob_get_clean();
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-	
+
 	  ga('create', 'UA-50487161-1', 'auto');
 	  ga('send', 'pageview');
 	</script>
@@ -99,11 +99,11 @@ $innhold = ob_get_clean();
 	    <?php } ?>
 
 	<div class="white-line"></div>
-    	
+
 		<main class="main">
 			<a name="main"></a>
 			<?php
-			
+
 			if (!erForside()) {
 				echo "<section class=\"side side-invertert\" data-scroll-index='2'>
 						<div class='content'>";
@@ -205,7 +205,7 @@ $innhold = ob_get_clean();
 				$(".arkiv-valg").hide();
 			});
 	<?php } ?>
-    
+
 </script>
 
 
