@@ -1,7 +1,7 @@
 <?php
 setlocale(LC_TIME, "Norwegian", "nb_NO", "nb_NO.utf8");
 //TODO legge inn googlecal og ical eksport
-    
+
 #fuksjonalitet
 include_once 'sider/aktiviteter/funksjoner.php';
 include_once 'sider/intern/slagverkhjelp/funksjoner.php';
@@ -51,8 +51,8 @@ if (er_logget_inn()) {
 #Det som printes på sida
 echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th>
-<th>Tid:</th><th>Arrangement:</th>
-<th class='sted'>Sted:</th>";
+<th>Oppmøte</th><th>Starttid:</th>
+<th>Arrangement:</th><th class='sted'>Sted:</th>";
 if(er_logget_inn()) {
 	echo "<th>Bæring:</th>";
 	echo "<th>Kakebaker:</th>";
@@ -65,7 +65,7 @@ echo "</tr></thead>";
 $forrigeAktivitetesAar = date("Y");
 
 	foreach($aktiviteter as $arrid => $aktivitet){
-		
+
 	$startdatosAar = date("Y", strtotime($aktivitet['start']));
 	if ($startdatosAar != $forrigeAktivitetesAar) {
 		echo "<tr><td colspan=6><h4 class='aarskille'>".$startdatosAar."</h4></td></tr>";
@@ -76,7 +76,7 @@ $forrigeAktivitetesAar = date("Y");
 	echo "<td class='day-of-week'>".strftime("%a", strtotime($aktivitet['start']))."</td>";
 
 	echo "<td>".strftime("%#d. %b", strtotime($aktivitet['start']));
-	
+
 	#hvis tildato er satt eller lik
 	if((dato("d", $aktivitet['slutt']) == dato("d", $aktivitet['start']))||($aktivitet['slutt']=="0000-00-00 00:00:00")){
 		echo "";
@@ -84,6 +84,12 @@ $forrigeAktivitetesAar = date("Y");
 		echo " - ".strftime("%a %#d. %b", strtotime($aktivitet['slutt']));
 	}
 	echo "</td>";
+
+	if($aktivitet['oppmoetetid']=="0000-00-00 00:00:00"){
+		echo "<td></td>";
+	}else{
+		echo "<td>".strftime("%H:%M", strtotime($aktivitet['oppmoetetid']))."</td>";
+	}
 
 	if($aktivitet['start']=="0000-00-00 00:00:00"){
 		echo "<td></td>";
@@ -102,7 +108,7 @@ $forrigeAktivitetesAar = date("Y");
 			<a href='?side=".$aktivitetstype."/vis&" . $id_url . "'><i class='fa fa-link'></i>".$aktivitet['tittel']."</a>
 			<p class='inline-sted'>".$aktivitet['sted']."</p>
 		  </td>";
-		
+
 	echo "<td class='sted'>".$aktivitet['sted']."</td>";
 
 	if(er_logget_inn()) {
