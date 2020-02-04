@@ -1,13 +1,15 @@
 <?php
-	// Neste konsert
-	$neste_konsert = neste_konsert_arrangement();
-	$neste_konsert_tid = strtotime($neste_konsert['dato']." ".$neste_konsert['oppmoetetid']);
-	$neste_konsert_varsle_n_dager_for = 14;
-	$neste_konsert_markert = $neste_konsert_tid - (86400 * $neste_konsert_varsle_n_dager_for) < time();
-	$neste_konsert_har_noter = antall_noter($neste_konsert["arrid"]) > 0;
+// Neste konsert
+$neste_konsert = neste_konsert_arrangement();
+
+if ($neste_konsert) {
+    $neste_konsert_tid = strtotime($neste_konsert['dato']." ".$neste_konsert['oppmoetetid']);
+    $neste_konsert_varsle_n_dager_for = 14;
+    $neste_konsert_markert = $neste_konsert_tid - (86400 * $neste_konsert_varsle_n_dager_for) < time();
+    $neste_konsert_har_noter = antall_noter($neste_konsert["arrid"]) > 0;
 ?>
 <section class="widget neste-konsert<?php if($neste_konsert_markert) echo " markert" ?>">
-	
+
 	<h3>
 		<a href='?side=aktiviteter/vis&arrid=<?php echo $neste_konsert["arrid"]; ?>'>
 			<i class="fa fa-chevron-right"></i><?php echo $neste_konsert['tittel']; ?>
@@ -25,9 +27,9 @@
 			<i class="fa fa-location-arrow fa-fw"></i><?php echo $neste_konsert["sted"]; ?>
 		</a>
 	</p>
-	<?php 
+	<?php
 	}
-	
+
 	if ($neste_konsert_har_noter) { ?>
 	<p>
 		<a href="?side=noter/noter_oversikt&arrid=<?php echo $neste_konsert["arrid"]; ?>">
@@ -36,3 +38,4 @@
 	</p>
 	<?php } ?>
 </section>
+<?php } ?>
