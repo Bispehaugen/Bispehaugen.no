@@ -52,11 +52,12 @@ if (er_logget_inn()) {
 echo "<table class='aktivitetsliste'>
 <thead><tr><th colspan=2>Dato:</th>";
 if (er_logget_inn()) {
-    echo "<th>Oppmøte:</th>";
+    echo "<th>Oppmøte:</th><th>Start:</th>";
+} else {
+    echo "<th>Tid:</th>";
 }
 
-echo "<th>Starttid:</th>
-<th>Arrangement:</th><th class='sted'>Sted:</th>";
+echo "<th>Arrangement:</th><th class='sted'>Sted:</th>";
 
 if(er_logget_inn()) {
 	echo "<th>Bæring:</th>";
