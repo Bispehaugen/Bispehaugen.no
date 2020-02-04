@@ -23,19 +23,20 @@
 	<h3><a href="?side=intern/kakeliste">Kakebakerliste</a></h3>
 	<h3><a href="?side=intern/slagverkhjelp/liste">Slagverkbæreliste</a></h3>
 	<h3><a href="?side=kontakt">Styret</a></h3>
-	
+	<h3><a href="?side=intern/tilbakemelding">Anonym tilbakemelding til styret</a></h3>
+
 	<?php
 		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();
 		$antallFeil = 0;
-		
+
 		foreach($sisteFeilmeldinger as $feil) {
 			$antallFeil += $feil['telling'];
 		}
-		
+
 		if (tilgang_webmaster()) {
 	?>
 	<section class="widget neste-konsert<?php if($neste_konsert_markert) echo " markert" ?>">
-		
+
 		<h3>
 			<a href='?side=feilmeldinger'>
 				<?php echo $antallFeil; ?> Feilmeldinger
@@ -43,7 +44,7 @@
 		</h3>
 	</section>
 	<?php } ?>
-	
+
 	</section>
 </section>
 </section>
@@ -58,7 +59,7 @@
 	</section>
 
 	<section class="siste-forum forum halv-side-ved-stor-skjerm">
-		
+
 		<h2>Siste på forumet</h2>
 		<h3><?php echo list_forum(); ?></h3>
 		<div class="clearfix"></div>
@@ -67,7 +68,7 @@
 		?>
 
 	</section>
-	
+
 	<div class="clearfix"></div>
 </section>
 <section class="side kontakt" data-scroll-index='8' data-scroll-url="?side=annet">
