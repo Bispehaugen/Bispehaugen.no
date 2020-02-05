@@ -37,8 +37,10 @@ if (has_post('send')) {
 
 <h2>Anonym tilbakemelding</h2>
 <p>
-    Her kan du gi anonym tilbakemelding til styret. Ingen informasjon om deg blir lagret eller sendt med denne meldingen.
-    Derfor kan du heller ikke få svar på at tilbakemeldingen er mottat eller at den blir behandlet.</p>
+    Her kan du gi anonym tilbakemelding til styret. Det er leder i korpset som vil motta meldingen.
+    Ingen informasjon om deg blir lagret eller sendt med denne meldingen.
+    Derfor kan du heller ikke få svar på at tilbakemeldingen er mottat eller at den blir behandlet.
+</p>
 
 <?php
 echo feilmeldinger($feilmeldinger);
