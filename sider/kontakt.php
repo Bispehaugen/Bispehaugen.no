@@ -61,7 +61,7 @@ $styremedlemmer=hent_og_putt_inn_i_array($sql);
 	<h4>Postadresse</h4>
 	<p>
 		Bispehaugen Ungdomskorps<br />
-		Postboks 9012<br />
+		Postboks 9022<br />
 		Rosenborg 7455 Trondheim<br />
 	</p>
 	
