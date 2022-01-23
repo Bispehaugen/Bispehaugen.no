@@ -23,6 +23,7 @@
 	<h3><a href="?side=intern/kakeliste">Kakebakerliste</a></h3>
 	<h3><a href="?side=intern/slagverkhjelp/liste">Slagverkbæreliste</a></h3>
 	<h3><a href="?side=kontakt">Styret</a></h3>
+	<h3><a href="https://forms.gle/R9gy4K5Kj85x5TNK6">Musikkforslag</a></h3>
 	<h3><a href="?side=intern/tilbakemelding">Anonym tilbakemelding til styret</a></h3>
 
 	<?php
