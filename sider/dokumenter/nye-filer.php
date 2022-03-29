@@ -30,7 +30,7 @@ if (empty($request->getFileName())) {
 $mappe = hent_mappe($mappeid);
 
 $tittel = $request->getFileName();
-$filnavn = fornorske($tittel);
+$filnavn = pathify($tittel);
 $filtype = finn_filtype($tittel);
 $mappetype = $mappe['mappetype'];
 $mappetype_path = strtolower(hent_mappetype_navn($mappetype));

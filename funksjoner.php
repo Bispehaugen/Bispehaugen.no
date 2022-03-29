@@ -943,6 +943,11 @@ function fornorske($navn) {
 	return $navnUtenNorskeTegn;
 }
 
+function pathify($tekst) {
+	$path = fornorske($tekst);
+	$path = str_replace("/", "_", $path);
+	return $path;
+}
 
 abstract class HttpStatus {
 	const SUCCESS = "success";
