@@ -28,10 +28,14 @@ if (has_post("token")) {
         $stmt = $dbh->prepare($sql_update);
         $stmt->execute(array($passord, $token));
 
-		logg("bytt-passord", "Token $token har blitt brukt til å endre ett passord");
-
-		header("Location: index.php?side=forside");
-		die();
+		if ($stmt->rowCount() == 0) {
+			logg("bytt-passord-feil", "Token $token ble ugyldig i løpet av passord-bytte-prosessen");
+			$token_allerede_brukt = true;
+		} else {
+			logg("bytt-passord-suksess", "Token $token har blitt brukt til å endre ett passord");
+			header("Location: index.php?side=forside");
+			die();
+		}
 	}
 	$fornavn = post("fornavn");
 }
@@ -50,6 +54,10 @@ if (has_get("token")) {
 		$fornavn = $b['fnavn'];
 		$token_allerede_brukt = false;
 	};
+
+	if ($token_allerede_brukt) {
+		logg("bytt-passord-feil", "Ugyldig token $token har blitt forsøkt brukt til å endre passord");
+	}
 }
 
 ?>
