@@ -19,15 +19,17 @@ if (has_post("token")) {
 	} else if ($unhashedPassword != post("gjenta_passord")) {
 		$feilmeldinger[] = "Passordene er ikke like";
 	} else {
-		
+
 		$token = post("token");
 		$passord = password_hash($unhashedPassword, PASSWORD_DEFAULT);
-		
+
 		$sql_update = "UPDATE medlemmer SET bytt_passord_token = NULL, passord = ? WHERE bytt_passord_token = ? LIMIT 1";
-		
+
         $stmt = $dbh->prepare($sql_update);
         $stmt->execute(array($passord, $token));
-		
+
+		logg("bytt-passord", "Token $token har blitt brukt til å endre ett passord");
+
 		header("Location: index.php?side=forside");
 		die();
 	}
@@ -35,13 +37,13 @@ if (has_post("token")) {
 }
 
 if (has_get("token")) {
-	
+
 	$token = get("token");
-	
+
 	$sql = "SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE bytt_passord_token = ? LIMIT 1";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($token));
-	
+
 	$token_allerede_brukt = true;
 
 	while($b = $stmt->fetch()) {
