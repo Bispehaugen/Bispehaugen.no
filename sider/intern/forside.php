@@ -27,6 +27,10 @@
 	<h3><a href="?side=intern/tilbakemelding">Anonym tilbakemelding til styret</a></h3>
 
 	<?php
+		if (tilgang_full()) {
+			echo "<h3><a href='?side=intern/endre-styret'>Endre styret</a></h3>";
+		}
+
 		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();
 		$antallFeil = sizeof($sisteFeilmeldinger);
 
