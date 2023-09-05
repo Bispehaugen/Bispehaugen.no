@@ -28,11 +28,7 @@
 
 	<?php
 		$sisteFeilmeldinger = $sisteSqlFeil = siste_sql_feil();
-		$antallFeil = 0;
-
-		foreach($sisteFeilmeldinger as $feil) {
-			$antallFeil += $feil['telling'];
-		}
+		$antallFeil = sizeof($sisteFeilmeldinger);
 
 		if (tilgang_webmaster()) {
 	?>

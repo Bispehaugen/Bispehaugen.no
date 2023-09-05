@@ -19,8 +19,7 @@ foreach($sisteSqlFeil as $feil) {
 	$melding = str_replace(PHP_EOL, '', $feil['melding']);
 	
 	echo "<li class='feil'>";
-	echo "<div class='antall'>".$feil['telling']."</div>";
-	
+
 	$do_match = preg_match($re, $melding, $matches);
 	
 	if ($do_match == 1) {

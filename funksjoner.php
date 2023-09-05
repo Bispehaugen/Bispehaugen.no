@@ -854,7 +854,7 @@ function logg($type, $melding) {
 
 function siste_sql_feil() {
 	$enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
-	$sql = "SELECT *, COUNT(*) AS telling FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' GROUP BY melding ORDER BY telling DESC LIMIT 200";
+	$sql = "SELECT * FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' ORDER BY tid DESC LIMIT 200";
 	return hent_og_putt_inn_i_array($sql);
 }
 
