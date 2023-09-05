@@ -1,5 +1,4 @@
-
-<?php 
+<?php
 	include_once "funksjoner.php";
 
 	$epost=post("epost");
