@@ -38,7 +38,8 @@
 	?>
 
 <section class="praktisk">
-<?php echo innhold("praktisk"); ?>
+<?php
+	echo innhold("praktisk");
 
 /*<p><a href='http://org.ntnu.no/buk/filer/dokumenter/Vedlegg_A2.pdf'>Instruksen for komitéer</a></p>
 			//skriver ut alle komiteene med link til komitevisning
@@ -66,3 +67,4 @@
 
 	echo "</section>";
 	*/
+?>
