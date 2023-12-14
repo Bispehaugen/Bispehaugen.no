@@ -1,37 +1,43 @@
-<?php 
+<?php
 //TODO Bilde og fikse kolonnebredde
-	
+
 	//funksjonalitet
 	$id=get('id');
-	
+
 	if(!has_get('id') || empty($id)) {
         header('Location: ?side=medlem/liste');
 	}
 
 	//henter valgte medlem fra databasen
 	$medlem = hent_brukerdata($id);
-	
+
+	$sluttet = isset($medlem['sluttetibuk_date']) || $medlem['status'] == "Sluttet";
+	if ($sluttet && !tilgang_endre()) {
+		header('Location: ?side=medlem/liste');
+		die();
+	}
+
 	echo '
 		<section class="informasjonslinje">
 			<h2 class="back-link"><a href="?side=medlem/liste" title="Vis medlemsliste">
 				<i class="fa fa-chevron-left"></i>Medlemmer</a>
 			</h2>
-			
+
 			';
-			
+
 			if(session('medlemsid')==$id || session('rettigheter') >2){
 				echo"<div class='verktoy'><a href='?side=medlem/endre&id=".$id."'><i class='fa fa-edit'></i>Endre</a></div>";
 			}
 echo '
 		</section>';
-	
+
 	//printer ut skjema med forhåndsutfylte verdier hvis disse eksisterer
-	
+
 	$bilde = isset($medlem['foto']) ? $medlem['foto'] : "";
 	?>
 
 <article class="medlem">
-	
+
 <?php if (!empty($bilde) && ($medlem['begrenset'] == 0 || er_logget_inn())) { ?>
 <div class="profilbilde"><img src='<?php echo thumb($bilde, 300); ?>' /></div>
 <?php } ?>
@@ -53,7 +59,7 @@ echo '
 	<p>
 		<strong>Født:</strong> <?php echo isset($medlem['fdato']) ? date("d. m. Y", strtotime($medlem['fdato'])) : "Ukjent"; ?>
 	</p>
-	
+
 	<?php if(isset($medlem['startetibuk_date']) && strtotime($medlem['startetibuk_date']) > 0) { ?>
 	<p>
 		<strong>Startet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlem['startetibuk_date'])); ?>
@@ -64,13 +70,13 @@ echo '
 		<strong>Sluttet i BUK:</strong> <?php echo date("d. M Y", strtotime($medlem['sluttetibuk_date'])); ?>
 	</p>
 	<?php } ?>
-	
+
 	<?php if(isset($medlem['studieyrke']) && !empty($medlem['studieyrke'])) { ?>
 	<p>
 		<strong>Studie/yrke:</strong> <?php echo $medlem['studieyrke']; ?>
 	</p>
 	<?php } ?>
-	
+
 <?php } ?>
 
 <?php if(isset($medlem['kommerfra']) && !empty($medlem['kommerfra'])){ ?>
@@ -97,18 +103,18 @@ echo '
 
 	<?php if(isset($medlem['tlfmobil'])) { ?>
 	<p>
-		<strong>Mobil:</strong> 
+		<strong>Mobil:</strong>
 		<a href="tel:<?php echo $medlem['tlfmobil']; ?>"><?php echo $medlem['tlfmobil']; ?></a>
 	</p>
 	<?php } ?>
-	
+
 	<?php if(isset($medlem['email'])) { ?>
 	<p>
-		<strong>E-post:</strong> 
+		<strong>E-post:</strong>
 		<a href="mailto:<?php echo $medlem['email']; ?>"><?php echo $medlem['email']; ?></a>
 	</p>
 	<?php } ?>
-	
+
 	<?php if(isset($medlem['adresse'])) { ?>
 	<p>
 		<strong>Adresse:</strong> <?php echo $medlem['adresse']; ?>
@@ -118,7 +124,7 @@ echo '
 
 
 <?php } ?>
-	
+
 <?php if(er_logget_inn() && isset($medlem['ommegselv'])) { ?>
 <h4>Litt om meg</h4>
 <p><?php echo nl2br($medlem['ommegselv']); ?></p>
