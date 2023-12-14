@@ -752,7 +752,8 @@ function fancyDato($tid, $visTimer = false) {
 }
 
 function visKartNederst() {
-	return (erForside() || get('side') === "annet" ) && !er_logget_inn();
+	// Midlertidig utilgjengelig
+	return false; //(erForside() || get('side') === "annet" ) && !er_logget_inn();
 }
 
 function neste_ovelse() {
