@@ -19,5 +19,6 @@ services:
       - "8080:80"
     volumes:
       - ".:/var/www/html"
+      - "../bilder:/var/www/bilder"
     depends_on:
       - db

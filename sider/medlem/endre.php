@@ -274,7 +274,7 @@ Den gamle adressen var:
                 <td></td>
                 <td class='right'>
                     <a href='?side=medlem/liste'>Avbryt</a>
-                    <input type='submit' name='slettMedlem' value='Slett' style='color: white; backgroun-color: red; margin: auto 4em auto 4em'>
+                    <a href='?side=medlem/slett&id=".kanskje($medlemmer, 'medlemsid')."' style='margin: auto 4em auto 4em'>Slett</a>
                     <input type='submit' name='endreMedlem' value='Lagre'>
                 </td>
                 </tr>
