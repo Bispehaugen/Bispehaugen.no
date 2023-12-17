@@ -1,14 +1,14 @@
 <?php
 if(er_logget_inn()){
-	
-	inkluder_side_fra_undermappe("intern/meny");
+    
+    inkluder_side_fra_undermappe("intern/meny");
 
 } else {
-	
-	if (!erForside()) {
+    
+    if (!erForside()) {
 ?>
 <ul class="menyliste">
-	<li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /> Hjem</a></li>
+    <li class="small-logo no-border"><a href="?side=forside"><img src="icon_logo.svg" /> Hjem</a></li>
     <li><a href="?side=nyheter/liste">Nyheter</a></li>
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag/vis">Spille for deg?</a></li>
@@ -22,7 +22,7 @@ if(er_logget_inn()){
     <?php } ?>
 </ul>
 <?php
-	} else {
+    } else {
 ?>
 <ul class="menyliste">
     <li class="small-logo no-border">
@@ -45,7 +45,7 @@ if(er_logget_inn()){
     </li>
     <li>
         <span data-scroll-nav='7'>Om oss</span>
-	</li>
+    </li>
     <?php if (er_faktisk_logget_inn()) { ?>
     <li>
         <a class="internlink" href="?side=forside&vis=intern">Intern</a>
@@ -64,5 +64,5 @@ if(er_logget_inn()){
 </ul>
 
 <?php
-	}
+    }
 }

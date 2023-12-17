@@ -4,24 +4,24 @@ $epost_sendt = false;
 $feilmeldinger = Array();
 
 if (has_post("epost")) {
-	
-	$antall_forsok = has_session("antall_forsok") ? session("antall_forsok") : 0;
-	
-	if ($antall_forsok > 3) {
-		echo "<h2>Vent litt</h2>";
-		echo "<p>Du har prøvd for mange gang på rad. Vent i 10 minutter</p>";
-	}
-	
-	$epost = post("epost");
-	
-	$sql = "SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE email = ? LIMIT 1";
-	
+    
+    $antall_forsok = has_session("antall_forsok") ? session("antall_forsok") : 0;
+    
+    if ($antall_forsok > 3) {
+        echo "<h2>Vent litt</h2>";
+        echo "<p>Du har prøvd for mange gang på rad. Vent i 10 minutter</p>";
+    }
+    
+    $epost = post("epost");
+    
+    $sql = "SELECT medlemsid, fnavn, enavn, email FROM medlemmer WHERE email = ? LIMIT 1";
+    
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(post("epost")));
-	
-	if ($stmt->rowCount() ==1) {
+    
+    if ($stmt->rowCount() ==1) {
         $b = $stmt->fetch();
-			
+            
         $to = $b['email'];
         $replyto = "Reply-To: Webkom <webkom@bispehaugen.no>";
         $subject = "Bispehaugen.no - Glemt passord";
@@ -48,10 +48,10 @@ Webkom";
             $epost_sendt = true;
         } else {
             $feilmeldinger[] = "Det oppstod en feil under sendelse av epost.";
- 		}
-	} else {
-		$epost_sendt = true;
-	}
+        }
+    } else {
+        $epost_sendt = true;
+    }
 }
 
 ?>
@@ -59,10 +59,10 @@ Webkom";
 
 <h2>Glemt passord</h2>
 <?php if ($epost_sendt) { ?>
-	
+    
 <h3>Takk!</h3>
 <p>Vi har nå sendt en epost, sjekk spam-filteret ditt hvis den ikke har kommet innen 5 minutter</p>
-	
+    
 <?php
 } else {
 ?>
@@ -76,8 +76,8 @@ echo feilmeldinger($feilmeldinger);
 ?>
 
 <form action="?side=glemt-passord" method="POST">
-	<input type="email" name="epost" placeholder="E-post" />
-	<input type="submit" value="Tilbakestill passord" />
+    <input type="email" name="epost" placeholder="E-post" />
+    <input type="submit" value="Tilbakestill passord" />
 </form>
 
 

@@ -18,12 +18,12 @@ use Flow\Uploader;
  */
 class UploaderTest extends FlowUnitCase
 {
-	/**
-	 * Virtual file system
-	 *
-	 * @var vfsStreamDirectory
-	 */
-	protected $vfs;
+    /**
+     * Virtual file system
+     *
+     * @var vfsStreamDirectory
+     */
+    protected $vfs;
 
     protected function setUp()
     {
@@ -32,29 +32,29 @@ class UploaderTest extends FlowUnitCase
         vfsStreamWrapper::setRoot($this->vfs);
     }
 
-	/**
-	 * @covers ::pruneChunks
-	 */
+    /**
+     * @covers ::pruneChunks
+     */
     public function testUploader_pruneChunks()
     {
-	    //// Setup test
+        //// Setup test
 
         $newDir = vfsStream::newDirectory('1');
         $newDir->lastModified(time()-31);
         $newDir->lastModified(time());
 
-	    $fileFirst = vfsStream::newFile('file31');
+        $fileFirst = vfsStream::newFile('file31');
         $fileFirst->lastModified(time()-31);
         $fileSecond = vfsStream::newFile('random_file');
         $fileSecond->lastModified(time()-30);
-	    $upDir = vfsStream::newFile('..');
+        $upDir = vfsStream::newFile('..');
 
-	    $this->vfs->addChild($newDir);
+        $this->vfs->addChild($newDir);
         $this->vfs->addChild($fileFirst);
         $this->vfs->addChild($fileSecond);
         $this->vfs->addChild($upDir);
 
-	    //// Actual test
+        //// Actual test
 
         Uploader::pruneChunks($this->vfs->url(), 30);
         $this->assertTrue(file_exists($newDir->url()));
@@ -62,16 +62,16 @@ class UploaderTest extends FlowUnitCase
         $this->assertTrue(file_exists($fileSecond->url()));
     }
 
-	/**
-	 * @covers ::pruneChunks
-	 */
-	public function testUploader_exception()
-	{
-		try {
-			@Uploader::pruneChunks('not/existing/dir', 30);
-			$this->fail();
-		} catch (FileOpenException $e) {
-			$this->assertSame('failed to open folder: not/existing/dir', $e->getMessage());
-		}
-	}
+    /**
+     * @covers ::pruneChunks
+     */
+    public function testUploader_exception()
+    {
+        try {
+            @Uploader::pruneChunks('not/existing/dir', 30);
+            $this->fail();
+        } catch (FileOpenException $e) {
+            $this->assertSame('failed to open folder: not/existing/dir', $e->getMessage());
+        }
+    }
 }

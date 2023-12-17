@@ -29,52 +29,52 @@ $allerede_varlset = $stmt->fetch();
 $stmt->closeCursor();
 
 if ($allerede_varlset['antall'] == 0 && !empty($arrangement)) {
-	$gruppeId = $arrangement['slagverk'];
-	
-	if (empty($gruppeId)) {
-		logg("slagverk-epost-feil", "Ingen gruppeId satt for arrid: ".$arrangement['arrid']);
-		die();
-	}
+    $gruppeId = $arrangement['slagverk'];
+    
+    if (empty($gruppeId)) {
+        logg("slagverk-epost-feil", "Ingen gruppeId satt for arrid: ".$arrangement['arrid']);
+        die();
+    }
 
-	$grupper = hent_slagverkhjelp($gruppeId);
+    $grupper = hent_slagverkhjelp($gruppeId);
 
-	if (empty($grupper)) {
-		logg("slagverk-epost-feil", "Kunne ikke finne noen medlemmer for gruppe ".$gruppeId. " arrid: ".$arrangement['arrid']);
-		die();
-	}
+    if (empty($grupper)) {
+        logg("slagverk-epost-feil", "Kunne ikke finne noen medlemmer for gruppe ".$gruppeId. " arrid: ".$arrangement['arrid']);
+        die();
+    }
 
-	$brukere = $grupper[$gruppeId];
-	
-	$tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
+    $brukere = $grupper[$gruppeId];
+    
+    $tid = strtotime($arrangement['dato'] . " " . $arrangement['oppmoetetid']);
 
-	$antall_dager = round(($tid - time()) / $sekunder_i_ett_dogn);
+    $antall_dager = round(($tid - time()) / $sekunder_i_ett_dogn);
 
-	$replyto = "styret@bispehaugen.no";
-	$subject = "Slagverkbæring - Bispehaugen.no";
+    $replyto = "styret@bispehaugen.no";
+    $subject = "Slagverkbæring - Bispehaugen.no";
 
-	foreach ($brukere as $bruker) {
-		$to = $bruker['email'];
-		$message = "
-	Hei " . $bruker['fnavn'] . "!
+    foreach ($brukere as $bruker) {
+        $to = $bruker['email'];
+        $message = "
+    Hei " . $bruker['fnavn'] . "!
 
-	Du er en av de som skal bære slagverk om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
-	Husk å møte minst 15 minutter tidligere enn oppmøte for å få bært opp slagverket.
-	Husk også at du skal bære det ned etterpå!
+    Du er en av de som skal bære slagverk om " . $antall_dager ." dager for \"" . $arrangement['tittel'] . "\", kl. " . date("H:i d.m.Y", $tid) . ".
+    Husk å møte minst 15 minutter tidligere enn oppmøte for å få bært opp slagverket.
+    Husk også at du skal bære det ned etterpå!
 
-	Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
+    Hvis det ikke passer må du selv sørge for å finne en stedfortreder.
 
-	Se slagverkbæregruppen din på http://bispehaugen.no/?side=intern/slagverkhjelp/liste
+    Se slagverkbæregruppen din på http://bispehaugen.no/?side=intern/slagverkhjelp/liste
 
-	Les mer om aktiviteten på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
+    Les mer om aktiviteten på http://bispehaugen.no/?side=aktiviteter/vis&arrid=".$arrangement['arrid']."
 
-	Med vennlig hilsen
-	Styret";
+    Med vennlig hilsen
+    Styret";
 
-		if(epost($to, $replyto, $subject, $message)) {
-			$sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
+        if(epost($to, $replyto, $subject, $message)) {
+            $sql_varling = "INSERT INTO varsling (arrid, type, medlemsid, tid) VALUES (?, ?, ?, ?)";
 
             $stmt = $dbh->prepare($sql_varling);
             $stmt->execute(array($arrangement["arrid"], Varslingstype::Slagverkhjelper, $bruker["medlemsid"], date("Y-m-d H:i:s")));
-		}
-	}
+        }
+    }
 }

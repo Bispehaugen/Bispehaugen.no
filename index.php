@@ -4,28 +4,28 @@ setlocale(LC_TIME, "nb_NO.utf8");
 include_once "funksjoner.php";
 
 if (er_logget_inn()) {
-	include_once "sider/intern/funksjoner.php";
+    include_once "sider/intern/funksjoner.php";
 }
 
 if (has_get("loggut")) {
-	logg_ut();
+    logg_ut();
 }
 
 if (!$er_produksjon) {
-	if(file_exists("migrering.php")){
-		include("migrering.php");
-	}
+    if(file_exists("migrering.php")){
+        include("migrering.php");
+    }
 }
 
 //lagrer alt innhold som en variabel
 if(has_get('side')){
-	$side = get('side');
+    $side = get('side');
 } else {
-	$side = "forside";
+    $side = "forside";
 }
 
 ob_start();
-	inkluder_side_fra_undermappe($side, "sider");
+    inkluder_side_fra_undermappe($side, "sider");
 $innhold = ob_get_clean();
 ?>
 
@@ -42,79 +42,79 @@ $innhold = ob_get_clean();
     <meta property="og:image" content="https://bispehaugen.no/icon_logo.png"/>
 
 
-	<link rel="shortcut icon" href="icon_logo.png" type="image/png" />
+    <link rel="shortcut icon" href="icon_logo.png" type="image/png" />
 
-	<link rel="stylesheet" href="css/fonts.css" type="text/css" />
-	<link rel="stylesheet" href="css/style.css" type="text/css" />
-	<link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
+    <link rel="stylesheet" href="css/fonts.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/aktivitet.css" type="text/css" />
 
-	<link async href='https://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<link async href='https://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
+    <link async href='https://fonts.googleapis.com/css?family=Dosis:300,400,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link async href='https://fonts.googleapis.com/css?family=Nunito:400,700,300' rel='stylesheet' type='text/css'>
 
-	<?php if (er_logget_inn()) { ?>
-	<link rel="stylesheet" href="css/forum.css" type="text/css" />
-	<link rel="stylesheet" href="css/internside.css" type="text/css" />
-	<link rel="stylesheet" href="css/dokumenter.css" type="text/css" />
-	<?php } ?>
+    <?php if (er_logget_inn()) { ?>
+    <link rel="stylesheet" href="css/forum.css" type="text/css" />
+    <link rel="stylesheet" href="css/internside.css" type="text/css" />
+    <link rel="stylesheet" href="css/dokumenter.css" type="text/css" />
+    <?php } ?>
 
 
-	<script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
-	<script type="text/javascript" src='js/underscore-min-1.8.3.js'></script>
+    <script type="text/javascript" src='js/jquery-1.11.1.min.js'></script>
+    <script type="text/javascript" src='js/underscore-min-1.8.3.js'></script>
 
-	<?php if (tilgang_endre()) { ?>
-	<link rel="stylesheet" href="css/redigerbar.css" type="text/css" />
+    <?php if (tilgang_endre()) { ?>
+    <link rel="stylesheet" href="css/redigerbar.css" type="text/css" />
     <script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="js/redigerbar.js"></script>
-	<?php } ?>
+    <?php } ?>
 </head>
 
 <body class="no-touch">
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	  ga('create', 'UA-50487161-1', 'auto');
-	  ga('send', 'pageview');
-	</script>
-	<header class='nav-container'>
+      ga('create', 'UA-50487161-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <header class='nav-container'>
         <nav>
             <div class="meny mobil"><i class="fa fa-bars"></i>Meny</div>
             <?php
-				inkluder_side_fra_undermappe("meny");
-			?>
+                inkluder_side_fra_undermappe("meny");
+            ?>
         </nav>
-		<div class="clearfix"></div>
-	</header>
+        <div class="clearfix"></div>
+    </header>
 
-	<div class="site<?php if(erForside()) { echo " forside"; } ?>">
-		<?php if (erForside() && !er_logget_inn()) { ?>
-		<section class="forside side coverflow" data-scroll-index='1' data-scroll-url="?side=forside">
-	    	<header class="front header">
-				<img class="logo" src="icon_logo.png" />
-		    	<h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
-	      	</header>
-	    </section>
-	    <?php } ?>
+    <div class="site<?php if(erForside()) { echo " forside"; } ?>">
+        <?php if (erForside() && !er_logget_inn()) { ?>
+        <section class="forside side coverflow" data-scroll-index='1' data-scroll-url="?side=forside">
+            <header class="front header">
+                <img class="logo" src="icon_logo.png" />
+                <h1 class="title"><span class="bispehaugen">Bispehaugen</span><br /> <span class="ungdomskorps">Ungdomskorps</span></h1>
+            </header>
+        </section>
+        <?php } ?>
 
-	<div class="white-line"></div>
+    <div class="white-line"></div>
 
-		<main class="main">
-			<a name="main"></a>
-			<?php
+        <main class="main">
+            <a name="main"></a>
+            <?php
 
-			if (!erForside()) {
-				echo "<section class=\"side side-invertert\" data-scroll-index='2'>
-						<div class='content'>";
-						echo $innhold;
-				echo "	</div>
-					</section>";
-			} else {
-			 	echo $innhold;
-			 }
-			?>
-		</main>
+            if (!erForside()) {
+                echo "<section class=\"side side-invertert\" data-scroll-index='2'>
+                        <div class='content'>";
+                        echo $innhold;
+                echo "  </div>
+                    </section>";
+            } else {
+                echo $innhold;
+             }
+            ?>
+        </main>
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css" />
 <script type="text/javascript" src="js/jquery.timeago.js"></script>
 <script type="text/javascript" src="js/jquery.timeago.no.js"></script>
@@ -137,31 +137,31 @@ $innhold = ob_get_clean();
 <?php } ?>
 <script src='scrollIt.js' type='text/javascript'></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-		//$("abbr.timeago").timeago();
-		if ('ontouchstart' in document) {
-		    $('body').removeClass('no-touch');
-		}
-	});
+    $(document).ready(function() {
+        //$("abbr.timeago").timeago();
+        if ('ontouchstart' in document) {
+            $('body').removeClass('no-touch');
+        }
+    });
 
-	function confirm_url(url, tekst) {
-		var bekreft = confirm(tekst);
-		if (bekreft) {
-			window.location = url;
-		}
-	}
+    function confirm_url(url, tekst) {
+        var bekreft = confirm(tekst);
+        if (bekreft) {
+            window.location = url;
+        }
+    }
 </script>
 <?php if(erForside() && !er_logget_inn()) { ?>
-	<script>
-	var onPageChange = function(index) {
-		var url = $("[data-scroll-index='"+index+"']").data("scroll-url");
-		changeHash(url);
-	};
+    <script>
+    var onPageChange = function(index) {
+        var url = $("[data-scroll-index='"+index+"']").data("scroll-url");
+        changeHash(url);
+    };
 
     $.scrollIt({
-	  scrollTime: 300,       // how long (in ms) the animation takes
-	  onPageChange: onPageChange,    // function(pageIndex) that is called when page is changed
-	});
+      scrollTime: 300,       // how long (in ms) the animation takes
+      onPageChange: onPageChange,    // function(pageIndex) that is called when page is changed
+    });
 
     function changeHash(href) {
         if (href) {
@@ -188,35 +188,35 @@ $innhold = ob_get_clean();
         $("nav .menyliste").toggle();
     });
 
-	<?php if (er_logget_inn()) { ?>
-		$("li.profilbilde")
-			.mouseenter(function() {
-				$(".profilbilde-valg").show();
-			})
-			.mouseleave(function() {
-				$(".profilbilde-valg").hide();
-			});
+    <?php if (er_logget_inn()) { ?>
+        $("li.profilbilde")
+            .mouseenter(function() {
+                $(".profilbilde-valg").show();
+            })
+            .mouseleave(function() {
+                $(".profilbilde-valg").hide();
+            });
 
-		$("li.arkiv")
-			.mouseenter(function() {
-				$(".arkiv-valg").show();
-			})
-			.mouseleave(function() {
-				$(".arkiv-valg").hide();
-			});
-	<?php } ?>
+        $("li.arkiv")
+            .mouseenter(function() {
+                $(".arkiv-valg").show();
+            })
+            .mouseleave(function() {
+                $(".arkiv-valg").hide();
+            });
+    <?php } ?>
 
 </script>
 
 
 <footer class="footer">
-	<?php
-	if (er_logget_inn()) {
-		inkluder_side_fra_undermappe("intern/bunn");
-	} else if (visKartNederst()) {
-		inkluder_side_fra_undermappe("kart_bunn");
-	}
-	?>
+    <?php
+    if (er_logget_inn()) {
+        inkluder_side_fra_undermappe("intern/bunn");
+    } else if (visKartNederst()) {
+        inkluder_side_fra_undermappe("kart_bunn");
+    }
+    ?>
 </footer>
 </body>
 </html>

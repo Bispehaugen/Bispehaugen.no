@@ -116,7 +116,7 @@ set_exception_handler("exception_handler");
  * Det er ikke nødvendig å legge ved sql-koden siden linjenummeret funksjonen blir
  * kalt fra blir lagt ved, men det kan være nyttig for å identifisere problemet
  * uten å lete gjennom koden først. Det er heller ikke nødvendig å legge ved exception-et,
- * men 
+ * men
  */
 function sqlerror($sql = "", $e = "") {
     $sql = empty($sql) ? "" : "<br />SQL:<br />$sql<br /><br />";
@@ -139,133 +139,133 @@ function sqlerror($sql = "", $e = "") {
 }
 
 function get($attributt) {
-	return isset($_GET[$attributt]) ? $_GET[$attributt] : null; 
+    return isset($_GET[$attributt]) ? $_GET[$attributt] : null;
 }
 
 function post($attributt) {
-	return isset($_POST[$attributt]) ? $_POST[$attributt] : null; 
+    return isset($_POST[$attributt]) ? $_POST[$attributt] : null;
 }
 
 function session($attributt) {
-	return isset($_SESSION[$attributt]) ? $_SESSION[$attributt] : null; 
+    return isset($_SESSION[$attributt]) ? $_SESSION[$attributt] : null;
 }
 
 function has_get($attributt) {
-	return isset($_GET[$attributt]);
+    return isset($_GET[$attributt]);
 }
 
 function has_post($attributt = "") {
-	if (empty($attributt)) {
-		return isset($_POST) && !empty($_POST);
-	}
-	return isset($_POST[$attributt]);
+    if (empty($attributt)) {
+        return isset($_POST) && !empty($_POST);
+    }
+    return isset($_POST[$attributt]);
 }
 
 function has_session($attributt) {
-	if (empty($attributt)) {
-		return isset($_SESSION) && !empty($_SESSION);
-	}
-	return isset($_SESSION[$attributt]);
+    if (empty($attributt)) {
+        return isset($_SESSION) && !empty($_SESSION);
+    }
+    return isset($_SESSION[$attributt]);
 }
 
 function kanskje($array, $key) {
-	if (is_array($array)) {
-		if (array_key_exists($key, $array)) {
-			return $array[$key];
-		}
-	}
-	return null;
+    if (is_array($array)) {
+        if (array_key_exists($key, $array)) {
+            return $array[$key];
+        }
+    }
+    return null;
 }
 
 function bare_tidspunkt($datetime) {
-	if (!empty($datetime)) {
-		$tid = strtotime($datetime);
-		return date("H:i", $tid);
-	} 
-	return null;
+    if (!empty($datetime)) {
+        $tid = strtotime($datetime);
+        return date("H:i", $tid);
+    }
+    return null;
 }
 
 function formater_dato_tidspunkt($date) {
-	return "kl. ".date("H:i m.d.Y", strtotime($date));
+    return "kl. ".date("H:i m.d.Y", strtotime($date));
 }
 
 function inkluder_side_fra_undermappe($sidenavn = "forside", $mappenavn = "sider"){
-	
-	if (!er_logget_inn()) {
-		$reservertePlasser = Array("intern/", "forum/", "bilder/", "noter/");
-		
-		foreach($reservertePlasser as $plass) {
-			if ( strpos($sidenavn, $plass) === 0) {
-				$sidenavn = "ikke_funnet";
-				break;
-			}
-		}
-	}
-	
-	$php_fil = $mappenavn."/".$sidenavn.".php";
-	
-	// Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
-	// hvis $page inneholder .. eller / så prøver noen å gå i undermapper, det vil vi ikke
-	if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
-		
-		if ( file_exists($php_fil) ) {
+
+    if (!er_logget_inn()) {
+        $reservertePlasser = Array("intern/", "forum/", "bilder/", "noter/");
+
+        foreach($reservertePlasser as $plass) {
+            if ( strpos($sidenavn, $plass) === 0) {
+                $sidenavn = "ikke_funnet";
+                break;
+            }
+        }
+    }
+
+    $php_fil = $mappenavn."/".$sidenavn.".php";
+
+    // Sjekk om siden fins i hovedmappen (vil ikke inkludere sider som er andre plasser)
+    // hvis $page inneholder .. eller / så prøver noen å gå i undermapper, det vil vi ikke
+    if( strpos($sidenavn,"..") === false || strpos($sidenavn,"/") === false || strpos($mappenavn,"..") === false ){
+
+        if ( file_exists($php_fil) ) {
             include $php_fil;
-		} else {
-			include "sider/ikke_funnet.php";
-		}
-		
-	} else {
-		include "sider/forside.php";
-	}
+        } else {
+            include "sider/ikke_funnet.php";
+        }
+
+    } else {
+        include "sider/forside.php";
+    }
 }
 
 function tilgang_webmaster() {
-	return $_SESSION['rettigheter'] == 10;
+    return $_SESSION['rettigheter'] == 10;
 }
 
 function tilgang_full() {
-	return $_SESSION['rettigheter'] > 2;
+    return $_SESSION['rettigheter'] > 2;
 }
 
 function tilgang_intern() {
-	return $_SESSION['rettigheter'] > 0;
+    return $_SESSION['rettigheter'] > 0;
 }
 
 function tilgang_endre() {
-	return $_SESSION['rettigheter'] > 1;
+    return $_SESSION['rettigheter'] > 1;
 }
 
 function hent_komiteer_for_bruker() {
     global $dbh;
-	$bruker = hent_brukerdata();
-	$sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ?";
+    $bruker = hent_brukerdata();
+    $sql = "SELECT komiteid FROM `verv` WHERE medlemsid = ?";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($bruker["medlemsid"]));
-	return array_map("reset", $stmt->fetchAll());
+    return array_map("reset", $stmt->fetchAll());
 }
 
 function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
-	//SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
-	//sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
-	if(er_logget_inn() && $alleMedlemmer){
-		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE instrumentid = instnr ORDER BY posisjon, 
-		grleder  desc, status, fnavn";
-	} else if(er_logget_inn() && $hentStottemedlemmer){
-		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid = instnr 
-		ORDER BY posisjon, grleder desc, status, fnavn";
-	} elseif(er_logget_inn()){
-		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instnr < 100 AND instrumentid = instnr 
-		ORDER BY posisjon, grleder desc, status, fnavn";
-	} else {
-		$sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status, 
-		medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND
-		instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
-	}
+    //SQL-spørringen som henter ut alt fra "instrumenter" og "medlemmer" i DB
+    //sjekker om man er logget inn for å vise "begrensede" medlemmer (som ikke vil vises eksternt)
+    if(er_logget_inn() && $alleMedlemmer){
+        $sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status,
+        medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE instrumentid = instnr ORDER BY posisjon,
+        grleder  desc, status, fnavn";
+    } else if(er_logget_inn() && $hentStottemedlemmer){
+        $sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status,
+        medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instrumentid = instnr
+        ORDER BY posisjon, grleder desc, status, fnavn";
+    } elseif(er_logget_inn()){
+        $sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status,
+        medlemmer.instrument, medlemmer.hengerfeste, medlemmer.bil, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND instnr < 100 AND instrumentid = instnr
+        ORDER BY posisjon, grleder desc, status, fnavn";
+    } else {
+        $sql = "SELECT medlemmer.medlemsid, medlemmer.fnavn, medlemmer.enavn, medlemmer.grleder, medlemmer.tlfmobil, medlemmer.status,
+        medlemmer.instrument, instrument.* FROM medlemmer,instrument WHERE status!='sluttet' AND
+        instrumentid LIKE instnr ORDER BY posisjon, grleder desc, status, fnavn";
+    }
 
-	return hent_og_putt_inn_i_array($sql);
+    return hent_og_putt_inn_i_array($sql);
 }
 
 /*
@@ -285,7 +285,7 @@ function hent_medlemmer($alleMedlemmer = false, $hentStottemedlemmer = false) {
  */
 function hent_og_putt_inn_i_array($sql, $params=array(), $index = ""){
     global $dbh;
-	$array = Array();
+    $array = Array();
     $stmt = $dbh->prepare($sql);
     $stmt->execute($params);
     $result = array();
@@ -302,22 +302,22 @@ function hent_og_putt_inn_i_array($sql, $params=array(), $index = ""){
 
 function hent_brukerdata($medlemid = ""){
     global $dbh;
-	if(empty($medlemid)){
-		if (has_session('medlemsid')) {
-			$medlemid = session("medlemsid");
-		} else {
-			return Array();
-		}
-	}
+    if(empty($medlemid)){
+        if (has_session('medlemsid')) {
+            $medlemid = session("medlemsid");
+        } else {
+            return Array();
+        }
+    }
 
-	if(er_logget_inn()){
-		$sql = "SELECT medlemsid, fnavn, enavn, brukernavn, I.instrument, I.instrumentid, I.instrumentid as instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
-					   startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste, bil
-				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
-	} else {
-		$sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, begrenset, bakgrunn, kommerfra 
-				FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
-	}
+    if(er_logget_inn()){
+        $sql = "SELECT medlemsid, fnavn, enavn, brukernavn, I.instrument, I.instrumentid, I.instrumentid as instnr, status, grleder, foto, adresse, postnr, poststed, email, tlfmobil, fdato, studieyrke,
+                       startetibuk_date, sluttetibuk_date, bakgrunn, ommegselv, kommerfra, begrenset, rettigheter, hengerfeste, bil
+                FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
+    } else {
+        $sql = "SELECT medlemsid, fnavn, enavn, status, I.instrument, I.instrumentid, I.instrumentid as instnr, grleder, foto, begrenset, bakgrunn, kommerfra
+                FROM medlemmer AS M LEFT JOIN instrument AS I ON M.instnr=I.instrumentid";
+    }
 
     $sql .= " WHERE `medlemsid`=?";
 
@@ -332,7 +332,7 @@ function hent_brukerdata($medlemid = ""){
         $medlemid = array($medlemid);
     }
 
-	$medlemmer = Array();
+    $medlemmer = Array();
 
     $stmt = $dbh->prepare($sql);
     foreach ($medlemid as $id) {
@@ -345,15 +345,15 @@ function hent_brukerdata($medlemid = ""){
         }
     }
 
-	return $medlemmer;
+    return $medlemmer;
 }
 
 function hent_bruker($brukerdata, $id) {
 
-	if (array_key_exists($id, $brukerdata)) {
-		return $brukerdata[$id];
-	}
-	return Array("fnavn" => "Ukjent", "enavn" => "", "medlemsid" => 0);
+    if (array_key_exists($id, $brukerdata)) {
+        return $brukerdata[$id];
+    }
+    return Array("fnavn" => "Ukjent", "enavn" => "", "medlemsid" => 0);
 }
 
 function generer_token() {
@@ -459,27 +459,27 @@ function er_faktisk_logget_inn(){
  * Hent $antall siste nyheter av typen Public (default)
  */
 function hent_siste_nyheter($antall, $type="Public"){
-	#For å kunne hente ut interne og public nyheter samtidig
+    #For å kunne hente ut interne og public nyheter samtidig
     $params = array(":antall" => $antall);
-	if ($type=="Intern+Public"){
-		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT :antall";
-	} else{
-		$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type=:type ORDER BY tid DESC LIMIT :antall";
+    if ($type=="Intern+Public"){
+        $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND (type='Public' OR type='Intern') ORDER BY tid DESC LIMIT :antall";
+    } else{
+        $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav FROM `nyheter` WHERE aktiv=1 AND type=:type ORDER BY tid DESC LIMIT :antall";
         $params[":type"] = $type;
-	};
-	return hent_og_putt_inn_i_array($sql, $params);
+    };
+    return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function hent_konserter($antall = "", $type="nestekonsert"){
     $params = array(":type" => $type);
-	$sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type=:type AND konsert_tid>now() AND aktiv=true ORDER BY konsert_tid";
+    $sql = "SELECT nyhetsid, overskrift, ingress, hoveddel, bilde, tid, type, skrevetav, konsert_tid, normal_pris, student_pris, sted FROM `nyheter` WHERE type=:type AND konsert_tid>now() AND aktiv=true ORDER BY konsert_tid";
 
-	if (!empty($antall)) {
-		$sql .= " LIMIT :antall";
+    if (!empty($antall)) {
+        $sql .= " LIMIT :antall";
         $params[":antall"] = $antall;
-	}
+    }
 
-	return hent_og_putt_inn_i_array($sql, $params);
+    return hent_og_putt_inn_i_array($sql, $params);
 }
 
 
@@ -500,13 +500,13 @@ function hent_konserter($antall = "", $type="nestekonsert"){
  */
 function logg_inn($medlemsid, $rettigheter, $husk=false){
     global $dbh;
-	$_SESSION["medlemsid"]   = $medlemsid;
-	$_SESSION["rettigheter"] = $rettigheter;
-	
-	$bruker = innlogget_bruker();
-	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
-	
-	$melding = $navn . " logget nettopp inn med rettighetene: ".$rettigheter;
+    $_SESSION["medlemsid"]   = $medlemsid;
+    $_SESSION["rettigheter"] = $rettigheter;
+
+    $bruker = innlogget_bruker();
+    $navn = $bruker["fnavn"]." ".$bruker["enavn"];
+
+    $melding = $navn . " logget nettopp inn med rettighetene: ".$rettigheter;
 
     if ($husk) {
         $token = generer_token();
@@ -523,18 +523,18 @@ function logg_inn($medlemsid, $rettigheter, $husk=false){
         $_SESSION["login_token"] = $token;
         $_SESSION["login_serie"] = $serie;
     }
-	
-	logg("login", $melding);
+
+    logg("login", $melding);
 }
 
 function logg_ut() {
     global $dbh;
-	$bruker = innlogget_bruker();
-	$navn = $bruker["fnavn"]." ".$bruker["enavn"];
-	
-	$melding = $navn . " logget ut";
-	
-	logg("logout", $melding);
+    $bruker = innlogget_bruker();
+    $navn = $bruker["fnavn"]." ".$bruker["enavn"];
+
+    $melding = $navn . " logget ut";
+
+    logg("logout", $melding);
 
     if (isset($_SESSION["husk_meg"])) {
         $serie = $_SESSION["login_serie"];
@@ -547,52 +547,52 @@ function logg_ut() {
         $_SESSION["token"] = "";
         $_SESSION["serie"] = "";
     }
-	
-	// Slett sessions
-	$_SESSION["medlemsid"]   = "";
-	$_SESSION["rettigheter"] = "";
-	
-	session_unset();
+
+    // Slett sessions
+    $_SESSION["medlemsid"]   = "";
+    $_SESSION["rettigheter"] = "";
+
+    session_unset();
     session_destroy();
 }
-	
+
 function ant_dager_siden($dato){
-	//dager siden siste innlegg
-	$dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($dato,0,10)))/ (60*60*24));
-	
-	if ($dagersiden==0){
-		$dagersiden_som_tekst = " i dag";
-	} elseif ($dagersiden==1){
-		$dagersiden_som_tekst = " i går";
-	} elseif($dagersiden<7){
-		$dagersiden_som_tekst = " for ".$dagersiden." dager siden";
-	} elseif($dagersiden<31){
-		$dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
-	} elseif($dagersiden<256){
-		$dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
-	} else {
-		$dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
-	};
-	return "<i>".$dagersiden_som_tekst."</i>";
+    //dager siden siste innlegg
+    $dagersiden= floor(abs(strtotime(date('Y-m-d'))-strtotime(substr($dato,0,10)))/ (60*60*24));
+
+    if ($dagersiden==0){
+        $dagersiden_som_tekst = " i dag";
+    } elseif ($dagersiden==1){
+        $dagersiden_som_tekst = " i går";
+    } elseif($dagersiden<7){
+        $dagersiden_som_tekst = " for ".$dagersiden." dager siden";
+    } elseif($dagersiden<31){
+        $dagersiden_som_tekst = " for ".floor($dagersiden/7)." uker siden";
+    } elseif($dagersiden<256){
+        $dagersiden_som_tekst = " for ".floor($dagersiden/30)." måneder siden";
+    } else {
+        $dagersiden_som_tekst = date("d. M Y",strtotime(substr($dato,0,10)));
+    };
+    return "<i>".$dagersiden_som_tekst."</i>";
 };
 
 function hent_aktiviteter($skip = "", $take = "", $alle = "", $reverse = false) {
 
-	if ($alle==1){
-		$sql = "SELECT * FROM `arrangement` WHERE slettet=false";
-	}else{
-		$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false";
-	}
+    if ($alle==1){
+        $sql = "SELECT * FROM `arrangement` WHERE slettet=false";
+    }else{
+        $sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false";
+    }
 
-	if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
-		$sql .= " AND public < 2";
-	} elseif ( er_logget_inn() && tilgang_full()){
-		$sql .= "";
-	} elseif ( er_logget_inn() && tilgang_intern()){
-		$sql .= " AND public < 2";
-	} else {
-		$sql .= " AND public = 1";
-	}
+    if ( er_logget_inn() && $_SESSION['rettigheter']==0 || get("p") == "bukaros"){
+        $sql .= " AND public < 2";
+    } elseif ( er_logget_inn() && tilgang_full()){
+        $sql .= "";
+    } elseif ( er_logget_inn() && tilgang_intern()){
+        $sql .= " AND public < 2";
+    } else {
+        $sql .= " AND public = 1";
+    }
 
     if ($reverse) {
         $sql .= " ORDER BY dato DESC, start DESC";
@@ -601,8 +601,8 @@ function hent_aktiviteter($skip = "", $take = "", $alle = "", $reverse = false) 
     }
 
     $params = array();
-	if ($skip != "" || $skip === 0) {
-		$sql .= " LIMIT ?";
+    if ($skip != "" || $skip === 0) {
+        $sql .= " LIMIT ?";
         if ($skip == 0 && $take > 0) {
             $params[] = $take;
         } else {
@@ -612,24 +612,24 @@ function hent_aktiviteter($skip = "", $take = "", $alle = "", $reverse = false) 
                 $params[] = $take;
             }
         }
-	}
+    }
 
     return hent_og_putt_inn_i_array($sql, $params);
 }
 
 function innlogget_bruker() {
-	if (has_session('innlogget_bruker') && !empty($_SESSION['innlogget_bruker'])){
-		$bruker = $_SESSION['innlogget_bruker'];
-	} else {
-		$bruker = hent_brukerdata();
-		$_SESSION['innlogget_bruker'] = $bruker;
-	}
+    if (has_session('innlogget_bruker') && !empty($_SESSION['innlogget_bruker'])){
+        $bruker = $_SESSION['innlogget_bruker'];
+    } else {
+        $bruker = hent_brukerdata();
+        $_SESSION['innlogget_bruker'] = $bruker;
+    }
 
-	return $bruker;
+    return $bruker;
 }
 
 function innlogget_bruker_oppdatert() {
-	unset($_SESSION['innlogget_bruker']);
+    unset($_SESSION['innlogget_bruker']);
 }
 
 abstract class Navnlengde
@@ -649,68 +649,68 @@ abstract class Mappetype
 
 abstract class Varslingstype
 {
-	const Kakebaker = 1;
-	const Slagverkhjelper = 2;
+    const Kakebaker = 1;
+    const Slagverkhjelper = 2;
 }
 
 function hent_mappetype_navn($mappetype) {
-	switch($mappetype) {
-		case Mappetype::Dokumenter:
-			return "Dokumenter";
-		case Mappetype::Noter:
-			return "Noter";
-		case Mappetype::Bilder:
-			return "Bilder";
-	}
-	die("Fant ikke mappetype: " . $mappetype);
+    switch($mappetype) {
+        case Mappetype::Dokumenter:
+            return "Dokumenter";
+        case Mappetype::Noter:
+            return "Noter";
+        case Mappetype::Bilder:
+            return "Bilder";
+    }
+    die("Fant ikke mappetype: " . $mappetype);
 }
 
 function thumb($bildePath, $width = "", $height = "") {
-	$bildePath = str_replace("../", "", $bildePath);
-	return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
+    $bildePath = str_replace("../", "", $bildePath);
+    return "thumb.php?size=".$width."x".$height."&src=".$bildePath;
 }
 
 function thumbFilid($filid, $width = "", $height = "") {
-	return "thumb.php?size=".$width."x".$height."&filid=".$filid;
+    return "thumb.php?size=".$width."x".$height."&filid=".$filid;
 }
 
 function brukerlenke($bruker, $fulltNavn = Navnlengde::FulltNavn, $visBilde = false, $ekstra_info = "") {
-	if (empty($bruker)) {
-		return "";
-	}
-	
-	$bilde = isset($bruker['foto']) ? $bruker['foto'] : "";
+    if (empty($bruker)) {
+        return "";
+    }
 
-	$html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
-	if($visBilde && !empty($bilde)) {
-		$html .= "<img src='".thumb($bilde, 250)."' />";
-	}
+    $bilde = isset($bruker['foto']) ? $bruker['foto'] : "";
 
-	$html .= $ekstra_info;
-	
-	switch ($fulltNavn) {
-		case Navnlengde::FulltNavn:
-			$html .= "<span>".$bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
-			break;
-		case Navnlengde::FullInfo:
-			$html .= "<span>". $bruker['fnavn'] ." ". $bruker['enavn'] ." <br> ". $bruker['tlfmobil'] ."</span>";
-			break;
-		case Navnlengde::Ingen:
-			break;
-		case Navnlengde::Fornavn:
-		default:
-			$html .= "<span title='".$bruker['fnavn'] ." ". $bruker['enavn'] ."'>". $bruker['fnavn'] ."</span>";
-			break;
-	}
-	$html .= "";
-	$html .= "</a>";
-	
-	return $html;
+    $html = "<a class='brukerlenke' href='?side=medlem/vis&id=" . $bruker['medlemsid'] . "'>";
+    if($visBilde && !empty($bilde)) {
+        $html .= "<img src='".thumb($bilde, 250)."' />";
+    }
+
+    $html .= $ekstra_info;
+
+    switch ($fulltNavn) {
+        case Navnlengde::FulltNavn:
+            $html .= "<span>".$bruker['fnavn'] ." ". $bruker['enavn'] ."</span>";
+            break;
+        case Navnlengde::FullInfo:
+            $html .= "<span>". $bruker['fnavn'] ." ". $bruker['enavn'] ." <br> ". $bruker['tlfmobil'] ."</span>";
+            break;
+        case Navnlengde::Ingen:
+            break;
+        case Navnlengde::Fornavn:
+        default:
+            $html .= "<span title='".$bruker['fnavn'] ." ". $bruker['enavn'] ."'>". $bruker['fnavn'] ."</span>";
+            break;
+    }
+    $html .= "";
+    $html .= "</a>";
+
+    return $html;
 }
 
 function dato($format, $tid) {
-	$tid = empty($tid) ? time() : strtotime($tid);
-	return date($format, $tid);
+    $tid = empty($tid) ? time() : strtotime($tid);
+    return date($format, $tid);
 }
 
 function clean($string) {
@@ -721,121 +721,121 @@ function clean($string) {
 }
 
 function erForside() {
-	return (!has_get("side") || strtolower(get('side')) == "forside") && !er_logget_inn();
+    return (!has_get("side") || strtolower(get('side')) == "forside") && !er_logget_inn();
 }
 
 function fancyDato($tid, $visTimer = false) {
-	$time = strtotime($tid); 
+    $time = strtotime($tid);
 
-	if($time == 0) {
-		return '';
-	}
+    if($time == 0) {
+        return '';
+    }
 
-	$html = '<time class="fancy-date" datetime="'.date("c", $time).'" title="'.strftime("%c", $time).'">';
+    $html = '<time class="fancy-date" datetime="'.date("c", $time).'" title="'.strftime("%c", $time).'">';
 
-	$html .= '
-		<div class="boks">
-			<div class="weekday">'.strftime("%a", $time).'</div>
-			<div class="day">'.date("j", $time).'.</div>
-			<div class="month">'.strftime("%b", $time).'</div>
-			<div class="year">'.date("Y", $time).'</div>
-		</div>
-	';
+    $html .= '
+        <div class="boks">
+            <div class="weekday">'.strftime("%a", $time).'</div>
+            <div class="day">'.date("j", $time).'.</div>
+            <div class="month">'.strftime("%b", $time).'</div>
+            <div class="year">'.date("Y", $time).'</div>
+        </div>
+    ';
 
-	if ($visTimer === true) {
-		$html .= '<div class="time boks">kl. '.date("H:i", $time).'</div>';
-	}
+    if ($visTimer === true) {
+        $html .= '<div class="time boks">kl. '.date("H:i", $time).'</div>';
+    }
 
-	$html .= '</time>';
+    $html .= '</time>';
 
-	return $html;
+    return $html;
 }
 
 function visKartNederst() {
-	// Midlertidig utilgjengelig
-	return false; //(erForside() || get('side') === "annet" ) && !er_logget_inn();
+    // Midlertidig utilgjengelig
+    return false; //(erForside() || get('side') === "annet" ) && !er_logget_inn();
 }
 
 function neste_ovelse() {
-	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND type='Øvelse' ORDER BY dato, start LIMIT 1";
+    $sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND slettet=false AND type='Øvelse' ORDER BY dato, start LIMIT 1";
     return reset(hent_og_putt_inn_i_array($sql));
 }
 
 function neste_konsert_arrangement() {
     global $dbh;
-	$sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND type='Konsert' AND slettet=false ORDER BY dato, start LIMIT 1";
+    $sql = "SELECT * FROM `arrangement` WHERE dato >= CURDATE() AND type='Konsert' AND slettet=false ORDER BY dato, start LIMIT 1";
     $stmt = $dbh->query($sql);
-	return $stmt->fetch();
+    return $stmt->fetch();
 }
 
 function neste_konsert_nyhet() {
-	return reset(hent_konserter(1));
+    return reset(hent_konserter(1));
 }
 
 function hent_styret() {
-	$sql = "SELECT vervid, komite.komiteid, verv.komiteid, navn, verv.posisjon, komite.posisjon,
-				   tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn, foto
-		    FROM komite, verv, medlemmer
-		    WHERE medlemmer.medlemsid=verv.medlemsid 
-		      AND komite.komiteid=verv.komiteid
-		    ORDER BY komite.posisjon, verv.posisjon";
+    $sql = "SELECT vervid, komite.komiteid, verv.komiteid, navn, verv.posisjon, komite.posisjon,
+                   tittel, medlemmer.medlemsid, verv.medlemsid, epost, fnavn, enavn, foto
+            FROM komite, verv, medlemmer
+            WHERE medlemmer.medlemsid=verv.medlemsid
+              AND komite.komiteid=verv.komiteid
+            ORDER BY komite.posisjon, verv.posisjon";
     return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_komiteer() {
-	$sql = "SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
-	$komiteer = hent_og_putt_inn_i_array($sql);
+    $sql = "SELECT komiteid, navn, mail_alias FROM komite ORDER BY posisjon";
+    $komiteer = hent_og_putt_inn_i_array($sql);
 
-	return array_filter($komiteer, function($komite, $komiteid) {
-	    return !empty($komite['navn']);
-	}, ARRAY_FILTER_USE_BOTH);
+    return array_filter($komiteer, function($komite, $komiteid) {
+        return !empty($komite['navn']);
+    }, ARRAY_FILTER_USE_BOTH);
 }
 
 function epost($to,$replyto,$subject,$message,$extra_header = "")  {
 
-	$sendgrid = new SendGrid(SENDGRID_APIKEY);
-	$email = new SendGrid\Email();
-	$email
-	    ->addTo($to)
-	    ->setFrom('ikke-svar@bispehaugen.no')
-	  	->setFromName('Bispehaugen.no')
-	    ->setSubject($subject)
-	    ->setText($message)
-	    ->setHtml($message)
-	    ->setReplyTo($replyto)
-	    ->setHeaders(array('X-Sent-Using' => 'SendGrid-API', 'X-Transport' => 'web'))
-	;
+    $sendgrid = new SendGrid(SENDGRID_APIKEY);
+    $email = new SendGrid\Email();
+    $email
+        ->addTo($to)
+        ->setFrom('ikke-svar@bispehaugen.no')
+        ->setFromName('Bispehaugen.no')
+        ->setSubject($subject)
+        ->setText($message)
+        ->setHtml($message)
+        ->setReplyTo($replyto)
+        ->setHeaders(array('X-Sent-Using' => 'SendGrid-API', 'X-Transport' => 'web'))
+    ;
 
-	// Or catch the error
-	$melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message;
+    // Or catch the error
+    $melding = "To: ".$to." | Subject: ".$subject." | Message: ".$message;
 
-	try {
-	    $sendgrid->send($email);
-		logg("epost", $melding);	
-		return true;
-	} catch(\SendGrid\Exception $e) {
-		logg("error-epost", $melding);
-	    echo $e->getCode();
-	    foreach($e->getErrors() as $er) {
-	        echo $er;
-	    }
-	    return false;
-	}
+    try {
+        $sendgrid->send($email);
+        logg("epost", $melding);
+        return true;
+    } catch(\SendGrid\Exception $e) {
+        logg("error-epost", $melding);
+        echo $e->getCode();
+        foreach($e->getErrors() as $er) {
+            echo $er;
+        }
+        return false;
+    }
 }
 
 function feilmeldinger($feilmeldinger) {
-	$html = "";
-	
-	if(!empty($feilmeldinger)) {
-		
-		$html = '<ul class="feilmeldinger">';
-		
-		foreach($feilmeldinger as $feilmelding){
-			$html .= "<li class='feil'>".$feilmelding."</li>";
-		}
-		$html .= "</ul>";
-	}
-	return $html;
+    $html = "";
+
+    if(!empty($feilmeldinger)) {
+
+        $html = '<ul class="feilmeldinger">';
+
+        foreach($feilmeldinger as $feilmelding){
+            $html .= "<li class='feil'>".$feilmelding."</li>";
+        }
+        $html .= "</ul>";
+    }
+    return $html;
 }
 
 /*
@@ -843,130 +843,130 @@ function feilmeldinger($feilmeldinger) {
  * Den skal under ingen omstendighet brukes for å lagre nye passord.
  */
 function generer_passord_hash($passord) {
-	return sha1($passord);
+    return sha1($passord);
 }
 
 function logg($type, $melding) {
     global $dbh;
-	$sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES (:type, :medlemsid, :melding, '".date("Y-m-d H:i:s")."')";
+    $sql = "INSERT INTO weblog (type, brukerid, melding, tid) VALUES (:type, :medlemsid, :melding, '".date("Y-m-d H:i:s")."')";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array(":type" => $type, ":medlemsid" => session("medlemsid"), ":melding" => $melding));
 }
 
 function siste_sql_feil() {
-	$enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
-	$sql = "SELECT * FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' ORDER BY tid DESC LIMIT 200";
-	return hent_og_putt_inn_i_array($sql);
+    $enMaanedSiden = date("Y.m.d H:i:s", strtotime("-4 months"));
+    $sql = "SELECT * FROM `weblog` WHERE type IN ('sqlerror', 'error', 'warning', 'notice') AND tid > '$enMaanedSiden' ORDER BY tid DESC LIMIT 200";
+    return hent_og_putt_inn_i_array($sql);
 }
 
 function hent_besetning() {
-	$sql = "SELECT besetningsid, besetningstype FROM noter_besetning";
-	return hent_og_putt_inn_i_array($sql);
+    $sql = "SELECT besetningsid, besetningstype FROM noter_besetning";
+    return hent_og_putt_inn_i_array($sql);
 }
 
 function finn_filtype($filnavn) {
-	$fileNameArray = preg_split("/\./", $filnavn);
-	if (count($fileNameArray) > 1) {
-		return $fileNameArray[count($fileNameArray)-1];
-	}
-	return false;
+    $fileNameArray = preg_split("/\./", $filnavn);
+    if (count($fileNameArray) > 1) {
+        return $fileNameArray[count($fileNameArray)-1];
+    }
+    return false;
 }
 
 function fil_ikon($filtype) {
-	$filtypeIkon = 'fa-file-o';
-	switch($filtype) {
-		case 'pdf':
-			$filtypeIkon = 'fa-file-pdf-o';
-			break;
-		case 'jpg':
-		case 'jpeg':
-		case 'tif':
-		case 'bmp':
-		case 'png':
-		case 'gif':
-			$filtypeIkon = 'fa-file-image-o';
-			break;
-		case 'ppt':
-		case 'pptx':
-			$filtypeIkon = 'fa-file-powerpoint-o';
-			break;
-		case 'doc':
-		case 'docx':
-			$filtypeIkon = 'fa-file-word-o';
-			break;
-		case 'xls':
-		case 'xlsx':
-			$filtypeIkon = 'fa-file-excel-o';
-			break;
-		case 'zip':
-		case 'tar':
-		case 'gz':
-		case '7z':
-			$filtypeIkon = 'fa-file-zip-o';
-			break;
-		case 'mp3':
-		case 'midi':
-		case 'wav':
-		case 'm4a':
-			$filtypeIkon = 'fa-file-audio-o';
-			break;
-		case 'avi':
-		case 'mp4':
-		case 'wmv':
-		case 'mov':
-			$filtypeIkon = 'fa-file-video-o';
-			break;
-	}
-	return $filtypeIkon;
+    $filtypeIkon = 'fa-file-o';
+    switch($filtype) {
+        case 'pdf':
+            $filtypeIkon = 'fa-file-pdf-o';
+            break;
+        case 'jpg':
+        case 'jpeg':
+        case 'tif':
+        case 'bmp':
+        case 'png':
+        case 'gif':
+            $filtypeIkon = 'fa-file-image-o';
+            break;
+        case 'ppt':
+        case 'pptx':
+            $filtypeIkon = 'fa-file-powerpoint-o';
+            break;
+        case 'doc':
+        case 'docx':
+            $filtypeIkon = 'fa-file-word-o';
+            break;
+        case 'xls':
+        case 'xlsx':
+            $filtypeIkon = 'fa-file-excel-o';
+            break;
+        case 'zip':
+        case 'tar':
+        case 'gz':
+        case '7z':
+            $filtypeIkon = 'fa-file-zip-o';
+            break;
+        case 'mp3':
+        case 'midi':
+        case 'wav':
+        case 'm4a':
+            $filtypeIkon = 'fa-file-audio-o';
+            break;
+        case 'avi':
+        case 'mp4':
+        case 'wmv':
+        case 'mov':
+            $filtypeIkon = 'fa-file-video-o';
+            break;
+    }
+    return $filtypeIkon;
 }
 
 function fil_er_bilde($filtype) {
-	switch(strtolower($filtype)) {
-		case 'jpg':
-		case 'jpeg':
-		case 'tif':
-		case 'bmp':
-		case 'png':
-		case 'gif':
-			return true;
-		}
-	return false;
+    switch(strtolower($filtype)) {
+        case 'jpg':
+        case 'jpeg':
+        case 'tif':
+        case 'bmp':
+        case 'png':
+        case 'gif':
+            return true;
+        }
+    return false;
 }
 
 function fornorske($navn) {
-	$navnUtenNorskeTegn = preg_replace("/[^A-ZÆØÅa-zæøå0-9\-.]/", '_', $navn);	
-	$navnUtenNorskeTegn = str_replace("Æ", 'AE', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("æ", 'ae', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("Ø", 'O', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("ø", 'o', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("Å", 'AA', $navnUtenNorskeTegn);	
-	$navnUtenNorskeTegn = str_replace("å", 'aa', $navnUtenNorskeTegn);	
-	return $navnUtenNorskeTegn;
+    $navnUtenNorskeTegn = preg_replace("/[^A-ZÆØÅa-zæøå0-9\-.]/", '_', $navn);
+    $navnUtenNorskeTegn = str_replace("Æ", 'AE', $navnUtenNorskeTegn);
+    $navnUtenNorskeTegn = str_replace("æ", 'ae', $navnUtenNorskeTegn);
+    $navnUtenNorskeTegn = str_replace("Ø", 'O', $navnUtenNorskeTegn);
+    $navnUtenNorskeTegn = str_replace("ø", 'o', $navnUtenNorskeTegn);
+    $navnUtenNorskeTegn = str_replace("Å", 'AA', $navnUtenNorskeTegn);
+    $navnUtenNorskeTegn = str_replace("å", 'aa', $navnUtenNorskeTegn);
+    return $navnUtenNorskeTegn;
 }
 
 function pathify($tekst) {
-	$path = fornorske($tekst);
-	$path = str_replace("/", "_", $path);
-	return $path;
+    $path = fornorske($tekst);
+    $path = str_replace("/", "_", $path);
+    return $path;
 }
 
 abstract class HttpStatus {
-	const SUCCESS = "success";
-	const ERROR = "error";
+    const SUCCESS = "success";
+    const ERROR = "error";
 }
 
 function json_response($status, $message, $errorStatusCode = 500) {
-	if ($status == HttpStatus::ERROR) {
-		http_response_code($errorStatusCode);
-	}
-	header('Content-type: application/json');
-	echo json_encode(Array("status" => $status, "message" => $message));
+    if ($status == HttpStatus::ERROR) {
+        http_response_code($errorStatusCode);
+    }
+    header('Content-type: application/json');
+    echo json_encode(Array("status" => $status, "message" => $message));
 }
 
 function debug($array) {
-	echo "<pre>";
-	print_r($array);
-	echo "</pre>";
+    echo "<pre>";
+    print_r($array);
+    echo "</pre>";
 }
 
 function innhold($navn, $tag="div", $class="", $id="") {

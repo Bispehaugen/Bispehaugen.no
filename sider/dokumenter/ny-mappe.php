@@ -4,14 +4,14 @@ global $dbh;
 include_once("sider/dokumenter/funksjoner.php");
 
 if(!has_post('navn') || !has_post('foreldreid') || !has_post('mappetype')) {
-	die("Kan ikke opprette ny mappe uten innsendt navn, mappetype eller foreldreid");
+    die("Kan ikke opprette ny mappe uten innsendt navn, mappetype eller foreldreid");
 }
 
 if(!er_logget_inn()) {
-	die("Du må være logget inn");
+    die("Du må være logget inn");
 }
 if (!tilgang_endre()) {
-	die("Du har ikke lov til å opprette mapper!");
+    die("Du har ikke lov til å opprette mapper!");
 }
 
 $navn = post('navn');
@@ -32,7 +32,7 @@ $mappetype_path = strtolower(hent_mappetype_navn($mappetype));
 $path = $mappetype_path."/".$mappenavn;
 
 if(!is_dir($path)) {
-	mkdir($path, 0751);
+    mkdir($path, 0751);
 }
 
 // Oppdatert mappe med riktig filstruktur
@@ -42,5 +42,5 @@ $stmt->execute(array($mappenavn, $ny_id));
 
 echo "
 <script type='text/javascript'>
-	window.location = '?side=dokumenter/liste&mappe=" . $ny_id . "&type=" . $mappetype . "';
+    window.location = '?side=dokumenter/liste&mappe=" . $ny_id . "&type=" . $mappetype . "';
 </script>";

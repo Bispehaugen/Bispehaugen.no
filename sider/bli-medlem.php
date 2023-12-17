@@ -1,4 +1,4 @@
-	<?php
+    <?php
 
 include_once "funksjoner.php";
 
@@ -15,63 +15,63 @@ $sTelefon = "";
 
 // Hvis bli_medlem mottar et skjema
 if(has_post("sEpost")){
-	
-	$sAnnet = post("sAnnet");
-	$sNavn = post("sNavn");
-	$sInstrument = post("sInstrument");
-	$sHvorKjentMed = post("sHvorKjentMed");
-	$sEpost = post("sEpost");
-	$sTelefon = post("sTelefon");
-	$sRegistrering = post("sRegistrering");
+    
+    $sAnnet = post("sAnnet");
+    $sNavn = post("sNavn");
+    $sInstrument = post("sInstrument");
+    $sHvorKjentMed = post("sHvorKjentMed");
+    $sEpost = post("sEpost");
+    $sTelefon = post("sTelefon");
+    $sRegistrering = post("sRegistrering");
 
-	# Definerer headere til mailen som skal sendes
-	$to = 'buk-webskjema@stud.ntnu.no';
-	$replyto = "Reply-To: $sNavn <$sEpost>";
-	$subject = "Nytt BUK medlem registrert via web-skjema";
-	
-	 if (preg_match(SPAMFILTER, $sAnnet) || preg_match(SPAMFILTER, $sNavn) || preg_match(SPAMFILTER, $sInstrument) || preg_match(SPAMFILTER, $sHvorKjentMed) || preg_match(SPAMFILTER, $sEpost) || preg_match(SPAMFILTER, $sTelefon)){
-	     die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
-	 }
-	
-	$message="
-	Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
-	nye medlemmer. Husk at Bispehaugen lover å ta kontakt innen en uke.
-	
-	NAVN:           $sNavn
-	INSTRUMENT:     $sInstrument
-	E-POST:         $sEpost
-	TELEFON:        $sTelefon
-	
-	Musikalsk bakgrunn:
-	$sAnnet
-	
-	Hvor fikk du høre om Bispehaugen:
-	$sHvorKjentMed
-	";
+    # Definerer headere til mailen som skal sendes
+    $to = 'buk-webskjema@stud.ntnu.no';
+    $replyto = "Reply-To: $sNavn <$sEpost>";
+    $subject = "Nytt BUK medlem registrert via web-skjema";
+    
+     if (preg_match(SPAMFILTER, $sAnnet) || preg_match(SPAMFILTER, $sNavn) || preg_match(SPAMFILTER, $sInstrument) || preg_match(SPAMFILTER, $sHvorKjentMed) || preg_match(SPAMFILTER, $sEpost) || preg_match(SPAMFILTER, $sTelefon)){
+         die("Beskjeden du skrev inneholder taggede ord og ble derfor ikke godkjent av spamfilteret.");
+     }
+    
+    $message="
+    Denne personen har besøkt BUK sine websider og sendt inn skjemaet for
+    nye medlemmer. Husk at Bispehaugen lover å ta kontakt innen en uke.
+    
+    NAVN:           $sNavn
+    INSTRUMENT:     $sInstrument
+    E-POST:         $sEpost
+    TELEFON:        $sTelefon
+    
+    Musikalsk bakgrunn:
+    $sAnnet
+    
+    Hvor fikk du høre om Bispehaugen:
+    $sHvorKjentMed
+    ";
 
-	if ($sRegistrering == "registrer") {
-		$message .= "
-	Personen ønsker å opprette en bruker
-		";
-	}
-	
-	if (!isset($sNavn) || $sNavn=="" || ($sTelefon=="" && $sEpost=="")) { 
-	   $feilmeldinger[] =  "<font color=red>Du må fylle inn navn og kontaktinformasjon</font>"; 
-	} 
-	elseif (preg_match("/@mail.com/",$sEpost)>0){ 
-	   $feilmeldinger[] =  "<font color=red>Forespørsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
-	}
-	elseif ($sEpost!="" && preg_match("/@/",$sEpost)==0){
-	   $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";
-	}
-	elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
-	   $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";		    
-	} 
-	elseif (epost($to,$replyto,$subject,$message)) {
-	//elseif (true) {
-		echo "<h1>Takk for interessen!</h1><p>En person fra korpset vil kontakte deg innen en uke.</p>";
-		$har_alle_feltene_utfylt_og_sendt_mail = true;
-	}
+    if ($sRegistrering == "registrer") {
+        $message .= "
+    Personen ønsker å opprette en bruker
+        ";
+    }
+    
+    if (!isset($sNavn) || $sNavn=="" || ($sTelefon=="" && $sEpost=="")) { 
+       $feilmeldinger[] =  "<font color=red>Du må fylle inn navn og kontaktinformasjon</font>"; 
+    } 
+    elseif (preg_match("/@mail.com/",$sEpost)>0){ 
+       $feilmeldinger[] =  "<font color=red>Forespørsler fra @mail.com e-post adresser er dessverre blokkert p.g.a. problemer med spam.</font>";
+    }
+    elseif ($sEpost!="" && preg_match("/@/",$sEpost)==0){
+       $feilmeldinger[] =  "<font color=red>Ugyldig e-post adresse. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";
+    }
+    elseif ($sTelefon!="" && preg_match("/\d\d/",$sTelefon)==0) {
+       $feilmeldinger[] =  "<font color=red>Ugyldig telefonnummer. Forespørselen er blitt blokkert p.g.a. problemer med spam.</font>";         
+    } 
+    elseif (epost($to,$replyto,$subject,$message)) {
+    //elseif (true) {
+        echo "<h1>Takk for interessen!</h1><p>En person fra korpset vil kontakte deg innen en uke.</p>";
+        $har_alle_feltene_utfylt_og_sendt_mail = true;
+    }
 
 }
 

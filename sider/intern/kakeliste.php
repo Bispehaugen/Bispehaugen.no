@@ -11,8 +11,8 @@ $arrangementer = neste_kakebakere();
 <tr><th>Når?</th><th>Hvem?</th><th>Hvor?</th></tr>
 <?php
 foreach($arrangementer as $arrangement) {
-	echo "<tr>";
-	echo "<td>" . strftime("%#d. %B %Y", strtotime($arrangement['dato'])) . "</td>";
+    echo "<tr>";
+    echo "<td>" . strftime("%#d. %B %Y", strtotime($arrangement['dato'])) . "</td>";
     echo "<td>";
     $bakere = "";
     foreach ($arrangement['kakebakere'] as $kakebaker) {
@@ -23,8 +23,8 @@ foreach($arrangementer as $arrangement) {
     }
     echo $bakere;
     echo "</td>";
-	echo "<td>" . "<a href='?side=aktiviteter/vis&arrid=".$arrangement['arrid']."'>" . $arrangement['tittel'] . "</a>" . "</td>";
-	echo "</tr>";
+    echo "<td>" . "<a href='?side=aktiviteter/vis&arrid=".$arrangement['arrid']."'>" . $arrangement['tittel'] . "</a>" . "</td>";
+    echo "</tr>";
 }
 ?>
 </table>
@@ -33,6 +33,6 @@ foreach($arrangementer as $arrangement) {
 
 if(tilgang_endre()) {
 ?>
-	<p>Gå inn for å endre en aktivitet for å legge til kakebakere</p>
+    <p>Gå inn for å endre en aktivitet for å legge til kakebakere</p>
 <?php
 }

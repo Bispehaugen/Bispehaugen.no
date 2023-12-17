@@ -38,24 +38,24 @@ $xprops = array( "X-LIC-LOCATION" => $tz );
 $bruker = hent_brukerdata();
 $brukerid = "";
 if (array_key_exists('medlemsid', $bruker)) {
-	$brukerid = $bruker['medlemsid'];
+    $brukerid = $bruker['medlemsid'];
 }
 
 foreach($aktiviteter as $id => $aktivitet) {
-	$uid = "Bispehaugen.no/Arrangement/".$id;
-	$address = $aktivitet["sted"];
-	$uri = "http://bispehaugen.no/?side=aktiviteter/liste&id=".$id;
-	$title = $aktivitet["tittel"];
-	$versjon = $aktivitet["versjon"];
+    $uid = "Bispehaugen.no/Arrangement/".$id;
+    $address = $aktivitet["sted"];
+    $uri = "http://bispehaugen.no/?side=aktiviteter/liste&id=".$id;
+    $title = $aktivitet["tittel"];
+    $versjon = $aktivitet["versjon"];
 
-	$datestart = date_parse($aktivitet["start"]);
-	$dateend = date_parse($aktivitet["slutt"]);
+    $datestart = date_parse($aktivitet["start"]);
+    $dateend = date_parse($aktivitet["slutt"]);
 
-	$description = $aktivitet["ingress"];
+    $description = $aktivitet["ingress"];
 
     $kakebakere = kakebakere($id);
 
-	if (!empty($kakebakere)) {
+    if (!empty($kakebakere)) {
         $bakere = "";
         if (count($kakebakere) == 1) {
             $bakere = "Kakebaker: " . $kakebakere[0]['fnavn'] . ' ' . $kakebakere[0]['enavn'];
@@ -70,30 +70,30 @@ foreach($aktiviteter as $id => $aktivitet) {
         }
 
         $description = $bakere . "\r\n" . $description;
-	}
+    }
 
-	if (!empty($aktivitet["slagverk"])) {
-		$description = "Slagverkgruppe " . $aktivitet["slagverk"] . "\r\n" . $description;
-	}
+    if (!empty($aktivitet["slagverk"])) {
+        $description = "Slagverkgruppe " . $aktivitet["slagverk"] . "\r\n" . $description;
+    }
 
-	if (!empty($aktivitet["oppmoetetid"]) && !($aktivitet["oppmoetetid"] == "00:00:00")) {
-		$description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
-	}
-	$description = str_replace("\r\n", "\\n", $description);
+    if (!empty($aktivitet["oppmoetetid"]) && !($aktivitet["oppmoetetid"] == "00:00:00")) {
+        $description = "Oppmøte kl. " . $aktivitet["oppmoetetid"] . "\r\n" . $description;
+    }
+    $description = str_replace("\r\n", "\\n", $description);
 
 
-	$vevent = & $v->newComponent( "vevent" );
-	  // create an event calendar component
-	$vevent->setProperty( "uid", $uid);
-	$vevent->setProperty( "uri", $uri);
+    $vevent = & $v->newComponent( "vevent" );
+      // create an event calendar component
+    $vevent->setProperty( "uid", $uid);
+    $vevent->setProperty( "uri", $uri);
 
-	$vevent->setProperty( "dtstart", $datestart["year"], $datestart["month"], $datestart["day"], $datestart["hour"], $datestart["minute"] );
-	$vevent->setProperty( "dtend", $dateend["year"], $dateend["month"], $dateend["day"], $dateend["hour"], $dateend["minute"] );
+    $vevent->setProperty( "dtstart", $datestart["year"], $datestart["month"], $datestart["day"], $datestart["hour"], $datestart["minute"] );
+    $vevent->setProperty( "dtend", $dateend["year"], $dateend["month"], $dateend["day"], $dateend["hour"], $dateend["minute"] );
 
-	$vevent->setProperty( "LOCATION", $address );
-	  // property name - case independent
-	$vevent->setProperty( "summary", $title);
-	$vevent->setProperty( "description", $description );
+    $vevent->setProperty( "LOCATION", $address );
+      // property name - case independent
+    $vevent->setProperty( "summary", $title);
+    $vevent->setProperty( "description", $description );
 
 }
 

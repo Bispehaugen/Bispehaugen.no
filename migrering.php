@@ -4,24 +4,24 @@ $stmt = $dbh->query("SELECT MAX(id) FROM `migreringer`");
 $forrige_migrering = $stmt->fetchColumn();
 
 function migrering($id) {
-	global $forrige_migrering;
+    global $forrige_migrering;
     global $dbh;
 
-	$arg_list = func_get_args();
-	// sjekk om $nr er kjørt
-	if ($forrige_migrering >= $id) return;
+    $arg_list = func_get_args();
+    // sjekk om $nr er kjørt
+    if ($forrige_migrering >= $id) return;
 
-	// Kjør alle strenger som blir sendt inn
-	for($i = 2; $i<func_num_args(); $i++) {
+    // Kjør alle strenger som blir sendt inn
+    for($i = 2; $i<func_num_args(); $i++) {
         try {
             $dbh->query($arg_list[$i]);
         } catch (PDOException $e) {
             die('Migrering id: '.$id.'. Query number '.$i.'. Invalid query: ' . $e->getMessage());
         }
-	}
+    }
 
-	// Sett inn at migrering er kjørt
-	$dbh->query("INSERT INTO `migreringer` (`id`, `kommentar`) VALUES ('".$id."', '".$arg_list[1]."')");
+    // Sett inn at migrering er kjørt
+    $dbh->query("INSERT INTO `migreringer` (`id`, `kommentar`) VALUES ('".$id."', '".$arg_list[1]."')");
 }
 
 migrering(1, "opprett migreringer tabell",
@@ -35,14 +35,14 @@ migrering(1, "opprett migreringer tabell",
 
 
 migrering(3, "Diverse",
-	"SELECT * FROM `medlemmer`"
+    "SELECT * FROM `medlemmer`"
 /*
 
-	"INSERT INTO `solfrih_bukdb`.`medlemmer` (`medlemsid`, `fnavn`, `enavn`, `adresse`, `postnr`, `tlfprivat`, `tlfmobil`, `tlfarbeid`, `instrument`, `verv`, `email`, `http`, `msn`, `beskrivelsesdok`, `poststed`, `status`, `instnr`, `grleder`, `brukernavn`, `passord`, `foto`, `bakgrunn`, `andreinstr`, `fdato`, `utdanning`, `studieyrke`, `bosted`, `kommerfra`, `ommegselv`, `startetibuk`, `sluttetibuk`, `sluttetibuk_date`, `startetibuk_date`, `avatar`, `rettigheter`, `begrenset`) VALUES ('5', 'Ola', 'Tveit', '', '', NULL, NULL, NULL, '', NULL, 'Slagverk', NULL, NULL, NULL, '', 'Sluttet', '0', '0', 'olatveit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0'), ('4', 'Ronny', 'Lauten', '', '', NULL, NULL, NULL, '', NULL, 'Slagverk', NULL, NULL, NULL, '', 'Sluttet', '0', '0', 'olatveit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0')",
-	"UPDATE `solfrih_bukdb`.`forum_innlegg_ny` SET `skrevetavid` = '5' WHERE `forum_innlegg_ny`.`innleggid` =4832",
-	"UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '4' WHERE  `forum_innlegg_ny`.`skrevetavid` is NULL",
-	"UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '111' WHERE  `forum_innlegg_ny`.`skrevetavid` = 0",
-	"UPDATE medlemmer, forum_innlegg_ny SET skrevetavid=medlemmer.medlemsid WHERE CONCAT(medlemmer.fnavn," ", medlemmer.enavn)=forum_innlegg_ny.skrevetav",
+    "INSERT INTO `solfrih_bukdb`.`medlemmer` (`medlemsid`, `fnavn`, `enavn`, `adresse`, `postnr`, `tlfprivat`, `tlfmobil`, `tlfarbeid`, `instrument`, `verv`, `email`, `http`, `msn`, `beskrivelsesdok`, `poststed`, `status`, `instnr`, `grleder`, `brukernavn`, `passord`, `foto`, `bakgrunn`, `andreinstr`, `fdato`, `utdanning`, `studieyrke`, `bosted`, `kommerfra`, `ommegselv`, `startetibuk`, `sluttetibuk`, `sluttetibuk_date`, `startetibuk_date`, `avatar`, `rettigheter`, `begrenset`) VALUES ('5', 'Ola', 'Tveit', '', '', NULL, NULL, NULL, '', NULL, 'Slagverk', NULL, NULL, NULL, '', 'Sluttet', '0', '0', 'olatveit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0'), ('4', 'Ronny', 'Lauten', '', '', NULL, NULL, NULL, '', NULL, 'Slagverk', NULL, NULL, NULL, '', 'Sluttet', '0', '0', 'olatveit', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0')",
+    "UPDATE `solfrih_bukdb`.`forum_innlegg_ny` SET `skrevetavid` = '5' WHERE `forum_innlegg_ny`.`innleggid` =4832",
+    "UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '4' WHERE  `forum_innlegg_ny`.`skrevetavid` is NULL",
+    "UPDATE  `solfrih_bukdb`.`forum_innlegg_ny` SET  `skrevetavid` =  '111' WHERE  `forum_innlegg_ny`.`skrevetavid` = 0",
+    "UPDATE medlemmer, forum_innlegg_ny SET skrevetavid=medlemmer.medlemsid WHERE CONCAT(medlemmer.fnavn," ", medlemmer.enavn)=forum_innlegg_ny.skrevetav",
 
 */
 
@@ -490,49 +490,49 @@ migrering(6, "Noter notesett",
 
 
 migrering(7, "Legg til start og slutt istede enn starttid og sluttid", 
-	"UPDATE `arrangement` SET `start` = CONCAT( dato, \" \", starttid )",
-	"UPDATE `arrangement` SET `slutt` = CONCAT( dato, \" \", sluttid )"
-	);
+    "UPDATE `arrangement` SET `start` = CONCAT( dato, \" \", starttid )",
+    "UPDATE `arrangement` SET `slutt` = CONCAT( dato, \" \", sluttid )"
+    );
 
 migrering(8, "Drop diverse arrangement",
-	"ALTER TABLE `arrangement` DROP `tildato`;",
-	"ALTER TABLE `arrangement` DROP `starttid`;",
-	"ALTER TABLE `arrangement` DROP `sluttid`;"
-	);
-	
+    "ALTER TABLE `arrangement` DROP `tildato`;",
+    "ALTER TABLE `arrangement` DROP `starttid`;",
+    "ALTER TABLE `arrangement` DROP `sluttid`;"
+    );
+    
 migrering(9, "Legger til skrevetavid", 
-	"ALTER TABLE  `nyheter` ADD  `skrevetavid` INT NOT NULL AFTER `skrevetav` ;",
-	"UPDATE nyheter, medlemmer SET nyheter.skrevetavid = medlemmer.medlemsid WHERE nyheter.skrevetav = CONCAT(medlemmer.fnavn, CONCAT(\" \", medlemmer.enavn));",
-	'UPDATE `nyheter` SET `skrevetavid` = 241 WHERE `nyhetsid` IN ("1227","1269","1270","1272","1273","1276","1281","1287","1291","1298","1299","1300","1305","1306","1308","1317","1332","1335","1340","1345","1347","1353","1354","1355","1362","1363","1372","1379","1390")',
-	'UPDATE `nyheter` SET `skrevetavid` = 290 WHERE `nyhetsid` IN ("1265","1302","1303","1319","1356","1357","1385","1391")',
-	'UPDATE `nyheter` SET `skrevetavid` = 312 WHERE `nyhetsid` IN ("1377")'
+    "ALTER TABLE  `nyheter` ADD  `skrevetavid` INT NOT NULL AFTER `skrevetav` ;",
+    "UPDATE nyheter, medlemmer SET nyheter.skrevetavid = medlemmer.medlemsid WHERE nyheter.skrevetav = CONCAT(medlemmer.fnavn, CONCAT(\" \", medlemmer.enavn));",
+    'UPDATE `nyheter` SET `skrevetavid` = 241 WHERE `nyhetsid` IN ("1227","1269","1270","1272","1273","1276","1281","1287","1291","1298","1299","1300","1305","1306","1308","1317","1332","1335","1340","1345","1347","1353","1354","1355","1362","1363","1372","1379","1390")',
+    'UPDATE `nyheter` SET `skrevetavid` = 290 WHERE `nyhetsid` IN ("1265","1302","1303","1319","1356","1357","1385","1391")',
+    'UPDATE `nyheter` SET `skrevetavid` = 312 WHERE `nyhetsid` IN ("1377")'
 );
 
 migrering(10, "Ukjente datoer blir satt til 2004", 
-	"UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` IS NULL;",
-	"UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` = \"0000-00-00 00:00:00\";"
+    "UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` IS NULL;",
+    "UPDATE forum_tema SET tidsisteinnlegg = startet WHERE `tidsisteinnlegg` = \"0000-00-00 00:00:00\";"
 );
 
 migrering(11, "Pris 0 som standard er uheldig", 
-	"ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NOT NULL",
-	"ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NOT NULL"
+    "ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NOT NULL",
+    "ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NOT NULL"
 );
-	
+    
 migrering(12, "Standarden var 0 før, blank nå, kunne vært null, men jeg er lat",
-	"UPDATE `nyheter` SET normal_pris = \"\" WHERE normal_pris = \"0\"",
-	"UPDATE `nyheter` SET student_pris = \"\" WHERE student_pris = \"0\""
+    "UPDATE `nyheter` SET normal_pris = \"\" WHERE normal_pris = \"0\"",
+    "UPDATE `nyheter` SET student_pris = \"\" WHERE student_pris = \"0\""
 );
 
 migrering(13, "Konsertpriser må kunne være null, da 0 gir empty() true -.-", 
-	"ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NULL",
-	"ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NULL",
-	"UPDATE `nyheter` SET normal_pris = null WHERE normal_pris = \"\"",
-	"UPDATE `nyheter` SET student_pris = null WHERE student_pris = \"\""
+    "ALTER TABLE  `nyheter` CHANGE  `normal_pris`  `normal_pris` VARCHAR( 5 ) NULL",
+    "ALTER TABLE  `nyheter` CHANGE  `student_pris`  `student_pris` VARCHAR( 5 ) NULL",
+    "UPDATE `nyheter` SET normal_pris = null WHERE normal_pris = \"\"",
+    "UPDATE `nyheter` SET student_pris = null WHERE student_pris = \"\""
 );
 
 migrering(14, "Legger til rettigheter på forum", 
-	"ALTER TABLE  `forum` ADD  `rettigheter` TINYINT NOT NULL DEFAULT  '0' AFTER  `pos`",
-	"UPDATE `forum` SET  `rettigheter` =  '2' WHERE  `forumid`=3 AND `forumid` = 4"
+    "ALTER TABLE  `forum` ADD  `rettigheter` TINYINT NOT NULL DEFAULT  '0' AFTER  `pos`",
+    "UPDATE `forum` SET  `rettigheter` =  '2' WHERE  `forumid`=3 AND `forumid` = 4"
 );
 
 
@@ -565,7 +565,7 @@ migrering(19, "opprett tabell med kobling mellom arrid og nyhetsid (KUN FOR KONS
 );
 
 migrering(20, "Legger til filer tabell for bilder, dokumenter og etterhvert noter", 
-	"CREATE TABLE IF NOT EXISTS `filer` (
+    "CREATE TABLE IF NOT EXISTS `filer` (
 `id` int(11) NOT NULL,
   `filnavn` varchar(255) NOT NULL,
   `tittel` varchar(255) NOT NULL,
@@ -581,7 +581,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
 );
 
 migrering(21, "Legger til mapper tabell for bilder, dokumenter og etterhvert noter", 
-	"CREATE TABLE IF NOT EXISTS `mapper` (
+    "CREATE TABLE IF NOT EXISTS `mapper` (
 `id` int(11) NOT NULL,
   `mappenavn` varchar(255) NOT NULL,
   `tittel` varchar(255) NOT NULL,
@@ -598,7 +598,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
 );
 
 migrering(22, "Legger til mappetyper tabellen (f.eks. album, dokumenter, notemappe)", 
-	"CREATE TABLE IF NOT EXISTS `mappetyper` (
+    "CREATE TABLE IF NOT EXISTS `mappetyper` (
 `id` int(11) NOT NULL,
   `navn` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;",
@@ -609,40 +609,40 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;"
 );
 
 migrering(23, "Legger til mappetyper (f.eks. album, dokumenter, notemappe)", 
-	"INSERT INTO `buk`.`mappetyper` (`id`, `navn`) VALUES (NULL, 'album'), (NULL, 'dokumenter');"
+    "INSERT INTO `buk`.`mappetyper` (`id`, `navn`) VALUES (NULL, 'album'), (NULL, 'dokumenter');"
 );
 
 migrering(24, "Legger til idpath i mapper-tabellen", 
-	"ALTER TABLE `mapper` ADD `idpath` VARCHAR(255) NOT NULL AFTER `mappenavn`;"
+    "ALTER TABLE `mapper` ADD `idpath` VARCHAR(255) NOT NULL AFTER `mappenavn`;"
 );
 
 migrering(25, "Legger til idpath i filer-tabellen", 
-	"ALTER TABLE `filer` ADD `idpath` VARCHAR(255) NOT NULL AFTER `filnavn`;"
+    "ALTER TABLE `filer` ADD `idpath` VARCHAR(255) NOT NULL AFTER `filnavn`;"
 );
 
 migrering(26, "Legger til tid på filer", 
-	"ALTER TABLE `filer` ADD `tid` TIMESTAMP NOT NULL AFTER `mappeid`;"
+    "ALTER TABLE `filer` ADD `tid` TIMESTAMP NOT NULL AFTER `mappeid`;"
 );
 
 migrering(27, "Fjern idpath på filer", 
-	"ALTER TABLE `filer` DROP `idpath`;"
+    "ALTER TABLE `filer` DROP `idpath`;"
 );
 
 migrering(28, "Legg til mappeid på notesett",
-	"ALTER TABLE `noter_notesett` ADD `mappeid` INT NULL AFTER `filpath`;"
+    "ALTER TABLE `noter_notesett` ADD `mappeid` INT NULL AFTER `filpath`;"
 );
 
 migrering(29, "Fjern idpath på mapper", 
-	"ALTER TABLE `mapper` DROP `idpath`;"
+    "ALTER TABLE `mapper` DROP `idpath`;"
 );
 
 migrering(30, "Legger til mappetype på filer, skal speile mappetype til mappeid, for å lette søk",
-	"ALTER TABLE `filer` ADD `mappetype` SMALLINT(6) NOT NULL AFTER `mappeid`;",
-	"UPDATE filer SET mappetype = 1"
+    "ALTER TABLE `filer` ADD `mappetype` SMALLINT(6) NOT NULL AFTER `mappeid`;",
+    "UPDATE filer SET mappetype = 1"
 );
 
 migrering(31, "Arkivnr 0 er ubrukelig, ha null istede",
-	"UPDATE noter_notesett SET arkivnr = NULL WHERE arkivnr = 0"
+    "UPDATE noter_notesett SET arkivnr = NULL WHERE arkivnr = 0"
 );
 
 migrering(32, "Opprett varling tabell for å sjekke om epostvarsling er sendt ut",
@@ -663,31 +663,31 @@ migrering(33, "Legg til slagverkhjelp",
 ");
 
 migrering(34, "Slagverkhjelp burde ha en id",
-	"ALTER TABLE `slagverkhjelp` ADD PRIMARY KEY(`medlemsid`);"
+    "ALTER TABLE `slagverkhjelp` ADD PRIMARY KEY(`medlemsid`);"
 );
 
 migrering(35, "Slagverkhjelp skal kunne ha en leder",
-	"ALTER TABLE `slagverkhjelp` ADD `gruppeleder` BOOLEAN NOT NULL DEFAULT FALSE ;"
+    "ALTER TABLE `slagverkhjelp` ADD `gruppeleder` BOOLEAN NOT NULL DEFAULT FALSE ;"
 );
 
 migrering(36, "Weblog type trenger ikke å bare være 8 tegn...",
-	"ALTER TABLE `weblog` CHANGE `type` `type` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;"
+    "ALTER TABLE `weblog` CHANGE `type` `type` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;"
 );
 
 migrering(37, "Legger til hengerfeste på medlemmer",
-	"ALTER TABLE `medlemmer` ADD `hengerfeste` BOOLEAN NOT NULL DEFAULT FALSE ;"
+    "ALTER TABLE `medlemmer` ADD `hengerfeste` BOOLEAN NOT NULL DEFAULT FALSE ;"
 );
 
 migrering(38, "Legger til slagverk gruppeid på arranngement",
-	"ALTER TABLE `arrangement` ADD `slagverk` INT NOT NULL COMMENT 'gruppeid for slagverk' AFTER `hjelpere`;"
+    "ALTER TABLE `arrangement` ADD `slagverk` INT NOT NULL COMMENT 'gruppeid for slagverk' AFTER `hjelpere`;"
 );
 
 migrering(39, "Legger til bil på medlemmer",
-	"ALTER TABLE `medlemmer` ADD `bil` BOOLEAN NOT NULL DEFAULT FALSE ;"
+    "ALTER TABLE `medlemmer` ADD `bil` BOOLEAN NOT NULL DEFAULT FALSE ;"
 );
 
 migrering(40, "Legg til medlemsid for varsling",
-	"ALTER TABLE `varsling` ADD `medlemsid` INT NOT NULL AFTER `type`;"
+    "ALTER TABLE `varsling` ADD `medlemsid` INT NOT NULL AFTER `type`;"
 );
 
 migrering(41, "Oppretter en tabell for lagring av 'husk meg' token",
@@ -735,8 +735,8 @@ migrering(46, "Importerer kakebakere til mange-til-mange tabellen",
         ON arr.kakebaker = m.medlemsid"
 );
 
-	/*
+    /*
 migrering(17, "Neste kommer her", 
-	"INSERT INTO ..."
+    "INSERT INTO ..."
 );
 */

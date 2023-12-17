@@ -12,15 +12,15 @@ include_once "funksjoner.php";
 // Skriving starter
 
 if(!tilgang_endre()) {
-	die(json_response(HttpStatus::ERROR, "Ingen tilgang til å slette filer", 401));
+    die(json_response(HttpStatus::ERROR, "Ingen tilgang til å slette filer", 401));
 }
 
 if (has_get('mappe')) {
-	// Sletter mappe
-	$mappeid = get('mappe');
-	$mappe = hent_mappe($mappeid);
+    // Sletter mappe
+    $mappeid = get('mappe');
+    $mappe = hent_mappe($mappeid);
 
-	$sql_antall_filer_og_undermapper_i_mappe = "SELECT SUM(antall) AS antall FROM
+    $sql_antall_filer_og_undermapper_i_mappe = "SELECT SUM(antall) AS antall FROM
 (
 (SELECT COUNT(f.id) AS antall FROM filer AS f WHERE f.mappeid = ?)
 UNION
@@ -30,10 +30,10 @@ UNION
     $stmt = $dbh->prepare($sql_antall_filer_og_undermapper_i_mappe);
     $stmt->execute(array($mappeid, $mappeid));
 
-	$antall_filer_og_undermapper_i_mappe = $stmt->fetchColumn();
+    $antall_filer_og_undermapper_i_mappe = $stmt->fetchColumn();
 
-	if($antall_filer_og_undermapper_i_mappe == 0){
-		$sql = "DELETE FROM mapper WHERE id = ? LIMIT 1";
+    if($antall_filer_og_undermapper_i_mappe == 0){
+        $sql = "DELETE FROM mapper WHERE id = ? LIMIT 1";
         $stmt = $dbh->prepare($sql);
         $stmt->execute(array($mappeid));
 
@@ -42,18 +42,18 @@ UNION
             rmdir($path);
         }
         die(json_response(HttpStatus::SUCCESS, "Mappe $mappeid slettet"));
-	} else {
-		die(json_response(HttpStatus::ERROR, "Du kan bare slette tomme mapper", 403));
-	}
+    } else {
+        die(json_response(HttpStatus::ERROR, "Du kan bare slette tomme mapper", 403));
+    }
 
 } else if (has_get('fil')) {
-	// Sletter fil
-	$filid = get('fil');
+    // Sletter fil
+    $filid = get('fil');
 
-	$fil = hent_fil($filid);
-	$mappe = hent_mappe($fil['mappeid']);
+    $fil = hent_fil($filid);
+    $mappe = hent_mappe($fil['mappeid']);
 
-	$sql = "DELETE FROM filer WHERE id = ? LIMIT 1";
+    $sql = "DELETE FROM filer WHERE id = ? LIMIT 1";
     $stmt = $dbh->prepare($sql);
     $stmt->execute(array($filid));
 
@@ -64,6 +64,6 @@ UNION
     die(json_response(HttpStatus::SUCCESS, "Fil $filid slettet"));
 
 } else {
-	// Finner ikke id
-	die(json_response(HttpStatus::ERROR, "Id ikke sendt med. Må enten sende med mappe='id' eller fil='id'", 403));
+    // Finner ikke id
+    die(json_response(HttpStatus::ERROR, "Id ikke sendt med. Må enten sende med mappe='id' eller fil='id'", 403));
 }

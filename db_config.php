@@ -5,12 +5,12 @@ $er_produksjon = false;
 $lokal_config_plassering = "lokal_config.php";
 
 for($dypde = 0; $dypde < 5; $dypde++) {
-	if(file_exists($lokal_config_plassering)){
-		include($lokal_config_plassering);
-		break;
-	} else {
-		$lokal_config_plassering = "../".$lokal_config_plassering;
-	}
+    if(file_exists($lokal_config_plassering)){
+        include($lokal_config_plassering);
+        break;
+    } else {
+        $lokal_config_plassering = "../".$lokal_config_plassering;
+    }
 }
 
 
@@ -20,10 +20,10 @@ for($dypde = 0; $dypde < 5; $dypde++) {
 Slik ser lokal_config.php ut
 Lagrer alle passord i lokal fil på alle pcer, slik at man kan endre for seg selv + github repo er åpent for hvem som helst til å lese
 <?php
-	$database_host="localhost";
-	$database_user="solfrih_bukdb";
-	$database_string="passord her";
-	$database_database = "solfrih_bukdb";
+    $database_host="localhost";
+    $database_user="solfrih_bukdb";
+    $database_string="passord her";
+    $database_database = "solfrih_bukdb";
 
-	DEFINE("SENDGRID_APIKEY", "");
+    DEFINE("SENDGRID_APIKEY", "");
 */

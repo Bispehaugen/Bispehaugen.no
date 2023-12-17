@@ -1,5 +1,5 @@
 <div id="map_canvas" class="map"></div>
-	
+    
 <script>
 function initialize() {
     var mapCanvas = document.getElementById('map_canvas');

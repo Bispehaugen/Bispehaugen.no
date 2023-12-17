@@ -1,6 +1,6 @@
 <?php
-	$bruker = innlogget_bruker();
-	$profilbilde = isset($bruker['foto']) ? $bruker['foto'] : "icon_logo.png";
+    $bruker = innlogget_bruker();
+    $profilbilde = isset($bruker['foto']) ? $bruker['foto'] : "icon_logo.png";
 ?>
 
 <ul class="menyliste">
@@ -25,7 +25,7 @@
             <i class="fa fa-caret-down"></i>
         </span>
         <ul class="profilbilde-valg">
-			<?php inkluder_side_fra_undermappe("intern/bruker_valg"); ?>
+            <?php inkluder_side_fra_undermappe("intern/bruker_valg"); ?>
         </ul>
     </li>
 </ul>

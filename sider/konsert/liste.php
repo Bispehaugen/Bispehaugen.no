@@ -11,14 +11,14 @@ $konserter = hent_konserter();
 <?php
 
 foreach($konserter as $konsert){
-			
-	$bilde = $konsert['bilde'];
-	if(empty($bilde)){
-		$bilde = "icon_logo.png";
-	}
-	
+            
+    $bilde = $konsert['bilde'];
+    if(empty($bilde)){
+        $bilde = "icon_logo.png";
+    }
+    
 echo '
-	<article class="box konsert" onclick="location.href=\'?side=konsert/vis&id='.$konsert['id'].'\'">
+    <article class="box konsert" onclick="location.href=\'?side=konsert/vis&id='.$konsert['id'].'\'">
       <div class="bilde">
           <img src="'.thumb($bilde, 125).'" />
       </div>
@@ -28,5 +28,5 @@ echo '
       </div>
       '.fancyDato($konsert['konsert_tid']).'
     </article>
-	';
+    ';
 }
