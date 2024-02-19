@@ -17,7 +17,7 @@ if (!er_logget_inn()) {
     <div class="clearfix"></div>
 </section>
 <section class="side aktiviteter" data-scroll-index='3' data-scroll-url="?side=aktiviteter/liste">
-    <div class='content'>        
+    <div class='content'>
     <?php
         inkluder_side_fra_undermappe("aktiviteter/liste");
     ?>
@@ -37,13 +37,6 @@ if (!er_logget_inn()) {
         ?>
     </div>
 </section>
-<section class="side medlemmer side-invertert" data-scroll-index='6' data-scroll-url="?side=medlem/liste">
-  <div class='content'>
-    <?php
-        inkluder_side_fra_undermappe("medlem/liste");
-    ?>
-</div>
-</section>
 
 <?php
 
@@ -54,6 +47,3 @@ inkluder_side_fra_undermappe("annet");
 inkluder_side_fra_undermappe("intern/forside");
 
 }
-
-
-

@@ -1,10 +1,10 @@
 <?php
 if(er_logget_inn()){
-    
+
     inkluder_side_fra_undermappe("intern/meny");
 
 } else {
-    
+
     if (!erForside()) {
 ?>
 <ul class="menyliste">
@@ -13,7 +13,6 @@ if(er_logget_inn()){
     <li><a href="?side=aktiviteter/liste">Aktiviteter</a></li>
     <li><a href="?side=spilleoppdrag/vis">Spille for deg?</a></li>
     <li><a href="?side=bli-medlem" class="bli-medlem">Bli medlem</a></li>
-    <li><a href="?side=medlem/liste">Medlemmer</a></li>
     <li><a href="?side=annet">Om oss</a></li>
     <?php if (er_faktisk_logget_inn()) { ?>
     <li><a href="?side=forside&vis=intern">Intern</a></li>
@@ -39,9 +38,6 @@ if(er_logget_inn()){
     </li>
     <li>
         <span data-scroll-nav='5' class="bli-medlem">Bli medlem</span>
-    </li>
-    <li>
-        <span data-scroll-nav='6'>Medlemmer</span>
     </li>
     <li>
         <span data-scroll-nav='7'>Om oss</span>
